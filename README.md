@@ -18,9 +18,6 @@
     1. bin          执行脚本
     2. generator    代码生成器
     3. sql          sql文件
-* opencloud-admin  开放平台运维系统-UI (port = 8801)
-    1. 服务器:基于oauth2单点登录,参数签名.
-    2. 前端:基于layui前端UI框架,ajax请求API网关获取数据
 * opencloud-common(公共包)
     1. 提供微服务相关依赖包
     2. 封装微服务必要配置类并自动注入
