@@ -1,0 +1,147 @@
+@import 'css3.less';
+@import "var.less";
+html {
+  background-color: #f2f2f2;
+  color: #666;
+}
+body {
+  font-family: "Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei";
+  font-size: 12px;
+  line-height: 1.28571;
+}
+a{
+  color: #2d8cf0;
+  background: 0 0;
+  text-decoration: none;
+  outline: 0;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+a:hover{
+    color: #2d8cf0;
+}
+//浮动
+.f-l {
+  float: left
+}
+
+.f-r {
+  float: right
+}
+
+/*清楚浮动*/
+.clearfix {
+  .clearfix();
+}
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  margin-top: -8px;
+  font-weight: bold;
+  font-size: 5px;
+  color: #c2c2c2;
+}
+
+
+.layui-fluid {
+  padding: 15px;
+}
+
+.layui-btn-disabled, .layui-btn-disabled:active, .layui-btn-disabled {
+  border: 1px solid #e6e6e6;
+  background-color: #FBFBFB !important;
+  color: #C9C9C9;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.layui-btn .layui-icon {
+   margin-right: 0px;
+  font-size: 14px;
+  vertical-align: bottom;
+  vertical-align: middle\9;
+}
+//字体
+.font-face('../fonts', 'iconfont');
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+//重置panel
+.panel-default {
+  border-color: #ebeaea;
+}
+
+.panel-default .panel-header {
+  border-color: transparent;
+  background-color: #fff;
+  color: #555555;
+}
+
+.panel-header {
+  border-bottom: solid 1px transparent;
+  padding: 8px 15px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+//下拉框选中颜色
+.layui-form-select dl dd.layui-this {
+  background: rgb(242, 242, 242);
+  color: #333;
+}
+
+
+//tab more的位置
+.layui-tab-bar {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  z-index: 10;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.layui-input, .layui-select, .layui-textarea {
+  height: 32px;
+}
+
+.layui-nav-tree .layui-nav-child {
+  padding-left:8px;
+  min-width: inherit;
+  background-color:transparent!important;
+}
+.layui-card-body .layui-table {
+  margin: 0px 0;
+}
+.layui-table td, .layui-table th {
+  font-size: 12px;
+}
+.layui-form-checkbox span {
+  padding: 0 5px 0 5px;
+  font-size: 12px;
+}
+
+.layui-form-item {
+  margin-bottom: 5px;
+  clear: both;
+}
+
+.layui-form-mid {
+  padding: 5px 0!important;
+}
+
+.layui-tree-head{
+  cursor: pointer;
+}

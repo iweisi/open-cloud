@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>菜单-首页</title>
+    <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css"
+          th:href="@{/static/layui/css/layui.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" th:href="@{/static/css/admin.css}"/>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div id="search-form" class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <button type="button"
+                                class="layui-btn layui-btn-small layui-btn-normal layui-btn-sm  hidden-xs addBtn">添加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <table id="table-list" class="layui-table" lay-filter="table"></table>
+        </div>
+
+    </div>
+</div>
+
+<script id="menus-form" type="text/html">
+    <div class="wrap-container">
+        <div class="layui-form" style="width: 90%; padding-top: 20px;" lay-filter="menuForm">
+            <input name="menuId" type="hidden" value="{{d.menuId}}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级菜单{{d.parentId}}</label>
+                <div class="layui-input-block">
+                    <select name="parentId">
+                        <option vlaue="0" >无</option>
+                        {{# layui.each(d.list, function(index, item) { }}
+                        <option vlaue="{{item.value}}"   >{{item.name}}</option>
+                        {{# });}}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="menuName" value="{{d.menuName}}" required="" lay-verify="required"
+                           placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">唯一编码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="menuCode" value="{{d.menuCode}}" required="" lay-verify="required"
+                           placeholder="请输入唯一编码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">访问路径</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" value="{{d.url}}" required=""
+                           placeholder="请输入访问路径" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="enabled" value="{{d.enabled}}" {{ d.enabled? 'checked' : '' }} lay-skin="switch" lay-text="启用|禁用"
+                           lay-filter="switchTest">
+                    <div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>OFF</em><i></i></div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea name="description" placeholder="请输入描述" class="layui-textarea">{{d.description}}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="../../static/layui/layui.js" th:src="@{/static/layui/layui.js}" type="text/javascript"
+        charset="utf-8"></script>
+<script src="../../static/js/config.js" th:src="@{/static/js/config.js}" type="text/javascript"
+        charset="utf-8"></script>
+<script>
+    layui.use(['rbac/menus'], function () {
+
+    });
+</script>
+</body>
+
+</html>

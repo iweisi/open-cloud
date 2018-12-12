@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>demo</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/admin.css"/>
+</head>
+<body>
+<form class="layui-form" >
+<div class="layui-input-normal" style="margin:100px 580px;">
+    <button class="layui-btn" lay-submit="" lay-filter="submitForm" ><i class="fa fa-floppy-o">&nbsp;</i>提交表单</button>
+    <div id="a" ></div>
+    <div id="b" ></div>
+</div>
+</form>
+<script src="../static/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    layui.use(['form',"transfer"], function () {
+        var $ = layui.jquery,
+            form = layui.form;
+        var data = [
+            {
+                "value":"111150000",
+                "text":"内蒙古自治区"
+            },
+            {
+                "value":"1111210000",
+                "text":"辽宁省"
+            },
+            {
+                "value":"1111220000",
+                "text":"吉林省"
+            },
+            {
+                "value":"1111230000",
+                "text":"黑龙江省"
+            },
+            {
+                "value":"1111320000",
+                "text":"江苏省"
+            },
+            {
+                "value":"1111330000",
+                "text":"浙江省"
+            },
+            {
+                "value":"1111340000",
+                "text":"安徽省"
+            },
+            {
+                "value":"1111360000",
+                "text":"江西省"
+            },
+            {
+                "value":"1111370000",
+                "text":"山东省"
+            },
+            {
+                "value":"1111410000",
+                "text":"河南省"
+            },
+            {
+                "value":"1111430000",
+                "text":"湖南省"
+            },
+            {
+                "value":"1111440000",
+                "text":"广东省"
+            },
+            {
+                "value":"1111450000",
+                "text":"广西壮族自治区"
+            },
+            {
+                "value":"1111460000",
+                "text":"海南省"
+            },
+            {
+                "value":"1111510000",
+                "text":"四川省"
+            },
+            {
+                "value":"1111520000",
+                "text":"贵州省"
+            },
+            {
+                "value":"1111530000",
+                "text":"云南省"
+            },
+            {
+                "value":"1111540000",
+                "text":"西藏自治区"
+            },
+            {
+                "value":"1111610000",
+                "text":"陕西省"
+            },
+            {
+                "value":"1111620000",
+                "text":"甘肃省"
+            },
+            {
+                "value":"1111630000",
+                "text":"青海省"
+            },
+            {
+                "value":"1111640000",
+                "text":"宁夏回族自治区"
+            },
+            {
+                "value":"1111650000",
+                "text":"新疆维吾尔自治区"
+            },
+            {
+                "value":"2111120000",
+                "text":"天津"
+            },
+            {
+                "value":"2111310000",
+                "text":"上海"
+            },
+            {
+                "value":"2111500000",
+                "text":"重庆"
+            },
+            {
+                "value":"2111110000",
+                "text":"北京"
+            },
+            {
+                "value":"1111130000",
+                "text":"河北省"
+            },
+            {
+                "value":"1111350000",
+                "text":"福建省"
+            }
+        ]
+
+        var $transfer1 = $("#a").transfer({data: data, name: 'names'});
+        var $transfer2 = $("#b").transfer({data: data, name: 'tests'});
+        //监听提交///保存或修改
+        form.on('submit(submitForm)', function (data) {
+            layer.alert(JSON.stringify(data.field));
+            return false;
+        });
+
+    });
+
+
+
+
+</script>
+</body>
+</html>
