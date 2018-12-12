@@ -18,6 +18,11 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
 
     var data = [];
 
+    $('.addBtn').click(function () {
+        formPage();
+        return false;
+    });
+
     var getSelectTree = function () {
         var treeData = treeselect.listConvert(data, {
             primaryKey: 'menuId',
@@ -65,7 +70,7 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
                 {field: 'description', title: '描述'},
                 {
                     field: 'enabled', title: '状态', sort: true, templet: function (d) {
-                    var html = '<input type="checkbox" data-id="' + d.menuId + '" name="enabled" value="' + d.enabled + '" lay-skin="switch"  lay-text="启用|禁用"  lay-filter="enable"  ' + (d.enabled ? "checked" : "") + '/>';
+                    var html = '<input type="checkbox" data-id="' + d.menuId + '" name="enabled" value="' + d.enabled + '" lay-skin="switch"  lay-text="启用|禁用"  lay-filter="enableTable"  ' + (d.enabled ? "checked" : "") + '/>';
                     return html;
                 }
                 },
@@ -82,6 +87,7 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
         ]
     });
     treetable.expandAll('#table-list');
+
     var formPage = function (data) {
         if (!data) {
             data = {
@@ -126,8 +132,8 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
         }
     });
 
-    //监听锁定操作
-    form.on('switch(enable)', function (obj) {
+    //表格启用开关
+    form.on('switch(enableTable)', function (obj) {
         var id = $(obj.elem).data('id');
         var url;
         if (obj.elem.checked) {
@@ -154,9 +160,27 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
         })
     });
 
-    $('.addBtn').click(function () {
-        formPage();
-        return false;
+    //表单下拉选择
+    form.on('select(parentId)', function (data) {
+        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(data.elem) //当前容器的全部表单字段，名值对形式：{name: value}
     });
+
+    //表单开关
+    form.on('switch(enabledForm)', function (obj) {
+        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(data.elem) //当前容器的全
+    });
+
+    //表单提交
+    form.on('submit(form)', function(data){
+        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(data.elem) //当前容器的全部表单字段，名值对形式：{name: value}
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+
     exports("rbacMenu", {});
 });

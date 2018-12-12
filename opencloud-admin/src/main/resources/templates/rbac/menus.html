@@ -39,7 +39,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">上级菜单{{d.parentId}}</label>
                 <div class="layui-input-block">
-                    <select name="parentId">
+                    <select name="parentId" lay-filter="parentId">
                         <option vlaue="0" >无</option>
                         {{# layui.each(d.list, function(index, item) { }}
                         <option vlaue="{{item.value}}"   >{{item.name}}</option>
@@ -71,8 +71,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="enabled" value="{{d.enabled}}" {{ d.enabled? 'checked' : '' }} lay-skin="switch" lay-text="启用|禁用"
-                           lay-filter="switchTest">
+                    <input type="checkbox" name="enabled" value="{{d.enabled}}" {{ d.enabled ? 'checked' : '' }} lay-skin="switch" lay-text="启用|禁用"
+                           lay-filter="enabledForm">
                     <div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>OFF</em><i></i></div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="formDemo">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" lay-submit  lay-filter="form">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
