@@ -49,7 +49,7 @@ public class SignatureFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        AntPathRequestMatcher matcher = new AntPathRequestMatcher("/sign");
+        AntPathRequestMatcher matcher = new AntPathRequestMatcher("/platform/sign");
         OpenAuth auth = OpenHelper.getPrincipal();
         if (auth != null && gatewayProperties.getEnabledValidateSign() && !matcher.matches(request)) {
             try {

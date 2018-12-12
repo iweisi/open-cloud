@@ -1,18 +1,16 @@
 package com.github.lyd.common.autoconfigure;
 
-import com.github.lyd.common.utils.SpringContextHolder;
 import com.github.lyd.common.annotation.AnnotationScan;
 import com.github.lyd.common.exception.OpenExceptionHandler;
 import com.github.lyd.common.gen.SnowflakeIdGenerator;
 import com.github.lyd.common.http.OpenRestTemplate;
+import com.github.lyd.common.utils.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
-import org.springframework.security.oauth2.common.AuthenticationScheme;
 
 /**
  * 默认配置类
@@ -95,14 +93,8 @@ public class DefaultAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(OpenRestTemplate.class)
-    public OpenRestTemplate platformRestTemplate(GatewayProperties gatewayProperties) {
-        ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
-        resource.setClientId(gatewayProperties.getClientId());
-        resource.setClientSecret(gatewayProperties.getClientSecret());
-        resource.setAccessTokenUri(gatewayProperties.getAuthServerAddr() + "/oauth/token");
-        resource.setAuthenticationScheme(AuthenticationScheme.form);
-        OpenRestTemplate restTemplate = new OpenRestTemplate(resource);
-        restTemplate.setGatewayProperties(gatewayProperties);
+    public OpenRestTemplate openRestTemplate(GatewayProperties gatewayProperties) {
+        OpenRestTemplate restTemplate = new OpenRestTemplate(gatewayProperties);
         return restTemplate;
     }
 

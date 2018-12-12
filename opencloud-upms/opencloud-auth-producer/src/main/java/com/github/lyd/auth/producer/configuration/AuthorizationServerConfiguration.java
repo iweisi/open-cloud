@@ -41,12 +41,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
-    /**
-     * 异常输出
-     */
-    @Autowired
-    private Oauth2WebResponseExceptionTranslator oauth2WebResponseExceptionTranslator;
-
 
     /**
      * 客户端store
@@ -107,7 +101,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .tokenServices(defaultTokenServices());
         // 自定义授权页面,映射
         endpoints.pathMapping("/oauth/confirm_access", "/confirm_access");
-        endpoints.exceptionTranslator(oauth2WebResponseExceptionTranslator);
+        //定义异常转换类生效
+        endpoints.exceptionTranslator(new Oauth2WebResponseExceptionTranslator());
     }
 
 

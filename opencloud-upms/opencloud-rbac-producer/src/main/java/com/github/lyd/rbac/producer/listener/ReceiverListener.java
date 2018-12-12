@@ -1,8 +1,8 @@
 package com.github.lyd.rbac.producer.listener;
 
 import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
-import com.github.lyd.common.utils.BeanUtils;
 import com.github.lyd.common.http.OpenRestTemplate;
+import com.github.lyd.common.utils.BeanUtils;
 import com.github.lyd.rbac.client.entity.ResourceApi;
 import com.github.lyd.rbac.producer.service.ApiService;
 import lombok.extern.slf4j.Slf4j;

@@ -102,8 +102,9 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
             };
         }
         data.list = getSelectTree();
+        var tplHtml = document.getElementById("menus-form").innerHTML
         //你也可以采用下述同步写法，将 render 方法的回调函数剔除，可直接返回渲染好的字符
-        var html = laytpl($('#menus-form').html()).render(data);
+        var html = laytpl(tplHtml).render(data);
         common.page("菜单添加", type = 1, html, w = "750px", h = "620px", function (page) {
         });
     }

@@ -29,7 +29,9 @@
    1. opencloud-gateway-client    API网关-接口
    2. opencloud-gateway-producer  API网关-资源服务器 (port = 8888)
       1. 提供接口调用统一入口:路由代理、API限流、API访问限制、API数字验签、API开发调试文档(生产环境不生效)
-      2. 自定义刷新网关端点(支持一键刷新路由、限流等配置) 
+      2. 提供基于oauth2密码模式登录,返回access_token
+      3. 提供内部数字签名接口
+      3. 自定义刷新网关端点(支持一键刷新路由、限流等配置) 
         [刷新路由/actuator/refresh-gateway](POST http://localhost:8888/actuator/refresh-gateway )  
         [灰度刷新/actuator/refresh-gateway?destination=application:* ](POST http://localhost:8888/actuator/refresh-gateway?destination=application:* )
 * opencloud-upms(权限管理)

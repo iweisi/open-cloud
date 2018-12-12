@@ -35,43 +35,43 @@
 <script id="menus-form" type="text/html">
     <div class="wrap-container">
         <div class="layui-form" style="width: 90%; padding-top: 20px;" lay-filter="menuForm">
-            <input name="menuId" type="hidden" value="{{d.menuId}}">
+            <input name="menuId" type="hidden" value="{{ d.menuId }}">
             <div class="layui-form-item">
-                <label class="layui-form-label">上级菜单{{d.parentId}}</label>
+                <label class="layui-form-label">上级菜单{{ d.parentId }}</label>
                 <div class="layui-input-block">
                     <select name="parentId" lay-filter="parentId">
                         <option vlaue="0" >无</option>
                         {{# layui.each(d.list, function(index, item) { }}
-                        <option vlaue="{{item.value}}">{{item.name}}</option>
-                        {{# });}}
+                        <option vlaue="{{ item.value }}">{{ item.name }}</option>
+                        {{#  });}}
                     </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单名称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="menuName" value="{{d.menuName}}" required="" lay-verify="required"
+                    <input type="text" name="menuName" value="{{ d.menuName }}" required="" lay-verify="required"
                            placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">唯一编码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="menuCode" value="{{d.menuCode}}" required="" lay-verify="required"
+                    <input type="text" name="menuCode" value="{{ d.menuCode }}" required="" lay-verify="required"
                            placeholder="请输入唯一编码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">访问路径</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" value="{{d.url}}" required=""
+                    <input type="text" name="title" value="{{ d.url }}" required=""
                            placeholder="请输入访问路径" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="enabled" value="{{d.enabled}}" {{ d.enabled ? 'checked' : '' }} lay-skin="switch" lay-text="启用|禁用"
+                    <input type="checkbox" name="enabled" value="{{ d.enabled }}" {{ d.enabled ? 'checked' : '' }} lay-skin="switch" lay-text="启用|禁用"
                            lay-filter="enabledForm">
                     <div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>OFF</em><i></i></div>
                 </div>
@@ -79,7 +79,7 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">描述</label>
                 <div class="layui-input-block">
-                    <textarea name="description" placeholder="请输入描述" class="layui-textarea">{{d.description}}</textarea>
+                    <textarea name="description" placeholder="请输入描述" class="layui-textarea">{{ d.description }}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">

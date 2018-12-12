@@ -56,19 +56,19 @@ public class OpenExceptionHandler {
     public static ResultBody authenticationException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ResultEnum code = ResultEnum.ERROR;
         if (ex instanceof UsernameNotFoundException) {
-            code = ResultEnum.USER_NOT_EXIST;
+            code = ResultEnum.USERNAME_NOTFOUND;
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else if (ex instanceof BadCredentialsException) {
-            code = ResultEnum.USER_LOGIN_FAIL;
+            code = ResultEnum.BAD_CREDENTIALS;
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else if (ex instanceof AccountExpiredException) {
-            code = ResultEnum.USER_ACCOUNT_EXPIRED;
+            code = ResultEnum.ACCOUNT_EXPIRED;
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else if (ex instanceof LockedException) {
-            code = ResultEnum.USER_LOCKED;
+            code = ResultEnum.ACCOUNT_LOCKED;
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else if (ex instanceof DisabledException) {
-            code = ResultEnum.USER_DISABLED;
+            code = ResultEnum.ACCOUNT_DISABLED;
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else if (ex instanceof CredentialsExpiredException) {
             code = ResultEnum.CREDENTIALS_EXPIRED;
@@ -99,6 +99,9 @@ public class OpenExceptionHandler {
             code = ResultEnum.UNAUTHORIZED_CLIENT;
         } else if (ex instanceof InvalidGrantException) {
             code = ResultEnum.INVALID_GRANT;
+            if(ex.getMessage().equals("Bad credentials")){
+                code= ResultEnum.BAD_CREDENTIALS;
+            }
         } else if (ex instanceof InvalidScopeException) {
             code = ResultEnum.INVALID_SCOPE;
         } else if (ex instanceof InvalidTokenException) {

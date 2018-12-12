@@ -31,12 +31,12 @@ public enum ResultEnum {
     /**
      * 账号错误
      */
-    USER_LOGIN_FAIL(20001, "user_login_fail"),
-    USER_NOT_EXIST(20002, "user_not_exist"),
-    USER_DISABLED(20003, "user_disabled"),
-    USER_ACCOUNT_EXPIRED(20004, "user_account_expired"),
-    CREDENTIALS_EXPIRED(20005, "credentials_expired"),
-    USER_LOCKED(20006, "user_locked"),
+    BAD_CREDENTIALS(20001, "bad_credentials"),
+    ACCOUNT_DISABLED(20002, "account_disabled"),
+    ACCOUNT_EXPIRED(20003, "account_expired"),
+    CREDENTIALS_EXPIRED(20004, "credentials_expired"),
+    ACCOUNT_LOCKED(20005, "account_locked"),
+    USERNAME_NOTFOUND(20006, "username_notfound"),
 
     /**
      * 提示错误

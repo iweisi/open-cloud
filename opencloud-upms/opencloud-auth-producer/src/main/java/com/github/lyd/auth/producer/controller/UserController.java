@@ -1,5 +1,6 @@
 package com.github.lyd.auth.producer.controller;
 
+import com.github.lyd.common.model.ResultBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +21,7 @@ public class UserController {
      */
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/me")
-    public Object getUser() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResultBody getUser() {
+        return ResultBody.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
