@@ -161,24 +161,24 @@ layui.define(['treetable', 'treeselect', 'common'], function (exports) {
     });
 
     //表单下拉选择
-    form.on('select(parentId)', function (data) {
-        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-        console.log(data.elem) //当前容器的全部表单字段，名值对形式：{name: value}
+    form.on('select(parentId)', function (obj) {
+        console.log(obj.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(obj.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(obj.elem) //当前容器的全部表单字段，名值对形式：{name: value}
     });
 
     //表单开关
     form.on('switch(enabledForm)', function (obj) {
-        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-        console.log(data.elem) //当前容器的全
+        console.log(obj.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(obj.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(obj.elem) //当前容器的全
     });
 
     //表单提交
-    form.on('submit(form)', function(data){
-        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-        console.log(data.elem) //当前容器的全部表单字段，名值对形式：{name: value}
+    form.on('submit(form)', function(obj){
+        console.log(obj.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(obj.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(obj.elem) //当前容器的全部表单字段，名值对形式：{name: value}
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
 
