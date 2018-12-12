@@ -54,7 +54,7 @@
         marker.enableDragging();
         map.addOverlay(marker); // 将标注添加到地图中
 
-        if (parent.editor && parent.document.body.contentEditable == "true") { //在编辑状态下
+        if(parent.editor && parent.document.body.contentEditable=="true") { //在编辑状态下
             setMapListener();//地图改变修改外层的iframe标签src属性
         }
     }
@@ -107,7 +107,10 @@
             var zoom = map.getZoom(),
                 center = map.getCenter(),
                 marker = window.marker.getPoint();
-            containerIframe.src = containerIframe.src.replace(new RegExp('([?#&])center=([^?#&]+)', 'i'), '$1center=' + center.lng + ',' + center.lat).replace(new RegExp('([?#&])markers=([^?#&]+)', 'i'), '$1markers=' + marker.lng + ',' + marker.lat).replace(new RegExp('([?#&])zoom=([^?#&]+)', 'i'), '$1zoom=' + zoom);
+            containerIframe.src = containerIframe.src.
+                replace(new RegExp('([?#&])center=([^?#&]+)', 'i'), '$1center=' + center.lng + ',' + center.lat).
+                replace(new RegExp('([?#&])markers=([^?#&]+)', 'i'), '$1markers=' + marker.lng + ',' + marker.lat).
+                replace(new RegExp('([?#&])zoom=([^?#&]+)', 'i'), '$1zoom=' + zoom);
             editor.fireEvent('saveScene');
         }
     }
