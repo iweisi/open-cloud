@@ -71,7 +71,7 @@ public class ResourcePermission implements Serializable {
     private String identityCode;
 
     /**
-     * 授权身份前缀:用户(USER_) 、角色(ROLE_)
+     * 授权身份前缀:租户(USER_) 、角色(ROLE_)
      */
     @Column(name = "identity_prefix")
     private String identityPrefix;

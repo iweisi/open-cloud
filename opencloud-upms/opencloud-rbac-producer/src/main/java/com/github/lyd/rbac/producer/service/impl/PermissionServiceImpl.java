@@ -11,7 +11,7 @@ import com.github.lyd.rbac.producer.mapper.ResourceActionMapper;
 import com.github.lyd.rbac.producer.mapper.ResourceApiMapper;
 import com.github.lyd.rbac.producer.mapper.ResourceMenuMapper;
 import com.github.lyd.rbac.producer.service.PermissionService;
-import com.github.lyd.rbac.producer.service.RoleService;
+import com.github.lyd.rbac.producer.service.RolesService;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private ResourceApiMapper apiMapperMapper;
     @Autowired
-    private RoleService roleService;
+    private RolesService roleService;
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
 
@@ -63,23 +63,23 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * 获取用户授权
+     * 获取租户授权
      *
-     * @param userId       用户ID
+     * @param tenantId       租户ID
      * @param resourceType 资源类型
      * @return
      */
     @Override
-    public List<ResourcePermission> getUserPermission(Long userId, String resourceType) {
-        List<Role> roles = roleService.getUserRoles(userId);
+    public List<ResourcePermission> getTenantPermission(Long tenantId, String resourceType) {
+        List<Roles> roles = roleService.getTenantRoles(tenantId);
         List<Long> roleIds = Lists.newArrayList();
         List<ResourcePermission> permissions = Lists.newArrayList();
-        // 用户私有权限
+        // 租户私有权限
         ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
-                .andEqualTo("identityId", userId)
+                .andEqualTo("identityId", tenantId)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
@@ -109,19 +109,19 @@ public class PermissionServiceImpl implements PermissionService {
 
 
     /**
-     * 获取用户私有授权
+     * 获取租户私有授权
      *
-     * @param userId 用户ID
+     * @param tenantId 租户ID
      * @return
      */
     @Override
-    public List<ResourcePermission> getUserSelfPermission(Long userId) {
+    public List<ResourcePermission> getTenantPrivatePermission(Long tenantId) {
         List<ResourcePermission> permissions = Lists.newArrayList();
-        // 用户私有权限
+        // 租户私有权限
         ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
-                .andEqualTo("identityId", userId)
+                .andEqualTo("identityId", tenantId)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
@@ -160,7 +160,7 @@ public class PermissionServiceImpl implements PermissionService {
         }
         String roleCode = "";
         if (RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
-            Role role = roleService.getRole(identityId);
+            Roles role = roleService.getRole(identityId);
             roleCode = role.getRoleCode();
         }
         //授权编码: 资源类型+资源编码 API_INFO

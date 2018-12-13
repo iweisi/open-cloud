@@ -25,22 +25,22 @@ public class PermissionsController implements PermissionRemoteService {
     @Autowired
     private PermissionService permissionService;
 
-    @ApiOperation(value = "登录用户菜单权限")
-    @GetMapping("/permissions/user/menus")
-    public ResultBody<List<ResourcePermission>> userMenus() {
-        return ResultBody.success(permissionService.getUserPermission(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_MENU));
+    @ApiOperation(value = "登录租户菜单权限")
+    @GetMapping("/permissions/tenant/menus")
+    public ResultBody<List<ResourcePermission>> tenantMenus() {
+        return ResultBody.success(permissionService.getTenantPermission(OpenHelper.getPrincipal().getTenantId(), RbacConstans.RESOURCE_TYPE_MENU));
     }
 
-    @ApiOperation(value = "登录用户操作权限")
-    @GetMapping("/permissions/user/actions")
-    public ResultBody<List<ResourcePermission>> userActions() {
-        return ResultBody.success(permissionService.getUserPermission(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_ACTION));
+    @ApiOperation(value = "登录租户操作权限")
+    @GetMapping("/permissions/tenant/actions")
+    public ResultBody<List<ResourcePermission>> tenantActions() {
+        return ResultBody.success(permissionService.getTenantPermission(OpenHelper.getPrincipal().getTenantId(), RbacConstans.RESOURCE_TYPE_ACTION));
     }
 
-    @ApiOperation(value = "登录用户API权限")
-    @GetMapping("/permissions/user/apis")
-    public ResultBody<List<ResourcePermission>> userApis() {
-        return ResultBody.success(permissionService.getUserPermission(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_API));
+    @ApiOperation(value = "登录租户API权限")
+    @GetMapping("/permissions/tenant/apis")
+    public ResultBody<List<ResourcePermission>> tenantApis() {
+        return ResultBody.success(permissionService.getTenantPermission(OpenHelper.getPrincipal().getTenantId(), RbacConstans.RESOURCE_TYPE_API));
     }
 
     /**

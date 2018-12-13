@@ -27,8 +27,8 @@ CREATE TABLE `platform_app_info` (
   `app_icon` varchar(255) DEFAULT NULL COMMENT '应用图标',
   `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
   `os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
-  `app_user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
-  `app_user_type` int(1) NOT NULL DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+  `app_user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '租户ID:默认为0',
+  `app_user_type` int(1) NOT NULL DEFAULT '0' COMMENT '租户类型:0-内部租户 1-服务提供商 2-自研开发者',
   `description` varchar(255) DEFAULT NULL COMMENT 'app描述',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间'
@@ -153,9 +153,9 @@ INSERT INTO `platform_resource_api` VALUES ('522067500544819200', 'disableMenu',
 INSERT INTO `platform_resource_api` VALUES ('522067500582567936', 'getMenu', '获取菜单资源', 'opencloud-rbac-producer', '/menus/{menuId}', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067500616122368', 'removeMenu', '移除菜单', 'opencloud-rbac-producer', '/menus/remove', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067500666454016', 'permissions', '获取授权列表', 'opencloud-rbac-producer', '/permissions', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067500704202752', 'userApis', '登录用户API权限', 'opencloud-rbac-producer', '/permissions/user/apis', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067500746145792', 'userActions', '登录用户操作权限', 'opencloud-rbac-producer', '/permissions/user/actions', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067500783894528', 'userMenus', '登录用户菜单权限', 'opencloud-rbac-producer', '/permissions/user/menus', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067500704202752', 'userApis', '登录租户API权限', 'opencloud-rbac-producer', '/permissions/user/apis', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067500746145792', 'userActions', '登录租户操作权限', 'opencloud-rbac-producer', '/permissions/user/actions', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067500783894528', 'userMenus', '登录租户菜单权限', 'opencloud-rbac-producer', '/permissions/user/menus', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067500825837568', 'addRole', '添加角色', 'opencloud-rbac-producer', '/roles/add', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067500859392000', 'roles', '角色列表', 'opencloud-rbac-producer', '/roles', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067500897140736', 'updateRole', '更新角色', 'opencloud-rbac-producer', '/roles/update', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
@@ -163,16 +163,16 @@ INSERT INTO `platform_resource_api` VALUES ('522067500934889472', 'removeRole', 
 INSERT INTO `platform_resource_api` VALUES ('522067500981026816', 'getRole', '获取角色信息', 'opencloud-rbac-producer', '/roles/{roleId}', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067501027164160', 'login', 'login', 'opencloud-rbac-producer', '/users/account/login', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522067501077495808', 'addLoginLog', 'addLoginLog', 'opencloud-rbac-producer', '/users/account/logs/add', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067501119438848', 'addUser', '添加用户', 'opencloud-rbac-producer', '/users/add', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067501161381888', 'updateUser', '更新用户', 'opencloud-rbac-producer', '/users/update', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
-INSERT INTO `platform_resource_api` VALUES ('522067501194936320', 'users', '用户列表', 'opencloud-rbac-producer', '/users', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067501119438848', 'addUser', '添加租户', 'opencloud-rbac-producer', '/users/add', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067501161381888', 'updateUser', '更新租户', 'opencloud-rbac-producer', '/users/update', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
+INSERT INTO `platform_resource_api` VALUES ('522067501194936320', 'users', '租户列表', 'opencloud-rbac-producer', '/users', '0', '', '1', '2018-12-11 15:09:51', '2018-12-11 18:23:19');
 INSERT INTO `platform_resource_api` VALUES ('522068701403414528', 'clients', 'clients', 'opencloud-oauth-producer', '/clients', '0', '', '1', '2018-12-11 15:14:37', '2018-12-11 17:52:22');
 INSERT INTO `platform_resource_api` VALUES ('522068701457940480', 'addClient', 'addClient', 'opencloud-oauth-producer', '/clients/add', '0', '', '1', '2018-12-11 15:14:37', '2018-12-11 17:52:22');
 INSERT INTO `platform_resource_api` VALUES ('522068701508272128', 'getClient', 'getClient', 'opencloud-oauth-producer', '/clients/{clientId}', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
 INSERT INTO `platform_resource_api` VALUES ('522068701550215168', 'updateClient', 'updateClient', 'opencloud-oauth-producer', '/clients/update', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
 INSERT INTO `platform_resource_api` VALUES ('522068701600546816', 'resetSecret', 'resetSecret', 'opencloud-oauth-producer', '/clients/reset', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
 INSERT INTO `platform_resource_api` VALUES ('522068701709598720', 'removeClinet', 'removeClinet', 'opencloud-oauth-producer', '/clients/remove', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
-INSERT INTO `platform_resource_api` VALUES ('522068701755736064', 'getUser', '获取当前登录用户', 'opencloud-oauth-producer', '/me', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
+INSERT INTO `platform_resource_api` VALUES ('522068701755736064', 'getUser', '获取当前登录租户', 'opencloud-oauth-producer', '/me', '0', '', '1', '2018-12-11 15:14:38', '2018-12-11 17:52:22');
 
 -- ----------------------------
 -- Table structure for platform_resource_menu
@@ -218,7 +218,7 @@ CREATE TABLE `platform_resource_permission` (
   `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
   `identity_id` bigint(20) NOT NULL COMMENT '授权身份ID',
   `identity_code` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '授权身份编码',
-  `identity_prefix` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '授权身份前缀:用户(USER_) 、角色(ROLE_)',
+  `identity_prefix` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '授权身份前缀:租户(USER_) 、角色(ROLE_)',
   `service_id` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资源授权表';
@@ -261,11 +261,11 @@ INSERT INTO `platform_role` VALUES ('4', 'companyDeveloper', '企业开发者', 
 -- ----------------------------
 DROP TABLE IF EXISTS `platform_role_user`;
 CREATE TABLE `platform_role_user` (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `user_id` bigint(20) NOT NULL COMMENT '租户ID',
   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
   KEY `fk_user` (`user_id`),
   KEY `fk_role` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色和用户关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色和租户关系表';
 
 -- ----------------------------
 -- Records of platform_role_user
@@ -280,12 +280,12 @@ INSERT INTO `platform_role_user` VALUES ('521677655146233856', '2');
 DROP TABLE IF EXISTS `platform_user_account`;
 CREATE TABLE `platform_user_account` (
   `account_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户Id',
-  `account` varchar(255) DEFAULT NULL COMMENT '标识：手机号、邮箱、 用户名、或第三方应用的唯一标识',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '租户Id',
+  `account` varchar(255) DEFAULT NULL COMMENT '标识：手机号、邮箱、 租户名、或第三方应用的唯一标识',
   `password` varchar(255) DEFAULT NULL COMMENT '密码凭证：站内的保存密码、站外的不保存或保存token）',
   `account_type` varchar(255) DEFAULT NULL COMMENT '登录类型:password-密码、mobile-手机号、email-邮箱、weixin-微信、weibo-微博、qq-等等',
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账号-用于登陆认证';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='租户账号-用于登陆认证';
 
 -- ----------------------------
 -- Records of platform_user_account
@@ -356,13 +356,13 @@ INSERT INTO `platform_user_account_logs` VALUES ('522001658952024064', '2018-12-
 -- ----------------------------
 DROP TABLE IF EXISTS `platform_user_profile`;
 CREATE TABLE `platform_user_profile` (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `user_id` bigint(20) NOT NULL COMMENT '租户ID',
   `user_name` varchar(255) DEFAULT NULL COMMENT '登陆账号',
   `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
   `profile_picture` varchar(255) DEFAULT NULL COMMENT '头像',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
-  `user_type` int(11) DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+  `user_type` int(11) DEFAULT '0' COMMENT '租户类型:0-内部租户 1-服务提供商 2-自研开发者',
   `company_id` bigint(20) DEFAULT NULL COMMENT '企业ID',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `create_time` datetime NOT NULL COMMENT '创建时间',
@@ -371,7 +371,7 @@ CREATE TABLE `platform_user_profile` (
   `register_time` datetime DEFAULT NULL COMMENT '注册时间',
   `state` int(11) DEFAULT '1' COMMENT '状态:0-禁用 1-启用 2-锁定',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录用户信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录租户信息';
 
 -- ----------------------------
 -- Records of platform_user_profile

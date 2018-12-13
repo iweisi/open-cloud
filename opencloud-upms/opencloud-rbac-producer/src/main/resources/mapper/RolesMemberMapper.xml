@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.lyd.rbac.producer.mapper.RolesMemberMapper">
+    <resultMap id="BaseResultMap" type="com.github.lyd.rbac.client.entity.RoleMember">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="tenant_id" property="tenantId" jdbcType="BIGINT"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="findTenantRoles" resultMap="com.github.lyd.rbac.producer.mapper.RolesMapper.BaseResultMap">
+        SELECT
+        platform_roles_member.tenant_id,
+        platform_roles.role_id,
+        platform_roles.role_code,
+        platform_roles.role_name,
+        platform_roles.description,
+        platform_roles.enabled,
+        platform_roles.create_time,
+        platform_roles.update_time
+        FROM
+        platform_roles_member
+        LEFT JOIN platform_roles ON platform_roles_member.role_id = platform_roles.role_id
+        WHERE tenant_id = #{tenantId}  and enabled = 1
+    </select>
+</mapper>

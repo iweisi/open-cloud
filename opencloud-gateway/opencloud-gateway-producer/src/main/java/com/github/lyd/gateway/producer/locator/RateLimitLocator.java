@@ -66,10 +66,10 @@ public class RateLimitLocator {
 
     /**
      * 加载数据库限流配置
-     * 1. 认证用户（Authenticated User）
-     * 使用已认证的用户名（username）或'anonymous'
+     * 1. 认证租户（Authenticated User）
+     * 使用已认证的租户名（username）或'anonymous'
      * 2. 原始请求（Request Origin）
-     * 使用用户的原始请求
+     * 使用租户的原始请求
      * 3. URL
      * 使用上游请求的地址
      * 4. 针对每个服务的全局配置
@@ -156,7 +156,7 @@ public class RateLimitLocator {
          * 限流方式
          * url    访问路径
          * origin 域名IP
-         * user 用户
+         * user 租户
          */
         private String type;
 

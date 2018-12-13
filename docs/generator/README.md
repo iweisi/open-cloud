@@ -438,7 +438,7 @@ fileName - ${tableClass.shortClassName}Test.txt
     列名：username
     列类型：VARCHAR
     字段名：username
-    注释：用户名
+    注释：租户名
     类型包名：java.lang
     类型短名：String
     类型全名：java.lang.String
@@ -474,7 +474,7 @@ fileName - ${tableClass.shortClassName}Test.txt
     列名：usertype
     列类型：VARCHAR
     字段名：usertype
-    注释：用户类型
+    注释：租户类型
     类型包名：java.lang
     类型短名：String
     类型全名：java.lang.String

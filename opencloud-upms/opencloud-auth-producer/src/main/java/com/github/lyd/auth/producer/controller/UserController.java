@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2018/11/9 15:43
  * @description:
  */
-@Api(tags = "认证用户")
+@Api(tags = "认证租户")
 @RestController
 public class UserController {
     /**
-     * 获取当前登录用户
+     * 获取当前登录租户
      * @return
      */
-    @ApiOperation(value = "获取当前登录用户")
+    @ApiOperation(value = "获取当前登录租户")
     @GetMapping("/me")
     public ResultBody getUser() {
         return ResultBody.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());

@@ -15,7 +15,7 @@ public @interface ApiRateLimit {
      * 限流规则内容
      * type = RateLimitType.URL ,不需要填写自动获取controller方法上的路径
      * type = RateLimitType.IP  ,填写ip地址
-     * type = RateLimitType.USER ,填写用户信息
+     * type = RateLimitType.USER ,填写租户信息
      *
      * @return
      */

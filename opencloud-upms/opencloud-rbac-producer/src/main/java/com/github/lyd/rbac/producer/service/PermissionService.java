@@ -12,21 +12,21 @@ import java.util.List;
 public interface PermissionService {
 
     /**
-     * 获取用户已授权资源(包含个人特殊权限和所拥有角色的所以权限)
+     * 获取租户已授权资源(包含个人特殊权限和所拥有角色的所以权限)
      *
-     * @param userId       用户ID
+     * @param tenantId       租户ID
      * @param resourceType 资源类型
      * @return
      */
-    List<ResourcePermission> getUserPermission(Long userId, String resourceType);
+    List<ResourcePermission> getTenantPermission(Long tenantId, String resourceType);
 
     /**
-     * 获取用户私有授权
+     * 获取租户私有授权
      *
-     * @param userId
+     * @param tenantId
      * @return
      */
-    List<ResourcePermission> getUserSelfPermission(Long userId);
+    List<ResourcePermission> getTenantPrivatePermission(Long tenantId);
 
     /**
      * 获取授权列表
@@ -39,7 +39,7 @@ public interface PermissionService {
      * 添加授权
      *
      * @param identityId      所有者ID
-     * @param identityPrefix    所有者类型:user-用户 role-角色
+     * @param identityPrefix    所有者类型:user-租户 role-角色
      * @param resourceType 资源类型:
      * @param resourceIds
      * @return

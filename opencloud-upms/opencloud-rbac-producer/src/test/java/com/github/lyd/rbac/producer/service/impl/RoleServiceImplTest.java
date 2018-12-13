@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.lyd.common.test.BaseTest;
 import com.github.lyd.common.utils.DateUtils;
 import com.github.lyd.common.utils.SignatureUtils;
-import com.github.lyd.rbac.client.entity.Role;
-import com.github.lyd.rbac.producer.service.RoleService;
+import com.github.lyd.rbac.client.entity.Roles;
+import com.github.lyd.rbac.producer.service.RolesService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,11 +18,11 @@ import java.util.HashMap;
  */
 public class RoleServiceImplTest extends BaseTest {
     @Autowired
-    private RoleService roleService;
+    private RolesService roleService;
 
     @Test
     public void getRole() throws Exception {
-        Role role = roleService.getRole(1l);
+        Roles role = roleService.getRole(1l);
         System.out.println(JSONObject.toJSONString(role));
     }
 

@@ -6,7 +6,7 @@ import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.gateway.producer.filter.*;
 import com.github.lyd.gateway.producer.locator.PermissionLocator;
-import com.github.lyd.gateway.producer.service.feign.AppInfoRemoteServiceClient;
+import com.github.lyd.gateway.producer.service.feign.AppDetailsRemoteServiceClient;
 import com.github.lyd.rbac.client.constans.RbacConstans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -44,7 +44,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private GatewayProperties gatewayProperties;
     @Autowired
-    private AppInfoRemoteServiceClient appInfoRemoteServiceClient;
+    private AppDetailsRemoteServiceClient appInfoRemoteServiceClient;
 
 
     @Override

@@ -16,7 +16,7 @@ import java.util.Collections;
 public class OpenAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
     private String accountType;
-    private Long userId;
+    private Long tenantId;
     private String username;
     private String password;
     private String nickName;
@@ -30,9 +30,9 @@ public class OpenAuth implements UserDetails {
     public OpenAuth() {
     }
 
-    public OpenAuth(String accountType, Long userId, String username, String nickName, String password, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenAuth(String accountType, Long tenantId, String username, String nickName, String password, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
         this.accountType = accountType;
-        this.userId = userId;
+        this.tenantId = tenantId;
         this.username = username;
         this.nickName = nickName;
         this.password = password;
@@ -92,12 +92,12 @@ public class OpenAuth implements UserDetails {
         this.accountType = accountType;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getTenantId() {
+        return tenantId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
     }
 
     public void setUsername(String username) {

@@ -9,8 +9,8 @@ import com.github.lyd.common.security.OpenAuth;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
-import com.github.lyd.gateway.producer.service.feign.AppInfoRemoteServiceClient;
-import com.github.lyd.rbac.client.dto.AppInfoDto;
+import com.github.lyd.gateway.producer.service.feign.AppDetailsRemoteServiceClient;
+import com.github.lyd.rbac.client.dto.AppDetailsDto;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,10 +31,10 @@ import java.util.Map;
  */
 public class SignatureFilter implements Filter {
     private SignatureDeniedHandler signatureDeniedHandler;
-    private AppInfoRemoteServiceClient appInfoRemoteServiceClient;
+    private AppDetailsRemoteServiceClient appInfoRemoteServiceClient;
     private GatewayProperties gatewayProperties;
 
-    public SignatureFilter(AppInfoRemoteServiceClient appInfoRemoteServiceClient, GatewayProperties gatewayProperties) {
+    public SignatureFilter(AppDetailsRemoteServiceClient appInfoRemoteServiceClient, GatewayProperties gatewayProperties) {
         this.appInfoRemoteServiceClient = appInfoRemoteServiceClient;
         this.gatewayProperties = gatewayProperties;
         this.signatureDeniedHandler = new OpenSignatureDeniedHandler();
@@ -60,8 +60,8 @@ public class SignatureFilter implements Filter {
                     // 验证请求参数
                     SignatureUtils.validateParams(params);
                     // 获取客户端信息
-                    ResultBody<AppInfoDto> result = appInfoRemoteServiceClient.getApp(appId);
-                    AppInfoDto appInfoDto = result.getData();
+                    ResultBody<AppDetailsDto> result = appInfoRemoteServiceClient.getApp(appId);
+                    AppDetailsDto appInfoDto = result.getData();
                     if (appInfoDto == null) {
                         throw new OpenSignatureException("clientId无效");
                     }
@@ -93,11 +93,11 @@ public class SignatureFilter implements Filter {
 
     }
 
-    public AppInfoRemoteServiceClient getAppInfoClientApi() {
+    public AppDetailsRemoteServiceClient getAppInfoClientApi() {
         return appInfoRemoteServiceClient;
     }
 
-    public void setAppInfoClientApi(AppInfoRemoteServiceClient appInfoClientApi) {
+    public void setAppInfoClientApi(AppDetailsRemoteServiceClient appInfoClientApi) {
         this.appInfoRemoteServiceClient = appInfoClientApi;
     }
 

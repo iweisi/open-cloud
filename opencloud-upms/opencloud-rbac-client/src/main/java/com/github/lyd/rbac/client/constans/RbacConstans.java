@@ -10,13 +10,13 @@ public class RbacConstans {
     public final static String SUPER_AUTHORITY = "ROLE_Administrator";
 
     /**
-     * 用户类型:0-平台、1-服务提供商、2-自研开发者
+     * 租户类型:0-平台、1-服务提供商、2-自研开发者
      */
     public final static int USER_TYPE_PLATFORM = 0;
     public final static int USER_TYPE_ISP = 1;
     public final static int USER_TYPE_DEVELOPER = 2;
     /**
-     * 用户状态
+     * 租户状态
      * 0:禁用、1:正常、2:锁定
      */
     public final static int USER_STATE_DISABLE = 0;
@@ -24,8 +24,8 @@ public class RbacConstans {
     public final static int USER_STATE_LOCKED = 2;
 
     /**
-     * 用户账号类型:
-     * username:用户名、email：邮箱、mobile：手机号、qq：QQ号、weixin：微信号、weibo：微博
+     * 租户账号类型:
+     * username:租户名、email：邮箱、mobile：手机号、qq：QQ号、weixin：微信号、weibo：微博
      */
     public final static String USER_ACCOUNT_TYPE_USERNAME = "username";
     public final static String USER_ACCOUNT_TYPE_EMAIL = "email";
@@ -44,7 +44,7 @@ public class RbacConstans {
 
     /**
      * 权限所有者
-     * user:用户权限、role:角色权限
+     * user:租户权限、role:角色权限
      */
     public final static String PERMISSION_SEPARATOR = "_";
     public final static String PERMISSION_IDENTITY_PREFIX_USER = "USER_";

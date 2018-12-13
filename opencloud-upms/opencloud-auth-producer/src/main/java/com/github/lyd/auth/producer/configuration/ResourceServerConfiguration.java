@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.auth.producer.service.feign.UserAccountRemoteServiceClient;
+import com.github.lyd.auth.producer.service.feign.TenantAccountRemoteServiceClient;
 import com.github.lyd.auth.producer.service.impl.UserLoginServiceImpl;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
@@ -46,7 +46,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private ResourceServerProperties properties;
     @Autowired
-    private UserAccountRemoteServiceClient userAccountRemoteServiceClient;
+    private TenantAccountRemoteServiceClient tenantAccountRemoteServiceClient;
     @Autowired
     private DataSource dataSource;
     @Autowired
@@ -129,7 +129,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 OpenAuth userLoginDetails = (OpenAuth) authentication.getPrincipal();
                 WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) authentication.getDetails();
                 //添加登录日志
-                userAccountRemoteServiceClient.addLoginLog(userLoginDetails.getUserId(), webAuthenticationDetails.getRemoteAddress(), request.getHeader("User-Agent"));
+                tenantAccountRemoteServiceClient.addLoginLog(userLoginDetails.getTenantId(), webAuthenticationDetails.getRemoteAddress(), request.getHeader("User-Agent"));
                 log.debug("添加登录日志:{} {}", userLoginDetails.getUsername(), webAuthenticationDetails.getRemoteAddress());
             } catch (Exception e) {
                 log.error("invoke addLoginLog api error:{}",e.getMessage());

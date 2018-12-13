@@ -9,7 +9,7 @@ import java.util.List;
 public interface PermissionRemoteService {
 
     /**
-     * 获取用户私有权限
+     * 获取租户私有权限
      *
      * @return 应用信息
      */
