@@ -62,7 +62,7 @@ public class IndexController {
             @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "form"),
             @ApiImplicitParam(name = "password", required = true, value = "登录密码", paramType = "form")
     })
-    @PostMapping("/oauth/login")
+    @PostMapping("/auth/login")
     @ResponseBody
     public Object login(@RequestParam String username, @RequestParam String password) {
         MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
@@ -74,7 +74,7 @@ public class IndexController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity(postParameters, headers);
-        Map result = openRestTemplate.postForObject(gatewayProperties.getAuthServerAddr().concat("/oauth/token"), request, Map.class);
+        Map result = openRestTemplate.postForObject(gatewayProperties.getAccessTokenUri(), request, Map.class);
         if (result.containsKey("access_token")) {
             return ResultBody.success(result);
         } else {

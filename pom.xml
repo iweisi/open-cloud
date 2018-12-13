@@ -33,9 +33,9 @@
                 <!--服务发现地址-->
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <!--认证授权地址-->
-                <auth.server-addr>http://192.168.60.104:8888/uaa</auth.server-addr>
+                <auth.server-addr>http://localhost:8211</auth.server-addr>
                 <!--网关服务地址-->
-                <gateway.server-addr>http://192.168.60.104:8888</gateway.server-addr>
+                <gateway.server-addr>http://localhost:8888</gateway.server-addr>
             </properties>
         </profile>
         <!-- 测试 -->
@@ -51,9 +51,9 @@
                 <!--服务发现地址-->
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <!--认证授权地址-->
-                <auth.server-addr>http://192.168.60.104:8888/uaa</auth.server-addr>
+                <auth.server-addr>http://localhost:8211</auth.server-addr>
                 <!--网关服务地址-->
-                <gateway.server-addr>http://192.168.60.104:8888</gateway.server-addr>
+                <gateway.server-addr>http://localhost:8888</gateway.server-addr>
             </properties>
         </profile>
         <!-- 生产 -->
@@ -69,9 +69,9 @@
                 <!--服务发现地址-->
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <!--认证授权地址-->
-                <auth.server-addr>http://192.168.60.104:8888/uaa</auth.server-addr>
+                <auth.server-addr>http://localhost:8211</auth.server-addr>
                 <!--网关服务地址-->
-                <gateway.server-addr>http://192.168.60.104:8888</gateway.server-addr>
+                <gateway.server-addr>http://localhost:8888</gateway.server-addr>
             </properties>
         </profile>
     </profiles>

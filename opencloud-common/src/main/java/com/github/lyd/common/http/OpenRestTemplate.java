@@ -38,7 +38,7 @@ public class OpenRestTemplate extends RestTemplate {
         ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
         resource.setClientId(gatewayProperties.getClientId());
         resource.setClientSecret(gatewayProperties.getClientSecret());
-        resource.setAccessTokenUri(gatewayProperties.getAuthServerAddr() + "/oauth/token");
+        resource.setAccessTokenUri(gatewayProperties.getAccessTokenUri());
         resource.setAuthenticationScheme(AuthenticationScheme.form);
         OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(resource);
         return restTemplate;
@@ -55,7 +55,7 @@ public class OpenRestTemplate extends RestTemplate {
         resource.setPassword(password);
         resource.setClientId(gatewayProperties.getClientId());
         resource.setClientSecret(gatewayProperties.getClientSecret());
-        resource.setAccessTokenUri(gatewayProperties.getAuthServerAddr().concat("/oauth/token"));
+        resource.setAccessTokenUri(gatewayProperties.getAccessTokenUri());
         resource.setAuthenticationScheme(AuthenticationScheme.form);
         resource.setGrantType("password");
         OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(resource);

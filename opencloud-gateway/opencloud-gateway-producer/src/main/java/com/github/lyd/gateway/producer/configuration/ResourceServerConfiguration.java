@@ -58,12 +58,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 //放行自定义Oauth2登录
-                .antMatchers("/platform/login").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 //只有超级管理员角色可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(RbacConstans.SUPER_AUTHORITY)
                 .anyRequest().authenticated()
                 .and().logout()
-                .logoutSuccessUrl(gatewayProperties.getAuthServerAddr() + "/logout")
+                .logoutSuccessUrl(gatewayProperties.getServerAddr() + "/auth/logout")
                 .and()
                 //认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。
                 .exceptionHandling()

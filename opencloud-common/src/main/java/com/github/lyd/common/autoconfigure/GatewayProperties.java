@@ -24,22 +24,34 @@ public class GatewayProperties {
      */
     private String serverAddr;
     /**
-     * 认证授权地址
-     */
-    private String authServerAddr;
-    /**
      * 认证范围
      */
     private String scope;
     /**
-     * 是否开启数字签名校验
+     * 是否开启数字签名校验,只对网关服务有效
      */
     private Boolean enabledValidateSign = true;
-
     /**
-     * 是否开启资源访问鉴权
+     * 是否开启资源访问鉴权,只对网关服务有效
      */
     private Boolean enabledValidateAccess = true;
+    /**
+     * 获取token
+     */
+    private String accessTokenUri;
+    /**
+     * 认证地址
+     */
+    private String userAuthorizationUri;
+    /**
+     * 获取token地址
+     */
+    private String tokenInfoUri;
+    /**
+     * 获取用户信息地址
+     */
+    private String userInfoUri;
+
 
     public String getClientId() {
         return clientId;
@@ -55,14 +67,6 @@ public class GatewayProperties {
 
     public void setClientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
-    }
-
-    public String getAuthServerAddr() {
-        return authServerAddr;
-    }
-
-    public void setAuthServerAddr(String authServerAddr) {
-        this.authServerAddr = authServerAddr;
     }
 
     public String getServerAddr() {
@@ -97,15 +101,50 @@ public class GatewayProperties {
         this.enabledValidateAccess = enabledValidateAccess;
     }
 
+    public String getAccessTokenUri() {
+        return accessTokenUri;
+    }
+
+    public void setAccessTokenUri(String accessTokenUri) {
+        this.accessTokenUri = accessTokenUri;
+    }
+
+    public String getUserAuthorizationUri() {
+        return userAuthorizationUri;
+    }
+
+    public void setUserAuthorizationUri(String userAuthorizationUri) {
+        this.userAuthorizationUri = userAuthorizationUri;
+    }
+
+    public String getTokenInfoUri() {
+        return tokenInfoUri;
+    }
+
+    public void setTokenInfoUri(String tokenInfoUri) {
+        this.tokenInfoUri = tokenInfoUri;
+    }
+
+    public String getUserInfoUri() {
+        return userInfoUri;
+    }
+
+    public void setUserInfoUri(String userInfoUri) {
+        this.userInfoUri = userInfoUri;
+    }
+
     @Override
     public String toString() {
         return "GatewayProperties{" +
                 "clientId='" + clientId + '\'' +
                 ", clientSecret='" + clientSecret + '\'' +
                 ", serverAddr='" + serverAddr + '\'' +
-                ", authServerAddr='" + authServerAddr + '\'' +
                 ", scope='" + scope + '\'' +
                 ", enabledValidateSign=" + enabledValidateSign +
+                ", accessTokenUri='" + accessTokenUri + '\'' +
+                ", userAuthorizationUri='" + userAuthorizationUri + '\'' +
+                ", tokenInfoUri='" + tokenInfoUri + '\'' +
+                ", userInfoUri='" + userInfoUri + '\'' +
                 ", enabledValidateAccess=" + enabledValidateAccess +
                 '}';
     }

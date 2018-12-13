@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 自定义swagger配置
+ *
  * @author LYD
  * @date 2018/7/29
  */
@@ -24,8 +25,29 @@ public class SwaggerProperties {
      * 文档描述
      */
     private String description;
+    /**
+     * 客户端ID
+     */
+    private String clientId;
+    /**
+     * 客户端密钥
+     */
+    private String clientSecret;
+    /**
+     * 客户端授权范围
+     */
+    private String scope;
+    /**
+     * 获取token
+     */
+    private String accessTokenUri;
+    /**
+     * 认证地址
+     */
+    private String userAuthorizationUri;
 
     private List<String> ignores = Lists.newArrayList();
+
     public String getTitle() {
         return title;
     }
@@ -58,12 +80,57 @@ public class SwaggerProperties {
         this.ignores = ignores;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
+    public String getAccessTokenUri() {
+        return accessTokenUri;
+    }
+
+    public void setAccessTokenUri(String accessTokenUri) {
+        this.accessTokenUri = accessTokenUri;
+    }
+
+    public String getUserAuthorizationUri() {
+        return userAuthorizationUri;
+    }
+
+    public void setUserAuthorizationUri(String userAuthorizationUri) {
+        this.userAuthorizationUri = userAuthorizationUri;
+    }
+
     @Override
     public String toString() {
         return "SwaggerProperties{" +
                 "enabled=" + enabled +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", clientSecret='" + clientSecret + '\'' +
+                ", scope='" + scope + '\'' +
+                ", accessTokenUri='" + accessTokenUri + '\'' +
+                ", userAuthorizationUri='" + userAuthorizationUri + '\'' +
                 ", ignores=" + ignores +
                 '}';
     }

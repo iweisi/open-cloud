@@ -20,8 +20,8 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "获取当前登录租户")
-    @GetMapping("/me")
-    public ResultBody getUser() {
+    @GetMapping("/principal")
+    public ResultBody principal() {
         return ResultBody.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }

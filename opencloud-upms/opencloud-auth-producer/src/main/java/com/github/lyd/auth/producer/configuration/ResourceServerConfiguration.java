@@ -101,7 +101,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .accessDeniedHandler(new OpenAccessDeniedHandler())
                 .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
                 .and()
-                .csrf().disable();
+                .csrf().disable().httpBasic().disable();
 
     }
 

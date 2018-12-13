@@ -35,12 +35,10 @@ import java.util.*;
 @Import({Swagger2DocumentationConfiguration.class})
 public class SwaggerAutoConfiguration {
     private SwaggerProperties swaggerProperties;
-    private GatewayProperties gatewayProperties;
     private static  final String SCOPE_PREFIX="scopes.";
     private static Locale locale = LocaleContextHolder.getLocale();
 
     public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties) {
-        this.gatewayProperties = gatewayProperties;
         this.swaggerProperties = swaggerProperties;
         log.debug("文档配置:{}", swaggerProperties);
         log.debug("文档安全配置:{}", gatewayProperties);
@@ -129,8 +127,8 @@ public class SwaggerAutoConfiguration {
         List<String> scopes = Lists.newArrayList();
         List list = Lists.newArrayList();
         MessageSource messageSource = SpringContextHolder.getBean(MessageSource.class);
-        if (gatewayProperties.getScope() != null) {
-            scopes.addAll(Arrays.asList(gatewayProperties.getScope().split(",")));
+        if (swaggerProperties.getScope() != null) {
+            scopes.addAll(Arrays.asList(swaggerProperties.getScope().split(",")));
         }
         scopes.forEach(s -> {
             list.add(new AuthorizationScope(s, messageSource.getMessage(SCOPE_PREFIX+s,null,s,locale)));
@@ -140,9 +138,9 @@ public class SwaggerAutoConfiguration {
 
     @Bean
     public SecurityConfiguration security() {
-        return new SecurityConfiguration(gatewayProperties.getClientId(),
-                gatewayProperties.getClientSecret(),
-                "realm", gatewayProperties.getClientId(),
+        return new SecurityConfiguration(swaggerProperties.getClientId(),
+                swaggerProperties.getClientSecret(),
+                "realm", swaggerProperties.getClientId(),
                 "", ApiKeyVehicle.HEADER, "", ",");
     }
 
@@ -150,9 +148,9 @@ public class SwaggerAutoConfiguration {
     List<GrantType> grantTypes() {
         List<GrantType> grantTypes = new ArrayList<>();
         TokenRequestEndpoint tokenRequestEndpoint = new TokenRequestEndpoint(
-                gatewayProperties.getAuthServerAddr() + "/oauth/authorize",
-                gatewayProperties.getClientId(), gatewayProperties.getClientSecret());
-        TokenEndpoint tokenEndpoint = new TokenEndpoint(gatewayProperties.getAuthServerAddr() + "/oauth/token", "access_token");
+                swaggerProperties.getUserAuthorizationUri(),
+                swaggerProperties.getClientId(), swaggerProperties.getClientSecret());
+        TokenEndpoint tokenEndpoint = new TokenEndpoint(swaggerProperties.getAccessTokenUri(), "access_token");
         grantTypes.add(new AuthorizationCodeGrant(tokenRequestEndpoint, tokenEndpoint));
         return grantTypes;
     }
