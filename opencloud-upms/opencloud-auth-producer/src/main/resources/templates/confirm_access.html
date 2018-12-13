@@ -3,80 +3,37 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title>开放平台-授权</title>
-    <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/static/layui/css/layui.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/admin.css" th:href="@{/static/css/admin.css}"/>
-    <style>
-        .layui-header  {
-            height: 48px;
-            border-bottom: 1px solid #404553;
-        }
-        .logo {
-            display: inline-block;
-            font-size: 16px;
-            color: #fff;
-        }
-        .navlist {
-            float: right;
-            display: inline-block;
-        }
-        .layui-breadcrumb>* {
-            font-size: 12px;
-        }
-        .layui-breadcrumb a {
-            color: #fff !important;
-        }
-
-        .layui-breadcrumb a:hover {
-            color: #999!important;
-        }
-
-        .api-list{
-            padding-top: 30px;
-            width: 300px;
-            color: #555;
-            margin:0px auto;
-        }
-
-        .api-list li{
-            height: 31px;
-            border: 1px;
-            color: #666;
-            border-bottom: 1px dotted #e2e2e2!important;
-            line-height: 31px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/static/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" charset="utf-8" src="../static/bootstrap/js/bootstrap.min.js" th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
 <body>
-<div class="layui-header   layui-bg-blue">
-    <div class="layui-main" style="width: 680px;">
-        <div style="line-height: 48px">
-        <a class="logo" href="/">
-            开放平台授权登陆
-        </a>
-        <span class="layui-breadcrumb navlist" lay-separator="|">
-          <a th:href="@{/login}">登陆</a>
-          <a href="">授权管理</a>
-          <a href="">申请接入</a>
-        </span>
+    <nav class="navbar navbar-default container-fluid">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">开放平台授权登陆</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+                <p class="navbar-text navbar-right">
+                    <a href="#" th:href="@{/login}">登陆</a>
+                    <a href="#">授权管理</a>
+                    <a href="#">申请接入</a>
+                </p>
+            </div>
         </div>
+    </nav>
+    <div style="padding-top: 30px;width: 300px; color: #555; margin:0px auto;">
         <form id='confirmationForm' name='confirmationForm' th:action="@{/oauth/authorize}" method='post'>
-        <ul class="api-list">
-            <li><a href="" th:text="${app.appName}"></a> 将获得以下权限：</li>
-
-                <input name='user_oauth_approval' value='true' type='hidden' />
-
-            <li> <label ><input type="checkbox" checked="checked" onclick="return false" th:name="${s.key}" value="true"  th:each="s : ${scopes}" /> <i th:text="${s.key}"  th:each="s : ${scopes}"></i> </label></li>
-           <p style="margin:10px 0 10px 0"><span>授权后表明你已同意</span> <button style="float: right" class="layui-btn layui-btn-normal" type="submit" id="write-email-btn">授权</button></p>
+        <input name='user_oauth_approval' value='true' type='hidden' />
+        <p><a href="#" th:text="${app.appName}">XX</a> 将获得以下权限：</p>
+        <ul class="list-group" >
+            <li class="list-group-item"> <span ><input type="checkbox" class="disabled" checked="checked" onclick="return false" th:name="${s.key}" value="true"  th:each="s : ${scopes}" /> <label th:text="#{${s.key}}"  th:each="s : ${scopes}"></label> </span></li>
         </ul>
+            <p class="help-block">授权后表明你已同意 QQ登录服务协议</p>
+           <button  class="btn btn-success pull-right" type="submit" id="write-email-btn">授权</button></p>
         </form>
     </div>
-</div>
-
-<script type="text/javascript" charset="utf-8" src="../static/layui/layui.all.js" th:src="@{/static/layui/layui.all.js}"></script>
 </body>
-
 </html>

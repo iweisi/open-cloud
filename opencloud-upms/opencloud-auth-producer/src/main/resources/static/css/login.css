@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background: url("../images/login/login_line.jpg") left center repeat-x;
+    background: #e7e7e7;
     height: 100%;
 }
 
@@ -13,17 +13,6 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #ececec inset;
 }
 
-/*按钮移上去颜色*/
-.layui-btn-primary:hover {
-    border-color: #1E9FFF;
-    color: #333;
-}
-
-/*页面背景色*/
-.m-login-bg {
-    background: url("../images/login/login_bg.png") left center repeat-x;
-    height: 100%;
-}
 
 .m-login {
     width: 390px;
@@ -53,10 +42,21 @@ input:-webkit-autofill {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    padding: 16px;
+    padding: 25px;
 }
 
-.m-login-warp .layui-input {
+.m-login-warp .card-header{
+    position: relative;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 15px;
+    border-bottom: 1px solid #f6f6f6;
+    color: #333;
+    border-radius: 2px 2px 0 0;
+    font-size: 14px;
+}
+
+.m-login-warp .form-control {
     height: 40px;
     line-height: 40px \9;
     margin-bottom: 5px;
@@ -75,11 +75,6 @@ input:-webkit-autofill {
     width: 100%;
 }
 
-.m-login-warp .verifyImg {
-    width: 130px;
-    height: 42px;
-}
-
 @media screen and (max-width: 450px) {
     .m-login {
         width: 300px;
@@ -88,13 +83,6 @@ input:-webkit-autofill {
         top: 50%;
         margin-left: -150px;
         margin-top: -240px;
-    }
-
-    .layui-form-item .layui-inline {
-        display: block;
-        margin-right: 0;
-        margin-bottom: 20px;
-        clear: both;
     }
 
     .m-login-warp .m-login-btn .layui-inline {

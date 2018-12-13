@@ -35,7 +35,7 @@ import java.util.*;
 @Import({Swagger2DocumentationConfiguration.class})
 public class SwaggerAutoConfiguration {
     private SwaggerProperties swaggerProperties;
-    private static  final String SCOPE_PREFIX="scopes.";
+    private static  final String SCOPE_PREFIX="scope.";
     private static Locale locale = LocaleContextHolder.getLocale();
 
     public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties) {
