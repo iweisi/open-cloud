@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author liuyadu
@@ -17,10 +18,12 @@ public class OpenAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
     private String accountType;
     private Long tenantId;
+    private String avatar;
     private String username;
     private String password;
     private String nickName;
-    private Collection<String> roles;
+    private Collection<Map> roles;
+    private Collection<String> authorities;
     private boolean accountNonLocked;
     private boolean accountNonExpired;
     private boolean enabled;
@@ -30,13 +33,15 @@ public class OpenAuth implements UserDetails {
     public OpenAuth() {
     }
 
-    public OpenAuth(String accountType, Long tenantId, String username, String nickName, String password, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenAuth(String accountType, Long tenantId, String avatar,String username, String nickName, String password,Collection<Map> roles , Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
         this.accountType = accountType;
         this.tenantId = tenantId;
+        this.avatar = avatar;
         this.username = username;
         this.nickName = nickName;
+        this.roles =  roles;
         this.password = password;
-        this.roles = authorities;
+        this.authorities = authorities;
         this.accountNonLocked = accountNonLocked;
         this.accountNonExpired = accountNonExpired;
         this.enabled = enabled;
@@ -45,11 +50,11 @@ public class OpenAuth implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (roles == null) {
+        if (authorities == null) {
             return Collections.EMPTY_LIST;
         }
         return AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
-                .collectionToCommaDelimitedString(roles));
+                .collectionToDelimitedString(authorities,",","ROLE_",""));
     }
 
     @JsonIgnore
@@ -108,11 +113,11 @@ public class OpenAuth implements UserDetails {
         this.password = password;
     }
 
-    public Collection<String> getRoles() {
+    public Collection<Map> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<String> roles) {
+    public void setRoles(Collection<Map> roles) {
         this.roles = roles;
     }
 
@@ -146,5 +151,13 @@ public class OpenAuth implements UserDetails {
 
     public void setAuthAppId(String authAppId) {
         this.authAppId = authAppId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

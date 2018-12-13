@@ -8,7 +8,7 @@
         <id column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
-        <result column="profile_picture" jdbcType="VARCHAR" property="profilePicture"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="state" jdbcType="INTEGER" property="state"/>

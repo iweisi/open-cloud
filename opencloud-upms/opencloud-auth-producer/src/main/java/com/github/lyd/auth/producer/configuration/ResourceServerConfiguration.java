@@ -1,7 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
 import com.github.lyd.auth.producer.service.feign.TenantAccountRemoteServiceClient;
-import com.github.lyd.auth.producer.service.impl.UserLoginServiceImpl;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenAuth;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,13 +21,10 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -47,26 +42,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private ResourceServerProperties properties;
     @Autowired
     private TenantAccountRemoteServiceClient tenantAccountRemoteServiceClient;
-    @Autowired
-    private DataSource dataSource;
-    @Autowired
-    private PersistentTokenRepository persistentTokenRepository;
-    @Autowired
-    private UserLoginServiceImpl userDetailsService;
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        // org.springframework.security.config.annotation.web.configurers.RememberMeConfigurer.tokenRepository
-        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dataSource);
-        // 该对象里面有定义创建表的语句
-        // 可以设置让该类来创建表
-        // 但是该功能只用使用一次，如果数据库已经存在表则会报错
-        //jdbcTokenRepository.setCreateTableOnStartup(true);
-        return jdbcTokenRepository;
-    }
-
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenServices(OpenHelper.buildRemoteTokenServices(properties));
@@ -89,20 +64,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .addLogoutHandler(new CookieClearingLogoutHandler("token", "remember-me"))
                 .logoutSuccessHandler(new LogoutSuccessHandler())
                 .and()
-                // 从这里开始配置记住我的功能
-                .rememberMe()
-                .userDetailsService(userDetailsService)
-                .tokenRepository(persistentTokenRepository)
-                // 新增过期配置，单位秒，默认配置写的60秒
-                .tokenValiditySeconds(60 * 60 * 24)
-                .and()
                 //认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。
                 .exceptionHandling()
                 .accessDeniedHandler(new OpenAccessDeniedHandler())
                 .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
                 .and()
                 .csrf().disable().httpBasic().disable();
-
     }
 
 

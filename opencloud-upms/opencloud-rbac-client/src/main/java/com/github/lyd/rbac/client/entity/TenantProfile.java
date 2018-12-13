@@ -51,8 +51,7 @@ public class TenantProfile implements Serializable {
     /**
      * 头像
      */
-    @Column(name = "profile_picture")
-    private String profilePicture;
+    private String avatar;
 
     /**
      * 邮箱
@@ -140,22 +139,12 @@ public class TenantProfile implements Serializable {
         this.nickName = nickName;
     }
 
-    /**
-     * 获取头像
-     *
-     * @return profile_picture - 头像
-     */
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getAvatar() {
+        return avatar;
     }
 
-    /**
-     * 设置头像
-     *
-     * @param profilePicture 头像
-     */
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     /**
