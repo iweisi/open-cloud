@@ -160,14 +160,14 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 角色授权组员
+     * 成员分配角色
      *
      * @param tenantId
      * @param roles
      * @return
      */
     @Override
-    public boolean saveUserRole(Long tenantId, Long... roles) {
+    public boolean saveMemberRoles(Long tenantId, Long... roles) {
         if (tenantId == null || roles == null) {
             return false;
         }

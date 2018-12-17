@@ -76,7 +76,7 @@ public interface RolesService {
      * @param roles
      * @return
      */
-    boolean saveUserRole(Long tenantId, Long... roles);
+    boolean saveMemberRoles(Long tenantId, Long... roles);
 
     /**
      * 获取角色所有授权组员数量
