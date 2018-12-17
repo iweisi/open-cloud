@@ -82,6 +82,7 @@ public class PermissionServiceImpl implements PermissionService {
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("identityId", tenantId)
+                .andEqualTo("enabled",true)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
@@ -99,6 +100,7 @@ public class PermissionServiceImpl implements PermissionService {
                         .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
                         .andIn("identityId", roleIds)
+                        .andEqualTo("enabled",true)
                         .end().build();
                 List<ResourcePermission> rolePermissions = permissionMapper.selectByExample(example);
                 if (rolePermissions != null) {
@@ -124,6 +126,7 @@ public class PermissionServiceImpl implements PermissionService {
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("identityId", tenantId)
+                .andEqualTo("enabled",true)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
@@ -139,7 +142,11 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public List<ResourcePermission> getPermissionList() {
-        return permissionMapper.selectAll();
+        ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
+        Example example = builder.criteria()
+                .andEqualTo("enabled",true)
+                .end().build();
+        return permissionMapper.selectByExample(example);
     }
 
     /**
@@ -207,6 +214,7 @@ public class PermissionServiceImpl implements PermissionService {
                         .andEqualTo("resourceType", resourceType).end().build();
                 ResourcePermission updateObj = new ResourcePermission();
                 updateObj.setCode(permission.getCode());
+                updateObj.setEnabled(permission.getEnabled());
                 updateObj.setServiceId(permission.getServiceId());
                 updateObj.setResourcePid(permission.getResourcePid());
                 updateObj.setName(permission.getName());
@@ -257,6 +265,7 @@ public class PermissionServiceImpl implements PermissionService {
         String serviceId = "";
         String name = "";
         String identityCode = null;
+        Boolean enabled = false;
         ResourcePermission permission = null;
         if (object instanceof ResourceMenu) {
             ResourceMenu menu = (ResourceMenu) object;
@@ -265,6 +274,7 @@ public class PermissionServiceImpl implements PermissionService {
             resourceId = menu.getMenuId();
             resourcePid = menu.getParentId();
             serviceId = DEFAULT_SERVICE_ID;
+            enabled = menu.getEnabled();
             name = menu.getMenuName();
         }
         if (object instanceof ResourceAction) {
@@ -275,6 +285,7 @@ public class PermissionServiceImpl implements PermissionService {
             resourcePid = action.getMenuId();
             serviceId = DEFAULT_SERVICE_ID;
             name = action.getActionName();
+            enabled = action.getEnabled();
         }
         if (object instanceof ResourceApi) {
             ResourceApi api = (ResourceApi) object;
@@ -284,6 +295,7 @@ public class PermissionServiceImpl implements PermissionService {
             resourcePid = 0L;
             serviceId = api.getServiceId();
             name = api.getApiName();
+            enabled = api.getEnabled();
         }
         if (object != null) {
             //授权编码=资源类型_资源编码
@@ -305,6 +317,7 @@ public class PermissionServiceImpl implements PermissionService {
             permission.setResourcePid(resourcePid);
             permission.setUrl(url);
             permission.setName(name);
+            permission.setEnabled(enabled);
             permission.setIdentityCode(identityCode);
             permission.setIdentityPrefix(identityPrefix);
             permission.setIdentityId(identityId);

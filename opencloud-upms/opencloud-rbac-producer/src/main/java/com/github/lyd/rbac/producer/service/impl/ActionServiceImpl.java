@@ -145,6 +145,8 @@ public class ActionServiceImpl implements ActionService {
         action.setEnabled(enable);
         action.setUpdateTime(new Date());
         int count = resourceActionMapper.updateByPrimaryKeySelective(action);
+        // 同步授权表里的信息
+        permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
     }
 

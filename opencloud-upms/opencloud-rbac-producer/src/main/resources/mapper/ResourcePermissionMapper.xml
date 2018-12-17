@@ -16,5 +16,6 @@
         <result column="identity_id" property="identityId" jdbcType="BIGINT"/>
         <result column="identity_code" property="identityCode" jdbcType="VARCHAR"/>
         <result column="identity_prefix" property="identityPrefix" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
     </resultMap>
 </mapper>

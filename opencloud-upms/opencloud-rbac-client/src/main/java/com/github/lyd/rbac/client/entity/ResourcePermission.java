@@ -75,7 +75,10 @@ public class ResourcePermission implements Serializable {
      */
     @Column(name = "identity_prefix")
     private String identityPrefix;
-
+    /**
+     * 是否可用
+     */
+    private Boolean enabled;
     /**
      * 获取授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
      *
@@ -198,5 +201,13 @@ public class ResourcePermission implements Serializable {
 
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

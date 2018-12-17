@@ -43,6 +43,7 @@ public class MenuServiceImpl implements MenuService {
 
     /**
      * 查询列表
+     *
      * @param keyword
      * @return
      */
@@ -50,6 +51,7 @@ public class MenuServiceImpl implements MenuService {
     public PageList<ResourceMenu> findList(String keyword) {
         ExampleBuilder builder = new ExampleBuilder(ResourceMenu.class);
         Example example = builder.criteria()
+                .andEqualTo("enabled", true)
                 .orLike("menuCode", keyword)
                 .orLike("menuName", keyword).end().build();
         List<ResourceMenu> list = resourceMenuMapper.selectByExample(example);
@@ -133,7 +135,7 @@ public class MenuServiceImpl implements MenuService {
         menu.setUpdateTime(new Date());
         int count = resourceMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
-        permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_ACTION,menu.getMenuId());
+        permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
     }
 
@@ -151,6 +153,8 @@ public class MenuServiceImpl implements MenuService {
         menu.setEnabled(enable);
         menu.setUpdateTime(new Date());
         int count = resourceMenuMapper.updateByPrimaryKeySelective(menu);
+        // 同步授权表里的信息
+        permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
     }
 
