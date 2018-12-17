@@ -84,11 +84,11 @@ public class TenantAccountServiceImpl implements TenantAccountService {
         tenantProfileService.addProfile(saved);
         //默认注册用户名账户
         Boolean suceess = this.registerUsernameAccount(saved.getTenantId(), saved.getUserName(), encodePassword);
-        if (StringUtils.isNotBlank(saved.getEmail())) {
+        if (suceess && StringUtils.isNotBlank(saved.getEmail())) {
             //注册email账号登陆
             this.registerMobileAccount(saved.getTenantId(), saved.getEmail(), encodePassword);
         }
-        if (StringUtils.isNotBlank(saved.getMobile())) {
+        if (suceess && StringUtils.isNotBlank(saved.getMobile())) {
             //注册手机号账号登陆
             this.registerMobileAccount(saved.getTenantId(), saved.getMobile(), encodePassword);
         }
