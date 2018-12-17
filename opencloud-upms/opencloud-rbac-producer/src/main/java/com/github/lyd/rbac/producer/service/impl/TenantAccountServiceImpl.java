@@ -5,6 +5,7 @@ import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.rbac.client.constans.RbacConstans;
 import com.github.lyd.rbac.client.dto.TenantAccountDto;
+import com.github.lyd.rbac.client.dto.TenantProfileDto;
 import com.github.lyd.rbac.client.entity.*;
 import com.github.lyd.rbac.producer.mapper.TenantAccountLogsMapper;
 import com.github.lyd.rbac.producer.mapper.TenantAccountMapper;
@@ -34,17 +35,65 @@ public class TenantAccountServiceImpl implements TenantAccountService {
 
     @Autowired
     private TenantAccountMapper tenantAccountMapper;
-
-    @Autowired
-    private TenantProfileService tenantProfileService;
-    @Autowired
-    private RolesService roleService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @Autowired
     private TenantAccountLogsMapper tenantAccountLogsMapper;
     @Autowired
+    private TenantProfileService tenantProfileService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RolesService roleService;
+    @Autowired
     private PermissionService permissionService;
+
+    /**
+     * 添加租户
+     *
+     * @param profileDto
+     * @return
+     */
+    @Override
+    public Boolean register(TenantProfileDto profileDto) {
+        if (profileDto == null) {
+            return false;
+        }
+        if (StringUtils.isBlank(profileDto.getUserName())) {
+            throw new OpenMessageException("账号不能为空!");
+        }
+        if (StringUtils.isBlank(profileDto.getPassword())) {
+            throw new OpenMessageException("密码不能为空!");
+        }
+        TenantProfile saved = tenantProfileService.getProfile(profileDto.getUserName());
+        if (saved != null) {
+            // 已注册
+            throw new OpenMessageException("登录名已经被注册!");
+        }
+        //未注册
+        saved = new TenantProfile();
+        BeanUtils.copyProperties(profileDto, saved);
+        //加密
+        String encodePassword = passwordEncoder.encode(profileDto.getPassword());
+        if (StringUtils.isBlank(saved.getNickName())) {
+            saved.setNickName(saved.getUserName());
+        }
+        saved.setState(RbacConstans.USER_STATE_NORMAL);
+        saved.setCreateTime(new Date());
+        saved.setUpdateTime(saved.getCreateTime());
+        saved.setRegisterTime(saved.getCreateTime());
+        //保存租户信息
+        tenantProfileService.addProfile(saved);
+        //默认注册用户名账户
+        Boolean suceess = this.registerUsernameAccount(saved.getTenantId(), saved.getUserName(), encodePassword);
+        if (StringUtils.isNotBlank(saved.getEmail())) {
+            //注册email账号登陆
+            suceess = this.registerMobileAccount(saved.getTenantId(), saved.getEmail(), encodePassword);
+        }
+        if (StringUtils.isNotBlank(saved.getMobile())) {
+            //注册手机号账号登陆
+            suceess = this.registerMobileAccount(saved.getTenantId(), saved.getMobile(), encodePassword);
+        }
+        return suceess;
+    }
 
     /**
      * 支持租户名、手机号、email登陆
@@ -115,6 +164,68 @@ public class TenantAccountServiceImpl implements TenantAccountService {
         return accountDto;
     }
 
+
+    /**
+     * 注册租户名账户
+     *
+     * @param tenantId
+     * @param username
+     * @param password
+     */
+    @Override
+    public boolean registerUsernameAccount(Long tenantId, String username, String password) {
+        if (isExist(tenantId, username, RbacConstans.USER_ACCOUNT_TYPE_USERNAME)) {
+            //已经注册
+            return false;
+        }
+        TenantAccount userAccount = new TenantAccount(tenantId, username, password, RbacConstans.USER_ACCOUNT_TYPE_USERNAME);
+        int result = tenantAccountMapper.insertSelective(userAccount);
+        return result > 0;
+    }
+
+    /**
+     * 注册email账号
+     *
+     * @param tenantId
+     * @param email
+     * @param password
+     */
+    @Override
+    public boolean registerEmailAccount(Long tenantId, String email, String password) {
+        if (!StringUtils.matchEmail(email)) {
+            return false;
+        }
+        if (isExist(tenantId, email, RbacConstans.USER_ACCOUNT_TYPE_EMAIL)) {
+            //已经注册
+            return false;
+        }
+        TenantAccount userAccount = new TenantAccount(tenantId, email, password, RbacConstans.USER_ACCOUNT_TYPE_EMAIL);
+        int result = tenantAccountMapper.insertSelective(userAccount);
+        return result > 0;
+    }
+
+    /**
+     * 注册手机账号
+     *
+     * @param tenantId
+     * @param mobile
+     * @param password
+     */
+    @Override
+    public boolean registerMobileAccount(Long tenantId, String mobile, String password) {
+        if (!StringUtils.matchMobile(mobile)) {
+            return false;
+        }
+        if (isExist(tenantId, mobile, RbacConstans.USER_ACCOUNT_TYPE_MOBILE)) {
+            //已经注册
+            return false;
+        }
+        TenantAccount userAccount = new TenantAccount(tenantId, mobile, password, RbacConstans.USER_ACCOUNT_TYPE_MOBILE);
+        int result = tenantAccountMapper.insertSelective(userAccount);
+        return result > 0;
+    }
+
+
     /**
      * 更新租户密码
      *
@@ -176,7 +287,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
     }
 
     /**
-     * 检查是否已绑定账号
+     * 检查是否已注册账号
      *
      * @param tenantId
      * @param account
@@ -196,66 +307,6 @@ public class TenantAccountServiceImpl implements TenantAccountService {
     }
 
     /**
-     * 绑定租户名账户
-     *
-     * @param tenantId
-     * @param username
-     * @param password
-     */
-    @Override
-    public boolean bindUsernameAccount(Long tenantId, String username, String password) {
-        if (isExist(tenantId, username, RbacConstans.USER_ACCOUNT_TYPE_USERNAME)) {
-            //已经绑定
-            return false;
-        }
-        TenantAccount userAccount = new TenantAccount(tenantId, username, password, RbacConstans.USER_ACCOUNT_TYPE_USERNAME);
-        int result = tenantAccountMapper.insertSelective(userAccount);
-        return result > 0;
-    }
-
-    /**
-     * 绑定email账号
-     *
-     * @param tenantId
-     * @param email
-     * @param password
-     */
-    @Override
-    public boolean bindEmailAccount(Long tenantId, String email, String password) {
-        if (!StringUtils.matchEmail(email)) {
-            return false;
-        }
-        if (isExist(tenantId, email, RbacConstans.USER_ACCOUNT_TYPE_EMAIL)) {
-            //已经绑定
-            return false;
-        }
-        TenantAccount userAccount = new TenantAccount(tenantId, email, password, RbacConstans.USER_ACCOUNT_TYPE_EMAIL);
-        int result = tenantAccountMapper.insertSelective(userAccount);
-        return result > 0;
-    }
-
-    /**
-     * 绑定手机账号
-     *
-     * @param tenantId
-     * @param mobile
-     * @param password
-     */
-    @Override
-    public boolean bindMobileAccount(Long tenantId, String mobile, String password) {
-        if (!StringUtils.matchMobile(mobile)) {
-            return false;
-        }
-        if (isExist(tenantId, mobile, RbacConstans.USER_ACCOUNT_TYPE_MOBILE)) {
-            //已经绑定
-            return false;
-        }
-        TenantAccount userAccount = new TenantAccount(tenantId, mobile, password, RbacConstans.USER_ACCOUNT_TYPE_MOBILE);
-        int result = tenantAccountMapper.insertSelective(userAccount);
-        return result > 0;
-    }
-
-    /**
      * 解绑email账号
      *
      * @param tenantId
@@ -263,7 +314,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean unbindEmailAccount(Long tenantId, String email) {
+    public boolean removeEmailAccount(Long tenantId, String email) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)
@@ -282,7 +333,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean unbindMobileAccount(Long tenantId, String mobile) {
+    public boolean removeMobileAccount(Long tenantId, String mobile) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)

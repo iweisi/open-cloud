@@ -1,6 +1,7 @@
 package com.github.lyd.rbac.producer.service;
 
 import com.github.lyd.rbac.client.dto.TenantAccountDto;
+import com.github.lyd.rbac.client.dto.TenantProfileDto;
 
 /**
  * 租户登录账号管理
@@ -9,6 +10,45 @@ import com.github.lyd.rbac.client.dto.TenantAccountDto;
  * @author liuyadu
  */
 public interface TenantAccountService {
+
+    /**
+     * 注册账户
+     *
+     * @param profileDto
+     * @return
+     */
+    Boolean register(TenantProfileDto profileDto);
+
+
+    /**
+     * 绑定租户名账户
+     *
+     * @param tenantId
+     * @param username
+     * @param password
+     * @return
+     */
+    boolean registerUsernameAccount(Long tenantId, String username, String password);
+
+    /**
+     * 绑定email账号
+     *
+     * @param email
+     * @param tenantId
+     * @param password
+     * @return
+     */
+    boolean registerEmailAccount(Long tenantId, String email, String password);
+
+    /**
+     * 绑定手机账号
+     *
+     * @param tenantId
+     * @param password
+     * @param mobile
+     * @return
+     */
+    boolean registerMobileAccount(Long tenantId, String mobile, String password);
 
     /**
      * 支持密码、手机号、email登陆
@@ -48,35 +88,6 @@ public interface TenantAccountService {
      */
     boolean isExist(Long tenantId, String account, String accountType);
 
-    /**
-     * 绑定租户名账户
-     *
-     * @param tenantId
-     * @param username
-     * @param password
-     * @return
-     */
-    boolean bindUsernameAccount(Long tenantId, String username, String password);
-
-    /**
-     * 绑定email账号
-     *
-     * @param email
-     * @param tenantId
-     * @param password
-     * @return
-     */
-    boolean bindEmailAccount(Long tenantId, String email, String password);
-
-    /**
-     * 绑定手机账号
-     *
-     * @param tenantId
-     * @param password
-     * @param mobile
-     * @return
-     */
-    boolean bindMobileAccount(Long tenantId, String mobile, String password);
 
     /**
      * 解绑email账号
@@ -85,7 +96,7 @@ public interface TenantAccountService {
      * @param tenantId
      * @return
      */
-    boolean unbindEmailAccount(Long tenantId, String email);
+    boolean removeEmailAccount(Long tenantId, String email);
 
     /**
      * 解绑手机账号
@@ -94,5 +105,5 @@ public interface TenantAccountService {
      * @param mobile
      * @return
      */
-    boolean unbindMobileAccount(Long tenantId, String mobile);
+    boolean removeMobileAccount(Long tenantId, String mobile);
 }

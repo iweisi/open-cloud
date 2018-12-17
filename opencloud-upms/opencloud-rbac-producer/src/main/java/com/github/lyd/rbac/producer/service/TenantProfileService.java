@@ -13,13 +13,6 @@ import com.github.lyd.rbac.client.entity.TenantProfile;
  * @description:
  */
 public interface TenantProfileService {
-    /**
-     * 添加租户
-     *
-     * @param profileDto
-     * @return
-     */
-    Boolean add(TenantProfileDto profileDto);
 
     /**
      * 更新租户
@@ -27,7 +20,15 @@ public interface TenantProfileService {
      * @param profileDto
      * @return
      */
-    Boolean update(TenantProfileDto profileDto);
+    Boolean addProfile(TenantProfile profileDto);
+
+    /**
+     * 更新租户
+     *
+     * @param profileDto
+     * @return
+     */
+    Boolean updateProfile(TenantProfile profileDto);
 
     /**
      * 分页查询
