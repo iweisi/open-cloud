@@ -20,7 +20,8 @@ public interface TenantAccountRemoteService {
     ResultBody<TenantAccountDto> login(@RequestParam(value = "username") String username);
 
     /**
-     * 登录成功
+     * 添加登录日志
+     *
      * @param tenantId
      * @param ipAddress
      * @param userAgent

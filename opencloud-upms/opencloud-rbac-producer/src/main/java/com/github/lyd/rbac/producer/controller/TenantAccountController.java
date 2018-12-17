@@ -33,7 +33,7 @@ public class TenantAccountController implements TenantAccountRemoteService {
     }
 
     /**
-     * 登录成功
+     * 添加登录日志
      *
      * @param tenantId
      * @param ipAddress
