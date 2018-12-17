@@ -7,7 +7,7 @@
         <result column="app_name" property="appName" jdbcType="VARCHAR"/>
         <result column="app_name_en" property="appNameEn" jdbcType="VARCHAR"/>
         <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
-        <result column="website" property="website" javaType="VARCHAR"/>
+        <result column="website" property="website" jdbcType="VARCHAR"/>
         <result column="os" property="os" jdbcType="VARCHAR"/>
         <result column="app_type" property="appType" jdbcType="VARCHAR"/>
         <result column="tenant_id" property="tenantId" jdbcType="BIGINT"/>

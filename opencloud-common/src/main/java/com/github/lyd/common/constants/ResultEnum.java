@@ -51,6 +51,7 @@ public enum ResultEnum {
     NOT_FOUND(40004, "not_found"),
     METHOD_NOT_ALLOWED(40005, "method_not_allowed"),
     MEDIA_TYPE_NOT_ACCEPTABLE(40006, "media_type_not_acceptable"),
+    TOO_MANY_REQUEST(40029, "too_many_request"),
     /**
      * 系统错误
      */

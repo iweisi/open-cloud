@@ -30,7 +30,6 @@ public class RateLimitLocator {
         this.jdbcTemplate = jdbcTemplate;
         this.properties = properties;
         this.converter = new StringToMatchTypeConverter();
-        ;
     }
 
     public JdbcTemplate getJdbcTemplate() {
@@ -66,8 +65,8 @@ public class RateLimitLocator {
 
     /**
      * 加载数据库限流配置
-     * 1. 认证租户（Authenticated User）
-     * 使用已认证的租户名（username）或'anonymous'
+     * 1. 认证用户（Authenticated User）
+     * 使用已认证的用户名（username）或'anonymous'
      * 2. 原始请求（Request Origin）
      * 使用租户的原始请求
      * 3. URL

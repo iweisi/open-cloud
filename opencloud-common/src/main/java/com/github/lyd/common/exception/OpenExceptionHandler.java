@@ -91,7 +91,7 @@ public class OpenExceptionHandler {
      * @param response
      * @return
      */
-    @ExceptionHandler({OAuth2Exception.class,InvalidTokenException.class})
+    @ExceptionHandler({OAuth2Exception.class, InvalidTokenException.class})
     public static ResultBody oauth2Exception(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ResultEnum code = ResultEnum.UNAUTHORIZED;
         if (ex instanceof InvalidClientException) {
@@ -100,8 +100,8 @@ public class OpenExceptionHandler {
             code = ResultEnum.UNAUTHORIZED_CLIENT;
         } else if (ex instanceof InvalidGrantException) {
             code = ResultEnum.INVALID_GRANT;
-            if("Bad credentials".equals(ex.getMessage())){
-                code= ResultEnum.BAD_CREDENTIALS;
+            if ("Bad credentials".equals(ex.getMessage())) {
+                code = ResultEnum.BAD_CREDENTIALS;
             }
         } else if (ex instanceof InvalidScopeException) {
             code = ResultEnum.INVALID_SCOPE;
@@ -143,7 +143,7 @@ public class OpenExceptionHandler {
         if (ex instanceof OpenSignatureException) {
             code = ResultEnum.SIGNATURE_DENIED;
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }else{
+        } else {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         //放入请求域
@@ -224,17 +224,19 @@ public class OpenExceptionHandler {
         }
         //提示消息
         String message = "";
-        if (resultCode.getCode() == ResultEnum.ALERT_ERROR.getCode() || resultCode.getCode() == ResultEnum.SIGNATURE_DENIED.getCode()|| resultCode.getCode() == ResultEnum.PARAMETER_ERROR.getCode()) {
-            message = ex.getMessage();
+        if (resultCode.getCode() == ResultEnum.ALERT_ERROR.getCode()
+                || resultCode.getCode() == ResultEnum.SIGNATURE_DENIED.getCode()
+                || resultCode.getCode() == ResultEnum.PARAMETER_ERROR.getCode()) {
+            message = i18n(ex.getMessage());
         } else {
-            message = i18n(resultCode);
+            message = i18n(resultCode.getMessage());
         }
-        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, exception,ex);
+        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, exception, ex);
         return ResultBody.failed(resultCode.getCode(), message).setPath(path);
     }
 
-    private static String i18n(ResultEnum httpCode) {
+    private static String i18n(String message) {
         MessageSource messageSource = SpringContextHolder.getBean(MessageSource.class);
-        return messageSource.getMessage(httpCode.getMessage(), null, httpCode.getMessage(), locale);
+        return messageSource.getMessage(message, null, message, locale);
     }
 }

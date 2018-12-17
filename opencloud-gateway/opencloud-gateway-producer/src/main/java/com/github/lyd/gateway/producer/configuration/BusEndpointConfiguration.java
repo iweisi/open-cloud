@@ -40,7 +40,7 @@ public class BusEndpointConfiguration {
         return permissionLocator;
     }
     @Bean
-    public ZuulErrorFilter errorFilter() {
+    public ZuulErrorFilter zuulErrorFilter() {
         return new ZuulErrorFilter();
     }
 
