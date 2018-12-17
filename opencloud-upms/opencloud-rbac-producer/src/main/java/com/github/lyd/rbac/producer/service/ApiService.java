@@ -32,7 +32,7 @@ public interface ApiService {
      * @param apiCode
      * @return
      */
-    boolean isExist(String apiCode);
+    Boolean isExist(String apiCode);
 
     /**
      * 检查Api编码是否存在
@@ -41,7 +41,7 @@ public interface ApiService {
      * @param serviceId
      * @return
      */
-    boolean isExist(String apiCode, String serviceId);
+    Boolean isExist(String apiCode, String serviceId);
 
     /**
      * 添加Api资源
@@ -49,7 +49,7 @@ public interface ApiService {
      * @param api
      * @return
      */
-    boolean addApi(ResourceApi api);
+    Boolean addApi(ResourceApi api);
 
     /**
      * 修改Api资源
@@ -57,7 +57,7 @@ public interface ApiService {
      * @param api
      * @return
      */
-    boolean updateApi(ResourceApi api);
+    Boolean updateApi(ResourceApi api);
 
     /**
      * 查询api
@@ -75,7 +75,7 @@ public interface ApiService {
      * @param enable
      * @return
      */
-    boolean updateEnable(Long apiId, Boolean enable);
+    Boolean updateEnable(Long apiId, Boolean enable);
 
     /**
      * 移除Api
@@ -83,5 +83,5 @@ public interface ApiService {
      * @param apiId
      * @return
      */
-    boolean removeApi(Long apiId);
+    Boolean removeApi(Long apiId);
 }

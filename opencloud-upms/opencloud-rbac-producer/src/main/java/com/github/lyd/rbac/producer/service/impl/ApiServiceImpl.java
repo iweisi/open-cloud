@@ -68,12 +68,12 @@ public class ApiServiceImpl implements ApiService {
      * @return
      */
     @Override
-    public boolean isExist(String apiCode) {
+    public Boolean isExist(String apiCode) {
         return isExist(apiCode, null);
     }
 
     @Override
-    public boolean isExist(String apiCode, String serviceId) {
+    public Boolean isExist(String apiCode, String serviceId) {
         ExampleBuilder builder = new ExampleBuilder(ResourceApi.class);
         Example example = builder.criteria()
                 .andEqualTo("apiCode", apiCode)
@@ -90,7 +90,7 @@ public class ApiServiceImpl implements ApiService {
      * @return
      */
     @Override
-    public boolean addApi(ResourceApi api) {
+    public Boolean addApi(ResourceApi api) {
         if (isExist(api.getApiCode(), api.getServiceId())) {
             throw new OpenMessageException(String.format("%sApi编码已存在,不允许重复添加", api.getApiCode()));
         }
@@ -113,7 +113,7 @@ public class ApiServiceImpl implements ApiService {
      * @return
      */
     @Override
-    public boolean updateApi(ResourceApi api) {
+    public Boolean updateApi(ResourceApi api) {
         ResourceApi savedApi = getApi(api.getApiId());
         if (savedApi == null) {
             throw new OpenMessageException(String.format("%sApi不存在", api.getApiId()));
@@ -159,7 +159,7 @@ public class ApiServiceImpl implements ApiService {
      * @return
      */
     @Override
-    public boolean updateEnable(Long apiId, Boolean enable) {
+    public Boolean updateEnable(Long apiId, Boolean enable) {
         ResourceApi api = new ResourceApi();
         api.setApiId(apiId);
         api.setEnabled(enable);
@@ -175,7 +175,7 @@ public class ApiServiceImpl implements ApiService {
      * @return
      */
     @Override
-    public boolean removeApi(Long apiId) {
+    public Boolean removeApi(Long apiId) {
         if (permissionService.isExist(apiId, RbacConstans.RESOURCE_TYPE_API)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", apiId));
         }

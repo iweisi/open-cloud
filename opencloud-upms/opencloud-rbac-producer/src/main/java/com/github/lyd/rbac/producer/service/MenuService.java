@@ -38,7 +38,7 @@ public interface MenuService {
      * @param menuCode
      * @return
      */
-    boolean isExist(String menuCode);
+    Boolean isExist(String menuCode);
 
 
     /**
@@ -47,7 +47,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    boolean addMenu(ResourceMenu menu);
+    Boolean addMenu(ResourceMenu menu);
 
     /**
      * 修改菜单资源
@@ -55,7 +55,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    boolean updateMenu(ResourceMenu menu);
+    Boolean updateMenu(ResourceMenu menu);
 
     /**
      * 更新启用禁用
@@ -64,7 +64,7 @@ public interface MenuService {
      * @param enable
      * @return
      */
-    boolean updateEnable(Long menuId, Boolean enable);
+    Boolean updateEnable(Long menuId, Boolean enable);
 
     /**
      * 移除菜单
@@ -72,5 +72,5 @@ public interface MenuService {
      * @param menuId
      * @return
      */
-    boolean removeMenu(Long menuId);
+    Boolean removeMenu(Long menuId);
 }

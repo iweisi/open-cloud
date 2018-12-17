@@ -53,7 +53,7 @@ public interface AppDetailsService {
      * @param authorities  应用权限,多个用逗号隔开
      * @return 应用信息
      */
-    boolean addAppInfo(String appName,
+    Boolean addAppInfo(String appName,
                        String appNameEn,
                        String appType,
                        String appIcon,
@@ -80,7 +80,7 @@ public interface AppDetailsService {
      * @param authorities  应用权限,多个用逗号隔开
      * @return 应用信息
      */
-    boolean updateInfo(String appId,
+    Boolean updateInfo(String appId,
                        String appName,
                        String appNameEn,
                        String appType,
@@ -98,7 +98,7 @@ public interface AppDetailsService {
      * @param appId
      * @return
      */
-    boolean restSecret(String appId);
+    Boolean restSecret(String appId);
 
     /**
      * 删除应用
@@ -106,5 +106,5 @@ public interface AppDetailsService {
      * @param appId
      * @return
      */
-    boolean removeApp(String appId);
+    Boolean removeApp(String appId);
 }

@@ -39,7 +39,7 @@ public interface RolesService {
      * @param enable      启用禁用
      * @return
      */
-    boolean addRole(String roleCode, String roleName, String description, boolean enable);
+    Boolean addRole(String roleCode, String roleName, String description, Boolean enable);
 
     /**
      * 更新角色
@@ -51,7 +51,7 @@ public interface RolesService {
      * @param enable      启用禁用
      * @return
      */
-    boolean updateRole(Long roleId, String roleCode, String roleName, String description, boolean enable);
+    Boolean updateRole(Long roleId, String roleCode, String roleName, String description, Boolean enable);
 
     /**
      * 删除角色
@@ -59,7 +59,7 @@ public interface RolesService {
      * @param roleId 角色ID
      * @return
      */
-    boolean removeRole(Long roleId);
+    Boolean removeRole(Long roleId);
 
     /**
      * 检测角色编码是否存在
@@ -67,7 +67,7 @@ public interface RolesService {
      * @param roleCode
      * @return
      */
-    boolean isExist(String roleCode);
+    Boolean isExist(String roleCode);
 
     /**
      * 角色授权组员
@@ -76,7 +76,7 @@ public interface RolesService {
      * @param roles
      * @return
      */
-    boolean saveMemberRoles(Long tenantId, Long... roles);
+    Boolean saveMemberRoles(Long tenantId, Long... roles);
 
     /**
      * 获取角色所有授权组员数量
@@ -100,7 +100,7 @@ public interface RolesService {
      * @param roleId
      * @return
      */
-    boolean removeRoleMembers(Long roleId);
+    Boolean removeRoleMembers(Long roleId);
 
     /**
      * 移除组员的所有角色
@@ -108,7 +108,7 @@ public interface RolesService {
      * @param tenantId
      * @return
      */
-    boolean removeMemberRoles(Long tenantId);
+    Boolean removeMemberRoles(Long tenantId);
 
     /**
      * 检测是否存在
@@ -117,7 +117,7 @@ public interface RolesService {
      * @param roleId
      * @return
      */
-    boolean isExist(Long tenantId, Long roleId);
+    Boolean isExist(Long tenantId, Long roleId);
 
     /**
      * 获取组员角色

@@ -68,7 +68,7 @@ public class ActionServiceImpl implements ActionService {
      * @return
      */
     @Override
-    public boolean isExist(String actionCode) {
+    public Boolean isExist(String actionCode) {
         ExampleBuilder builder = new ExampleBuilder(ResourceAction.class);
         Example example = builder.criteria()
                 .andEqualTo("actionCode", actionCode)
@@ -84,7 +84,7 @@ public class ActionServiceImpl implements ActionService {
      * @return
      */
     @Override
-    public boolean addAction(ResourceAction action) {
+    public Boolean addAction(ResourceAction action) {
         if (isExist(action.getActionCode())) {
             throw new OpenMessageException(String.format("%sAction编码已存在,不允许重复添加", action.getActionCode()));
         }
@@ -107,7 +107,7 @@ public class ActionServiceImpl implements ActionService {
      * @return
      */
     @Override
-    public boolean updateAction(ResourceAction action) {
+    public Boolean updateAction(ResourceAction action) {
         ResourceAction savedAction = getAction(action.getActionId());
         if (savedAction == null) {
             throw new OpenMessageException(String.format("%sAction不存在", action.getActionId()));
@@ -139,7 +139,7 @@ public class ActionServiceImpl implements ActionService {
      * @return
      */
     @Override
-    public boolean updateEnable(Long actionId, Boolean enable) {
+    public Boolean updateEnable(Long actionId, Boolean enable) {
         ResourceAction action = new ResourceAction();
         action.setActionId(actionId);
         action.setEnabled(enable);
@@ -155,7 +155,7 @@ public class ActionServiceImpl implements ActionService {
      * @return
      */
     @Override
-    public boolean removeAction(Long actionId) {
+    public Boolean removeAction(Long actionId) {
         if (permissionService.isExist(actionId, RbacConstans.RESOURCE_TYPE_ACTION)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", actionId));
         }

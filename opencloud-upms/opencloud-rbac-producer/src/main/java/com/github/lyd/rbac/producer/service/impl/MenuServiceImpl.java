@@ -74,7 +74,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public boolean isExist(String menuCode) {
+    public Boolean isExist(String menuCode) {
         ExampleBuilder builder = new ExampleBuilder(ResourceMenu.class);
         Example example = builder.criteria()
                 .andEqualTo("menuCode", menuCode)
@@ -90,7 +90,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public boolean addMenu(ResourceMenu menu) {
+    public Boolean addMenu(ResourceMenu menu) {
         if (isExist(menu.getMenuCode())) {
             throw new OpenMessageException(String.format("%s菜单编码已存在,不允许重复添加", menu.getMenuCode()));
         }
@@ -113,7 +113,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public boolean updateMenu(ResourceMenu menu) {
+    public Boolean updateMenu(ResourceMenu menu) {
         ResourceMenu savedMenu = getMenu(menu.getMenuId());
         if (savedMenu == null) {
             throw new OpenMessageException(String.format("%s菜单不存在", menu.getMenuId()));
@@ -145,7 +145,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public boolean updateEnable(Long menuId, Boolean enable) {
+    public Boolean updateEnable(Long menuId, Boolean enable) {
         ResourceMenu menu = new ResourceMenu();
         menu.setMenuId(menuId);
         menu.setEnabled(enable);
@@ -161,7 +161,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public boolean removeMenu(Long menuId) {
+    public Boolean removeMenu(Long menuId) {
         if (permissionService.isExist(menuId, RbacConstans.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", menuId));
         }

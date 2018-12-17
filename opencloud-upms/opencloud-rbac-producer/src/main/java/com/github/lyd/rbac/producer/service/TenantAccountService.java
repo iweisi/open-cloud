@@ -28,7 +28,7 @@ public interface TenantAccountService {
      * @param password
      * @return
      */
-    boolean registerUsernameAccount(Long tenantId, String username, String password);
+    Boolean registerUsernameAccount(Long tenantId, String username, String password);
 
     /**
      * 绑定email账号
@@ -38,7 +38,7 @@ public interface TenantAccountService {
      * @param password
      * @return
      */
-    boolean registerEmailAccount(Long tenantId, String email, String password);
+    Boolean registerEmailAccount(Long tenantId, String email, String password);
 
     /**
      * 绑定手机账号
@@ -48,7 +48,7 @@ public interface TenantAccountService {
      * @param mobile
      * @return
      */
-    boolean registerMobileAccount(Long tenantId, String mobile, String password);
+    Boolean registerMobileAccount(Long tenantId, String mobile, String password);
 
     /**
      * 支持密码、手机号、email登陆
@@ -67,7 +67,7 @@ public interface TenantAccountService {
      * @param newPassword
      * @return
      */
-    boolean resetPassword(Long tenantId, String oldPassword, String newPassword);
+    Boolean resetPassword(Long tenantId, String oldPassword, String newPassword);
 
     /**
      * 添加登录日志
@@ -86,7 +86,7 @@ public interface TenantAccountService {
      * @param accountType
      * @return
      */
-    boolean isExist(Long tenantId, String account, String accountType);
+    Boolean isExist(Long tenantId, String account, String accountType);
 
 
     /**
@@ -96,7 +96,7 @@ public interface TenantAccountService {
      * @param tenantId
      * @return
      */
-    boolean removeEmailAccount(Long tenantId, String email);
+    Boolean removeEmailAccount(Long tenantId, String email);
 
     /**
      * 解绑手机账号
@@ -105,5 +105,5 @@ public interface TenantAccountService {
      * @param mobile
      * @return
      */
-    boolean removeMobileAccount(Long tenantId, String mobile);
+    Boolean removeMobileAccount(Long tenantId, String mobile);
 }

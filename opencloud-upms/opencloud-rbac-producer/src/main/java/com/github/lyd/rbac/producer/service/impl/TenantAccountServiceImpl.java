@@ -173,7 +173,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean registerUsernameAccount(Long tenantId, String username, String password) {
+    public Boolean registerUsernameAccount(Long tenantId, String username, String password) {
         if (isExist(tenantId, username, RbacConstans.USER_ACCOUNT_TYPE_USERNAME)) {
             //已经注册
             return false;
@@ -191,7 +191,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean registerEmailAccount(Long tenantId, String email, String password) {
+    public Boolean registerEmailAccount(Long tenantId, String email, String password) {
         if (!StringUtils.matchEmail(email)) {
             return false;
         }
@@ -212,7 +212,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean registerMobileAccount(Long tenantId, String mobile, String password) {
+    public Boolean registerMobileAccount(Long tenantId, String mobile, String password) {
         if (!StringUtils.matchMobile(mobile)) {
             return false;
         }
@@ -235,7 +235,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean resetPassword(Long tenantId, String oldPassword, String newPassword) {
+    public Boolean resetPassword(Long tenantId, String oldPassword, String newPassword) {
         if (tenantId == null || StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword)) {
             return false;
         }
@@ -295,7 +295,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean isExist(Long tenantId, String account, String accountType) {
+    public Boolean isExist(Long tenantId, String account, String accountType) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)
@@ -314,7 +314,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean removeEmailAccount(Long tenantId, String email) {
+    public Boolean removeEmailAccount(Long tenantId, String email) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)
@@ -333,7 +333,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean removeMobileAccount(Long tenantId, String mobile) {
+    public Boolean removeMobileAccount(Long tenantId, String mobile) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)

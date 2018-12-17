@@ -32,7 +32,7 @@ public interface ActionService {
      * @param actionCode
      * @return
      */
-    boolean isExist(String actionCode);
+    Boolean isExist(String actionCode);
 
 
     /**
@@ -41,7 +41,7 @@ public interface ActionService {
      * @param action
      * @return
      */
-    boolean addAction(ResourceAction action);
+    Boolean addAction(ResourceAction action);
 
     /**
      * 修改动作资源
@@ -49,7 +49,7 @@ public interface ActionService {
      * @param action
      * @return
      */
-    boolean updateAction(ResourceAction action);
+    Boolean updateAction(ResourceAction action);
 
     /**
      * 更新启用禁用
@@ -58,7 +58,7 @@ public interface ActionService {
      * @param enable
      * @return
      */
-    boolean updateEnable(Long actionId, Boolean enable);
+    Boolean updateEnable(Long actionId, Boolean enable);
 
     /**
      * 移除动作
@@ -66,5 +66,5 @@ public interface ActionService {
      * @param actionId
      * @return
      */
-    boolean removeAction(Long actionId);
+    Boolean removeAction(Long actionId);
 }

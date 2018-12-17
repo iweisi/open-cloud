@@ -44,7 +44,7 @@ public interface PermissionService {
      * @param resourceIds
      * @return
      */
-    boolean addPermission(Long identityId, String identityPrefix, String resourceType, Long... resourceIds);
+    Boolean addPermission(Long identityId, String identityPrefix, String resourceType, Long... resourceIds);
 
     /**
      * 更新授权信息
@@ -55,7 +55,7 @@ public interface PermissionService {
      * @param resourceId
      * @return
      */
-    boolean updatePermission(String resourceType, Long resourceId);
+    Boolean updatePermission(String resourceType, Long resourceId);
 
     /**
      * 检查资源是否存在
@@ -64,5 +64,5 @@ public interface PermissionService {
      * @param resourceType
      * @return
      */
-    boolean isExist(Long resourceId, String resourceType);
+    Boolean isExist(Long resourceId, String resourceType);
 }

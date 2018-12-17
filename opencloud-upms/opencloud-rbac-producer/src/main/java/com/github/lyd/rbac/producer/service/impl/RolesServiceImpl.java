@@ -67,7 +67,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean addRole(String roleCode, String roleName, String description, boolean enable) {
+    public Boolean addRole(String roleCode, String roleName, String description, Boolean enable) {
         if (StringUtils.isBlank(roleCode)) {
             return false;
         }
@@ -98,7 +98,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean updateRole(Long roleId, String roleCode, String roleName, String description, boolean enable) {
+    public Boolean updateRole(Long roleId, String roleCode, String roleName, String description, Boolean enable) {
         if (roleId == null) {
             return false;
         }
@@ -131,7 +131,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean removeRole(Long roleId) {
+    public Boolean removeRole(Long roleId) {
         if (roleId == null) {
             return false;
         }
@@ -150,7 +150,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean isExist(String roleCode) {
+    public Boolean isExist(String roleCode) {
         if (StringUtils.isBlank(roleCode)) {
             throw new OpenMessageException("roleCode is null");
         }
@@ -167,7 +167,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean saveMemberRoles(Long tenantId, Long... roles) {
+    public Boolean saveMemberRoles(Long tenantId, Long... roles) {
         if (tenantId == null || roles == null) {
             return false;
         }
@@ -223,7 +223,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean removeRoleMembers(Long roleId) {
+    public Boolean removeRoleMembers(Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria().andEqualTo("roleId", roleId).end().build();
         int result = rolesMemberMapper.deleteByExample(example);
@@ -237,7 +237,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean removeMemberRoles(Long tenantId) {
+    public Boolean removeMemberRoles(Long tenantId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria().andEqualTo("tenantId", tenantId).end().build();
         int result = rolesMemberMapper.deleteByExample(example);
@@ -252,7 +252,7 @@ public class RolesServiceImpl implements RolesService {
      * @return
      */
     @Override
-    public boolean isExist(Long tenantId, Long roleId) {
+    public Boolean isExist(Long tenantId, Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)

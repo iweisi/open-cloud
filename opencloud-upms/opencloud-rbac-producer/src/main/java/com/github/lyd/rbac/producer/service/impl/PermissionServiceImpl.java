@@ -152,7 +152,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public boolean addPermission(Long identityId, String identityPrefix, String resourceType, Long... resourceIds) {
+    public Boolean addPermission(Long identityId, String identityPrefix, String resourceType, Long... resourceIds) {
         if (!RbacConstans.PERMISSION_IDENTITY_PREFIX_USER.equals(identityPrefix) && !RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
             throw new OpenMessageException(String.format("%s所有者类型暂不支持!", identityPrefix));
         }
@@ -192,7 +192,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public boolean updatePermission(String resourceType, Long resourceId) {
+    public Boolean updatePermission(String resourceType, Long resourceId) {
         // 判断资源类型
         CrudMapper crudMapper = getMapper(resourceType);
         if (crudMapper == null) {
@@ -227,7 +227,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public boolean isExist(Long resourceId, String resourceType) {
+    public Boolean isExist(Long resourceId, String resourceType) {
         ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
         Example example = builder.criteria()
                 .andEqualTo("resourceId", resourceId)

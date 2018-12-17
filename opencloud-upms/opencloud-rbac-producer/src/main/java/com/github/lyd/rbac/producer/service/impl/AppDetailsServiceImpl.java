@@ -100,7 +100,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
      * @return 应用信息
      */
     @Override
-    public boolean addAppInfo(String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
+    public Boolean addAppInfo(String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
         String clientId = String.valueOf(idGenerator.nextId());
         String clientSecret = RandomValueUtils.uuid();
         AppDetailsDto appInfo = new AppDetailsDto();
@@ -117,7 +117,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
         int result = appInfoMapper.insertSelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         String grantTypes = RbacConstans.getGrantTypes(appType);
-        boolean autoApprove = RbacConstans.isAutoApprove(appType);
+        Boolean autoApprove = RbacConstans.isAutoApprove(appType);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
@@ -143,7 +143,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
      * @return 应用信息
      */
     @Override
-    public boolean updateInfo(String appId, String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
+    public Boolean updateInfo(String appId, String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
         AppDetailsDto appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
@@ -158,7 +158,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
         int result = appInfoMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         String grantTypes = RbacConstans.getGrantTypes(appType);
-        boolean autoApprove = RbacConstans.isAutoApprove(appType);
+        Boolean autoApprove = RbacConstans.isAutoApprove(appType);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(appInfo.getAppId(), grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚
@@ -174,7 +174,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
      * @return
      */
     @Override
-    public boolean restSecret(String appId) {
+    public Boolean restSecret(String appId) {
         AppDetailsDto appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
@@ -199,7 +199,7 @@ public class AppDetailsServiceImpl implements AppDetailsService {
      * @return
      */
     @Override
-    public boolean removeApp(String appId) {
+    public Boolean removeApp(String appId) {
         AppDetailsDto appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
