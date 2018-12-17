@@ -81,6 +81,11 @@ public class AppDetails implements Serializable {
     private Date updateTime;
 
     /**
+     * 官方网址
+     */
+    private String website;
+
+    /**
      * @return app_id
      */
     public String getAppId() {
@@ -246,5 +251,13 @@ public class AppDetails implements Serializable {
 
     public void setTenantType(Integer tenantType) {
         this.tenantType = tenantType;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
