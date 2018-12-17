@@ -3,9 +3,12 @@ package com.github.lyd.gateway.producer.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 public class ZuulPreFilter extends ZuulFilter {
@@ -17,6 +20,11 @@ public class ZuulPreFilter extends ZuulFilter {
     public boolean shouldFilter() {
         return true;
     }
+
+    @Autowired
+    private MetricsEndpoint metricsEndpoint;
+    private static final String METRIC_NAME = "system.cpu.usage";
+    private static final double MAX_USAGE = 0.50D;
 
     /**
      * 过滤器类型
@@ -40,8 +48,23 @@ public class ZuulPreFilter extends ZuulFilter {
      */
     @Override
     public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
+       RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+        HttpServletResponse response = ctx.getResponse();
+        /* Double systemCpuUsage = metricsEndpoint.metric(METRIC_NAME, null)
+                .getMeasurements()
+                .stream()
+                .filter(Objects::nonNull)
+                .findFirst()
+                .map(MetricsEndpoint.Sample::getValue)
+                .filter(Double::isFinite)
+                .orElse(0.0D);
+        boolean ok = systemCpuUsage < MAX_USAGE;
+        log.debug("system.cpu.usage: " + systemCpuUsage + " ok: " + ok);
+        if (!ok) {
+            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            return null;
+        }*/
         log.info("send {} request to {}", request.getMethod(), request.getRequestURL().toString());
         return null;
     }

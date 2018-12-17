@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
@@ -57,25 +58,25 @@ public class OpenExceptionHandler {
         ResultEnum code = ResultEnum.ERROR;
         if (ex instanceof UsernameNotFoundException) {
             code = ResultEnum.USERNAME_NOTFOUND;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof BadCredentialsException) {
             code = ResultEnum.BAD_CREDENTIALS;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof AccountExpiredException) {
             code = ResultEnum.ACCOUNT_EXPIRED;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof LockedException) {
             code = ResultEnum.ACCOUNT_LOCKED;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof DisabledException) {
             code = ResultEnum.ACCOUNT_DISABLED;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof CredentialsExpiredException) {
             code = ResultEnum.CREDENTIALS_EXPIRED;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof InsufficientAuthenticationException) {
             code = ResultEnum.UNAUTHORIZED;
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
         //放入请求域
         request.setAttribute(KEY, code);
@@ -99,7 +100,7 @@ public class OpenExceptionHandler {
             code = ResultEnum.UNAUTHORIZED_CLIENT;
         } else if (ex instanceof InvalidGrantException) {
             code = ResultEnum.INVALID_GRANT;
-            if(ex.getMessage().equals("Bad credentials")){
+            if("Bad credentials".equals(ex.getMessage())){
                 code= ResultEnum.BAD_CREDENTIALS;
             }
         } else if (ex instanceof InvalidScopeException) {
@@ -119,7 +120,7 @@ public class OpenExceptionHandler {
         } else {
             code = ResultEnum.INVALID_REQUEST;
         }
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         //放入请求域
         request.setAttribute(KEY, code);
         return buildBody(ex, request, response);
@@ -141,9 +142,9 @@ public class OpenExceptionHandler {
         }
         if (ex instanceof OpenSignatureException) {
             code = ResultEnum.SIGNATURE_DENIED;
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }else{
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         //放入请求域
         request.setAttribute(KEY, code);
@@ -162,29 +163,29 @@ public class OpenExceptionHandler {
     public static ResultBody exception(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ResultEnum code = ResultEnum.ERROR;
         if (ex instanceof HttpMessageNotReadableException || ex instanceof TypeMismatchException || ex instanceof MissingServletRequestParameterException) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             code = ResultEnum.BAD_REQUEST;
         } else if (ex instanceof NoHandlerFoundException) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpStatus.NOT_FOUND.value());
             code = ResultEnum.NOT_FOUND;
         } else if (ex instanceof HttpRequestMethodNotSupportedException) {
-            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
             code = ResultEnum.METHOD_NOT_ALLOWED;
         } else if (ex instanceof HttpMediaTypeNotAcceptableException) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             code = ResultEnum.MEDIA_TYPE_NOT_ACCEPTABLE;
         } else if (ex instanceof MethodArgumentNotValidException) {
             BindingResult bindingResult = ((MethodArgumentNotValidException) ex).getBindingResult();
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             code = ResultEnum.PARAMETER_ERROR;
             return ResultBody.failed(code.getCode(), bindingResult.getFieldError().getDefaultMessage());
         } else if (ex instanceof IllegalArgumentException) {
             //参数错误
             code = ResultEnum.PARAMETER_ERROR;
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         } else if (ex instanceof AccessDeniedException) {
             code = ResultEnum.ACCESS_DENIED;
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(HttpStatus.FORBIDDEN.value());
         }
         request.setAttribute(KEY, code);
         return buildBody(ex, request, response);
