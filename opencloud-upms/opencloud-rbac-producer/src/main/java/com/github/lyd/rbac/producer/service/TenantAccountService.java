@@ -56,7 +56,7 @@ public interface TenantAccountService {
      * @param password
      * @return
      */
-    boolean bindUsernameOnAccount(Long tenantId, String username, String password);
+    boolean bindUsernameAccount(Long tenantId, String username, String password);
 
     /**
      * 绑定email账号
@@ -66,7 +66,7 @@ public interface TenantAccountService {
      * @param password
      * @return
      */
-    boolean bindEmailOnAccount(Long tenantId, String email, String password);
+    boolean bindEmailAccount(Long tenantId, String email, String password);
 
     /**
      * 绑定手机账号
@@ -76,7 +76,7 @@ public interface TenantAccountService {
      * @param mobile
      * @return
      */
-    boolean bindMobileOnAccount(Long tenantId, String mobile, String password);
+    boolean bindMobileAccount(Long tenantId, String mobile, String password);
 
     /**
      * 解绑email账号
@@ -85,7 +85,7 @@ public interface TenantAccountService {
      * @param tenantId
      * @return
      */
-    boolean unbindEmailOnAccount(Long tenantId, String email);
+    boolean unbindEmailAccount(Long tenantId, String email);
 
     /**
      * 解绑手机账号
@@ -94,5 +94,5 @@ public interface TenantAccountService {
      * @param mobile
      * @return
      */
-    boolean unbindMobileOnAccount(Long tenantId, String mobile);
+    boolean unbindMobileAccount(Long tenantId, String mobile);
 }

@@ -37,7 +37,7 @@ CREATE TABLE `platform_app_details` (
 -- ----------------------------
 -- Records of platform_app_details
 -- ----------------------------
-INSERT INTO `platform_app_details` VALUES ('gateway', '123456', '开放API', 'ApiGateway', null, 'server', null, '0', '0', 'API网关', '2018-11-12 17:48:45', '2018-11-16 18:46:31');
+INSERT INTO `platform_app_details` VALUES ('gateway', '123456', '开放云平台', 'ApiGateway', null, 'server', null, '0', '0', '开放云平台', '2018-11-12 17:48:45', '2018-11-16 18:46:31');
 
 -- ----------------------------
 -- Table structure for platform_dict

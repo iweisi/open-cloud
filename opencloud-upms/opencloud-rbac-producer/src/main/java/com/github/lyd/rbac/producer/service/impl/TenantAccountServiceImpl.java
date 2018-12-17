@@ -203,7 +203,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean bindUsernameOnAccount(Long tenantId, String username, String password) {
+    public boolean bindUsernameAccount(Long tenantId, String username, String password) {
         if (isExist(tenantId, username, RbacConstans.USER_ACCOUNT_TYPE_USERNAME)) {
             //已经绑定
             return false;
@@ -221,7 +221,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean bindEmailOnAccount(Long tenantId, String email, String password) {
+    public boolean bindEmailAccount(Long tenantId, String email, String password) {
         if (!StringUtils.matchEmail(email)) {
             return false;
         }
@@ -242,7 +242,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @param password
      */
     @Override
-    public boolean bindMobileOnAccount(Long tenantId, String mobile, String password) {
+    public boolean bindMobileAccount(Long tenantId, String mobile, String password) {
         if (!StringUtils.matchMobile(mobile)) {
             return false;
         }
@@ -263,7 +263,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean unbindEmailOnAccount(Long tenantId, String email) {
+    public boolean unbindEmailAccount(Long tenantId, String email) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)
@@ -282,7 +282,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
      * @return
      */
     @Override
-    public boolean unbindMobileOnAccount(Long tenantId, String mobile) {
+    public boolean unbindMobileAccount(Long tenantId, String mobile) {
         ExampleBuilder builder = new ExampleBuilder(TenantAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)

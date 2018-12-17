@@ -76,14 +76,14 @@ public class TenantProfileServiceImpl implements TenantProfileService {
         //保存租户信息
         tenantProfileMapper.insertSelective(saved);
         //绑定租户名登陆
-        Boolean suceess = tenantAccountService.bindUsernameOnAccount(saved.getTenantId(), saved.getUserName(), encodePassword);
+        Boolean suceess = tenantAccountService.bindUsernameAccount(saved.getTenantId(), saved.getUserName(), encodePassword);
         if (StringUtils.isNotBlank(saved.getEmail())) {
             //绑定email账号登陆
-            suceess = tenantAccountService.bindEmailOnAccount(saved.getTenantId(), saved.getEmail(), encodePassword);
+            suceess = tenantAccountService.bindEmailAccount(saved.getTenantId(), saved.getEmail(), encodePassword);
         }
         if (StringUtils.isNotBlank(saved.getMobile())) {
             //绑定手机号账号登陆
-            suceess = tenantAccountService.bindMobileOnAccount(saved.getTenantId(), saved.getMobile(), encodePassword);
+            suceess = tenantAccountService.bindMobileAccount(saved.getTenantId(), saved.getMobile(), encodePassword);
         }
         return suceess;
     }
