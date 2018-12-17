@@ -299,7 +299,7 @@ public class PermissionServiceImpl implements PermissionService {
                 }
             }
             permission = new ResourcePermission();
-            permission.setCode(code.toUpperCase());
+            permission.setCode(code);
             permission.setServiceId(serviceId);
             permission.setResourceId(resourceId);
             permission.setResourcePid(resourcePid);

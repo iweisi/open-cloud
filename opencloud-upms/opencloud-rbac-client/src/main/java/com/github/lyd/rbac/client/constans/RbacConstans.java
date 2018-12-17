@@ -38,9 +38,9 @@ public class RbacConstans {
      * 资源类型
      * menu:菜单、action:操作、api:API
      */
-    public final static String RESOURCE_TYPE_MENU = "MENU";
-    public final static String RESOURCE_TYPE_ACTION = "ACTION";
-    public final static String RESOURCE_TYPE_API = "API";
+    public final static String RESOURCE_TYPE_MENU = "menu";
+    public final static String RESOURCE_TYPE_ACTION = "action";
+    public final static String RESOURCE_TYPE_API = "api";
 
     /**
      * 权限所有者
@@ -53,13 +53,13 @@ public class RbacConstans {
     /**
      * 应用服务
      */
-    public final static String APP_TYPE_SERVER = "SERVER";
-    public final static String APP_TYPE_APP = "APP";
-    public final static String APP_TYPE_PC = "PC";
-    public final static String APP_TYPE_WAP = "WAP";
+    public final static String APP_TYPE_SERVER = "server";
+    public final static String APP_TYPE_APP = "app";
+    public final static String APP_TYPE_PC = "pc";
+    public final static String APP_TYPE_WAP = "wap";
 
-    public final static String APP_IOS = "IOS";
-    public final static String APP_ANDROID = "ANDROID";
+    public final static String APP_IOS = "ios";
+    public final static String APP_ANDROID = "android";
 
 
     public static boolean validateOs(String os) {
