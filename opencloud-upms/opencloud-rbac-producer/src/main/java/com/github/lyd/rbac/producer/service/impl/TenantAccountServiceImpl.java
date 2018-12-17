@@ -113,13 +113,13 @@ public class TenantAccountServiceImpl implements TenantAccountService {
                 .andEqualTo("account", account)
                 .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
-        //默认租户名登录
+        //默认用户名登录
         tenantAccount = tenantAccountMapper.selectOneByExample(example);
 
         if (tenantAccount == null && StringUtils.matchMobile(account)) {
             //强制清空
             example.clear();
-            //  尝试邮箱获取
+            //  尝试手机号登录
             example = builder.criteria()
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_MOBILE)
@@ -130,7 +130,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
         if (tenantAccount == null && StringUtils.matchEmail(account)) {
             //强制清空
             example.clear();
-            //  尝试邮箱获取
+            //  尝试邮箱登录
             example = builder.criteria()
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_EMAIL)
@@ -142,7 +142,7 @@ public class TenantAccountServiceImpl implements TenantAccountService {
             accountDto = new TenantAccountDto();
             BeanUtils.copyProperties(tenantAccount, accountDto);
             List<String> authorities = Lists.newArrayList();
-            //查询角色
+            //查询角色权限
             List<Roles> rolesList = roleService.getTenantRoles(tenantAccount.getTenantId());
             if (rolesList != null) {
                 for (Roles role : rolesList) {
