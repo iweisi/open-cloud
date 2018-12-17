@@ -129,7 +129,7 @@ public class ApiServiceImpl implements ApiService {
         }
         api.setUpdateTime(new Date());
         int count = resourceApiMapper.updateByPrimaryKeySelective(api);
-        // 同步授权表里的资源
+        // 同步授权表里的信息
         permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_API, api.getApiId());
         return count > 0;
     }

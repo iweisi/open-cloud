@@ -137,7 +137,7 @@ public class RolesServiceImpl implements RolesService {
         }
         int count = getCountByRole(roleId);
         if (count > 0) {
-            throw new OpenMessageException("该角色下存在授权租户,不允许删除!");
+            throw new OpenMessageException("该角色下存在授权组员,不允许删除!");
         }
         int result = roleMapper.deleteByPrimaryKey(roleId);
         return result > 0;
@@ -160,7 +160,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 角色授权租户
+     * 角色授权组员
      *
      * @param tenantId
      * @param roles
@@ -174,8 +174,8 @@ public class RolesServiceImpl implements RolesService {
         if (roles.length == 0) {
             return false;
         }
-        // 删除已有角色
-        removeUserRoleByUser(tenantId);
+        // 先清空,在添加
+        removeMemberRoles(tenantId);
         List<RoleMember> list = Lists.newArrayList();
         for (Long roleId : roles) {
             RoleMember roleUser = new RoleMember();
@@ -189,7 +189,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 获取角色所有授权租户数量
+     * 获取角色所有授权组员数量
      *
      * @param roleId
      * @return
@@ -203,13 +203,13 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 获取租户角色数量
+     * 获取组员角色数量
      *
      * @param tenantId
      * @return
      */
     @Override
-    public int getCountByUser(Long tenantId) {
+    public int getCountByTenant(Long tenantId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria().andEqualTo("tenantId", tenantId).end().build();
         int result = rolesMemberMapper.selectCountByExample(example);
@@ -217,13 +217,13 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 移除角色所有授权租户
+     * 移除角色所有组员
      *
      * @param roleId
      * @return
      */
     @Override
-    public boolean removeUserRoleByRole(Long roleId) {
+    public boolean removeRoleMembers(Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria().andEqualTo("roleId", roleId).end().build();
         int result = rolesMemberMapper.deleteByExample(example);
@@ -231,13 +231,13 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-     * 移除租户的所有角色
+     * 移除组员的所有角色
      *
      * @param tenantId
      * @return
      */
     @Override
-    public boolean removeUserRoleByUser(Long tenantId) {
+    public boolean removeMemberRoles(Long tenantId) {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria().andEqualTo("tenantId", tenantId).end().build();
         int result = rolesMemberMapper.deleteByExample(example);
@@ -256,7 +256,7 @@ public class RolesServiceImpl implements RolesService {
         ExampleBuilder builder = new ExampleBuilder(RoleMember.class);
         Example example = builder.criteria()
                 .andEqualTo("tenantId", tenantId)
-                .andEqualTo("roleId",roleId)
+                .andEqualTo("roleId", roleId)
                 .end().build();
         int result = rolesMemberMapper.selectCountByExample(example);
         return result > 0;
@@ -264,7 +264,7 @@ public class RolesServiceImpl implements RolesService {
 
 
     /**
-     * 获取租户角色
+     * 获取组员角色
      *
      * @param tenantId
      * @return

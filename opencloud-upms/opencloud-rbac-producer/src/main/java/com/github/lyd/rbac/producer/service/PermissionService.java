@@ -21,7 +21,7 @@ public interface PermissionService {
     List<ResourcePermission> getTenantPermission(Long tenantId, String resourceType);
 
     /**
-     * 获取租户私有授权
+     * 获取租户授权列表
      *
      * @param tenantId
      * @return
@@ -29,7 +29,7 @@ public interface PermissionService {
     List<ResourcePermission> getTenantPrivatePermission(Long tenantId);
 
     /**
-     * 获取授权列表
+     * 获取所有授权列表
      *
      * @return
      */

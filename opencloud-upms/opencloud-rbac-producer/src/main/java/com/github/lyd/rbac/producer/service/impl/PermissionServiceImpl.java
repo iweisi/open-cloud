@@ -3,7 +3,6 @@ package com.github.lyd.rbac.producer.service.impl;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.CrudMapper;
 import com.github.lyd.common.mapper.ExampleBuilder;
-import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.rbac.client.constans.RbacConstans;
 import com.github.lyd.rbac.client.entity.*;
 import com.github.lyd.rbac.producer.mapper.PermissionMapper;
@@ -23,6 +22,9 @@ import java.util.List;
 
 
 /**
+ * 资源授权
+ * 对菜单、操作、API等进行权限分配操作
+ *
  * @author liuyadu
  */
 @Service
@@ -63,9 +65,9 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * 获取租户授权
+     * 获取租户授权列表
      *
-     * @param tenantId       租户ID
+     * @param tenantId     租户ID
      * @param resourceType 资源类型
      * @return
      */
@@ -91,7 +93,7 @@ public class PermissionServiceImpl implements PermissionService {
                 roleIds.add(rbacRole.getRoleId());
             });
             if (!roleIds.isEmpty()) {
-                //强制清空
+                //强制清空查询
                 example.clear();
                 example = builder.criteria()
                         .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE)
@@ -131,7 +133,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * 获取授权列表
+     * 获取所有授权列表
      *
      * @return
      */
@@ -158,67 +160,12 @@ public class PermissionServiceImpl implements PermissionService {
         if (crudMapper == null) {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
-        String roleCode = "";
-        if (RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
-            Roles role = roleService.getRole(identityId);
-            roleCode = role.getRoleCode();
-        }
-        //授权编码: 资源类型+资源编码 API_INFO
         List<ResourcePermission> permissions = Lists.newArrayList();
         for (Long resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
-            if (object != null) {
-                String code = null;
-                String url = null;
-                Long resourceId = null;
-                Long resourcePid = null;
-                String serviceId = "";
-                String name = "";
-                if (object instanceof ResourceMenu) {
-                    ResourceMenu menu = (ResourceMenu) object;
-                    code = menu.getMenuCode();
-                    url = menu.getUrl();
-                    resourceId = menu.getMenuId();
-                    resourcePid = menu.getParentId();
-                    serviceId = DEFAULT_SERVICE_ID;
-                    name = menu.getMenuName();
-                }
-                if (object instanceof ResourceAction) {
-                    ResourceAction action = (ResourceAction) object;
-                    code = action.getActionCode();
-                    url = action.getUrl();
-                    resourceId = action.getActionId();
-                    resourcePid = action.getMenuId();
-                    serviceId = DEFAULT_SERVICE_ID;
-                    name = action.getActionName();
-                }
-                if (object instanceof ResourceApi) {
-                    ResourceApi api = (ResourceApi) object;
-                    code = api.getApiCode();
-                    url = api.getUrl();
-                    resourceId = api.getApiId();
-                    resourcePid = 0L;
-                    serviceId = api.getServiceId();
-                    name = api.getApiName();
-                }
-                if (object != null) {
-                    code = resourceType + RbacConstans.PERMISSION_SEPARATOR + code;
-                    String identityCode = identityPrefix + code + identityId;
-                    if (StringUtils.isNotBlank(roleCode)) {
-                        identityCode = identityPrefix + roleCode;
-                    }
-                    ResourcePermission permission = new ResourcePermission();
-                    permission.setCode(code.toUpperCase());
-                    permission.setServiceId(serviceId);
-                    permission.setResourceId(resourceId);
-                    permission.setResourcePid(resourcePid);
-                    permission.setUrl(url);
-                    permission.setName(name);
-                    permission.setIdentityCode(identityCode);
-                    permission.setIdentityPrefix(identityPrefix);
-                    permission.setIdentityId(identityId);
-                    permissions.add(permission);
-                }
+            ResourcePermission permission = buildPermission(resourceType, identityPrefix, identityId, object);
+            if (permission != null) {
+                permissions.add(permission);
             }
         }
         if (permissions.isEmpty()) {
@@ -236,10 +183,9 @@ public class PermissionServiceImpl implements PermissionService {
         return result > 0;
     }
 
+
     /**
      * 更新授权信息
-     * 支持更新name,url,resourcePid,serviceId
-     * 不允许修改权限标识
      *
      * @param resourceType
      * @param resourceId
@@ -254,44 +200,18 @@ public class PermissionServiceImpl implements PermissionService {
         }
         Object object = crudMapper.selectByPrimaryKey(resourceId);
         if (object != null) {
-            String url = null;
-            Long resourcePid = null;
-            String serviceId = null;
-            String name = null;
-            if (object instanceof ResourceMenu) {
-                ResourceMenu menu = (ResourceMenu) object;
-                url = menu.getUrl();
-                resourceId = menu.getMenuId();
-                resourcePid = menu.getParentId();
-                serviceId = DEFAULT_SERVICE_ID;
-                name = menu.getMenuName();
-            }
-            if (object instanceof ResourceAction) {
-                ResourceAction action = (ResourceAction) object;
-                url = action.getUrl();
-                resourceId = action.getActionId();
-                resourcePid = action.getMenuId();
-                serviceId = DEFAULT_SERVICE_ID;
-                name = action.getActionName();
-            }
-            if (object instanceof ResourceApi) {
-                ResourceApi api = (ResourceApi) object;
-                url = api.getUrl();
-                resourceId = api.getApiId();
-                resourcePid = 0L;
-                serviceId = api.getServiceId();
-                name = api.getApiName();
-            }
-            if (object != null) {
+            ResourcePermission permission = buildPermission(resourceType, null, null, object);
+            if (permission != null) {
                 ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
                 Example example = builder.criteria().andEqualTo("resourceId", resourceId)
                         .andEqualTo("resourceType", resourceType).end().build();
-                ResourcePermission permission = new ResourcePermission();
-                permission.setServiceId(serviceId);
-                permission.setResourcePid(resourcePid);
-                permission.setName(name);
-                permission.setUrl(url);
-                int count = permissionMapper.updateByExampleSelective(permission, example);
+                ResourcePermission updateObj = new ResourcePermission();
+                updateObj.setCode(permission.getCode());
+                updateObj.setServiceId(permission.getServiceId());
+                updateObj.setResourcePid(permission.getResourcePid());
+                updateObj.setName(permission.getName());
+                updateObj.setUrl(permission.getUrl());
+                int count = permissionMapper.updateByExampleSelective(updateObj, example);
                 return count > 0;
             }
 
@@ -315,5 +235,80 @@ public class PermissionServiceImpl implements PermissionService {
                 .end().build();
         int count = permissionMapper.selectCountByExample(example);
         return count > 0;
+    }
+
+    /**
+     * 构建授权对象
+     *
+     * @param resourceType   资源类型
+     * @param identityPrefix 授权身份前缀
+     * @param identityId     授权身份ID
+     * @param object         资源对象
+     * @return
+     */
+    protected ResourcePermission buildPermission(String resourceType, String identityPrefix, Long identityId, Object object) {
+        if (object == null) {
+            return null;
+        }
+        String code = null;
+        String url = null;
+        Long resourceId = null;
+        Long resourcePid = null;
+        String serviceId = "";
+        String name = "";
+        String identityCode = null;
+        ResourcePermission permission = null;
+        if (object instanceof ResourceMenu) {
+            ResourceMenu menu = (ResourceMenu) object;
+            code = menu.getMenuCode();
+            url = menu.getUrl();
+            resourceId = menu.getMenuId();
+            resourcePid = menu.getParentId();
+            serviceId = DEFAULT_SERVICE_ID;
+            name = menu.getMenuName();
+        }
+        if (object instanceof ResourceAction) {
+            ResourceAction action = (ResourceAction) object;
+            code = action.getActionCode();
+            url = action.getUrl();
+            resourceId = action.getActionId();
+            resourcePid = action.getMenuId();
+            serviceId = DEFAULT_SERVICE_ID;
+            name = action.getActionName();
+        }
+        if (object instanceof ResourceApi) {
+            ResourceApi api = (ResourceApi) object;
+            code = api.getApiCode();
+            url = api.getUrl();
+            resourceId = api.getApiId();
+            resourcePid = 0L;
+            serviceId = api.getServiceId();
+            name = api.getApiName();
+        }
+        if (object != null) {
+            //授权编码=资源类型_资源编码
+            code = resourceType + RbacConstans.PERMISSION_SEPARATOR + code;
+            if (identityPrefix != null) {
+                if (RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
+                    Roles role = roleService.getRole(identityId);
+                    // 角色授权标识=ROLE_角色编码
+                    identityCode = identityPrefix + role.getRoleCode();
+                } else {
+                    // 个人授权特殊标识=USER_资源编码_用户标识
+                    identityCode = identityPrefix + code + identityId;
+                }
+            }
+            permission = new ResourcePermission();
+            permission.setCode(code.toUpperCase());
+            permission.setServiceId(serviceId);
+            permission.setResourceId(resourceId);
+            permission.setResourcePid(resourcePid);
+            permission.setUrl(url);
+            permission.setName(name);
+            permission.setIdentityCode(identityCode);
+            permission.setIdentityPrefix(identityPrefix);
+            permission.setIdentityId(identityId);
+        }
+        return permission;
     }
 }

@@ -70,7 +70,7 @@ public interface RolesService {
     boolean isExist(String roleCode);
 
     /**
-     * 角色授权租户
+     * 角色授权组员
      *
      * @param tenantId
      * @param roles
@@ -79,7 +79,7 @@ public interface RolesService {
     boolean saveUserRole(Long tenantId, Long... roles);
 
     /**
-     * 获取角色所有授权租户数量
+     * 获取角色所有授权组员数量
      *
      * @param roleId
      * @return
@@ -87,28 +87,28 @@ public interface RolesService {
     int getCountByRole(Long roleId);
 
     /**
-     * 获取租户角色数量
+     * 获取组员角色数量
      *
      * @param tenantId
      * @return
      */
-    int getCountByUser(Long tenantId);
+    int getCountByTenant(Long tenantId);
 
     /**
-     * 移除角色所有授权租户
+     * 移除角色所有组员
      *
      * @param roleId
      * @return
      */
-    boolean removeUserRoleByRole(Long roleId);
+    boolean removeRoleMembers(Long roleId);
 
     /**
-     * 移除租户的所有角色
+     * 移除组员的所有角色
      *
      * @param tenantId
      * @return
      */
-    boolean removeUserRoleByUser(Long tenantId);
+    boolean removeMemberRoles(Long tenantId);
 
     /**
      * 检测是否存在
@@ -120,7 +120,7 @@ public interface RolesService {
     boolean isExist(Long tenantId, Long roleId);
 
     /**
-     * 获取租户角色
+     * 获取组员角色
      *
      * @param tenantId
      * @return

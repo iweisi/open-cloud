@@ -132,7 +132,7 @@ public class MenuServiceImpl implements MenuService {
         }
         menu.setUpdateTime(new Date());
         int count = resourceMenuMapper.updateByPrimaryKeySelective(menu);
-        // 同步授权表里的资源
+        // 同步授权表里的信息
         permissionService.updatePermission(RbacConstans.RESOURCE_TYPE_ACTION,menu.getMenuId());
         return count > 0;
     }

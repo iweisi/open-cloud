@@ -46,13 +46,13 @@ public class RoleServiceImplTest extends BaseTest {
 
     @Test
     public void removeUserRoleByRole() throws Exception {
-        boolean result = roleService.removeUserRoleByRole(4l);
+        boolean result = roleService.removeRoleMembers(4l);
         System.out.println(result);
     }
 
     @Test
     public void removeUserRoleByUserId() throws Exception {
-        boolean result = roleService.removeUserRoleByUser(1l);
+        boolean result = roleService.removeMemberRoles(1l);
         System.out.println(result);
     }
 
