@@ -2,7 +2,6 @@ package com.github.lyd.common.autoconfigure;
 
 import com.github.lyd.common.utils.DateUtils;
 import com.github.lyd.common.utils.RandomValueUtils;
-import com.github.lyd.common.utils.SpringContextHolder;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +34,13 @@ import java.util.*;
 @Import({Swagger2DocumentationConfiguration.class})
 public class SwaggerAutoConfiguration {
     private SwaggerProperties swaggerProperties;
-    private static  final String SCOPE_PREFIX="scope.";
-    private static Locale locale = LocaleContextHolder.getLocale();
+    private static final String SCOPE_PREFIX = "scope.";
+    private Locale locale = LocaleContextHolder.getLocale();
+    private MessageSource messageSource;
 
-    public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties) {
+    public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties,MessageSource messageSource) {
         this.swaggerProperties = swaggerProperties;
+        this.messageSource = messageSource;
         log.debug("文档配置:{}", swaggerProperties);
         log.debug("文档安全配置:{}", gatewayProperties);
     }
@@ -126,12 +127,11 @@ public class SwaggerAutoConfiguration {
     private List<AuthorizationScope> scopes() {
         List<String> scopes = Lists.newArrayList();
         List list = Lists.newArrayList();
-        MessageSource messageSource = SpringContextHolder.getBean(MessageSource.class);
         if (swaggerProperties.getScope() != null) {
             scopes.addAll(Arrays.asList(swaggerProperties.getScope().split(",")));
         }
         scopes.forEach(s -> {
-            list.add(new AuthorizationScope(s, messageSource.getMessage(SCOPE_PREFIX+s,null,s,locale)));
+            list.add(new AuthorizationScope(s, messageSource.getMessage(SCOPE_PREFIX + s, null, s, locale)));
         });
         return list;
     }
