@@ -2,11 +2,12 @@
 
 INPUT=$2
 echo "输入的路径 $INPUT"
+FILE_PATH=`readlink -f $INPUT`
+echo "输入的服务路径 $PATH"
 SERVICE=${INPUT##*/}
 echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
-
 if [ "$1" = "" ];
 then
     echo -e "\033[0;31m 未输入操作名 \033[0m  \033[0;34m {start|stop|restart|status} \033[0m"
@@ -23,67 +24,61 @@ LOGS_DIR=$DEPLOY_DIR/logs/$SERVICE_NAME
 if [ ! -d $LOGS_DIR ]; then
         mkdir -p $LOGS_DIR
 fi
-STDOUT_FILE=$LOGS_DIR/stdout.out
+LOG_PATH=$LOGS_DIR/stdout.out
 
-function start()
+start()
 {
-	count=`ps -ef |grep java|grep $SERVICE|grep -v grep|wc -l`
-	if [ $count != 0 ];then
-		echo -e "\033[0;32m $SERVICE is running... \033[0m"
-	else
-		nohup java -jar $SERVICE >$STDOUT_FILE  2>&1 &
-		boot_id=`ps -ef |grep java|grep $SERVICE|grep -v grep|awk '{print $2}'`
-	    echo -e "\033[0;32m pid:$boot_id Start $SERVICE success... \033[0m "
-	    echo -e "\033[0;31m $STDOUT_FILE \033[0m"
-	fi
+	pid=checkpid
+	if [ ! -n "$pid" ]; then
+    JAVA_CMD="nohup java -jar  $FILE_PATH > $LOG_PATH 2>&1 &"
+    su -c "$JAVA_CMD"
+    echo "---------------------------------"
+    echo "启动完成，按CTRL+C退出日志界面即可>>>>>"
+    echo "---------------------------------"
+    sleep 2s
+    tail -f $LOG_PATH
+  else
+      echo "$SERVICE_NAME is runing PID: $pid"
+  fi
 }
 
-function stop()
-{
-	echo -e "\033[0;34m Stop $SERVICE \033[0m"
-	boot_id=`ps -ef |grep java|grep $SERVICE|grep -v grep|awk '{print $2}'`
-	count=`ps -ef |grep java|grep $SERVICE|grep -v grep|wc -l`
-
-	if [ $count != 0 ];then
-	    kill $boot_id
-    	count=`ps -ef |grep java|grep $SERVICE|grep -v grep|wc -l`
-
-		boot_id=`ps -ef |grep java|grep $SERVICE|grep -v grep|awk '{print $2}'`
-		kill -9 $boot_id
-		echo -e "\033[0;31m kill pid $boot_id \033[0m"
-	fi
+checkpid(){
+    pid=`ps -ef |grep $FILE_PATH |grep -v grep |awk '{print $2}'`
+    return pid
 }
 
-function restart()
+stop()
+{
+	pid=checkpid
+    if [ ! -n "$pid" ]; then
+     echo "$SERVICE_NAME not runing"
+    else
+      echo "$SERVICE_NAME stop..."
+      kill -9 $pid
+    fi
+}
+
+restart()
 {
 	stop
 	sleep 2
 	start
 }
 
-function status()
+status()
 {
-    boot_id=`ps -ef |grep java|grep $SERVICE|grep -v grep|awk '{print $2}'`
-    count=`ps -ef |grep java|grep $SERVICE|grep -v grep|wc -l`
-    if [ $count != 0 ];then
-        echo -e "\033[0;32m pid: $boot_id $SERVICE is running... \033[0m"
-    else
-        echo -e "\033[0;31m $SERVICE is not running... \033[0m"
-    fi
+   pid=checkpid
+   if [ ! -n "$pid" ]; then
+     echo "$SERVICE_NAME not runing"
+   else
+     echo "$SERVICE_NAME runing PID: $pid"
+   fi
 }
 
 case $1 in
-	start)
-	start;;
-	stop)
-	stop;;
-	restart)
-	restart;;
-	status)
-	status;;
-	*)
-
-	echo -e "\033[0;31m Usage: \033[0m  \033[0;34m sh  $0  {start|stop|restart|status}  {SERVICEJarName} \033[0m
-\033[0;31m Example: \033[0m
-	  \033[0;33m sh  $0  start esmart-java.jar \033[0m"
+          start) start;;
+          stop)  stop;;
+          restart)  restart;;
+          status)  status;;
+              *)  echo "require start|stop|restart|status"  ;;
 esac
