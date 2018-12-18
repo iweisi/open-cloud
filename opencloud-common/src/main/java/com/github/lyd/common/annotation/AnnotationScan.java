@@ -42,8 +42,8 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
         amqpTemplate = applicationContext.getBean(RabbitTemplate.class);
         Environment env = applicationContext.getEnvironment();
         String serviceId = env.getProperty("spring.application.name", "application");
-        List<Map<String, String>> list = Lists.newArrayList();
-        List<Map<String, String>> limitList = Lists.newArrayList();
+        List<Map<String, Object>> list = Lists.newArrayList();
+        List<Map<String, Object>> limitList = Lists.newArrayList();
         log.info("ApplicationReadyEvent:{}", serviceId);
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RestController.class);
         //遍历Bean
@@ -76,25 +76,22 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                     name = code;
                 }
                 path = prefix + path;
-                Map<String, String> api = Maps.newHashMap();
+                Map<String, Object> api = Maps.newHashMap();
                 api.put("apiCode", code);
                 api.put("apiName", name);
                 api.put("serviceId", serviceId);
                 api.put("url", path);
                 api.put("description", desc);
                 list.add(api);
-                Map<String, String> limit = Maps.newHashMap();
+                Map<String, Object> limit = Maps.newHashMap();
                 // 限流
                 if (m.isAnnotationPresent(ApiRateLimit.class)) {
                     ApiRateLimit rateLimit = m.getAnnotation(ApiRateLimit.class);
-                    if (!rateLimit.type().equals(ApiRateLimitType.URL)) {
-                        path = rateLimit.value();
-                    }
-                    limit.put("rules",path);
-                    limit.put("type",rateLimit.type().name());
+                    limit.put("types",rateLimit.types());
                     limit.put("serviceId", serviceId);
-                    limit.put("limit",String.valueOf(rateLimit.limit()));
-                    limit.put("interval",String.valueOf(rateLimit.interval()));
+                    limit.put("limit",rateLimit.limit());
+                    limit.put("interval",rateLimit.interval());
+                    limit.put("quota",rateLimit.quota());
                     limitList.add(limit);
                 }
             }

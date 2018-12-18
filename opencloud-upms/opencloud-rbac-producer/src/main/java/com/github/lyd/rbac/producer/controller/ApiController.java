@@ -32,7 +32,7 @@ public class ApiController implements ApiRemoteService {
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
     @PostMapping("/apis")
-    @ApiRateLimit(limit = 10,interval = 1)
+    @ApiRateLimit(limit = 10,interval = 1000)
     @Override
     public ResultBody<PageList<ResourceApi>> apis(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
@@ -52,7 +52,7 @@ public class ApiController implements ApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
-    @ApiRateLimit(limit = 20,interval = 1)
+    @ApiRateLimit(limit = 20,interval = 1000)
     @GetMapping("/apis/{apiId}")
     @Override
     public ResultBody<ResourceApi> getApi(@PathVariable("apiId") Long apiId) {
