@@ -36,11 +36,7 @@ start()
 	checkPid
 	if [[ ! -n "$pid" ]]; then
     nohup java -jar  $FILE_PATH >> $LOG_PATH 2>&1 &
-    echo "---------------------------------"
-    echo "启动完成，按CTRL+C退出日志界面即可>>>>>"
-    echo "---------------------------------"
-    sleep 2s
-    tail -f ${LOG_PATH}
+    echo "$SERVICE_NAME is starting you can check the $LOG_PATH"
   else
       echo "$SERVICE_NAME is runing PID: $pid"
   fi
