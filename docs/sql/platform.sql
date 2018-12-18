@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2018-12-17 18:49:57
+Date: 2018-12-18 13:09:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -113,7 +113,7 @@ CREATE TABLE `platform_resource_action` (
   `description` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
   `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
   `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT '0000-00-00 00:00:00',
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`action_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作表';
 
@@ -137,7 +137,7 @@ CREATE TABLE `platform_resource_api` (
   `description` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
   `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
   `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT '0000-00-00 00:00:00',
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`api_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='API资源表';
 
@@ -193,45 +193,45 @@ INSERT INTO `platform_resource_api` VALUES ('522068701550215168', 'updateClient'
 INSERT INTO `platform_resource_api` VALUES ('522068701600546816', 'resetSecret', 'resetSecret', 'platform-oauth-producer', '/clients/reset', '0', '', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
 INSERT INTO `platform_resource_api` VALUES ('522068701709598720', 'removeClinet', 'removeClinet', 'platform-oauth-producer', '/clients/remove', '0', '', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
 INSERT INTO `platform_resource_api` VALUES ('522068701755736064', 'getUser', '获取当前登录用户', 'platform-oauth-producer', '/me', '0', '', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:05');
-INSERT INTO `platform_resource_api` VALUES ('522519297684144128', 'actions', '动作列表', 'opencloud-rbac-producer', '/actions', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298078408704', 'getAction', '获取动作资源', 'opencloud-rbac-producer', '/actions/{actionId}', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298262958080', 'updateAction', '编辑动作资源', 'opencloud-rbac-producer', '/actions/update', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298481061888', 'removeAction', '移除动作', 'opencloud-rbac-producer', '/actions/remove', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298636251136', 'disableAction', '禁用动作资源', 'opencloud-rbac-producer', '/actions/disable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298824994816', 'addAction', '添加动作资源', 'opencloud-rbac-producer', '/actions/add', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519298984378368', 'enableAction', '启用动作资源', 'opencloud-rbac-producer', '/actions/enable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519299194093568', 'enableApi', '启用Api资源', 'opencloud-rbac-producer', '/apis/enable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519299374448640', 'apis', 'Api列表', 'opencloud-rbac-producer', '/apis', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519299550609408', 'removeApi', '移除Api', 'opencloud-rbac-producer', '/apis/remove', '0', '', '1', '2018-12-12 21:05:08', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519299751936000', 'addApi', '添加Api资源', 'opencloud-rbac-producer', '/apis/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519299907125248', 'getApi', '获取Api资源', 'opencloud-rbac-producer', '/apis/{apiId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300070703104', 'disableApi', '禁用Api资源', 'opencloud-rbac-producer', '/apis/disable', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300213309440', 'updateApi', '编辑Api资源', 'opencloud-rbac-producer', '/apis/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300381081600', 'updateApp', '编辑应用', 'opencloud-rbac-producer', '/apps/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300536270848', 'resetSecret', '重置秘钥', 'opencloud-rbac-producer', '/apps/reset', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300691460096', 'apps', '应用列表', 'opencloud-rbac-producer', '/apps', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519300905369600', 'addApp', '添加应用', 'opencloud-rbac-producer', '/apps/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519301110890496', 'getApp', '获取应用信息', 'opencloud-rbac-producer', '/apps/{appId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519301316411392', 'removeApp', '删除应用', 'opencloud-rbac-producer', '/apps/remove', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519301521932288', 'addMenu', '添加菜单资源', 'opencloud-rbac-producer', '/menus/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519301740036096', 'getMenu', '获取菜单资源', 'opencloud-rbac-producer', '/menus/{menuId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519302012665856', 'menus', '菜单列表', 'opencloud-rbac-producer', '/menus', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519302163660800', 'menusAll', '菜单列表', 'opencloud-rbac-producer', '/menus/all', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519302327238656', 'updateMenu', '编辑菜单资源', 'opencloud-rbac-producer', '/menus/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519302474039296', 'enableMenu', '启用菜单资源', 'opencloud-rbac-producer', '/menus/enable', '0', '', '1', '2018-12-12 21:05:09', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519304877375488', 'removeMenu', '移除菜单', 'opencloud-rbac-producer', '/menus/remove', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519305028370432', 'disableMenu', '禁用菜单资源', 'opencloud-rbac-producer', '/menus/disable', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519305200336896', 'permissions', '获取授权列表', 'opencloud-rbac-producer', '/permissions', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:02');
+INSERT INTO `platform_resource_api` VALUES ('522519297684144128', 'actions', '动作列表', 'opencloud-rbac-producer', '/actions', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298078408704', 'getAction', '获取动作资源', 'opencloud-rbac-producer', '/actions/{actionId}', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298262958080', 'updateAction', '编辑动作资源', 'opencloud-rbac-producer', '/actions/update', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298481061888', 'removeAction', '移除动作', 'opencloud-rbac-producer', '/actions/remove', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298636251136', 'disableAction', '禁用动作资源', 'opencloud-rbac-producer', '/actions/disable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298824994816', 'addAction', '添加动作资源', 'opencloud-rbac-producer', '/actions/add', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519298984378368', 'enableAction', '启用动作资源', 'opencloud-rbac-producer', '/actions/enable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519299194093568', 'enableApi', '启用Api资源', 'opencloud-rbac-producer', '/apis/enable', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519299374448640', 'apis', 'Api列表', 'opencloud-rbac-producer', '/apis', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519299550609408', 'removeApi', '移除Api', 'opencloud-rbac-producer', '/apis/remove', '0', '', '1', '2018-12-12 21:05:08', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519299751936000', 'addApi', '添加Api资源', 'opencloud-rbac-producer', '/apis/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519299907125248', 'getApi', '获取Api资源', 'opencloud-rbac-producer', '/apis/{apiId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519300070703104', 'disableApi', '禁用Api资源', 'opencloud-rbac-producer', '/apis/disable', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519300213309440', 'updateApi', '编辑Api资源', 'opencloud-rbac-producer', '/apis/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:12');
+INSERT INTO `platform_resource_api` VALUES ('522519300381081600', 'updateApp', '编辑应用', 'opencloud-rbac-producer', '/apps/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519300536270848', 'resetSecret', '重置秘钥', 'opencloud-rbac-producer', '/apps/reset', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519300691460096', 'apps', '应用列表', 'opencloud-rbac-producer', '/apps', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519300905369600', 'addApp', '添加应用', 'opencloud-rbac-producer', '/apps/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519301110890496', 'getApp', '获取应用信息', 'opencloud-rbac-producer', '/apps/{appId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519301316411392', 'removeApp', '删除应用', 'opencloud-rbac-producer', '/apps/remove', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519301521932288', 'addMenu', '添加菜单资源', 'opencloud-rbac-producer', '/menus/add', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519301740036096', 'getMenu', '获取菜单资源', 'opencloud-rbac-producer', '/menus/{menuId}', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519302012665856', 'menus', '菜单列表', 'opencloud-rbac-producer', '/menus', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519302163660800', 'menusAll', '菜单列表', 'opencloud-rbac-producer', '/menus/all', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519302327238656', 'updateMenu', '编辑菜单资源', 'opencloud-rbac-producer', '/menus/update', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519302474039296', 'enableMenu', '启用菜单资源', 'opencloud-rbac-producer', '/menus/enable', '0', '', '1', '2018-12-12 21:05:09', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519304877375488', 'removeMenu', '移除菜单', 'opencloud-rbac-producer', '/menus/remove', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519305028370432', 'disableMenu', '禁用菜单资源', 'opencloud-rbac-producer', '/menus/disable', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522519305200336896', 'permissions', '获取授权列表', 'opencloud-rbac-producer', '/permissions', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:13');
 INSERT INTO `platform_resource_api` VALUES ('522519305347137536', 'userApis', '登录用户API权限', 'opencloud-rbac-producer', '/permissions/user/apis', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
 INSERT INTO `platform_resource_api` VALUES ('522519305519104000', 'userMenus', '登录用户菜单权限', 'opencloud-rbac-producer', '/permissions/user/menus', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
 INSERT INTO `platform_resource_api` VALUES ('522519305695264768', 'userActions', '登录用户操作权限', 'opencloud-rbac-producer', '/permissions/user/actions', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `platform_resource_api` VALUES ('522519305867231232', 'getRole', '获取角色信息', 'opencloud-rbac-producer', '/roles/{roleId}', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519306139860992', 'addRole', '添加角色', 'opencloud-rbac-producer', '/roles/add', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522519306366353408', 'roles', '角色列表', 'opencloud-rbac-producer', '/roles', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522519306529931264', 'removeRole', '删除角色', 'opencloud-rbac-producer', '/roles/remove', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522519306676731904', 'updateRole', '更新角色', 'opencloud-rbac-producer', '/roles/update', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522519306844504064', 'addLoginLog', 'addLoginLog', 'opencloud-rbac-producer', '/tenants/account/logs/add', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522519307012276224', 'login', 'login', 'opencloud-rbac-producer', '/tenants/account/login', '0', '', '1', '2018-12-12 21:05:10', '2018-12-17 18:13:03');
+INSERT INTO `platform_resource_api` VALUES ('522519305867231232', 'getRole', '获取角色信息', 'opencloud-rbac-producer', '/roles/{roleId}', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519306139860992', 'addRole', '添加角色', 'opencloud-rbac-producer', '/roles/add', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519306366353408', 'roles', '角色列表', 'opencloud-rbac-producer', '/roles', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519306529931264', 'removeRole', '删除角色', 'opencloud-rbac-producer', '/roles/remove', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519306676731904', 'updateRole', '更新角色', 'opencloud-rbac-producer', '/roles/update', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519306844504064', 'addLoginLog', 'addLoginLog', 'opencloud-rbac-producer', '/tenants/account/logs/add', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522519307012276224', 'login', 'login', 'opencloud-rbac-producer', '/tenants/account/login', '0', '', '1', '2018-12-12 21:05:10', '2018-12-18 10:43:14');
 INSERT INTO `platform_resource_api` VALUES ('522519307196825600', 'addUser', '添加用户', 'opencloud-rbac-producer', '/users/add', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
 INSERT INTO `platform_resource_api` VALUES ('522519307368792064', 'users', '用户列表', 'opencloud-rbac-producer', '/users', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
 INSERT INTO `platform_resource_api` VALUES ('522519307544952832', 'updateUser', '更新用户', 'opencloud-rbac-producer', '/users/update', '0', '', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
@@ -242,19 +242,19 @@ INSERT INTO `platform_resource_api` VALUES ('522519388214001664', 'getClient', '
 INSERT INTO `platform_resource_api` VALUES ('522519388385968128', 'updateClient', 'updateClient', 'opencloud-oauth-producer', '/clients/update', '0', '', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
 INSERT INTO `platform_resource_api` VALUES ('522519388721512448', 'removeClinet', 'removeClinet', 'opencloud-oauth-producer', '/clients/remove', '0', '', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
 INSERT INTO `platform_resource_api` VALUES ('522519388872507392', 'getUser', '获取当前登录租户', 'opencloud-oauth-producer', '/me', '0', '', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `platform_resource_api` VALUES ('522881233328275456', 'tenantApis', '登录租户API权限', 'opencloud-rbac-producer', '/permissions/tenant/apis', '0', '', '1', '2018-12-13 21:03:20', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522881233605099520', 'tenantActions', '登录租户操作权限', 'opencloud-rbac-producer', '/permissions/tenant/actions', '0', '', '1', '2018-12-13 21:03:20', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522881233877729280', 'tenantMenus', '登录租户菜单权限', 'opencloud-rbac-producer', '/permissions/tenant/menus', '0', '', '1', '2018-12-13 21:03:20', '2018-12-17 18:13:02');
-INSERT INTO `platform_resource_api` VALUES ('522881235266043904', 'tenants', '租户列表', 'opencloud-rbac-producer', '/tenants', '0', '', '1', '2018-12-13 21:03:21', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522881235421233152', 'updateTenant', '更新租户', 'opencloud-rbac-producer', '/tenants/update', '0', '', '1', '2018-12-13 21:03:21', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522881235580616704', 'addTenant', '添加租户', 'opencloud-rbac-producer', '/tenants/add', '0', '', '1', '2018-12-13 21:03:21', '2018-12-17 18:13:03');
-INSERT INTO `platform_resource_api` VALUES ('522897301509767168', 'clients', 'clients', 'opencloud-auth-producer', '/clients', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897301698510848', 'updateClient', 'updateClient', 'opencloud-auth-producer', '/clients/update', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897301849505792', 'addClient', 'addClient', 'opencloud-auth-producer', '/clients/add', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897302004695040', 'getClient', 'getClient', 'opencloud-auth-producer', '/clients/{clientId}', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897302168272896', 'resetSecret', 'resetSecret', 'opencloud-auth-producer', '/clients/reset', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897302411542528', 'removeClinet', 'removeClinet', 'opencloud-auth-producer', '/clients/remove', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:36');
-INSERT INTO `platform_resource_api` VALUES ('522897302575120384', 'principal', '获取当前登录租户', 'opencloud-auth-producer', '/principal', '0', '', '1', '2018-12-13 22:07:11', '2018-12-17 18:42:37');
+INSERT INTO `platform_resource_api` VALUES ('522881233328275456', 'tenantApis', '登录租户API权限', 'opencloud-rbac-producer', '/permissions/tenant/apis', '0', '', '1', '2018-12-13 21:03:20', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522881233605099520', 'tenantActions', '登录租户操作权限', 'opencloud-rbac-producer', '/permissions/tenant/actions', '0', '', '1', '2018-12-13 21:03:20', '2018-12-18 10:43:13');
+INSERT INTO `platform_resource_api` VALUES ('522881233877729280', 'tenantMenus', '登录租户菜单权限', 'opencloud-rbac-producer', '/permissions/tenant/menus', '0', '', '1', '2018-12-13 21:03:20', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522881235266043904', 'tenants', '租户列表', 'opencloud-rbac-producer', '/tenants', '0', '', '1', '2018-12-13 21:03:21', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522881235421233152', 'updateTenant', '更新租户', 'opencloud-rbac-producer', '/tenants/update', '0', '', '1', '2018-12-13 21:03:21', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522881235580616704', 'addTenant', '添加租户', 'opencloud-rbac-producer', '/tenants/add', '0', '', '1', '2018-12-13 21:03:21', '2018-12-18 10:43:14');
+INSERT INTO `platform_resource_api` VALUES ('522897301509767168', 'clients', 'clients', 'opencloud-auth-producer', '/clients', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897301698510848', 'updateClient', 'updateClient', 'opencloud-auth-producer', '/clients/update', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897301849505792', 'addClient', 'addClient', 'opencloud-auth-producer', '/clients/add', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897302004695040', 'getClient', 'getClient', 'opencloud-auth-producer', '/clients/{clientId}', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897302168272896', 'resetSecret', 'resetSecret', 'opencloud-auth-producer', '/clients/reset', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897302411542528', 'removeClinet', 'removeClinet', 'opencloud-auth-producer', '/clients/remove', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
+INSERT INTO `platform_resource_api` VALUES ('522897302575120384', 'principal', '获取当前登录租户', 'opencloud-auth-producer', '/principal', '0', '', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
 
 -- ----------------------------
 -- Table structure for platform_resource_menu
@@ -271,7 +271,7 @@ CREATE TABLE `platform_resource_menu` (
   `description` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
   `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否可用',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='菜单表';
 
@@ -326,7 +326,7 @@ CREATE TABLE `platform_roles` (
   `description` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '角色描述',
   `enabled` int(10) NOT NULL COMMENT '是否可用',
   `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT '0000-00-00 00:00:00',
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_code` (`role_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色';
