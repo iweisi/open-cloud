@@ -8,7 +8,7 @@ SERVICE=${INPUT##*/}
 echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
-JVM_OPTS="-Xms128m -Xmx128m"
+JVM_OPTS="-Xms64m -Xmx128m"
 
 if [[ "$1" = "" ]];
 then
@@ -35,7 +35,7 @@ start()
 {
 	checkPid
 	if [[ ! -n "$pid" ]]; then
-    nohup java -jar  $FILE_PATH >> $LOG_PATH 2>&1 &
+    nohup java ${JVM_OPTS} -jar  ${FILE_PATH} >> ${LOG_PATH} 2>&1 &
     echo "$SERVICE_NAME is starting you can check the $LOG_PATH"
   else
       echo "$SERVICE_NAME is runing PID: $pid"
