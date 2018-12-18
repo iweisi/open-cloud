@@ -3,7 +3,7 @@
 INPUT=$2
 echo "输入的路径 $INPUT"
 FILE_PATH=`readlink -f $INPUT`
-echo "输入的服务路径 $PATH"
+echo "输入的服务路径 $FILE_PATH"
 SERVICE=${INPUT##*/}
 echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
@@ -25,10 +25,10 @@ if [ ! -d $LOGS_DIR ]; then
         mkdir -p $LOGS_DIR
 fi
 LOG_PATH=$LOGS_DIR/stdout.out
-
+pid=0
 start()
 {
-	pid=checkpid
+	checkpid
 	if [ ! -n "$pid" ]; then
     JAVA_CMD="nohup java -jar  $FILE_PATH > $LOG_PATH 2>&1 &"
     su -c "$JAVA_CMD"
@@ -44,12 +44,11 @@ start()
 
 checkpid(){
     pid=`ps -ef |grep $FILE_PATH |grep -v grep |awk '{print $2}'`
-    return pid
 }
 
 stop()
 {
-	pid=checkpid
+	checkpid
     if [ ! -n "$pid" ]; then
      echo "$SERVICE_NAME not runing"
     else
@@ -67,7 +66,7 @@ restart()
 
 status()
 {
-   pid=checkpid
+   checkpid
    if [ ! -n "$pid" ]; then
      echo "$SERVICE_NAME not runing"
    else
