@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties({OpenMailProperties.class})
+@EnableConfigurationProperties({MailChannelsProperties.class})
 public class MailConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MailSenderLocator.class)
-    public MailSenderLocator mailSenderLocator(OpenMailProperties properties) {
+    public MailSenderLocator mailSenderLocator(MailChannelsProperties properties) {
         MailSenderLocator locator = new MailSenderLocator(properties);
         locator.setMailSenders(locator.locateSenders());
         return locator;

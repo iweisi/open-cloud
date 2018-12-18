@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  * @author liuyadu
  */
-@ConfigurationProperties(prefix = "open.mail")
-public class OpenMailProperties {
+@ConfigurationProperties(prefix = "opencloud.mail")
+public class MailChannelsProperties {
     private Map<String, MailProperties> channels;
 
     public Map<String, MailProperties> getChannels() {

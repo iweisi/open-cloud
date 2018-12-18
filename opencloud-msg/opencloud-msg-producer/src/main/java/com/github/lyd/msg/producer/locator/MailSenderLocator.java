@@ -1,6 +1,6 @@
 package com.github.lyd.msg.producer.locator;
 
-import com.github.lyd.msg.producer.configuration.OpenMailProperties;
+import com.github.lyd.msg.producer.configuration.MailChannelsProperties;
 import com.google.common.collect.Maps;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,9 +16,9 @@ import java.util.Properties;
  * @description:
  */
 public class MailSenderLocator {
-    private OpenMailProperties mailProperties;
+    private MailChannelsProperties mailProperties;
 
-    public MailSenderLocator(OpenMailProperties mailProperties) {
+    public MailSenderLocator(MailChannelsProperties mailProperties) {
         this.mailProperties = mailProperties;
     }
 
