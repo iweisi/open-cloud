@@ -65,9 +65,9 @@
                 <!--服务发现地址-->
                 <discovery.server-addr>172.17.207.82:8848</discovery.server-addr>
                 <!--认证授权地址-->
-                <auth.server-addr>http://172.17.207.82:8211</auth.server-addr>
+                <auth.server-addr>http://39.106.187.125:8211</auth.server-addr>
                 <!--网关服务地址-->
-                <gateway.server-addr>http://172.17.207.82:8888</gateway.server-addr>
+                <gateway.server-addr>http://39.106.187.125:8888</gateway.server-addr>
             </properties>
         </profile>
         <!-- 生产 -->
