@@ -21,7 +21,6 @@ import java.util.Map;
 @Slf4j
 public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
 
-    private Collection<? extends GrantedAuthority> defaultAuthorities;
 
     public OpenUserAuthenticationConverter() {
     }
@@ -35,8 +34,9 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
                 params.put(key, map.get(key));
             }
         }
-        OpenAuth auth =  BeanUtils.mapToBean(params, OpenAuth.class);
+        OpenAuth auth = BeanUtils.mapToBean(params, OpenAuth.class);
         auth.setAuthAppId(params.get(AccessTokenConverter.CLIENT_ID).toString());
+        auth.setAuthorities(AuthorityUtils.authorityListToSet(getAuthorities(map)));
         return auth;
     }
 
@@ -66,7 +66,7 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
 
     private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
         if (!map.containsKey(AUTHORITIES)) {
-            return defaultAuthorities;
+            return AuthorityUtils.NO_AUTHORITIES;
         }
         Object authorities = map.get(AUTHORITIES);
         if (authorities instanceof String) {

@@ -160,4 +160,8 @@ public class OpenAuth implements UserDetails {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public void setAuthorities(Collection<String> authorities) {
+        this.authorities = authorities;
+    }
 }
