@@ -62,9 +62,10 @@ public class IndexController {
             @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "form"),
             @ApiImplicitParam(name = "password", required = true, value = "登录密码", paramType = "form")
     })
-    @PostMapping("/auth/login")
+    @PostMapping("/rest/login")
     @ResponseBody
     public Object login(@RequestParam String username, @RequestParam String password) {
+        // 使用oauth2密码模式登录.
         MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
         postParameters.add("username", username);
         postParameters.add("password", password);

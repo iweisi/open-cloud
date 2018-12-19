@@ -58,7 +58,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 //放行自定义Oauth2登录
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/rest/login").permitAll()
                 //只有超级管理员角色可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(RbacConstans.SUPER_AUTHORITY)
                 .anyRequest().authenticated()

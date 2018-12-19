@@ -54,7 +54,7 @@ public class OpenAuth implements UserDetails {
             return Collections.EMPTY_LIST;
         }
         return AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
-                .collectionToDelimitedString(authorities,",","ROLE_",""));
+                .collectionToCommaDelimitedString(authorities));
     }
 
     @JsonIgnore

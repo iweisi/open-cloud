@@ -1,9 +1,9 @@
 package com.github.lyd.auth.producer.controller;
 
 import com.github.lyd.common.model.ResultBody;
+import com.github.lyd.common.security.OpenHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +20,8 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "获取当前登录租户")
-    @GetMapping("/principal")
-    public ResultBody principal() {
-        return ResultBody.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    @GetMapping("/user")
+    public ResultBody user() {
+        return ResultBody.success(OpenHelper.getPrincipal());
     }
 }
