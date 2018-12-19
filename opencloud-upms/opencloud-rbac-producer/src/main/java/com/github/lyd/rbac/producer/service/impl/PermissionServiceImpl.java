@@ -82,14 +82,14 @@ public class PermissionServiceImpl implements PermissionService {
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("identityId", tenantId)
-                .andEqualTo("enabled",true)
+                .andEqualTo("enabled",1)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
             permissions.addAll(userPermissions);
         }
+        //租户角色权限
         if (roles != null) {
-            //获取角色权限
             roles.forEach(rbacRole -> {
                 roleIds.add(rbacRole.getRoleId());
             });
@@ -100,7 +100,7 @@ public class PermissionServiceImpl implements PermissionService {
                         .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
                         .andIn("identityId", roleIds)
-                        .andEqualTo("enabled",true)
+                        .andEqualTo("enabled",1)
                         .end().build();
                 List<ResourcePermission> rolePermissions = permissionMapper.selectByExample(example);
                 if (rolePermissions != null) {
@@ -126,7 +126,7 @@ public class PermissionServiceImpl implements PermissionService {
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("identityId", tenantId)
-                .andEqualTo("enabled",true)
+                .andEqualTo("enabled",1)
                 .end().build();
         List<ResourcePermission> userPermissions = permissionMapper.selectByExample(example);
         if (userPermissions != null) {
@@ -144,7 +144,7 @@ public class PermissionServiceImpl implements PermissionService {
     public List<ResourcePermission> getPermissionList() {
         ExampleBuilder builder = new ExampleBuilder(ResourcePermission.class);
         Example example = builder.criteria()
-                .andEqualTo("enabled",true)
+                .andEqualTo("enabled",1)
                 .end().build();
         return permissionMapper.selectByExample(example);
     }

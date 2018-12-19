@@ -309,11 +309,11 @@ CREATE TABLE `platform_resource_permission` (
 -- ----------------------------
 -- Records of platform_resource_permission
 -- ----------------------------
-INSERT INTO `platform_resource_permission` VALUES ('1', 'MENU_SYSTEM', '系统安全', '', '1', '0', 'MENU', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
-INSERT INTO `platform_resource_permission` VALUES ('2', 'MENU_AUTHORITY', '权限管理', '/authoritys/index', '2', '1', 'MENU', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
-INSERT INTO `platform_resource_permission` VALUES ('3', 'MENU_MENU', '菜单管理', '/menus/index', '3', '1', 'MENU', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
-INSERT INTO `platform_resource_permission` VALUES ('4', 'MENU_SERVER', '服务维护', null, '4', '0', 'MENU', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
-INSERT INTO `platform_resource_permission` VALUES ('5', 'MENU_TRACE', '服务追踪', 'http://localhost:7080', '7', '4', 'MENU', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
+INSERT INTO `platform_resource_permission` VALUES ('1', 'MENU_SYSTEM', '系统安全', '', '1', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
+INSERT INTO `platform_resource_permission` VALUES ('2', 'MENU_AUTHORITY', '权限管理', '/authoritys/index', '2', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
+INSERT INTO `platform_resource_permission` VALUES ('3', 'MENU_MENU', '菜单管理', '/menus/index', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
+INSERT INTO `platform_resource_permission` VALUES ('4', 'MENU_SERVER', '服务维护', null, '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
+INSERT INTO `platform_resource_permission` VALUES ('5', 'MENU_TRACE', '服务追踪', 'http://localhost:7080', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'platform-rbac-producer', '1');
 
 -- ----------------------------
 -- Table structure for platform_roles
