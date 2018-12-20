@@ -14,8 +14,8 @@ public interface SystemApiRemoteService {
      *
      * @return
      */
-    @PostMapping("/apis")
-    ResultBody<PageList<SystemApi>> apis(
+    @PostMapping("/api")
+    ResultBody<PageList<SystemApi>> api(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -28,7 +28,7 @@ public interface SystemApiRemoteService {
      * @param apiId apiId
      * @return 应用信息
      */
-    @GetMapping("/apis/{apiId}")
+    @GetMapping("/api/{apiId}")
     ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId);
 
     /**
@@ -43,7 +43,7 @@ public interface SystemApiRemoteService {
      * @param apiDesc 描述
      * @return
      */
-    @PostMapping("/apis/add")
+    @PostMapping("/api/add")
     ResultBody<Boolean> addApi(
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
@@ -67,7 +67,7 @@ public interface SystemApiRemoteService {
      * @param apiDesc 描述
      * @return
      */
-    @PostMapping("/apis/update")
+    @PostMapping("/api/update")
     ResultBody<Boolean> updateApi(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
@@ -85,7 +85,7 @@ public interface SystemApiRemoteService {
      * @param apiId ApiID
      * @return
      */
-    @PostMapping("/apis/disable")
+    @PostMapping("/api/disable")
     ResultBody<Boolean> disableApi(
             @RequestParam("apiId") Long apiId
     );
@@ -96,7 +96,7 @@ public interface SystemApiRemoteService {
      * @param apiId ApiID
      * @return
      */
-    @PostMapping("/apis/enable")
+    @PostMapping("/api/enable")
     ResultBody<Boolean> enableApi(
             @RequestParam("apiId") Long apiId
     );
@@ -107,7 +107,7 @@ public interface SystemApiRemoteService {
      * @param apiId ApiID
      * @return
      */
-    @PostMapping("/apis/remove")
+    @PostMapping("/api/remove")
     ResultBody<Boolean> removeApi(
             @RequestParam("apiId") Long apiId
     );

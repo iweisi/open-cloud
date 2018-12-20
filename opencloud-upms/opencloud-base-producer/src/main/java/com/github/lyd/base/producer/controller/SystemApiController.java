@@ -34,10 +34,10 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/apis")
+    @PostMapping("/api")
     @ApiRateLimit(limit = 10,interval = 1000)
     @Override
-    public ResultBody<PageList<SystemApi>> apis(
+    public ResultBody<PageList<SystemApi>> api(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -56,7 +56,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
     @ApiRateLimit(limit = 20,interval = 1000)
-    @GetMapping("/apis/{apiId}")
+    @GetMapping("/api/{apiId}")
     @Override
     public ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId) {
         return ResultBody.success(apiService.getApi(apiId));
@@ -84,7 +84,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/apis/add")
+    @PostMapping("/api/add")
     @Override
     public ResultBody<Boolean> addApi(
             @RequestParam(value = "apiCode") String apiCode,
@@ -130,7 +130,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/apis/update")
+    @PostMapping("/api/update")
     @Override
     public ResultBody<Boolean> updateApi(
             @RequestParam("apiId") Long apiId,
@@ -164,7 +164,7 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })
-    @PostMapping("/apis/disable")
+    @PostMapping("/api/disable")
     @Override
     public ResultBody<Boolean> disableApi(
             @RequestParam("apiId") Long apiId
@@ -182,7 +182,7 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })
-    @PostMapping("/apis/enable")
+    @PostMapping("/api/enable")
     @Override
     public ResultBody<Boolean> enableApi(
             @RequestParam("apiId") Long apiId
@@ -200,7 +200,7 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })
-    @PostMapping("/apis/remove")
+    @PostMapping("/api/remove")
     @Override
     public ResultBody<Boolean> removeApi(
             @RequestParam("apiId") Long apiId

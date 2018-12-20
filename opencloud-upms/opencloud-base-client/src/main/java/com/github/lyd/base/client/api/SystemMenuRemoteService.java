@@ -14,8 +14,8 @@ public interface SystemMenuRemoteService {
      *
      * @return
      */
-    @PostMapping("/menus")
-    ResultBody<PageList<SystemMenu>> menus(
+    @PostMapping("/menu")
+    ResultBody<PageList<SystemMenu>> menu(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -26,8 +26,8 @@ public interface SystemMenuRemoteService {
      *
      * @return
      */
-    @PostMapping("/menus/all")
-    ResultBody<PageList<SystemMenu>> menusAll(
+    @PostMapping("/menu/all")
+    ResultBody<PageList<SystemMenu>> menuAll(
             @RequestParam(name = "keyword", required = false) String keyword
     );
 
@@ -37,7 +37,7 @@ public interface SystemMenuRemoteService {
      * @param menuId menuId
      * @return 应用信息
      */
-    @GetMapping("/menus/{menuId}")
+    @GetMapping("/menu/{menuId}")
     ResultBody<SystemMenu> getMenu(@PathVariable("menuId") Long menuId);
 
     /**
@@ -53,7 +53,7 @@ public interface SystemMenuRemoteService {
      * @param description 描述
      * @return
      */
-    @PostMapping("/menus/add")
+    @PostMapping("/menu/add")
     ResultBody<Boolean> addMenu(
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
@@ -79,7 +79,7 @@ public interface SystemMenuRemoteService {
      * @param description 描述
      * @return
      */
-    @PostMapping("/menus/update")
+    @PostMapping("/menu/update")
     ResultBody<Boolean> updateMenu(
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "menuCode") String menuCode,
@@ -98,7 +98,7 @@ public interface SystemMenuRemoteService {
      * @param menuId 菜单ID
      * @return
      */
-    @PostMapping("/menus/disable")
+    @PostMapping("/menu/disable")
     ResultBody<Boolean> disableMenu(
             @RequestParam("menuId") Long menuId
     );
@@ -109,7 +109,7 @@ public interface SystemMenuRemoteService {
      * @param menuId 菜单ID
      * @return
      */
-    @PostMapping("/menus/enable")
+    @PostMapping("/menu/enable")
     ResultBody<Boolean> enableMenu(
             @RequestParam("menuId") Long menuId
     );
@@ -120,7 +120,7 @@ public interface SystemMenuRemoteService {
      * @param menuId 菜单ID
      * @return
      */
-    @PostMapping("/menus/remove")
+    @PostMapping("/menu/remove")
     ResultBody<Boolean> removeMenu(
             @RequestParam("menuId") Long menuId
     );

@@ -33,9 +33,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/menus")
+    @PostMapping("/menu")
     @Override
-    public ResultBody<PageList<SystemMenu>> menus(
+    public ResultBody<PageList<SystemMenu>> menu(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -53,9 +53,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/menus/all")
+    @PostMapping("/menu/all")
     @Override
-    public ResultBody<PageList<SystemMenu>> menusAll(String keyword) {
+    public ResultBody<PageList<SystemMenu>> menuAll(String keyword) {
         return ResultBody.success(menuService.findList(keyword));
     }
 
@@ -69,7 +69,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
     })
-    @GetMapping("/menus/{menuId}")
+    @GetMapping("/menu/{menuId}")
     @Override
     public ResultBody<SystemMenu> getMenu(@PathVariable("menuId") Long menuId) {
         return ResultBody.success(menuService.getMenu(menuId));
@@ -99,7 +99,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "menuDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/menus/add")
+    @PostMapping("/menu/add")
     @Override
     public ResultBody<Boolean> addMenu(
             @RequestParam(value = "menuCode") String menuCode,
@@ -149,7 +149,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "menuDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/menus/update")
+    @PostMapping("/menu/update")
     @Override
     public ResultBody<Boolean> updateMenu(
             @RequestParam("menuId") Long menuId,
@@ -185,7 +185,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
-    @PostMapping("/menus/disable")
+    @PostMapping("/menu/disable")
     @Override
     public ResultBody<Boolean> disableMenu(
             @RequestParam("menuId") Long menuId
@@ -203,7 +203,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
-    @PostMapping("/menus/enable")
+    @PostMapping("/menu/enable")
     @Override
     public ResultBody<Boolean> enableMenu(
             @RequestParam("menuId") Long menuId
@@ -221,7 +221,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
-    @PostMapping("/menus/remove")
+    @PostMapping("/menu/remove")
     @Override
     public ResultBody<Boolean> removeMenu(
             @RequestParam("menuId") Long menuId

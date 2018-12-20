@@ -1,15 +1,15 @@
 package com.github.lyd.base.producer.service.impl;
 
 import com.github.lyd.base.client.entity.*;
-import com.github.lyd.base.producer.mapper.SystemLoginLogsMapper;
-import com.github.lyd.base.producer.service.SystemLoginAccountService;
+import com.github.lyd.base.producer.mapper.SystemAccountLogsMapper;
+import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.base.client.constans.RbacConstans;
-import com.github.lyd.base.client.dto.SystemLoginAccountDto;
+import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
-import com.github.lyd.base.producer.mapper.SystemLoginAccountMapper;
+import com.github.lyd.base.producer.mapper.SystemAccountMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
@@ -31,12 +31,12 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SystemLoginAccountServiceImpl implements SystemLoginAccountService {
+public class SystemAccountServiceImpl implements SystemAccountService {
 
     @Autowired
-    private SystemLoginAccountMapper systemLoginAccountMapper;
+    private SystemAccountMapper systemAccountMapper;
     @Autowired
-    private SystemLoginLogsMapper systemLoginLogsMapper;
+    private SystemAccountLogsMapper systemAccountLogsMapper;
     @Autowired
     private SystemUserService systemUserService;
     @Autowired
@@ -102,19 +102,19 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
      * @return
      */
     @Override
-    public SystemLoginAccountDto login(String account) {
+    public SystemAccountDto login(String account) {
         if (StringUtils.isBlank(account)) {
             return null;
         }
-        SystemLoginAccount userAccount = null;
-        SystemLoginAccountDto accountDto = null;
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginAccount.class);
+        SystemAccount userAccount = null;
+        SystemAccountDto accountDto = null;
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("account", account)
                 .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
         //默认用户名登录
-        userAccount = systemLoginAccountMapper.selectOneByExample(example);
+        userAccount = systemAccountMapper.selectOneByExample(example);
 
         if (userAccount == null && StringUtils.matchMobile(account)) {
             //强制清空
@@ -124,7 +124,7 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_MOBILE)
                     .end().build();
-            userAccount = systemLoginAccountMapper.selectOneByExample(example);
+            userAccount = systemAccountMapper.selectOneByExample(example);
         }
 
         if (userAccount == null && StringUtils.matchEmail(account)) {
@@ -135,11 +135,11 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_EMAIL)
                     .end().build();
-            userAccount = systemLoginAccountMapper.selectOneByExample(example);
+            userAccount = systemAccountMapper.selectOneByExample(example);
         }
 
         if (userAccount != null) {
-            accountDto = new SystemLoginAccountDto();
+            accountDto = new SystemAccountDto();
             BeanUtils.copyProperties(userAccount, accountDto);
             List<String> authorities = Lists.newArrayList();
             //查询角色权限
@@ -178,8 +178,8 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
             //已经注册
             return false;
         }
-        SystemLoginAccount userAccount = new SystemLoginAccount(userId, username, password, RbacConstans.USER_ACCOUNT_TYPE_USERNAME);
-        int result = systemLoginAccountMapper.insertSelective(userAccount);
+        SystemAccount userAccount = new SystemAccount(userId, username, password, RbacConstans.USER_ACCOUNT_TYPE_USERNAME);
+        int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
 
@@ -199,8 +199,8 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
             //已经注册
             return false;
         }
-        SystemLoginAccount userAccount = new SystemLoginAccount(userId, email, password, RbacConstans.USER_ACCOUNT_TYPE_EMAIL);
-        int result = systemLoginAccountMapper.insertSelective(userAccount);
+        SystemAccount userAccount = new SystemAccount(userId, email, password, RbacConstans.USER_ACCOUNT_TYPE_EMAIL);
+        int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
 
@@ -220,8 +220,8 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
             //已经注册
             return false;
         }
-        SystemLoginAccount userAccount = new SystemLoginAccount(userId, mobile, password, RbacConstans.USER_ACCOUNT_TYPE_MOBILE);
-        int result = systemLoginAccountMapper.insertSelective(userAccount);
+        SystemAccount userAccount = new SystemAccount(userId, mobile, password, RbacConstans.USER_ACCOUNT_TYPE_MOBILE);
+        int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
 
@@ -243,13 +243,13 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
         if (userProfile == null) {
             throw new OpenMessageException("系统用户不存在");
         }
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginAccount.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", userProfile.getUserName())
                 .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
-        SystemLoginAccount userAccount = systemLoginAccountMapper.selectOneByExample(example);
+        SystemAccount userAccount = systemAccountMapper.selectOneByExample(example);
         if (userAccount == null) {
             return false;
         }
@@ -258,7 +258,7 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
             throw new OpenMessageException("原密码不正确");
         }
         userAccount.setPassword(passwordEncoder.encode(newPassword));
-        int count = systemLoginAccountMapper.updateByPrimaryKey(userAccount);
+        int count = systemAccountMapper.updateByPrimaryKey(userAccount);
         return count > 0;
     }
 
@@ -273,17 +273,17 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
         if (userId == null) {
             return;
         }
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginLogs.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemAccountLogs.class);
         Example example = builder.criteria().andEqualTo("userId", userId).end().build();
-        int count = systemLoginLogsMapper.selectCountByExample(example);
+        int count = systemAccountLogsMapper.selectCountByExample(example);
 
-        SystemLoginLogs logs = new SystemLoginLogs();
+        SystemAccountLogs logs = new SystemAccountLogs();
         logs.setUserId(userId);
         logs.setLoginTime(new Date());
         logs.setLoginIp(ipAddress);
         logs.setLoginAgent(agent);
         logs.setLoginNums(count + 1);
-        systemLoginLogsMapper.insertSelective(logs);
+        systemAccountLogsMapper.insertSelective(logs);
     }
 
     /**
@@ -296,13 +296,13 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
      */
     @Override
     public Boolean isExist(Long userId, String account, String accountType) {
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginAccount.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", account)
                 .andEqualTo("accountType", accountType)
                 .end().build();
-        int count = systemLoginAccountMapper.selectCountByExample(example);
+        int count = systemAccountMapper.selectCountByExample(example);
         return count > 0 ? true : false;
     }
 
@@ -315,13 +315,13 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
      */
     @Override
     public Boolean removeEmailAccount(Long userId, String email) {
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginAccount.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", email)
                 .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_EMAIL)
                 .end().build();
-        int count = systemLoginAccountMapper.deleteByExample(example);
+        int count = systemAccountMapper.deleteByExample(example);
         return count > 0 ? true : false;
     }
 
@@ -334,13 +334,13 @@ public class SystemLoginAccountServiceImpl implements SystemLoginAccountService 
      */
     @Override
     public Boolean removeMobileAccount(Long userId, String mobile) {
-        ExampleBuilder builder = new ExampleBuilder(SystemLoginAccount.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", mobile)
                 .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_MOBILE)
                 .end().build();
-        int count = systemLoginAccountMapper.deleteByExample(example);
+        int count = systemAccountMapper.deleteByExample(example);
         return count > 0 ? true : false;
     }
 

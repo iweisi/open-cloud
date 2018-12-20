@@ -11,8 +11,8 @@ import java.io.Serializable;
 /**
  * @author liuyadu
  */
-@Table(name = "system_login_account")
-public class SystemLoginAccount implements Serializable {
+@Table(name = "system_account")
+public class SystemAccount implements Serializable {
     private static final long serialVersionUID = -4484479600033295192L;
     @Id
     @Column(name = "account_id")
@@ -42,10 +42,10 @@ public class SystemLoginAccount implements Serializable {
     private String accountType;
 
 
-    public SystemLoginAccount() {
+    public SystemAccount() {
     }
 
-    public SystemLoginAccount(Long userId, String account, String password, String accountType) {
+    public SystemAccount(Long userId, String account, String password, String accountType) {
         this.userId = userId;
         this.account = account;
         this.password = password;

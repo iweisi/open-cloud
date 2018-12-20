@@ -17,8 +17,8 @@ public interface SystemActionRemoteService {
      *
      * @return
      */
-    @PostMapping("/actions")
-    ResultBody<PageList<SystemAction>> actions(
+    @PostMapping("/action")
+    ResultBody<PageList<SystemAction>> action(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -31,7 +31,7 @@ public interface SystemActionRemoteService {
      * @param actionId actionId
      * @return 应用信息
      */
-    @GetMapping("/actions/{actionId}")
+    @GetMapping("/action/{actionId}")
     ResultBody<SystemAction> getAction(@PathVariable("actionId") Long actionId);
 
     /**
@@ -46,7 +46,7 @@ public interface SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @PostMapping("/actions/add")
+    @PostMapping("/action/add")
     ResultBody<Boolean> addAction(
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
@@ -70,7 +70,7 @@ public interface SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @PostMapping("/actions/update")
+    @PostMapping("/action/update")
     ResultBody<Boolean> updateAction(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "actionCode") String actionCode,
@@ -88,7 +88,7 @@ public interface SystemActionRemoteService {
      * @param actionId 动作ID
      * @return
      */
-    @PostMapping("/actions/disable")
+    @PostMapping("/action/disable")
     ResultBody<Boolean> disableAction(
             @RequestParam("actionId") Long actionId
     );
@@ -99,7 +99,7 @@ public interface SystemActionRemoteService {
      * @param actionId 动作ID
      * @return
      */
-    @PostMapping("/actions/enable")
+    @PostMapping("/action/enable")
     ResultBody<Boolean> enableAction(
             @RequestParam("actionId") Long actionId
     );
@@ -110,7 +110,7 @@ public interface SystemActionRemoteService {
      * @param actionId 动作ID
      * @return
      */
-    @PostMapping("/actions/remove")
+    @PostMapping("/action/remove")
     ResultBody<Boolean> removeAction(
             @RequestParam("actionId") Long actionId
     );

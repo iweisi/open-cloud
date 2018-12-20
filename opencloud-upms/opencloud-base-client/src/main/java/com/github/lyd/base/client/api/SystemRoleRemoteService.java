@@ -20,8 +20,8 @@ public interface SystemRoleRemoteService {
      *
      * @return
      */
-    @PostMapping("/roles")
-    ResultBody<PageList<SystemRole>> roles(
+    @PostMapping("/role")
+    ResultBody<PageList<SystemRole>> role(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -33,7 +33,7 @@ public interface SystemRoleRemoteService {
      * @param roleId
      * @return
      */
-    @GetMapping("/roles/{roleId}")
+    @GetMapping("/role/{roleId}")
     ResultBody<SystemRole> getRole(@PathVariable(value = "roleId") Long roleId);
 
     /**
@@ -45,7 +45,7 @@ public interface SystemRoleRemoteService {
      * @param enable      启用禁用
      * @return
      */
-    @PostMapping("/roles/add")
+    @PostMapping("/role/add")
     ResultBody<Boolean> addRole(
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
@@ -63,7 +63,7 @@ public interface SystemRoleRemoteService {
      * @param enable      启用禁用
      * @return
      */
-    @PostMapping("/roles/update")
+    @PostMapping("/role/update")
     ResultBody<Boolean> updateRole(
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "roleCode") String roleCode,
@@ -79,7 +79,7 @@ public interface SystemRoleRemoteService {
      * @param roleId 角色ID
      * @return
      */
-    @PostMapping("/roles/remove")
+    @PostMapping("/role/remove")
     ResultBody<Boolean> removeRole(
             @RequestParam(value = "roleId") Long roleId
     );

@@ -44,8 +44,8 @@ public interface SystemUserRemoteService {
      *
      * @return
      */
-    @PostMapping("/users")
-    ResultBody<PageList<SystemUserDto>> users(
+    @PostMapping("/user")
+    ResultBody<PageList<SystemUserDto>> user(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -59,7 +59,7 @@ public interface SystemUserRemoteService {
      * @param state
      * @return
      */
-    @PostMapping("/users/add")
+    @PostMapping("/user/add")
     ResultBody<SystemUserDto> addUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
@@ -74,7 +74,7 @@ public interface SystemUserRemoteService {
      * @param state
      * @return
      */
-    @PostMapping("/users/update")
+    @PostMapping("/user/update")
     ResultBody<SystemUserDto> updateUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,

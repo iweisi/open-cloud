@@ -36,9 +36,9 @@ public class SystemAppController implements SystemAppRemoteService {
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/apps")
+    @PostMapping("/app")
     @Override
-    public ResultBody<PageList<SystemAppDto>> apps(
+    public ResultBody<PageList<SystemAppDto>> app(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -57,7 +57,7 @@ public class SystemAppController implements SystemAppRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
     })
-    @GetMapping("/apps/{appId}")
+    @GetMapping("/app/{appId}")
     @Override
     public ResultBody<SystemAppDto> getApp(
             @PathVariable("appId") String appId
@@ -94,7 +94,7 @@ public class SystemAppController implements SystemAppRemoteService {
             @ApiImplicitParam(name = "resourceIds", value = "资源服务器ID(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
             @ApiImplicitParam(name = "authorities", value = "应用权限(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
     })
-    @PostMapping("/apps/add")
+    @PostMapping("/app/add")
     @Override
     public ResultBody<Boolean> addApp(
             @RequestParam(value = "appName") String appName,
@@ -142,7 +142,7 @@ public class SystemAppController implements SystemAppRemoteService {
             @ApiImplicitParam(name = "resourceIds", value = "资源服务器ID(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
             @ApiImplicitParam(name = "authorities", value = "应用权限(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
     })
-    @PostMapping("/apps/update")
+    @PostMapping("/app/update")
     @Override
     public ResultBody<Boolean> updateApp(
             @RequestParam("appId") String appId,
@@ -171,7 +171,7 @@ public class SystemAppController implements SystemAppRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
     })
-    @PostMapping("/apps/reset")
+    @PostMapping("/app/reset")
     @Override
     public ResultBody<Boolean> resetSecret(
             @RequestParam("appId") String appId
@@ -190,7 +190,7 @@ public class SystemAppController implements SystemAppRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
     })
-    @PostMapping("/apps/remove")
+    @PostMapping("/app/remove")
     @Override
     public ResultBody<Boolean> removeApp(
             @RequestParam("appId") String appId

@@ -11,8 +11,8 @@ import java.util.Date;
 /**
  * @author liuyadu
  */
-@Table(name = "system_login_logs")
-public class SystemLoginLogs {
+@Table(name = "system_account_logs")
+public class SystemAccountLogs {
     @Id
     @KeySql(genId = SnowflakeId.class)
     private Long id;

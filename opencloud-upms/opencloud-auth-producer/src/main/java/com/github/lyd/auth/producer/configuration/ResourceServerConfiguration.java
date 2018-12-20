@@ -1,11 +1,11 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.auth.producer.service.feign.SystemLoginAccountApi;
+import com.github.lyd.auth.producer.service.feign.SystemAccountApi;
+import com.github.lyd.base.client.constans.RbacConstans;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenAuth;
 import com.github.lyd.common.security.OpenHelper;
-import com.github.lyd.base.client.constans.RbacConstans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -41,7 +41,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private ResourceServerProperties properties;
     @Autowired
-    private SystemLoginAccountApi systemLoginAccountApi;
+    private SystemAccountApi systemAccountApi;
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenServices(OpenHelper.buildRemoteTokenServices(properties));
@@ -96,7 +96,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 OpenAuth userLoginDetails = (OpenAuth) authentication.getPrincipal();
                 WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) authentication.getDetails();
                 //添加登录日志
-                systemLoginAccountApi.addLoginLog(userLoginDetails.getUserId(), webAuthenticationDetails.getRemoteAddress(), request.getHeader("User-Agent"));
+                systemAccountApi.addLoginLog(userLoginDetails.getUserId(), webAuthenticationDetails.getRemoteAddress(), request.getHeader("User-Agent"));
                 log.debug("添加登录日志:{} {}", userLoginDetails.getUsername(), webAuthenticationDetails.getRemoteAddress());
             } catch (Exception e) {
                 log.error("invoke addLoginLog api error:{}",e.getMessage());

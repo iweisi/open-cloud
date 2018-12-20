@@ -14,8 +14,8 @@ public interface SystemAppRemoteService {
      *
      * @return
      */
-    @PostMapping("/apps")
-    ResultBody<PageList<SystemAppDto>> apps(
+    @PostMapping("/app")
+    ResultBody<PageList<SystemAppDto>> app(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -28,7 +28,7 @@ public interface SystemAppRemoteService {
      * @param appId 应用Id
      * @return
      */
-    @GetMapping("/apps/{appId}")
+    @GetMapping("/app/{appId}")
     ResultBody<SystemAppDto> getApp(@PathVariable("appId") String appId);
 
     /**
@@ -46,7 +46,7 @@ public interface SystemAppRemoteService {
      * @param authorities  应用权限,多个用逗号隔开
      * @return
      */
-    @PostMapping("/apps/add")
+    @PostMapping("/app/add")
     ResultBody<Boolean> addApp(
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
@@ -76,7 +76,7 @@ public interface SystemAppRemoteService {
      * @param authorities  应用权限,多个用逗号隔开
      * @return
      */
-    @PostMapping("/apps/update")
+    @PostMapping("/app/update")
     ResultBody<Boolean> updateApp(
             @RequestParam("appId") String appId,
             @RequestParam(value = "appName") String appName,
@@ -97,7 +97,7 @@ public interface SystemAppRemoteService {
      * @param appId 应用Id
      * @return
      */
-    @PostMapping("/apps/reset")
+    @PostMapping("/app/reset")
     ResultBody<Boolean> resetSecret(
             @RequestParam("appId") String appId
     );
@@ -109,7 +109,7 @@ public interface SystemAppRemoteService {
      * @param appId 应用Id
      * @return
      */
-    @PostMapping("/apps/remove")
+    @PostMapping("/app/remove")
     ResultBody<Boolean> removeApp(
             @RequestParam("appId") String appId
     );

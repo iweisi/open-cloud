@@ -33,9 +33,9 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/roles")
+    @PostMapping("/role")
     @Override
-    public ResultBody<PageList<SystemRole>> roles(
+    public ResultBody<PageList<SystemRole>> role(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -53,7 +53,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
     })
-    @GetMapping("/roles/{roleId}")
+    @GetMapping("/role/{roleId}")
     @Override
     public ResultBody<SystemRole> getRole(@PathVariable(value = "roleId") Long roleId) {
         SystemRole result = roleService.getRole(roleId);
@@ -76,7 +76,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
             @ApiImplicitParam(name = "enable", value = "启用禁用", defaultValue = "", required = false, paramType = "form")
     })
-    @PostMapping("/roles/add")
+    @PostMapping("/role/add")
     @Override
     public ResultBody<Boolean> addRole(
             @RequestParam(value = "roleCode") String roleCode,
@@ -106,7 +106,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
             @ApiImplicitParam(name = "enable", value = "启用禁用", defaultValue = "", required = false, paramType = "form")
     })
-    @PostMapping("/roles/update")
+    @PostMapping("/role/update")
     @Override
     public ResultBody<Boolean> updateRole(
             @RequestParam(value = "roleId") Long roleId,
@@ -129,7 +129,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
-    @PostMapping("/roles/remove")
+    @PostMapping("/role/remove")
     @Override
     public ResultBody<Boolean> removeRole(
             @RequestParam(value = "roleId") Long roleId

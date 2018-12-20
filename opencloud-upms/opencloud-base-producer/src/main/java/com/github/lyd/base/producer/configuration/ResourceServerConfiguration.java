@@ -42,7 +42,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(RbacConstans.SUPER_AUTHORITY)
                 .antMatchers("/v2/api-docs/**").permitAll()
                 // 内部调用直接放行
-                .antMatchers("/users/login", "/users/logs/add", "/access","/apps/{appId}").permitAll()
+                .antMatchers("/account/login", "/account/logs/add", "/access","/app/{appId}").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。

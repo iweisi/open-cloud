@@ -1,6 +1,6 @@
 package com.github.lyd.base.producer.service;
 
-import com.github.lyd.base.client.dto.SystemLoginAccountDto;
+import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
 
 /**
@@ -9,7 +9,7 @@ import com.github.lyd.base.client.dto.SystemUserDto;
  *
  * @author liuyadu
  */
-public interface SystemLoginAccountService {
+public interface SystemAccountService {
 
     /**
      * 注册账户
@@ -57,7 +57,7 @@ public interface SystemLoginAccountService {
      * @param account 登陆账号
      * @return
      */
-    SystemLoginAccountDto login(String account);
+    SystemAccountDto login(String account);
 
     /**
      * 更新系统用户密码

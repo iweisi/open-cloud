@@ -1,10 +1,10 @@
 package com.github.lyd.auth.producer.service.impl;
 
-import com.github.lyd.auth.producer.service.feign.SystemLoginAccountApi;
+import com.github.lyd.auth.producer.service.feign.SystemAccountApi;
+import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenAuth;
-import com.github.lyd.base.client.constans.RbacConstans;
-import com.github.lyd.base.client.dto.SystemLoginAccountDto;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ import java.util.Map;
 public class UserLoginServiceImpl implements UserDetailsService {
 
     @Autowired
-    private SystemLoginAccountApi systemLoginAccountApi;
+    private SystemAccountApi systemAccountApi;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        ResultBody<SystemLoginAccountDto> resp = systemLoginAccountApi.login(username);
-        SystemLoginAccountDto account = resp.getData();
+        ResultBody<SystemAccountDto> resp = systemAccountApi.login(username);
+        SystemAccountDto account = resp.getData();
         if (account == null) {
             throw new UsernameNotFoundException("系统用户 " + username + " 不存在!");
         }

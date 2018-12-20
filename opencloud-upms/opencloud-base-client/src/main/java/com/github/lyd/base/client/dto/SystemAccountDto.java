@@ -1,7 +1,7 @@
 package com.github.lyd.base.client.dto;
 
 import com.github.lyd.base.client.entity.SystemRole;
-import com.github.lyd.base.client.entity.SystemLoginAccount;
+import com.github.lyd.base.client.entity.SystemAccount;
 import com.github.lyd.base.client.entity.SystemUser;
 import com.google.common.collect.Lists;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2018/11/12 11:35
  * @description:
  */
-public class SystemLoginAccountDto extends SystemLoginAccount implements Serializable {
+public class SystemAccountDto extends SystemAccount implements Serializable {
     private static final long serialVersionUID = 6717800085953996702L;
 
     /**

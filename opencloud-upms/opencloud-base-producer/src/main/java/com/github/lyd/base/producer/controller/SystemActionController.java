@@ -33,9 +33,9 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/actions")
+    @PostMapping("/action")
     @Override
-    public ResultBody<PageList<SystemAction>> actions(
+    public ResultBody<PageList<SystemAction>> action(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -53,7 +53,7 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "动作Id", paramType = "path"),
     })
-    @GetMapping("/actions/{actionId}")
+    @GetMapping("/action/{actionId}")
     @Override
     public ResultBody<SystemAction> getAction(@PathVariable("actionId") Long actionId) {
         return ResultBody.success(actionService.getAction(actionId));
@@ -81,7 +81,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/actions/add")
+    @PostMapping("/action/add")
     @Override
     public ResultBody<Boolean> addAction(
             @RequestParam(value = "actionCode") String actionCode,
@@ -127,7 +127,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
     })
-    @PostMapping("/actions/update")
+    @PostMapping("/action/update")
     @Override
     public ResultBody<Boolean> updateAction(
             @RequestParam("actionId") Long actionId,
@@ -161,7 +161,7 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form")
     })
-    @PostMapping("/actions/disable")
+    @PostMapping("/action/disable")
     @Override
     public ResultBody<Boolean> disableAction(
             @RequestParam("actionId") Long actionId
@@ -179,7 +179,7 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form")
     })
-    @PostMapping("/actions/enable")
+    @PostMapping("/action/enable")
     @Override
     public ResultBody<Boolean> enableAction(
             @RequestParam("actionId") Long actionId
@@ -197,7 +197,7 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form")
     })
-    @PostMapping("/actions/remove")
+    @PostMapping("/action/remove")
     @Override
     public ResultBody<Boolean> removeAction(
             @RequestParam("actionId") Long actionId
