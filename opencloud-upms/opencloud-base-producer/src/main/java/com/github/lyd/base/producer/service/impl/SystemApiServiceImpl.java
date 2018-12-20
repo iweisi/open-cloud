@@ -4,7 +4,7 @@ import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
@@ -130,7 +130,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_API, api.getApiId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
         return count > 0;
     }
 
@@ -166,7 +166,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION,api.getApiId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,api.getApiId());
         return count > 0;
     }
 
@@ -178,7 +178,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public Boolean removeApi(Long apiId) {
-        if (systemAccessService.isExist(apiId, RbacConstans.RESOURCE_TYPE_API)) {
+        if (systemAccessService.isExist(apiId, BaseConstants.RESOURCE_TYPE_API)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", apiId));
         }
         int count = systemApiMapper.deleteByPrimaryKey(apiId);

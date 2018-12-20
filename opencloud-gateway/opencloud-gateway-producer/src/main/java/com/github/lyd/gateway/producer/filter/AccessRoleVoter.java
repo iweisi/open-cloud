@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.filter;
 
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.vote.RoleVoter;
@@ -35,7 +35,7 @@ public class AccessRoleVoter extends RoleVoter {
             Iterator var8 = authorities.iterator();
             while (var8.hasNext()) {
                 GrantedAuthority authority = (GrantedAuthority) var8.next();
-                if (authority.getAuthority().equals(RbacConstans.SUPER_AUTHORITY)) {
+                if (authority.getAuthority().equals(BaseConstants.SUPER_AUTHORITY)) {
                     //超级管理员拥有全部权限,直接通过
                     return 1;
                 }

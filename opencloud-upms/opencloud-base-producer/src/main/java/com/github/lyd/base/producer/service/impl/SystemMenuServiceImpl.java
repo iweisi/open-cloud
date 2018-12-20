@@ -6,7 +6,7 @@ import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.pagehelper.PageHelper;
@@ -138,7 +138,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         menu.setUpdateTime(new Date());
         int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
     }
 
@@ -157,7 +157,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         menu.setUpdateTime(new Date());
         int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
     }
 
@@ -169,7 +169,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      */
     @Override
     public Boolean removeMenu(Long menuId) {
-        if (systemAccessService.isExist(menuId, RbacConstans.RESOURCE_TYPE_MENU)) {
+        if (systemAccessService.isExist(menuId, BaseConstants.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", menuId));
         }
         int count = systemMenuMapper.deleteByPrimaryKey(menuId);

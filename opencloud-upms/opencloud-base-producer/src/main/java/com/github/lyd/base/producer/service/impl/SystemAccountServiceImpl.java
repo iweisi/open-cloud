@@ -6,7 +6,7 @@ import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.producer.mapper.SystemAccountMapper;
@@ -76,7 +76,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (StringUtils.isBlank(saved.getNickName())) {
             saved.setNickName(saved.getUserName());
         }
-        saved.setState(RbacConstans.USER_STATE_NORMAL);
+        saved.setState(BaseConstants.USER_STATE_NORMAL);
         saved.setCreateTime(new Date());
         saved.setUpdateTime(saved.getCreateTime());
         saved.setRegisterTime(saved.getCreateTime());
@@ -111,7 +111,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("account", account)
-                .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_USERNAME)
+                .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
         //默认用户名登录
         userAccount = systemAccountMapper.selectOneByExample(example);
@@ -122,7 +122,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             //  尝试手机号登录
             example = builder.criteria()
                     .andEqualTo("account", account)
-                    .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_MOBILE)
+                    .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
                     .end().build();
             userAccount = systemAccountMapper.selectOneByExample(example);
         }
@@ -133,7 +133,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             //  尝试邮箱登录
             example = builder.criteria()
                     .andEqualTo("account", account)
-                    .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_EMAIL)
+                    .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
                     .end().build();
             userAccount = systemAccountMapper.selectOneByExample(example);
         }
@@ -146,7 +146,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             List<SystemRole> rolesList = roleService.getUserRoles(userAccount.getUserId());
             if (rolesList != null) {
                 for (SystemRole role : rolesList) {
-                    authorities.add(RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE + role.getRoleCode());
+                    authorities.add(BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE + role.getRoleCode());
                 }
             }
             //获取系统用户私有权限
@@ -174,11 +174,11 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      */
     @Override
     public Boolean registerUsernameAccount(Long userId, String username, String password) {
-        if (isExist(userId, username, RbacConstans.USER_ACCOUNT_TYPE_USERNAME)) {
+        if (isExist(userId, username, BaseConstants.USER_ACCOUNT_TYPE_USERNAME)) {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, username, password, RbacConstans.USER_ACCOUNT_TYPE_USERNAME);
+        SystemAccount userAccount = new SystemAccount(userId, username, password, BaseConstants.USER_ACCOUNT_TYPE_USERNAME);
         int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
@@ -195,11 +195,11 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (!StringUtils.matchEmail(email)) {
             return false;
         }
-        if (isExist(userId, email, RbacConstans.USER_ACCOUNT_TYPE_EMAIL)) {
+        if (isExist(userId, email, BaseConstants.USER_ACCOUNT_TYPE_EMAIL)) {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, email, password, RbacConstans.USER_ACCOUNT_TYPE_EMAIL);
+        SystemAccount userAccount = new SystemAccount(userId, email, password, BaseConstants.USER_ACCOUNT_TYPE_EMAIL);
         int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
@@ -216,11 +216,11 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (!StringUtils.matchMobile(mobile)) {
             return false;
         }
-        if (isExist(userId, mobile, RbacConstans.USER_ACCOUNT_TYPE_MOBILE)) {
+        if (isExist(userId, mobile, BaseConstants.USER_ACCOUNT_TYPE_MOBILE)) {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, mobile, password, RbacConstans.USER_ACCOUNT_TYPE_MOBILE);
+        SystemAccount userAccount = new SystemAccount(userId, mobile, password, BaseConstants.USER_ACCOUNT_TYPE_MOBILE);
         int result = systemAccountMapper.insertSelective(userAccount);
         return result > 0;
     }
@@ -247,7 +247,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", userProfile.getUserName())
-                .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_USERNAME)
+                .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
         SystemAccount userAccount = systemAccountMapper.selectOneByExample(example);
         if (userAccount == null) {
@@ -319,7 +319,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", email)
-                .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_EMAIL)
+                .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
                 .end().build();
         int count = systemAccountMapper.deleteByExample(example);
         return count > 0 ? true : false;
@@ -338,7 +338,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", mobile)
-                .andEqualTo("accountType", RbacConstans.USER_ACCOUNT_TYPE_MOBILE)
+                .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
                 .end().build();
         int count = systemAccountMapper.deleteByExample(example);
         return count > 0 ? true : false;

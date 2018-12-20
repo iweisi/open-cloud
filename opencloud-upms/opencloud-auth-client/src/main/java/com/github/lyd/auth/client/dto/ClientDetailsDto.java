@@ -1,7 +1,7 @@
 package com.github.lyd.auth.client.dto;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.lyd.auth.client.constans.AuthConstans;
+import com.github.lyd.auth.client.constants.AuthConstants;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.security.core.GrantedAuthority;
@@ -136,12 +136,12 @@ public class ClientDetailsDto implements Serializable, ClientDetails {
 
     @Override
     public Integer getAccessTokenValiditySeconds() {
-        return AuthConstans.ACCESS_TOKEN_VALIDITY_SECONDS;
+        return AuthConstants.ACCESS_TOKEN_VALIDITY_SECONDS;
     }
 
     @Override
     public Integer getRefreshTokenValiditySeconds() {
-        return AuthConstans.REFRESH_TOKEN_VALIDITY_SECONDS;
+        return AuthConstants.REFRESH_TOKEN_VALIDITY_SECONDS;
     }
 
     @Override

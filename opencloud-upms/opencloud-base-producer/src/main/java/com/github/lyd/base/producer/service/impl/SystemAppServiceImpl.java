@@ -10,7 +10,7 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.utils.RandomValueUtils;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -116,8 +116,8 @@ public class SystemAppServiceImpl implements SystemAppService {
         appInfo.setUpdateTime(appInfo.getCreateTime());
         int result = systemAppMapper.insertSelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
-        String grantTypes = RbacConstans.getGrantTypes(appType);
-        Boolean autoApprove = RbacConstans.isAutoApprove(appType);
+        String grantTypes = BaseConstants.getGrantTypes(appType);
+        Boolean autoApprove = BaseConstants.isAutoApprove(appType);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
@@ -157,8 +157,8 @@ public class SystemAppServiceImpl implements SystemAppService {
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
-        String grantTypes = RbacConstans.getGrantTypes(appType);
-        Boolean autoApprove = RbacConstans.isAutoApprove(appType);
+        String grantTypes = BaseConstants.getGrantTypes(appType);
+        Boolean autoApprove = BaseConstants.isAutoApprove(appType);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(appInfo.getAppId(), grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚

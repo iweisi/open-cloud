@@ -9,7 +9,7 @@ import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.filter.*;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -72,7 +72,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 // 放行自定义Oauth2登录
                 .antMatchers("/rest/login").permitAll()
                 // 只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(RbacConstans.SUPER_AUTHORITY)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(BaseConstants.SUPER_AUTHORITY)
                 .anyRequest().authenticated()
                 // SSO退出
                 .and().logout().logoutSuccessHandler(new SsoLogoutSuccessHandler(gatewayProperties.getServerAddr() + "/auth/logout", restTemplate))
@@ -127,7 +127,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         decisionVoters.add(new AccessRoleVoter());
         //特殊权限投票器,修改前缀为USER_
         AccessRoleVoter accessRoleVoter = new AccessRoleVoter();
-        accessRoleVoter.setRolePrefix(RbacConstans.PERMISSION_IDENTITY_PREFIX_USER);
+        accessRoleVoter.setRolePrefix(BaseConstants.PERMISSION_IDENTITY_PREFIX_USER);
         decisionVoters.add(accessRoleVoter);
         AbstractAccessDecisionManager accessDecisionManager = new AffirmativeBased(decisionVoters);
         return accessDecisionManager;

@@ -5,7 +5,7 @@ import com.github.lyd.base.producer.mapper.SystemAccessMapper;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.CrudMapper;
 import com.github.lyd.common.mapper.ExampleBuilder;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.producer.mapper.SystemActionMapper;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
 import com.github.lyd.base.producer.mapper.SystemMenuMapper;
@@ -51,13 +51,13 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      */
     private CrudMapper getMapper(String resourceType) {
         // 判断资源类型
-        if (RbacConstans.RESOURCE_TYPE_MENU.equals(resourceType)) {
+        if (BaseConstants.RESOURCE_TYPE_MENU.equals(resourceType)) {
             return systemMenuMapper;
         }
-        if (RbacConstans.RESOURCE_TYPE_ACTION.equals(resourceType)) {
+        if (BaseConstants.RESOURCE_TYPE_ACTION.equals(resourceType)) {
             return systemActionMapper;
         }
-        if (RbacConstans.RESOURCE_TYPE_API.equals(resourceType)) {
+        if (BaseConstants.RESOURCE_TYPE_API.equals(resourceType)) {
             return systemApiMapper;
         }
         return null;
@@ -78,7 +78,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         // 系统用户私有权限
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
+                .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("identityId", userId)
                 .andEqualTo("enabled",1)
@@ -96,7 +96,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 //强制清空查询
                 example.clear();
                 example = builder.criteria()
-                        .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE)
+                        .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
                         .andIn("identityId", roleIds)
                         .andEqualTo("enabled",1)
@@ -123,7 +123,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         // 系统用户私有权限
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("identityPrefix", RbacConstans.PERMISSION_IDENTITY_PREFIX_USER)
+                .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("identityId", userId)
                 .andEqualTo("enabled",1)
                 .end().build();
@@ -159,7 +159,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      */
     @Override
     public Boolean addAccess(Long identityId, String identityPrefix, String resourceType, Long... resourceIds) {
-        if (!RbacConstans.PERMISSION_IDENTITY_PREFIX_USER.equals(identityPrefix) && !RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
+        if (!BaseConstants.PERMISSION_IDENTITY_PREFIX_USER.equals(identityPrefix) && !BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
             throw new OpenMessageException(String.format("%s所有者类型暂不支持!", identityPrefix));
         }
         CrudMapper crudMapper = getMapper(resourceType);
@@ -298,9 +298,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         }
         if (object != null) {
             //授权编码=资源类型_资源编码
-            code = resourceType + RbacConstans.PERMISSION_SEPARATOR + code;
+            code = resourceType + BaseConstants.PERMISSION_SEPARATOR + code;
             if (identityPrefix != null) {
-                if (RbacConstans.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
+                if (BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
                     SystemRole role = systemRoleService.getRole(identityId);
                     // 角色授权标识=ROLE_角色编码
                     identityCode = identityPrefix + role.getRoleCode();

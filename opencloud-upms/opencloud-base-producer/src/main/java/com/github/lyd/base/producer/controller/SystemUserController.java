@@ -1,7 +1,7 @@
 package com.github.lyd.base.producer.controller;
 
 import com.github.lyd.base.client.api.SystemUserRemoteService;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.client.entity.SystemAccess;
 import com.github.lyd.base.producer.service.SystemAccessService;
@@ -97,18 +97,18 @@ public class SystemUserController implements SystemUserRemoteService {
     @ApiOperation(value = "当前用户可访问菜单资源")
     @GetMapping("/user/current/menus")
     public ResultBody<List<SystemAccess>> userMenus() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_MENU));
+        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
     }
 
     @ApiOperation(value = "当前用户可访问操作资源")
     @GetMapping("/user/current/actions")
     public ResultBody<List<SystemAccess>> userActions() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_ACTION));
+        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
     }
 
     @ApiOperation(value = "当前用户可访问API资源")
     @GetMapping("/user/current/apis")
     public ResultBody<List<SystemAccess>> userApis() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), RbacConstans.RESOURCE_TYPE_API));
+        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_API));
     }
 }

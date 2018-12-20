@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.auth.client.constans.AuthConstans;
+import com.github.lyd.auth.client.constants.AuthConstants;
 import com.github.lyd.auth.producer.exception.Oauth2WebResponseExceptionTranslator;
 import com.github.lyd.common.security.OpenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,9 +114,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(clientDetailsService());
         // token有效期自定义设置，默认12小时
-        tokenServices.setAccessTokenValiditySeconds(AuthConstans.ACCESS_TOKEN_VALIDITY_SECONDS);
+        tokenServices.setAccessTokenValiditySeconds(AuthConstants.ACCESS_TOKEN_VALIDITY_SECONDS);
         //默认30天，这里修改
-        tokenServices.setRefreshTokenValiditySeconds(AuthConstans.REFRESH_TOKEN_VALIDITY_SECONDS);
+        tokenServices.setRefreshTokenValiditySeconds(AuthConstants.REFRESH_TOKEN_VALIDITY_SECONDS);
         return tokenServices;
     }
 

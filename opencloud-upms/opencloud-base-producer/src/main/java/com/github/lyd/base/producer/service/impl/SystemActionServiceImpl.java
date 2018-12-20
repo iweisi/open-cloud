@@ -5,7 +5,7 @@ import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.constans.RbacConstans;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemAction;
 import com.github.lyd.base.producer.mapper.SystemActionMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
@@ -127,7 +127,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
     }
 
@@ -146,7 +146,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
     }
 
@@ -158,7 +158,7 @@ public class SystemActionServiceImpl implements SystemActionService {
      */
     @Override
     public Boolean removeAction(Long actionId) {
-        if (systemAccessService.isExist(actionId, RbacConstans.RESOURCE_TYPE_ACTION)) {
+        if (systemAccessService.isExist(actionId, BaseConstants.RESOURCE_TYPE_ACTION)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", actionId));
         }
         int count = systemActionMapper.deleteByPrimaryKey(actionId);

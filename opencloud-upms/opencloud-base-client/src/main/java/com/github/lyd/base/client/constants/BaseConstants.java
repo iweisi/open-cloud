@@ -1,9 +1,9 @@
-package com.github.lyd.base.client.constans;
+package com.github.lyd.base.client.constants;
 
 /**
  * 通用权限常量
  */
-public class RbacConstans {
+public class BaseConstants {
     /**
      * 超级权限
      */
