@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 为了安全这里直接用jdbc 访问系统用户表, 由于安全限制不能直接使用feign方式获取系统用户信息
- *
  * @author liuyadu
  */
 @Service("userDetailService")
