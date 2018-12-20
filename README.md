@@ -71,7 +71,7 @@
    4. 网关服务地址:<code><gateway.server-addr>http://localhost:8888</gateway.server-addr></code>  
 #### 项目部署
 打包不同环境:<code>mvn clean install package -P {dev|test|online}</code>  
-启动脚本:<code>./start.sh {start|stop|restart|status} {service}.jar</code>    
+启动脚本:<code>./startup.sh {start|stop|restart|status} {service}.jar</code>    
 启动顺序:   
    1. 安装并启动nacos服务发现  
    2. opencloud-base-producer  
