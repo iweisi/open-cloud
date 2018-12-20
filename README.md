@@ -22,7 +22,7 @@
     1. 提供微服务相关依赖包
     2. 封装springCloud必要配置类、自动加载、
     3. 工具类、统一全局异常解析、自定义错误码(支持国际化)、自定义属性配置、
-* opencloud-gateway(API网关)
+* opencloud-gateway(开发API网关)
    1. opencloud-gateway-client    API网关-接口
    2. opencloud-gateway-producer  API网关-资源服务器 (port = 8888)
       1. 提供接口调用统一入口:路由代理、限流、访问限制、数字验签、开发调试文档(生产环境不生效)
