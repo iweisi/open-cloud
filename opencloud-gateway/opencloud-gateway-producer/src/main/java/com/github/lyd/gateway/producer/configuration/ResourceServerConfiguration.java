@@ -9,7 +9,7 @@ import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.filter.*;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
-import com.github.lyd.sys.client.constans.RbacConstans;
+import com.github.lyd.base.client.constans.RbacConstans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;

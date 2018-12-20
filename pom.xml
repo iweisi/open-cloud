@@ -120,7 +120,7 @@
 
         <!--自定义版本-->
         <opencloud.common.version>0.2.0-SNAPSHOT</opencloud.common.version>
-        <opencloud.system-client.version>0.2.0-SNAPSHOT</opencloud.system-client.version>
+        <opencloud.base-client.version>0.2.0-SNAPSHOT</opencloud.base-client.version>
         <opencloud.auth-client.version>0.2.0-SNAPSHOT</opencloud.auth-client.version>
         <opencloud.gateway-client.version>0.2.0-SNAPSHOT</opencloud.gateway-client.version>
         <opencloud.acms-client.version>0.2.0-SNAPSHOT</opencloud.acms-client.version>

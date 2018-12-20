@@ -34,8 +34,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.lyd</groupId>
-            <artifactId>opencloud-system-client</artifactId>
-            <version>${opencloud.system-client.version}</version>
+            <artifactId>opencloud-base-client</artifactId>
+            <version>${opencloud.base-client.version}</version>
         </dependency>
     </dependencies>
     <build>

@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.filter;
 
-import com.github.lyd.sys.client.constans.RbacConstans;
+import com.github.lyd.base.client.constans.RbacConstans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.vote.RoleVoter;

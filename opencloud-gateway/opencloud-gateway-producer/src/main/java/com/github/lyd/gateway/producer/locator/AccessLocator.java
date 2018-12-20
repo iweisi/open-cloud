@@ -2,7 +2,7 @@ package com.github.lyd.gateway.producer.locator;
 
 import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.gateway.producer.service.feign.SystemAccessApi;
-import com.github.lyd.sys.client.entity.SystemAccess;
+import com.github.lyd.base.client.entity.SystemAccess;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.Route;

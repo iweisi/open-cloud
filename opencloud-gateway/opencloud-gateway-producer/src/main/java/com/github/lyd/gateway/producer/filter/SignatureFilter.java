@@ -10,7 +10,7 @@ import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
-import com.github.lyd.sys.client.dto.SystemAppDto;
+import com.github.lyd.base.client.dto.SystemAppDto;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
