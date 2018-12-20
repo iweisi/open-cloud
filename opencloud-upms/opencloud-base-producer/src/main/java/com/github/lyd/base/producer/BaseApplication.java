@@ -15,7 +15,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.github.lyd"})
-@MapperScan(basePackages = "com.github.lyd.sys.producer.mapper")
+@MapperScan(basePackages = "com.github.lyd.base.producer.mapper")
 public class BaseApplication {
 
     public static void main(String[] args) {
