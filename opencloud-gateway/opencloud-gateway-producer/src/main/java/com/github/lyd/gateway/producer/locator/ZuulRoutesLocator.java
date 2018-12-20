@@ -86,7 +86,7 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
     public Map<String, ZuulRoute> loadRouteWithDb() {
         Map<String, ZuulProperties.ZuulRoute> routes = Maps.newLinkedHashMap();
         try {
-            List<ZuulRouteVO> results = jdbcTemplate.query("select * from platform_gateway_routes where enabled = true ", new
+            List<ZuulRouteVO> results = jdbcTemplate.query("select * from gateway_routes where enabled = true ", new
                     BeanPropertyRowMapper<>(ZuulRouteVO.class));
             if (results != null && results.size() > 0) {
                 for (ZuulRouteVO result : results) {

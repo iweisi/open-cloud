@@ -32,14 +32,14 @@
         [刷新路由/actuator/refresh-gateway](POST http://localhost:8888/actuator/refresh-gateway )  
         [灰度刷新/actuator/refresh-gateway?destination=application:* ](POST http://localhost:8888/actuator/refresh-gateway?destination=application:* )
 * opencloud-upms(权限管理)
-   1. opencloud-oauth-client   认证管理-接口
-   2. opencloud-oauth-producer 认证管理-认证授权器和资源服务器 (port = 8211)
+   1. opencloud-auth-client   认证管理-接口
+   2. opencloud-auth-producer 认证管理-认证授权器和资源服务器 (port = 8211)
       1. 身份认证、授权,颁发有效令牌
-      2. SSO单点认证登录,租户登录信息
+      2. SSO单点认证登录,系统用户登录信息
       3. 客户端、令牌、授权管理
-   3. opencloud-rbac-client    权限管理-接口
-   4. opencloud-rbac-producer  权限管理-资源服务器 (port = 8233)
-      1. 平台租户资料和登录账号管理
+   3. opencloud-system-client    权限管理-接口
+   4. opencloud-system-producer  权限管理-资源服务器 (port = 8233)
+      1. 平台系统用户资料和登录账号管理
       2. 角色管理、授权
       3. 菜单资源、操作资源、API资源管理
       4. 应用管理、授权
@@ -72,12 +72,10 @@
 启动脚本:<code>./start.sh {start|stop|restart|status} {service}.jar</code>    
 启动顺序:   
    1. 安装并启动nacos服务发现  
-   2. opencloud-rbac-producer  
-   3. opencloud-oauth-producer  
+   2. opencloud-system-producer  
+   3. opencloud-auth-producer  
    4. opencloud-gateway-producer  
-   5. opencloud-admin  
-访问接口文档:[http://localhost:8888/](http://localhost:8888/)  
-访问运维后台:[http://localhost:8801/](http://localhost:8801/)
+访问API网关:[http://localhost:8888/](http://localhost:8888/)  
 
    
 

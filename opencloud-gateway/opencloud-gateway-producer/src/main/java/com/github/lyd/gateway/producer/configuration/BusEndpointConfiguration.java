@@ -4,10 +4,10 @@ import com.github.lyd.gateway.producer.endpoint.GatewayRefreshBusEndpoint;
 import com.github.lyd.gateway.producer.event.GatewayRefreshRemoteListener;
 import com.github.lyd.gateway.producer.filter.ZuulErrorFilter;
 import com.github.lyd.gateway.producer.filter.ZuulPreFilter;
-import com.github.lyd.gateway.producer.locator.PermissionLocator;
+import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRoutesLocator;
-import com.github.lyd.gateway.producer.service.feign.PermissionRemoteServiceClient;
+import com.github.lyd.gateway.producer.service.feign.SystemAccessApi;
 import com.marcosbarbero.cloud.autoconfigure.zuul.ratelimit.config.properties.RateLimitProperties;
 import com.netflix.zuul.ZuulFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +33,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class BusEndpointConfiguration {
     private RateLimitLocator rateLimitLocator;
     private ZuulRoutesLocator zuulRoutesLocator;
-    private PermissionLocator permissionLocator;
+    private AccessLocator permissionLocator;
     @Bean
-    public PermissionLocator permissionLocator(ZuulRoutesLocator zuulRoutesLocator, PermissionRemoteServiceClient permissionRemoteServiceClient) {
-        permissionLocator = new PermissionLocator(permissionRemoteServiceClient, zuulRoutesLocator);
+    public AccessLocator permissionLocator(ZuulRoutesLocator zuulRoutesLocator, SystemAccessApi systemAccessApi) {
+        permissionLocator = new AccessLocator(systemAccessApi, zuulRoutesLocator);
         return permissionLocator;
     }
     @Bean

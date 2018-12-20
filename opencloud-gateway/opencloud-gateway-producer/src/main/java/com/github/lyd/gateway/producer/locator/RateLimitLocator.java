@@ -68,7 +68,7 @@ public class RateLimitLocator {
      * 1. 认证用户（Authenticated User）
      * 使用已认证的用户名（username）或'anonymous'
      * 2. 原始请求（Request Origin）
-     * 使用租户的原始请求
+     * 使用系统用户的原始请求
      * 3. URL
      * 使用上游请求的地址
      * 4. 针对每个服务的全局配置
@@ -92,7 +92,7 @@ public class RateLimitLocator {
     protected Map<String, List<RateLimitProperties.Policy>> loadRateLimitWithDb() {
         Map<String, List<RateLimitProperties.Policy>> policyMap = Maps.newLinkedHashMap();
         try{
-            List<PolicyVO> results = jdbcTemplate.query("select * from platform_gateway_rate_limit  where enabled = true ", new
+            List<PolicyVO> results = jdbcTemplate.query("select * from gateway_rate_limit  where enabled = true ", new
                     BeanPropertyRowMapper<>(PolicyVO.class));
             if (results != null && results.size() > 0) {
                 for (PolicyVO result : results) {
@@ -155,7 +155,7 @@ public class RateLimitLocator {
          * 限流方式
          * url    访问路径
          * origin 域名IP
-         * user 租户
+         * user 系统用户
          */
         private String type;
 

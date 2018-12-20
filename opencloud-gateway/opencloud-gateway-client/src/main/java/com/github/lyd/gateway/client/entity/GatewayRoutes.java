@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @date: 2018/10/24 16:21
  * @description:
  */
-@Table(name = "platform_gateway_routes")
+@Table(name = "gateway_routes")
 public class GatewayRoutes implements Serializable {
     private static final long serialVersionUID = -2952097064941740301L;
 
@@ -58,6 +58,11 @@ public class GatewayRoutes implements Serializable {
      * 0-禁用 1-启用
      */
     private Boolean enabled;
+    /**
+     * 路由描述
+     */
+    @Column(name = "route_desc")
+    private String routeDesc;
 
     /**
      * 获取路由ID

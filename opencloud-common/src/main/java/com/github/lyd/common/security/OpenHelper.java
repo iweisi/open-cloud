@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class OpenHelper {
     /**
-     * 获取登陆租户
+     * 获取登陆系统用户
      *
      * @return
      */
@@ -50,7 +50,7 @@ public class OpenHelper {
      * @return
      */
     public static RemoteTokenServices buildRemoteTokenServices(ResourceServerProperties properties) {
-        // 使用自定义租户凭证转换器
+        // 使用自定义系统用户凭证转换器
         DefaultAccessTokenConverter accessTokenConverter = buildAccessTokenConverter();
         RemoteTokenServices services = new RemoteTokenServices();
         services.setCheckTokenEndpointUrl(properties.getTokenInfoUri());

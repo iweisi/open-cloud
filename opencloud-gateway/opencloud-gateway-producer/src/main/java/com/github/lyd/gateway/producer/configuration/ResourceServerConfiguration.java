@@ -7,9 +7,9 @@ import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.filter.*;
-import com.github.lyd.gateway.producer.locator.PermissionLocator;
-import com.github.lyd.gateway.producer.service.feign.AppDetailsRemoteServiceClient;
-import com.github.lyd.rbac.client.constans.RbacConstans;
+import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
+import com.github.lyd.sys.client.constans.RbacConstans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -51,11 +51,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private ResourceServerProperties properties;
     @Autowired
-    private PermissionLocator permissionLocator;
+    private AccessLocator permissionLocator;
     @Autowired
     private GatewayProperties gatewayProperties;
     @Autowired
-    private AppDetailsRemoteServiceClient appInfoRemoteServiceClient;
+    private SystemAppApi systemAppApi;
     @Autowired
     private RestTemplate restTemplate;
 
@@ -86,7 +86,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         /**
          * 增加签名过滤器
          */
-        http.addFilterAfter(new SignatureFilter(appInfoRemoteServiceClient, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
+        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
         /**
          * 自定义动态权限过滤器
          */

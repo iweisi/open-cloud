@@ -16,7 +16,7 @@
     <modules>
         <module>opencloud-auth-client</module>
         <module>opencloud-auth-producer</module>
-        <module>opencloud-rbac-client</module>
-        <module>opencloud-rbac-producer</module>
+        <module>opencloud-system-client</module>
+        <module>opencloud-system-producer</module>
     </modules>
 </project>

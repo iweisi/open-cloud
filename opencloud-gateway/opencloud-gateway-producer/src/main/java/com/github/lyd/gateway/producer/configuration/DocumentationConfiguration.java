@@ -60,7 +60,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
     }
 
     @Autowired
-    public DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRoutesLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
+    public  DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRoutesLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
         this.swaggerProperties = swaggerProperties;
         this.zuulRoutesLocator = zuulRoutesLocator;
         this.namingService = discoveryProperties.namingServiceInstance();

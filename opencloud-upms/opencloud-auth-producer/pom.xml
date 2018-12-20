@@ -34,8 +34,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.lyd</groupId>
-            <artifactId>opencloud-rbac-client</artifactId>
-            <version>${opencloud.rbac-client.version}</version>
+            <artifactId>opencloud-system-client</artifactId>
+            <version>${opencloud.system-client.version}</version>
         </dependency>
     </dependencies>
     <build>

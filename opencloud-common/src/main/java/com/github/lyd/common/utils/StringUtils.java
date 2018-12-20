@@ -432,7 +432,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 检查租户名称
+     * 检查系统用户名称
      * 中英文,8-16位
      *
      * @param username

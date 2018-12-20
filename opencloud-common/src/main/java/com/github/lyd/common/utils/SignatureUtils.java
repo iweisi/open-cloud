@@ -94,7 +94,7 @@ public class SignatureUtils {
 //                    if(redisTemplate!=null){
 //                        String key = PREFIX + clientId + nonce;
 //                        //判断请求是否重复攻击
-//                        //从redis中获取当前nonce，如果不存在则允许通过，并在redis中存储当前随机数，并设置过期时间为10分钟，单租户区分
+//                        //从redis中获取当前nonce，如果不存在则允许通过，并在redis中存储当前随机数，并设置过期时间为10分钟，单系统用户区分
 //                        String save_nonce = redisTemplate.opsForValue().get(key);
 //                        if (save_nonce == null) {
 //                            redisTemplate.opsForValue().set(key, nonce, 10, TimeUnit.MINUTES);

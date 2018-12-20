@@ -1,8 +1,8 @@
 package com.github.lyd.gateway.producer.locator;
 
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.gateway.producer.service.feign.PermissionRemoteServiceClient;
-import com.github.lyd.rbac.client.entity.ResourcePermission;
+import com.github.lyd.gateway.producer.service.feign.SystemAccessApi;
+import com.github.lyd.sys.client.entity.SystemAccess;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.Route;
@@ -18,13 +18,13 @@ import java.util.List;
  * @author liuyadu
  */
 @Slf4j
-public class PermissionLocator {
+public class AccessLocator {
     private HashMap<String, Collection<ConfigAttribute>> map = Maps.newHashMap();
-    private PermissionRemoteServiceClient permissionRemoteServiceClient;
+    private SystemAccessApi systemAccessApi;
     private ZuulRoutesLocator zuulRoutesLocator;
 
-    public PermissionLocator(PermissionRemoteServiceClient permissionRemoteServiceClient, ZuulRoutesLocator zuulRoutesLocator) {
-        this.permissionRemoteServiceClient = permissionRemoteServiceClient;
+    public AccessLocator(SystemAccessApi systemAccessApi, ZuulRoutesLocator zuulRoutesLocator) {
+        this.systemAccessApi = systemAccessApi;
         this.zuulRoutesLocator = zuulRoutesLocator;
     }
 
@@ -41,7 +41,7 @@ public class PermissionLocator {
      * @param permission
      * @return
      */
-    protected String getZuulPath(ResourcePermission permission) {
+    protected String getZuulPath(SystemAccess permission) {
         List<Route> rotes = zuulRoutesLocator.getRoutes();
         if (rotes != null && !rotes.isEmpty()) {
             for (Route route : rotes) {
@@ -70,9 +70,9 @@ public class PermissionLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<ResourcePermission> permissions = permissionRemoteServiceClient.permissions().getData();
+            List<SystemAccess> permissions = systemAccessApi.access().getData();
             if (permissions != null) {
-                for (ResourcePermission permission : permissions) {
+                for (SystemAccess permission : permissions) {
                     if (StringUtils.isBlank(permission.getUrl())) {
                         continue;
                     }

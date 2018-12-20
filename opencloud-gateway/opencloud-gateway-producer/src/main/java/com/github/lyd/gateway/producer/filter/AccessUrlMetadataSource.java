@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.filter;
 
-import com.github.lyd.gateway.producer.locator.PermissionLocator;
+import com.github.lyd.gateway.producer.locator.AccessLocator;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -19,14 +19,14 @@ import java.util.Iterator;
 public class AccessUrlMetadataSource implements
         FilterInvocationSecurityMetadataSource {
 
-    private PermissionLocator permissionLocator;
+    private AccessLocator permissionLocator;
 
-    public AccessUrlMetadataSource(PermissionLocator permissionLocator) {
+    public AccessUrlMetadataSource(AccessLocator permissionLocator) {
         this.permissionLocator = permissionLocator;
     }
 
     /**
-     * 此方法是为了判定租户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定租户是否有此权限。
+     * 此方法是为了判定系统用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定系统用户是否有此权限。
      *
      * @param object
      * @return
@@ -35,7 +35,7 @@ public class AccessUrlMetadataSource implements
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         HashMap<String, Collection<ConfigAttribute>> map = permissionLocator.getMap();
-        //object 中包含租户请求的request 信息
+        //object 中包含系统用户请求的request 信息
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         AntPathRequestMatcher matcher;
         String resUrl;

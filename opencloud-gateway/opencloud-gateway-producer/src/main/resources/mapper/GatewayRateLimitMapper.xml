@@ -12,5 +12,6 @@
         <result column="enabled" property="enabled" jdbcType="BIT"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="rules" property="rules" jdbcType="LONGVARCHAR"/>
+        <result column="limit_desc" property="limitDesc" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

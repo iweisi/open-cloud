@@ -17,7 +17,7 @@ import java.util.Map;
 public class OpenAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
     private String accountType;
-    private Long tenantId;
+    private Long userId;
     private String avatar;
     private String username;
     private String password;
@@ -33,9 +33,9 @@ public class OpenAuth implements UserDetails {
     public OpenAuth() {
     }
 
-    public OpenAuth(String accountType, Long tenantId, String avatar,String username, String nickName, String password,Collection<Map> roles , Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenAuth(String accountType, Long userId, String avatar,String username, String nickName, String password,Collection<Map> roles , Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
         this.accountType = accountType;
-        this.tenantId = tenantId;
+        this.userId = userId;
         this.avatar = avatar;
         this.username = username;
         this.nickName = nickName;
@@ -97,12 +97,12 @@ public class OpenAuth implements UserDetails {
         this.accountType = accountType;
     }
 
-    public Long getTenantId() {
-        return tenantId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setUsername(String username) {

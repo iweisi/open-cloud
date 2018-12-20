@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @date: 2018/10/24 16:21
  * @description:
  */
-@Table(name = "platform_gateway_rate_limit")
+@Table(name = "gateway_rate_limit")
 public class GatewayRateLimit implements Serializable {
     private static final long serialVersionUID = 3692306737735802410L;
     @Id
@@ -45,6 +45,11 @@ public class GatewayRateLimit implements Serializable {
     private String type;
 
     private String rules;
+    /**
+     * 限流描述
+     */
+    @Column(name = "limit_desc")
+    private String limitDesc;
 
     /**
      * 获取限制数量
@@ -152,5 +157,13 @@ public class GatewayRateLimit implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLimitDesc() {
+        return limitDesc;
+    }
+
+    public void setLimitDesc(String limitDesc) {
+        this.limitDesc = limitDesc;
     }
 }

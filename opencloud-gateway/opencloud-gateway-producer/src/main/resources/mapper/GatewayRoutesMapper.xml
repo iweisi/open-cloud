@@ -13,5 +13,6 @@
         <result column="strip_prefix" property="stripPrefix" jdbcType="BIT"/>
         <result column="retryable" property="retryable" jdbcType="BIT"/>
         <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="route_desc" property="routeDesc" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>
