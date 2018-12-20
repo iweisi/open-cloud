@@ -18,7 +18,7 @@
     1. bin          执行脚本
     2. generator    代码生成器
     3. sql          sql文件
-* opencloud-common(公共包)
+* opencloud-common(公共模块)
     1. 提供微服务相关依赖包
     2. 封装微服务必要配置类并自动注入
     3. 工具类、全局异常解析、自定义错误码(支持国际化)、自定义属性配置、
@@ -31,7 +31,7 @@
       3. 自定义刷新网关端点(支持一键刷新路由、限流等配置) 
         [刷新路由/actuator/refresh-gateway](POST http://localhost:8888/actuator/refresh-gateway )  
         [灰度刷新/actuator/refresh-gateway?destination=application:* ](POST http://localhost:8888/actuator/refresh-gateway?destination=application:* )
-* opencloud-upms(基础服务)
+* opencloud-upms(权限认证模块)
    1. opencloud-base-client    基础服务-接口
    2. opencloud-base-producer  基础服务-资源服务器 (port = 8233)
       1. 平台系统用户资料和登录账号管理
