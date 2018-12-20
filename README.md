@@ -39,8 +39,8 @@
       3. 菜单资源、操作资源、API资源管理、
       4. 应用管理、
       5. 资源授权
-   3. opencloud-auth-client   认证管理-接口
-   4. opencloud-auth-producer 认证管理-认证授权器和资源服务器 (port = 8211)
+   3. opencloud-auth-client   认证服务-接口
+   4. opencloud-auth-producer 认证服务-认证授权器和资源服务器 (port = 8211)
       1. 统一身份认证、授权,颁发有效令牌
       2. 客户端、令牌、授权管理
       3. SSO单点登录
