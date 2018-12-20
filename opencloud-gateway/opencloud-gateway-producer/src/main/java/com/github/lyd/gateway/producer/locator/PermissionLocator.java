@@ -51,7 +51,11 @@ public class PermissionLocator {
                     if (!path.startsWith("/")) {
                         path = "/" + path;
                     }
-                    return route.getPrefix().concat(path);
+                    if (route.isPrefixStripped()) {
+                        return path;
+                    } else {
+                        return route.getPrefix().concat(path);
+                    }
                 }
             }
         }
