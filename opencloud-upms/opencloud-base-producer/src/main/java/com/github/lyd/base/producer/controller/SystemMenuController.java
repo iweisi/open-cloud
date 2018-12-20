@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author liuyadu
  */
-@Api(tags = "菜单资源")
+@Api(tags = "菜单资源管理")
 @RestController
 public class SystemMenuController implements SystemMenuRemoteService {
     @Autowired

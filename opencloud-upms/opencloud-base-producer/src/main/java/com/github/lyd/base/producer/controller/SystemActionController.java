@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author liuyadu
  */
-@Api(tags = "动作资源")
+@Api(tags = "动作资源管理")
 @RestController
 public class SystemActionController implements SystemActionRemoteService {
     @Autowired

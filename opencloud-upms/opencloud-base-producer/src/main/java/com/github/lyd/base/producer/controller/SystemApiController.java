@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author liuyadu
  */
-@Api(tags = "Api资源")
+@Api(tags = "Api资源管理")
 @RestController
 public class SystemApiController implements SystemApiRemoteService {
     @Autowired
