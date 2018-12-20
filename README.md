@@ -74,9 +74,9 @@
 启动脚本:<code>./startup.sh {start|stop|restart|status} {service}.jar</code>    
 启动顺序:   
    1. 安装并启动nacos服务发现  
-   2. opencloud-base-producer  
-   3. opencloud-auth-producer  
-   4. opencloud-gateway-producer  
+   2. open-base-producer  
+   3. open-auth-producer  
+   4. open-gateway-producer  
 访问API网关:[http://localhost:8888/](http://localhost:8888/)  
 
    
