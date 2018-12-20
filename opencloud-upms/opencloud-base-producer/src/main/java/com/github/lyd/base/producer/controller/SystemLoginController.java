@@ -1,13 +1,14 @@
 package com.github.lyd.base.producer.controller;
 
-import com.github.lyd.base.producer.service.SystemAccessService;
-import com.github.lyd.base.producer.service.SystemLoginAccountService;
-import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.base.client.api.SystemLoginAccountRemoteService;
 import com.github.lyd.base.client.constans.RbacConstans;
 import com.github.lyd.base.client.dto.SystemLoginAccountDto;
 import com.github.lyd.base.client.entity.SystemAccess;
+import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemLoginAccountService;
+import com.github.lyd.common.model.ResultBody;
+import com.github.lyd.common.security.OpenHelper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import java.util.List;
  *
  * @author liuyadu
  */
+@Api(tags = "登录用户")
 @RestController
 public class SystemLoginController implements SystemLoginAccountRemoteService {
     @Autowired
