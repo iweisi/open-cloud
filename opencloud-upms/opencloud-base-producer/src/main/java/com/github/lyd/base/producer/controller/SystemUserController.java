@@ -95,19 +95,19 @@ public class SystemUserController implements SystemUserRemoteService {
 
 
     @ApiOperation(value = "当前用户可访问菜单资源")
-    @GetMapping("/user/current/menus")
+    @GetMapping("/user/menus")
     public ResultBody<List<SystemAccess>> userMenus() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
     }
 
     @ApiOperation(value = "当前用户可访问操作资源")
-    @GetMapping("/user/current/actions")
+    @GetMapping("/user/actions")
     public ResultBody<List<SystemAccess>> userActions() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
     }
 
     @ApiOperation(value = "当前用户可访问API资源")
-    @GetMapping("/user/current/apis")
+    @GetMapping("/user/apis")
     public ResultBody<List<SystemAccess>> userApis() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_API));
     }
