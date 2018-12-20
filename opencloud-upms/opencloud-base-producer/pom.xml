@@ -7,7 +7,7 @@
     <groupId>com.github.lyd</groupId>
     <artifactId>opencloud-base-producer</artifactId>
     <version>0.2.0</version>
-    <description>权限控制</description>
+    <description>基础服务：资源管理、权限分配</description>
     <parent>
         <artifactId>opencloud-upms</artifactId>
         <groupId>com.github.lyd</groupId>

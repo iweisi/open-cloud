@@ -7,7 +7,7 @@
     <groupId>com.github.lyd</groupId>
     <version>${opencloud.base-client.version}</version>
     <packaging>jar</packaging>
-    <description>权限控制-客户端</description>
+    <description>基础服务-接口</description>
     <parent>
         <artifactId>opencloud-upms</artifactId>
         <groupId>com.github.lyd</groupId>
