@@ -21,8 +21,8 @@ public interface ClientDetailsRemoteService {
      *
      * @return
      */
-    @GetMapping("/clients")
-    ResultBody<PageList<ClientDetailsDto>> clients();
+    @GetMapping("/client")
+    ResultBody<PageList<ClientDetailsDto>> client();
 
 
     /**
@@ -31,7 +31,7 @@ public interface ClientDetailsRemoteService {
      * @param clientId 客户端Id
      * @return 客户端信息
      */
-    @GetMapping("/clients/{clientId}")
+    @GetMapping("/client/{clientId}")
     ResultBody<ClientDetailsDto> getClient(
             @PathVariable("clientId") String clientId
     );
@@ -50,7 +50,7 @@ public interface ClientDetailsRemoteService {
      * @param clientInfo   客户端附加信息,json字符串
      * @return
      */
-    @PostMapping("/clients/add")
+    @PostMapping("/client/add")
     ResultBody<Boolean> addClient(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret,
@@ -76,7 +76,7 @@ public interface ClientDetailsRemoteService {
      * @param clientInfo   客户端附加信息,json字符串
      * @return
      */
-    @PostMapping("/clients/update")
+    @PostMapping("/client/update")
     ResultBody<Boolean> updateClient(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "grantTypes") String grantTypes,
@@ -95,7 +95,7 @@ public interface ClientDetailsRemoteService {
      * @param clientSecret 客户端秘钥
      * @return
      */
-    @PostMapping("/clients/reset")
+    @PostMapping("/client/reset")
     ResultBody<Boolean> resetSecret(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret
@@ -108,7 +108,7 @@ public interface ClientDetailsRemoteService {
      * @param clientId 客户端Id
      * @return 客户端信息
      */
-    @PostMapping("/clients/remove")
+    @PostMapping("/client/remove")
     ResultBody removeClinet(
             @RequestParam(value = "clientId") String clientId
     );

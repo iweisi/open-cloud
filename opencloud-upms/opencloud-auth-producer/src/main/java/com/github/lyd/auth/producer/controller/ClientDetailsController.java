@@ -30,9 +30,9 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      *
      * @return
      */
-    @GetMapping("/clients")
+    @GetMapping("/client")
     @Override
-    public ResultBody<PageList<ClientDetailsDto>> clients() {
+    public ResultBody<PageList<ClientDetailsDto>> client() {
         return ResultBody.success(clinetInfoService.findAllList());
     }
 
@@ -42,7 +42,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientId 客户端Id
      * @return 客户端信息
      */
-    @GetMapping("/clients/{clientId}")
+    @GetMapping("/client/{clientId}")
     @Override
     public ResultBody<ClientDetailsDto> getClient(
             @PathVariable("clientId") String clientId
@@ -64,7 +64,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientInfo   客户端附加信息,json字符串
      * @return
      */
-    @PostMapping("/clients/add")
+    @PostMapping("/client/add")
     @Override
     public ResultBody<Boolean> addClient(
             @RequestParam(value = "clientId") String clientId,
@@ -96,7 +96,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientInfo   客户端附加信息,json字符串
      * @return
      */
-    @PostMapping("/clients/update")
+    @PostMapping("/client/update")
     @Override
     public ResultBody<Boolean> updateClient(
             @RequestParam(value = "clientId") String clientId,
@@ -121,7 +121,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientSecret 客户端秘钥
      * @return
      */
-    @PostMapping("/clients/reset")
+    @PostMapping("/client/reset")
     @Override
     public ResultBody<Boolean> resetSecret(
             @RequestParam(value = "clientId") String clientId,
@@ -136,7 +136,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientId 客户端Id
      * @return 客户端信息
      */
-    @PostMapping("/clients/remove")
+    @PostMapping("/client/remove")
     @Override
     public ResultBody removeClinet(
             @RequestParam(value = "clientId") String clientId
