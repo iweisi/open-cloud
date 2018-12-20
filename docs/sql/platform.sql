@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2018-12-20 18:02:26
+Date: 2018-12-20 21:34:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -84,188 +84,6 @@ INSERT INTO `system_access` VALUES ('2', 'menu_authority', '权限管理', '/aut
 INSERT INTO `system_access` VALUES ('3', 'menu_menus', '菜单管理', '/menus/index', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 INSERT INTO `system_access` VALUES ('4', 'menu_server', '服务维护', null, '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 INSERT INTO `system_access` VALUES ('5', 'menu_trace', '服务追踪', 'http://localhost:7080', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-
--- ----------------------------
--- Table structure for system_action
--- ----------------------------
-DROP TABLE IF EXISTS `system_action`;
-CREATE TABLE `system_action` (
-                               `action_id` bigint(20) NOT NULL COMMENT '资源ID',
-                               `action_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
-                               `action_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
-                               `action_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
-                               `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
-                               `menu_id` bigint(20) DEFAULT NULL COMMENT '资源父节点',
-                               `priority` int(10) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
-                               `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
-                               `create_time` datetime NOT NULL,
-                               `update_time` datetime DEFAULT NULL,
-                               PRIMARY KEY (`action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作表';
-
--- ----------------------------
--- Records of system_action
--- ----------------------------
-INSERT INTO `system_action` VALUES ('1', 'btnDetail', '详情', '详情', '/funcPages/adManager', '2', '0', '1', '2018-07-29 21:20:10', '2018-09-25 23:02:11');
-INSERT INTO `system_action` VALUES ('2', 'btnSave', '保存', '保存', '/index', '2', '0', '1', '2018-07-29 21:20:13', '2018-09-25 23:02:11');
-
--- ----------------------------
--- Table structure for system_api
--- ----------------------------
-DROP TABLE IF EXISTS `system_api`;
-CREATE TABLE `system_api` (
-                            `api_id` bigint(20) NOT NULL COMMENT '资源ID',
-                            `api_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
-                            `api_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
-                            `api_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
-                            `service_id` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '服务ID',
-                            `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
-                            `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级',
-                            `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
-                            `create_time` datetime NOT NULL,
-                            `update_time` datetime DEFAULT NULL,
-                            PRIMARY KEY (`api_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='API资源表';
-
--- ----------------------------
--- Records of system_api
--- ----------------------------
-INSERT INTO `system_api` VALUES ('522067499043258368', 'actions', '动作列表', '', 'opencloud-base-producer', '/actions', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:17');
-INSERT INTO `system_api` VALUES ('522067499139727360', 'enableAction', '启用动作资源', '', 'opencloud-base-producer', '/actions/enable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499198447616', 'removeAction', '移除动作', '', 'opencloud-base-producer', '/actions/remove', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499269750784', 'disableAction', '禁用动作资源', '', 'opencloud-base-producer', '/actions/disable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:17');
-INSERT INTO `system_api` VALUES ('522067499391385600', 'addAction', '添加动作资源', '', 'opencloud-base-producer', '/actions/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499466883072', 'updateAction', '编辑动作资源', '', 'opencloud-base-producer', '/actions/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499525603328', 'getAction', '获取动作资源', '', 'opencloud-base-producer', '/actions/{actionId}', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:17');
-INSERT INTO `system_api` VALUES ('522067499601100800', 'apis', 'Api列表', '', 'opencloud-base-producer', '/apis', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499659821056', 'removeApi', '移除Api', '', 'opencloud-base-producer', '/apis/remove', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499714347008', 'addApi', '添加Api资源', '', 'opencloud-base-producer', '/apis/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499777261568', 'disableApi', '禁用Api资源', '', 'opencloud-base-producer', '/apis/disable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499827593216', 'getApi', '获取Api资源', '', 'opencloud-base-producer', '/apis/{apiId}', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499865341952', 'updateApi', '编辑Api资源', '', 'opencloud-base-producer', '/apis/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499907284992', 'enableApi', '启用Api资源', '', 'opencloud-base-producer', '/apis/enable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067499949228032', 'getApp', '获取应用信息', '', 'opencloud-base-producer', '/apps/{appId}', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500003753984', 'removeApp', '删除应用', '', 'opencloud-base-producer', '/apps/remove', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500049891328', 'addApp', '添加应用', '', 'opencloud-base-producer', '/apps/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067500100222976', 'apps', '应用列表', '', 'opencloud-base-producer', '/apps', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500167331840', 'updateApp', '编辑应用', '', 'opencloud-base-producer', '/apps/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:18');
-INSERT INTO `system_api` VALUES ('522067500259606528', 'resetSecret', '重置秘钥', '', 'opencloud-base-producer', '/apps/reset', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500309938176', 'enableMenu', '启用菜单资源', '', 'opencloud-base-producer', '/menus/enable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500360269824', 'updateMenu', '编辑菜单资源', '', 'opencloud-base-producer', '/menus/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500406407168', 'menus', '菜单列表', '', 'opencloud-base-producer', '/menus', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500460933120', 'addMenu', '添加菜单资源', '', 'opencloud-base-producer', '/menus/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500502876160', 'menusAll', '菜单列表', '', 'opencloud-base-producer', '/menus/all', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500544819200', 'disableMenu', '禁用菜单资源', '', 'opencloud-base-producer', '/menus/disable', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500582567936', 'getMenu', '获取菜单资源', '', 'opencloud-base-producer', '/menus/{menuId}', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500616122368', 'removeMenu', '移除菜单', '', 'opencloud-base-producer', '/menus/remove', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:19');
-INSERT INTO `system_api` VALUES ('522067500666454016', 'permissions', '获取授权列表', '', 'opencloud-base-producer', '/permissions', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500704202752', 'userApis', '登录用户API权限', '', 'opencloud-base-producer', '/permissions/user/apis', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500746145792', 'userActions', '登录用户操作权限', '', 'opencloud-base-producer', '/permissions/user/actions', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500783894528', 'userMenus', '登录用户菜单权限', '', 'opencloud-base-producer', '/permissions/user/menus', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500825837568', 'addRole', '添加角色', '', 'opencloud-base-producer', '/roles/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500859392000', 'roles', '角色列表', '', 'opencloud-base-producer', '/roles', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500897140736', 'updateRole', '更新角色', '', 'opencloud-base-producer', '/roles/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500934889472', 'removeRole', '删除角色', '', 'opencloud-base-producer', '/roles/remove', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067500981026816', 'getRole', '获取角色信息', '', 'opencloud-base-producer', '/roles/{roleId}', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067501027164160', 'login', 'login', '', 'opencloud-base-producer', '/users/account/login', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067501077495808', 'addLoginLog', 'addLoginLog', '', 'opencloud-base-producer', '/users/account/logs/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:20');
-INSERT INTO `system_api` VALUES ('522067501119438848', 'addUser', '添加用户', '', 'opencloud-base-producer', '/users/add', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:21');
-INSERT INTO `system_api` VALUES ('522067501161381888', 'updateUser', '更新用户', '', 'opencloud-base-producer', '/users/update', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:21');
-INSERT INTO `system_api` VALUES ('522067501194936320', 'users', '用户列表', '', 'opencloud-base-producer', '/users', '0', '1', '2018-12-11 15:09:51', '2018-12-12 01:54:21');
-INSERT INTO `system_api` VALUES ('522068701403414528', 'clients', 'clients', '', 'platform-oauth-producer', '/clients', '0', '1', '2018-12-11 15:14:37', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701457940480', 'addClient', 'addClient', '', 'platform-oauth-producer', '/clients/add', '0', '1', '2018-12-11 15:14:37', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701508272128', 'getClient', 'getClient', '', 'platform-oauth-producer', '/clients/{clientId}', '0', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701550215168', 'updateClient', 'updateClient', '', 'platform-oauth-producer', '/clients/update', '0', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701600546816', 'resetSecret', 'resetSecret', '', 'platform-oauth-producer', '/clients/reset', '0', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701709598720', 'removeClinet', 'removeClinet', '', 'platform-oauth-producer', '/clients/remove', '0', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:04');
-INSERT INTO `system_api` VALUES ('522068701755736064', 'getUser', '获取当前登录用户', '', 'platform-oauth-producer', '/me', '0', '1', '2018-12-11 15:14:38', '2018-12-12 01:47:05');
-INSERT INTO `system_api` VALUES ('522519297684144128', 'actions', '动作列表', '', 'opencloud-base-producer', '/actions', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298078408704', 'getAction', '获取动作资源', '', 'opencloud-base-producer', '/actions/{actionId}', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298262958080', 'updateAction', '编辑动作资源', '', 'opencloud-base-producer', '/actions/update', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298481061888', 'removeAction', '移除动作', '', 'opencloud-base-producer', '/actions/remove', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298636251136', 'disableAction', '禁用动作资源', '', 'opencloud-base-producer', '/actions/disable', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298824994816', 'addAction', '添加动作资源', '', 'opencloud-base-producer', '/actions/add', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519298984378368', 'enableAction', '启用动作资源', '', 'opencloud-base-producer', '/actions/enable', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519299194093568', 'enableApi', '启用Api资源', '', 'opencloud-base-producer', '/apis/enable', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519299374448640', 'apis', 'Api列表', '', 'opencloud-base-producer', '/apis', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519299550609408', 'removeApi', '移除Api', '', 'opencloud-base-producer', '/apis/remove', '0', '1', '2018-12-12 21:05:08', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519299751936000', 'addApi', '添加Api资源', '', 'opencloud-base-producer', '/apis/add', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519299907125248', 'getApi', '获取Api资源', '', 'opencloud-base-producer', '/apis/{apiId}', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519300070703104', 'disableApi', '禁用Api资源', '', 'opencloud-base-producer', '/apis/disable', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519300213309440', 'updateApi', '编辑Api资源', '', 'opencloud-base-producer', '/apis/update', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519300381081600', 'updateApp', '编辑应用', '', 'opencloud-base-producer', '/apps/update', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519300536270848', 'resetSecret', '重置秘钥', '', 'opencloud-base-producer', '/apps/reset', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519300691460096', 'apps', '应用列表', '', 'opencloud-base-producer', '/apps', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519300905369600', 'addApp', '添加应用', '', 'opencloud-base-producer', '/apps/add', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519301110890496', 'getApp', '获取应用信息', '', 'opencloud-base-producer', '/apps/{appId}', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:35');
-INSERT INTO `system_api` VALUES ('522519301316411392', 'removeApp', '删除应用', '', 'opencloud-base-producer', '/apps/remove', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519301521932288', 'addMenu', '添加菜单资源', '', 'opencloud-base-producer', '/menus/add', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519301740036096', 'getMenu', '获取菜单资源', '', 'opencloud-base-producer', '/menus/{menuId}', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519302012665856', 'menus', '菜单列表', '', 'opencloud-base-producer', '/menus', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519302163660800', 'menusAll', '菜单列表', '', 'opencloud-base-producer', '/menus/all', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519302327238656', 'updateMenu', '编辑菜单资源', '', 'opencloud-base-producer', '/menus/update', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519302474039296', 'enableMenu', '启用菜单资源', '', 'opencloud-base-producer', '/menus/enable', '0', '1', '2018-12-12 21:05:09', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519304877375488', 'removeMenu', '移除菜单', '', 'opencloud-base-producer', '/menus/remove', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519305028370432', 'disableMenu', '禁用菜单资源', '', 'opencloud-base-producer', '/menus/disable', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519305200336896', 'permissions', '获取授权列表', '', 'opencloud-base-producer', '/permissions', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519305347137536', 'userApis', '登录用户API权限', '', 'opencloud-base-producer', '/permissions/user/apis', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519305519104000', 'userMenus', '登录用户菜单权限', '', 'opencloud-base-producer', '/permissions/user/menus', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519305695264768', 'userActions', '登录用户操作权限', '', 'opencloud-base-producer', '/permissions/user/actions', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519305867231232', 'getRole', '获取角色信息', '', 'opencloud-base-producer', '/roles/{roleId}', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519306139860992', 'addRole', '添加角色', '', 'opencloud-base-producer', '/roles/add', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519306366353408', 'roles', '角色列表', '', 'opencloud-base-producer', '/roles', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519306529931264', 'removeRole', '删除角色', '', 'opencloud-base-producer', '/roles/remove', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519306676731904', 'updateRole', '更新角色', '', 'opencloud-base-producer', '/roles/update', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519306844504064', 'addLoginLog', 'addLoginLog', '', 'opencloud-base-producer', '/tenants/account/logs/add', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519307012276224', 'login', 'login', '', 'opencloud-base-producer', '/tenants/account/login', '0', '1', '2018-12-12 21:05:10', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522519307196825600', 'addUser', '添加用户', '', 'opencloud-base-producer', '/users/add', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519307368792064', 'users', '用户列表', '', 'opencloud-base-producer', '/users', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519307544952832', 'updateUser', '更新用户', '', 'opencloud-base-producer', '/users/update', '0', '1', '2018-12-12 21:05:10', '2018-12-13 00:27:18');
-INSERT INTO `system_api` VALUES ('522519387723268096', 'clients', 'clients', '', 'opencloud-auth-producer', '/clients', '0', '1', '2018-12-12 21:05:29', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519387899428864', 'resetSecret', 'resetSecret', '', 'opencloud-auth-producer', '/clients/reset', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519388075589632', 'addClient', 'addClient', '', 'opencloud-auth-producer', '/clients/add', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519388214001664', 'getClient', 'getClient', '', 'opencloud-auth-producer', '/clients/{clientId}', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519388385968128', 'updateClient', 'updateClient', '', 'opencloud-auth-producer', '/clients/update', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519388721512448', 'removeClinet', 'removeClinet', '', 'opencloud-auth-producer', '/clients/remove', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522519388872507392', 'getUser', '获取当前登录租户', '', 'opencloud-auth-producer', '/me', '0', '1', '2018-12-12 21:05:30', '2018-12-13 21:17:59');
-INSERT INTO `system_api` VALUES ('522881233328275456', 'tenantApis', '登录租户API权限', '', 'opencloud-base-producer', '/tenant/apis', '0', '1', '2018-12-13 21:03:20', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522881233605099520', 'tenantActions', '登录租户操作权限', '', 'opencloud-base-producer', '/tenant/actions', '0', '1', '2018-12-13 21:03:20', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522881233877729280', 'tenantMenus', '登录租户菜单权限', '', 'opencloud-base-producer', '/tenant/menus', '0', '1', '2018-12-13 21:03:20', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522881235266043904', 'tenants', '租户列表', '', 'opencloud-base-producer', '/tenants', '0', '1', '2018-12-13 21:03:21', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522881235421233152', 'updateTenant', '更新租户', '', 'opencloud-base-producer', '/tenants/update', '0', '1', '2018-12-13 21:03:21', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522881235580616704', 'addTenant', '添加租户', '', 'opencloud-base-producer', '/tenants/add', '0', '1', '2018-12-13 21:03:21', '2018-12-20 13:33:36');
-INSERT INTO `system_api` VALUES ('522897301509767168', 'clients', 'clients', '', 'opencloud-auth-producer', '/clients', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:00');
-INSERT INTO `system_api` VALUES ('522897301698510848', 'updateClient', 'updateClient', '', 'opencloud-auth-producer', '/clients/update', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:00');
-INSERT INTO `system_api` VALUES ('522897301849505792', 'addClient', 'addClient', '', 'opencloud-auth-producer', '/clients/add', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:00');
-INSERT INTO `system_api` VALUES ('522897302004695040', 'getClient', 'getClient', '', 'opencloud-auth-producer', '/clients/{clientId}', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:01');
-INSERT INTO `system_api` VALUES ('522897302168272896', 'resetSecret', 'resetSecret', '', 'opencloud-auth-producer', '/clients/reset', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:00');
-INSERT INTO `system_api` VALUES ('522897302411542528', 'removeClinet', 'removeClinet', '', 'opencloud-auth-producer', '/clients/remove', '0', '1', '2018-12-13 22:07:11', '2018-12-20 13:23:00');
-INSERT INTO `system_api` VALUES ('522897302575120384', 'principal', '获取当前登录租户', '', 'opencloud-auth-producer', '/principal', '0', '1', '2018-12-13 22:07:11', '2018-12-18 10:43:27');
-INSERT INTO `system_api` VALUES ('525302103241916416', 'user', '获取当前登录租户', '', 'opencloud-auth-producer', '/user', '0', '1', '2018-12-20 13:23:01', '2018-12-20 13:23:01');
-
--- ----------------------------
--- Table structure for system_app
--- ----------------------------
-DROP TABLE IF EXISTS `system_app`;
-CREATE TABLE `system_app` (
-                            `app_id` varchar(20) NOT NULL COMMENT '客户端ID',
-                            `app_secret` varchar(255) NOT NULL COMMENT '客户端秘钥',
-                            `app_name` varchar(255) NOT NULL COMMENT 'app名称',
-                            `app_name_en` varchar(255) NOT NULL COMMENT 'app英文名称',
-                            `app_icon` varchar(255) DEFAULT NULL COMMENT '应用图标',
-                            `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
-                            `app_desc` varchar(255) DEFAULT NULL COMMENT 'app描述',
-                            `app_os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
-                            `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
-                            `user_type` int(1) NOT NULL DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
-                            `create_time` datetime NOT NULL COMMENT '创建时间',
-                            `update_time` datetime DEFAULT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of system_app
--- ----------------------------
-INSERT INTO `system_app` VALUES ('gateway', '123456', '开放云平台', 'ApiGateway', null, 'server', '开放云平台', null, '0', '0', '2018-11-12 17:48:45', '2018-11-16 18:46:31');
 
 -- ----------------------------
 -- Table structure for system_account
@@ -364,6 +182,126 @@ INSERT INTO `system_account_logs` VALUES ('522884963100524544', '2018-12-13 21:1
 INSERT INTO `system_account_logs` VALUES ('522899530824286208', '2018-12-13 22:16:03', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36', '58', '521677655146233856');
 INSERT INTO `system_account_logs` VALUES ('525302912906166272', '2018-12-20 13:26:14', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36', '59', '521677655146233856');
 INSERT INTO `system_account_logs` VALUES ('525337416806957056', '2018-12-20 15:43:20', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36', '60', '521677655146233856');
+INSERT INTO `system_account_logs` VALUES ('525423532281167872', '2018-12-20 21:25:31', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36', '61', '521677655146233856');
+
+-- ----------------------------
+-- Table structure for system_action
+-- ----------------------------
+DROP TABLE IF EXISTS `system_action`;
+CREATE TABLE `system_action` (
+                               `action_id` bigint(20) NOT NULL COMMENT '资源ID',
+                               `action_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
+                               `action_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
+                               `action_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
+                               `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
+                               `menu_id` bigint(20) DEFAULT NULL COMMENT '资源父节点',
+                               `priority` int(10) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
+                               `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
+                               `create_time` datetime NOT NULL,
+                               `update_time` datetime DEFAULT NULL,
+                               PRIMARY KEY (`action_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作表';
+
+-- ----------------------------
+-- Records of system_action
+-- ----------------------------
+INSERT INTO `system_action` VALUES ('1', 'btnDetail', '详情', '详情', '/funcPages/adManager', '2', '0', '1', '2018-07-29 21:20:10', '2018-09-25 23:02:11');
+INSERT INTO `system_action` VALUES ('2', 'btnSave', '保存', '保存', '/index', '2', '0', '1', '2018-07-29 21:20:13', '2018-09-25 23:02:11');
+
+-- ----------------------------
+-- Table structure for system_api
+-- ----------------------------
+DROP TABLE IF EXISTS `system_api`;
+CREATE TABLE `system_api` (
+                            `api_id` bigint(20) NOT NULL COMMENT '资源ID',
+                            `api_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
+                            `api_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
+                            `api_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
+                            `service_id` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '服务ID',
+                            `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
+                            `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级',
+                            `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
+                            `create_time` datetime NOT NULL,
+                            `update_time` datetime DEFAULT NULL,
+                            PRIMARY KEY (`api_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='API资源表';
+
+-- ----------------------------
+-- Records of system_api
+-- ----------------------------
+INSERT INTO `system_api` VALUES ('525425413166465024', 'client', 'client', null, 'opencloud-auth-producer', '/client', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425413371985920', 'updateClient', 'updateClient', null, 'opencloud-auth-producer', '/client/update', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425413543952384', 'addClient', 'addClient', null, 'opencloud-auth-producer', '/client/add', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425413690753024', 'resetSecret', 'resetSecret', null, 'opencloud-auth-producer', '/client/reset', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425413850136576', 'getClient', 'getClient', null, 'opencloud-auth-producer', '/client/{clientId}', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425414009520128', 'removeClinet', 'removeClinet', null, 'opencloud-auth-producer', '/client/remove', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425414164709376', 'user', '获取当前登录系统用户', null, 'opencloud-auth-producer', '/user', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:53');
+INSERT INTO `system_api` VALUES ('525425414911295488', 'access', '获取授权列表', null, 'opencloud-base-producer', '/access', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:00');
+INSERT INTO `system_api` VALUES ('525425415074873344', 'addLoginLog', 'addLoginLog', null, 'opencloud-base-producer', '/account/logs/add', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:00');
+INSERT INTO `system_api` VALUES ('525425415397834752', 'login', 'login', null, 'opencloud-base-producer', '/account/login', '0', '1', '2018-12-20 21:33:00', '2018-12-20 21:33:00');
+INSERT INTO `system_api` VALUES ('525425415561412608', 'action', '动作列表', null, 'opencloud-base-producer', '/action', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425415750156288', 'getAction', '获取动作资源', null, 'opencloud-base-producer', '/action/{actionId}', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425415959871488', 'updateAction', '编辑动作资源', null, 'opencloud-base-producer', '/action/update', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425416123449344', 'removeAction', '移除动作', null, 'opencloud-base-producer', '/action/remove', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425416425439232', 'enableAction', '启用动作资源', null, 'opencloud-base-producer', '/action/enable', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425416622571520', 'addAction', '添加动作资源', null, 'opencloud-base-producer', '/action/add', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425416786149376', 'disableAction', '禁用动作资源', null, 'opencloud-base-producer', '/action/disable', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425416970698752', 'api', 'Api列表', null, 'opencloud-base-producer', '/api', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417146859520', 'removeApi', '移除Api', null, 'opencloud-base-producer', '/api/remove', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417306243072', 'addApi', '添加Api资源', null, 'opencloud-base-producer', '/api/add', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417457238016', 'updateApi', '编辑Api资源', null, 'opencloud-base-producer', '/api/update', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417620815872', 'disableApi', '禁用Api资源', null, 'opencloud-base-producer', '/api/disable', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417771810816', 'getApi', '获取Api资源', null, 'opencloud-base-producer', '/api/{apiId}', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425417935388672', 'enableApi', '启用Api资源', null, 'opencloud-base-producer', '/api/enable', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425418191241216', 'app', '应用列表', null, 'opencloud-base-producer', '/app', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425418434510848', 'getApp', '获取应用信息', null, 'opencloud-base-producer', '/app/{appId}', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425418614865920', 'addApp', '添加应用', null, 'opencloud-base-producer', '/app/add', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425418774249472', 'updateApp', '编辑应用', null, 'opencloud-base-producer', '/app/update', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425418925244416', 'removeApp', '删除应用', null, 'opencloud-base-producer', '/app/remove', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419088822272', 'resetSecret', '重置秘钥', null, 'opencloud-base-producer', '/app/reset', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419239817216', 'updateMenu', '编辑菜单资源', null, 'opencloud-base-producer', '/menu/update', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419399200768', 'menu', '菜单列表', null, 'opencloud-base-producer', '/menu', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419550195712', 'menuAll', '菜单列表', null, 'opencloud-base-producer', '/menu/all', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419713773568', 'disableMenu', '禁用菜单资源', null, 'opencloud-base-producer', '/menu/disable', '0', '1', '2018-12-20 21:33:01', '2018-12-20 21:33:01');
+INSERT INTO `system_api` VALUES ('525425419868962816', 'getMenu', '获取菜单资源', null, 'opencloud-base-producer', '/menu/{menuId}', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420028346368', 'addMenu', '添加菜单资源', null, 'opencloud-base-producer', '/menu/add', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420179341312', 'enableMenu', '启用菜单资源', null, 'opencloud-base-producer', '/menu/enable', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420313559040', 'removeMenu', '移除菜单', null, 'opencloud-base-producer', '/menu/remove', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420464553984', 'getRole', '获取角色信息', null, 'opencloud-base-producer', '/role/{roleId}', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420628131840', 'role', '角色列表', null, 'opencloud-base-producer', '/role', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420779126784', 'updateRole', '更新角色', null, 'opencloud-base-producer', '/role/update', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425420946898944', 'removeRole', '删除角色', null, 'opencloud-base-producer', '/role/remove', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421089505280', 'addRole', '添加角色', null, 'opencloud-base-producer', '/role/add', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421215334400', 'user', '系统用户列表', null, 'opencloud-base-producer', '/user', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421332774912', 'userActions', '当前用户可访问操作资源', null, 'opencloud-base-producer', '/user/current/actions', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421462798336', 'userApis', '当前用户可访问API资源', null, 'opencloud-base-producer', '/user/current/apis', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421617987584', 'userMenus', '当前用户可访问菜单资源', null, 'opencloud-base-producer', '/user/current/menus', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421777371136', 'updateUser', '更新系统用户', null, 'opencloud-base-producer', '/user/update', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+INSERT INTO `system_api` VALUES ('525425421890617344', 'addUser', '添加系统用户', null, 'opencloud-base-producer', '/user/add', '0', '1', '2018-12-20 21:33:02', '2018-12-20 21:33:02');
+
+-- ----------------------------
+-- Table structure for system_app
+-- ----------------------------
+DROP TABLE IF EXISTS `system_app`;
+CREATE TABLE `system_app` (
+                            `app_id` varchar(20) NOT NULL COMMENT '客户端ID',
+                            `app_secret` varchar(255) NOT NULL COMMENT '客户端秘钥',
+                            `app_name` varchar(255) NOT NULL COMMENT 'app名称',
+                            `app_name_en` varchar(255) NOT NULL COMMENT 'app英文名称',
+                            `app_icon` varchar(255) DEFAULT NULL COMMENT '应用图标',
+                            `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
+                            `app_desc` varchar(255) DEFAULT NULL COMMENT 'app描述',
+                            `app_os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
+                            `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
+                            `user_type` int(1) NOT NULL DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+                            `create_time` datetime NOT NULL COMMENT '创建时间',
+                            `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of system_app
+-- ----------------------------
+INSERT INTO `system_app` VALUES ('gateway', '123456', '开放云平台', 'ApiGateway', null, 'server', '开放云平台', null, '0', '0', '2018-11-12 17:48:45', '2018-11-16 18:46:31');
 
 -- ----------------------------
 -- Table structure for system_menu
