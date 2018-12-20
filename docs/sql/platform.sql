@@ -20,15 +20,15 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `gateway_rate_limit`;
 CREATE TABLE `gateway_rate_limit` (
-  `id` bigint(20) NOT NULL,
-  `limit` bigint(11) NOT NULL DEFAULT '0' COMMENT '限制数量',
-  `interval` bigint(11) NOT NULL DEFAULT '1' COMMENT '时间间隔(秒)',
-  `service_id` varchar(100) NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-禁用 1-启用',
-  `type` varchar(10) DEFAULT 'url' COMMENT '限流规则类型:url,origin,user',
-  `rules` text COMMENT '限流规则内容',
-  `limit_desc` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                    `id` bigint(20) NOT NULL,
+                                    `limit` bigint(11) NOT NULL DEFAULT '0' COMMENT '限制数量',
+                                    `interval` bigint(11) NOT NULL DEFAULT '1' COMMENT '时间间隔(秒)',
+                                    `service_id` varchar(100) NOT NULL,
+                                    `enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-禁用 1-启用',
+                                    `type` varchar(10) DEFAULT 'url' COMMENT '限流规则类型:url,origin,user',
+                                    `rules` text COMMENT '限流规则内容',
+                                    `limit_desc` varchar(255) DEFAULT NULL,
+                                    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网关流量限制';
 
 -- ----------------------------
@@ -40,16 +40,16 @@ CREATE TABLE `gateway_rate_limit` (
 -- ----------------------------
 DROP TABLE IF EXISTS `gateway_routes`;
 CREATE TABLE `gateway_routes` (
-  `id` bigint(20) NOT NULL,
-  `route_id` varchar(100) DEFAULT NULL COMMENT '路由ID',
-  `path` varchar(255) DEFAULT NULL COMMENT '路径',
-  `service_id` varchar(255) DEFAULT NULL COMMENT '服务ID',
-  `url` varchar(255) DEFAULT NULL COMMENT '完整地址',
-  `strip_prefix` tinyint(1) DEFAULT '1' COMMENT '忽略前缀',
-  `retryable` tinyint(1) DEFAULT '0' COMMENT '0-不重试 1-重试',
-  `enabled` tinyint(1) DEFAULT '0' COMMENT '0-禁用 1-启用 ',
-  `route_desc` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                `id` bigint(20) NOT NULL,
+                                `route_id` varchar(100) DEFAULT NULL COMMENT '路由ID',
+                                `path` varchar(255) DEFAULT NULL COMMENT '路径',
+                                `service_id` varchar(255) DEFAULT NULL COMMENT '服务ID',
+                                `url` varchar(255) DEFAULT NULL COMMENT '完整地址',
+                                `strip_prefix` tinyint(1) DEFAULT '1' COMMENT '忽略前缀',
+                                `retryable` tinyint(1) DEFAULT '0' COMMENT '0-不重试 1-重试',
+                                `enabled` tinyint(1) DEFAULT '0' COMMENT '0-禁用 1-启用 ',
+                                `route_desc` varchar(255) DEFAULT NULL,
+                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网关动态路由';
 
 -- ----------------------------
@@ -61,46 +61,46 @@ CREATE TABLE `gateway_routes` (
 -- ----------------------------
 DROP TABLE IF EXISTS `system_access`;
 CREATE TABLE `system_access` (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '授权编码: 资源类型+资源名称  API_INFO',
-  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
-  `url` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
-  `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
-  `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
-  `identity_id` bigint(20) NOT NULL COMMENT '授权身份ID',
-  `identity_code` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '授权身份编码',
-  `identity_prefix` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '授权身份前缀:用户(USER_) 、角色(ROLE_)',
-  `service_id` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `enabled` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`id`)
+                               `id` bigint(20) NOT NULL,
+                               `code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '授权编码: 资源类型+资源名称  API_INFO',
+                               `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
+                               `url` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+                               `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
+                               `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
+                               `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
+                               `identity_id` bigint(20) NOT NULL COMMENT '授权身份ID',
+                               `identity_code` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '授权身份编码',
+                               `identity_prefix` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '授权身份前缀:用户(USER_) 、角色(ROLE_)',
+                               `service_id` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+                               `enabled` tinyint(1) DEFAULT '1',
+                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资源授权表';
 
 -- ----------------------------
 -- Records of system_access
 -- ----------------------------
-INSERT INTO `system_access` VALUES ('1', 'MENU_SYSTEM', '系统安全', '', '1', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('2', 'MENU_AUTHORITY', '权限管理', '/authoritys/index', '2', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('3', 'MENU_MENU', '菜单管理', '/menus/index', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('4', 'MENU_SERVER', '服务维护', null, '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('5', 'MENU_TRACE', '服务追踪', 'http://localhost:7080', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('1', 'menu_system', '系统安全', '', '1', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('2', 'menu_authority', '权限管理', '/authoritys/index', '2', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('3', 'menu_menus', '菜单管理', '/menus/index', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('4', 'menu_server', '服务维护', null, '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('5', 'menu_trace', '服务追踪', 'http://localhost:7080', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 
 -- ----------------------------
 -- Table structure for system_action
 -- ----------------------------
 DROP TABLE IF EXISTS `system_action`;
 CREATE TABLE `system_action` (
-  `action_id` bigint(20) NOT NULL COMMENT '资源ID',
-  `action_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
-  `action_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
-  `action_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
-  `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
-  `menu_id` bigint(20) DEFAULT NULL COMMENT '资源父节点',
-  `priority` int(10) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`action_id`)
+                               `action_id` bigint(20) NOT NULL COMMENT '资源ID',
+                               `action_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
+                               `action_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
+                               `action_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
+                               `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
+                               `menu_id` bigint(20) DEFAULT NULL COMMENT '资源父节点',
+                               `priority` int(10) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
+                               `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
+                               `create_time` datetime NOT NULL,
+                               `update_time` datetime DEFAULT NULL,
+                               PRIMARY KEY (`action_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作表';
 
 -- ----------------------------
@@ -114,17 +114,17 @@ INSERT INTO `system_action` VALUES ('2', 'btnSave', '保存', '保存', '/index'
 -- ----------------------------
 DROP TABLE IF EXISTS `system_api`;
 CREATE TABLE `system_api` (
-  `api_id` bigint(20) NOT NULL COMMENT '资源ID',
-  `api_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
-  `api_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
-  `api_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
-  `service_id` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '服务ID',
-  `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
-  `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`api_id`)
+                            `api_id` bigint(20) NOT NULL COMMENT '资源ID',
+                            `api_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源编码',
+                            `api_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '资源名称',
+                            `api_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '资源描述',
+                            `service_id` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '服务ID',
+                            `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '资源路径',
+                            `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级',
+                            `enabled` tinyint(1) NOT NULL COMMENT '是否可用',
+                            `create_time` datetime NOT NULL,
+                            `update_time` datetime DEFAULT NULL,
+                            PRIMARY KEY (`api_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='API资源表';
 
 -- ----------------------------
@@ -248,18 +248,18 @@ INSERT INTO `system_api` VALUES ('525302103241916416', 'user', '获取当前登�
 -- ----------------------------
 DROP TABLE IF EXISTS `system_app`;
 CREATE TABLE `system_app` (
-  `app_id` varchar(20) NOT NULL COMMENT '客户端ID',
-  `app_secret` varchar(255) NOT NULL COMMENT '客户端秘钥',
-  `app_name` varchar(255) NOT NULL COMMENT 'app名称',
-  `app_name_en` varchar(255) NOT NULL COMMENT 'app英文名称',
-  `app_icon` varchar(255) DEFAULT NULL COMMENT '应用图标',
-  `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
-  `app_desc` varchar(255) DEFAULT NULL COMMENT 'app描述',
-  `app_os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
-  `user_type` int(1) NOT NULL DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+                            `app_id` varchar(20) NOT NULL COMMENT '客户端ID',
+                            `app_secret` varchar(255) NOT NULL COMMENT '客户端秘钥',
+                            `app_name` varchar(255) NOT NULL COMMENT 'app名称',
+                            `app_name_en` varchar(255) NOT NULL COMMENT 'app英文名称',
+                            `app_icon` varchar(255) DEFAULT NULL COMMENT '应用图标',
+                            `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
+                            `app_desc` varchar(255) DEFAULT NULL COMMENT 'app描述',
+                            `app_os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
+                            `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
+                            `user_type` int(1) NOT NULL DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+                            `create_time` datetime NOT NULL COMMENT '创建时间',
+                            `update_time` datetime DEFAULT NULL COMMENT '更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -272,12 +272,12 @@ INSERT INTO `system_app` VALUES ('gateway', '123456', '开放云平台', 'ApiGat
 -- ----------------------------
 DROP TABLE IF EXISTS `system_account`;
 CREATE TABLE `system_account` (
-  `account_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户Id',
-  `account` varchar(255) DEFAULT NULL COMMENT '标识：手机号、邮箱、 用户名、或第三方应用的唯一标识',
-  `password` varchar(255) DEFAULT NULL COMMENT '密码凭证：站内的保存密码、站外的不保存或保存token）',
-  `account_type` varchar(255) DEFAULT NULL COMMENT '登录类型:password-密码、mobile-手机号、email-邮箱、weixin-微信、weibo-微博、qq-等等',
-  PRIMARY KEY (`account_id`)
+                                `account_id` bigint(20) NOT NULL,
+                                `user_id` bigint(20) DEFAULT NULL COMMENT '用户Id',
+                                `account` varchar(255) DEFAULT NULL COMMENT '标识：手机号、邮箱、 用户名、或第三方应用的唯一标识',
+                                `password` varchar(255) DEFAULT NULL COMMENT '密码凭证：站内的保存密码、站外的不保存或保存token）',
+                                `account_type` varchar(255) DEFAULT NULL COMMENT '登录类型:password-密码、mobile-手机号、email-邮箱、weixin-微信、weibo-微博、qq-等等',
+                                PRIMARY KEY (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账号-用于登陆认证';
 
 -- ----------------------------
@@ -292,13 +292,13 @@ INSERT INTO `system_account` VALUES ('521677655586635776', '521677655146233856',
 -- ----------------------------
 DROP TABLE IF EXISTS `system_account_logs`;
 CREATE TABLE `system_account_logs` (
-  `id` bigint(20) NOT NULL,
-  `login_time` datetime NOT NULL,
-  `login_ip` varchar(255) DEFAULT NULL COMMENT '登录Ip',
-  `login_agent` varchar(500) DEFAULT NULL COMMENT '登录设备',
-  `login_nums` int(11) DEFAULT NULL COMMENT '登录次数',
-  `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+                                     `id` bigint(20) NOT NULL,
+                                     `login_time` datetime NOT NULL,
+                                     `login_ip` varchar(255) DEFAULT NULL COMMENT '登录Ip',
+                                     `login_agent` varchar(500) DEFAULT NULL COMMENT '登录设备',
+                                     `login_nums` int(11) DEFAULT NULL COMMENT '登录次数',
+                                     `user_id` bigint(20) NOT NULL,
+                                     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账号登录日志';
 
 -- ----------------------------
@@ -370,18 +370,18 @@ INSERT INTO `system_account_logs` VALUES ('525337416806957056', '2018-12-20 15:4
 -- ----------------------------
 DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu` (
-  `menu_id` bigint(20) NOT NULL COMMENT '菜单Id',
-  `menu_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '菜单编码',
-  `menu_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '菜单名称',
-  `menu_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
-  `icon` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '菜单标题',
-  `parent_id` bigint(20) DEFAULT NULL COMMENT '父级菜单',
-  `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '请求路径',
-  `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
-  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否可用',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`menu_id`)
+                             `menu_id` bigint(20) NOT NULL COMMENT '菜单Id',
+                             `menu_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '菜单编码',
+                             `menu_name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '菜单名称',
+                             `menu_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
+                             `icon` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '菜单标题',
+                             `parent_id` bigint(20) DEFAULT NULL COMMENT '父级菜单',
+                             `url` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '请求路径',
+                             `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
+                             `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否可用',
+                             `create_time` datetime NOT NULL COMMENT '创建时间',
+                             `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+                             PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='菜单表';
 
 -- ----------------------------
@@ -400,15 +400,15 @@ INSERT INTO `system_menu` VALUES ('7', 'trace', '服务追踪', '服务追踪', 
 -- ----------------------------
 DROP TABLE IF EXISTS `system_role`;
 CREATE TABLE `system_role` (
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  `role_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '角色编码',
-  `role_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '角色名称',
-  `role_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '角色描述',
-  `enabled` int(10) NOT NULL COMMENT '是否可用',
-  `create_time` datetime NOT NULL,
-  `update_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE KEY `role_code` (`role_code`) USING BTREE
+                             `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+                             `role_code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '角色编码',
+                             `role_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '角色名称',
+                             `role_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '角色描述',
+                             `enabled` int(10) NOT NULL COMMENT '是否可用',
+                             `create_time` datetime NOT NULL,
+                             `update_time` datetime DEFAULT NULL,
+                             PRIMARY KEY (`role_id`),
+                             UNIQUE KEY `role_code` (`role_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色';
 
 -- ----------------------------
@@ -424,21 +424,21 @@ INSERT INTO `system_role` VALUES ('4', 'companyDeveloper', '企业开发者', ''
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user` (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `user_name` varchar(255) DEFAULT NULL COMMENT '登陆账号',
-  `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
-  `avatar` varchar(255) DEFAULT '' COMMENT '头像',
-  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
-  `user_type` int(11) DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
-  `user_desc` varchar(255) DEFAULT '' COMMENT '描述',
-  `company_id` bigint(20) DEFAULT NULL COMMENT '企业ID',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `register_ip` varchar(100) DEFAULT NULL COMMENT '注册IP',
-  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `state` int(11) DEFAULT '1' COMMENT '状态:0-禁用 1-启用 2-锁定',
-  PRIMARY KEY (`user_id`)
+                             `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+                             `user_name` varchar(255) DEFAULT NULL COMMENT '登陆账号',
+                             `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
+                             `avatar` varchar(255) DEFAULT '' COMMENT '头像',
+                             `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+                             `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
+                             `user_type` int(11) DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+                             `user_desc` varchar(255) DEFAULT '' COMMENT '描述',
+                             `company_id` bigint(20) DEFAULT NULL COMMENT '企业ID',
+                             `create_time` datetime NOT NULL COMMENT '创建时间',
+                             `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+                             `register_ip` varchar(100) DEFAULT NULL COMMENT '注册IP',
+                             `register_time` datetime DEFAULT NULL COMMENT '注册时间',
+                             `state` int(11) DEFAULT '1' COMMENT '状态:0-禁用 1-启用 2-锁定',
+                             PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录用户信息';
 
 -- ----------------------------
@@ -451,10 +451,10 @@ INSERT INTO `system_user` VALUES ('521677655146233856', 'admin', 'admin', null, 
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user_role`;
 CREATE TABLE `system_user_role` (
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  KEY `fk_user` (`user_id`),
-  KEY `fk_role` (`role_id`)
+                                  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+                                  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+                                  KEY `fk_user` (`user_id`),
+                                  KEY `fk_role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色和用户关系表';
 
 -- ----------------------------
