@@ -6,6 +6,7 @@ import com.github.lyd.base.client.entity.SystemMenu;
 
 /**
  * 菜单资源
+ * @author liuyadu
  */
 public interface SystemMenuService {
     /**

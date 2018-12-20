@@ -28,9 +28,9 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class SystemRoleServiceImpl implements SystemRoleService {
     @Autowired
-    private SystemRoleMapper roleMapper;
+    private SystemRoleMapper systemRoleMapper;
     @Autowired
-    private SystemUserRoleMapper rolesMemberMapper;
+    private SystemUserRoleMapper systemUserRoleMapper;
 
     /**
      * 分页查询
@@ -42,7 +42,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     public PageList<SystemRole> findListPage(PageParams pageParams, String keyword) {
         PageHelper.startPage(pageParams.getPage(), pageParams.getLimit(), pageParams.getOrderBy());
-        List<SystemRole> list = roleMapper.selectRoleList(null);
+        List<SystemRole> list = systemRoleMapper.selectRoleList(null);
         return new PageList(list);
     }
 
@@ -54,7 +54,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      */
     @Override
     public SystemRole getRole(Long roleId) {
-        return roleMapper.selectByPrimaryKey(roleId);
+        return systemRoleMapper.selectByPrimaryKey(roleId);
     }
 
     /**
@@ -83,7 +83,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         role.setRoleCode(roleCode);
         role.setRoleName(roleName);
         role.setEnabled(enable ? 1 : 0);
-        int result = roleMapper.insertSelective(role);
+        int result = systemRoleMapper.insertSelective(role);
         return result > 0;
     }
 
@@ -120,7 +120,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         role.setRoleCode(roleCode);
         role.setRoleName(roleName);
         role.setEnabled(enable ? 1 : 0);
-        int result = roleMapper.updateByPrimaryKeySelective(role);
+        int result = systemRoleMapper.updateByPrimaryKeySelective(role);
         return result > 0;
     }
 
@@ -139,7 +139,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (count > 0) {
             throw new OpenMessageException("该角色下存在授权组员,不允许删除!");
         }
-        int result = roleMapper.deleteByPrimaryKey(roleId);
+        int result = systemRoleMapper.deleteByPrimaryKey(roleId);
         return result > 0;
     }
 
@@ -156,7 +156,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         }
         ExampleBuilder builder = new ExampleBuilder(SystemRole.class);
         Example example = builder.criteria().andEqualTo("roleCode", roleCode).end().build();
-        return roleMapper.selectCountByExample(example) > 0;
+        return systemRoleMapper.selectCountByExample(example) > 0;
     }
 
     /**
@@ -184,7 +184,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             list.add(roleUser);
         }
         // 批量保存
-        int result = rolesMemberMapper.insertList(list);
+        int result = systemUserRoleMapper.insertList(list);
         return result > 0;
     }
 
@@ -198,7 +198,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public int getCountByRole(Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("roleId", roleId).end().build();
-        int result = rolesMemberMapper.selectCountByExample(example);
+        int result = systemUserRoleMapper.selectCountByExample(example);
         return result;
     }
 
@@ -212,7 +212,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public int getCountByUser(Long userId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("userId", userId).end().build();
-        int result = rolesMemberMapper.selectCountByExample(example);
+        int result = systemUserRoleMapper.selectCountByExample(example);
         return result;
     }
 
@@ -226,7 +226,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public Boolean removeRoleMembers(Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("roleId", roleId).end().build();
-        int result = rolesMemberMapper.deleteByExample(example);
+        int result = systemUserRoleMapper.deleteByExample(example);
         return result > 0;
     }
 
@@ -240,7 +240,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public Boolean removeMemberRoles(Long userId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("userId", userId).end().build();
-        int result = rolesMemberMapper.deleteByExample(example);
+        int result = systemUserRoleMapper.deleteByExample(example);
         return result > 0;
     }
 
@@ -258,7 +258,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
                 .andEqualTo("userId", userId)
                 .andEqualTo("roleId", roleId)
                 .end().build();
-        int result = rolesMemberMapper.selectCountByExample(example);
+        int result = systemUserRoleMapper.selectCountByExample(example);
         return result > 0;
     }
 
@@ -271,7 +271,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      */
     @Override
     public List<SystemRole> getUserRoles(Long userId) {
-        List<SystemRole> roles = rolesMemberMapper.selectUserRoleList(userId);
+        List<SystemRole> roles = systemUserRoleMapper.selectUserRoleList(userId);
         return roles;
     }
 

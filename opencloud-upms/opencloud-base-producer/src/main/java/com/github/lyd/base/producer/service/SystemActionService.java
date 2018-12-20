@@ -6,6 +6,7 @@ import com.github.lyd.base.client.entity.SystemAction;
 
 /**
  * 动作资源
+ * @author liuyadu
  */
 public interface SystemActionService {
     /**

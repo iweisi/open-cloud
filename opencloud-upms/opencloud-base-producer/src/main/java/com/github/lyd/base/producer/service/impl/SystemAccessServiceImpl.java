@@ -32,7 +32,6 @@ import java.util.List;
 public class SystemAccessServiceImpl implements SystemAccessService {
     @Autowired
     private SystemAccessMapper systemAccessMapper;
-
     @Autowired
     private SystemMenuMapper systemMenuMapper;
     @Autowired

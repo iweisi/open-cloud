@@ -27,7 +27,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class SystemActionServiceImpl implements SystemActionService {
     @Autowired
-    private SystemActionMapper resourceActionMapper;
+    private SystemActionMapper systemActionMapper;
     @Autowired
     private SystemAccessService systemAccessService;
 
@@ -45,7 +45,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         Example example = builder.criteria()
                 .orLike("actionCode", keyword)
                 .orLike("actionName", keyword).end().build();
-        List<SystemAction> list = resourceActionMapper.selectByExample(example);
+        List<SystemAction> list = systemActionMapper.selectByExample(example);
         return new PageList(list);
     }
 
@@ -57,7 +57,7 @@ public class SystemActionServiceImpl implements SystemActionService {
      */
     @Override
     public SystemAction getAction(Long actionId) {
-        return resourceActionMapper.selectByPrimaryKey(actionId);
+        return systemActionMapper.selectByPrimaryKey(actionId);
     }
 
 
@@ -73,7 +73,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         Example example = builder.criteria()
                 .andEqualTo("actionCode", actionCode)
                 .end().build();
-        int count = resourceActionMapper.selectCountByExample(example);
+        int count = systemActionMapper.selectCountByExample(example);
         return count > 0 ? true : false;
     }
 
@@ -96,7 +96,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         }
         action.setCreateTime(new Date());
         action.setUpdateTime(action.getCreateTime());
-        int count = resourceActionMapper.insertSelective(action);
+        int count = systemActionMapper.insertSelective(action);
         return count > 0;
     }
 
@@ -125,7 +125,7 @@ public class SystemActionServiceImpl implements SystemActionService {
             action.setPriority(0);
         }
         action.setUpdateTime(new Date());
-        int count = resourceActionMapper.updateByPrimaryKeySelective(action);
+        int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
         systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
@@ -144,7 +144,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setActionId(actionId);
         action.setEnabled(enable);
         action.setUpdateTime(new Date());
-        int count = resourceActionMapper.updateByPrimaryKeySelective(action);
+        int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
         systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
@@ -161,7 +161,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         if (systemAccessService.isExist(actionId, RbacConstans.RESOURCE_TYPE_ACTION)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", actionId));
         }
-        int count = resourceActionMapper.deleteByPrimaryKey(actionId);
+        int count = systemActionMapper.deleteByPrimaryKey(actionId);
         return count > 0;
     }
 

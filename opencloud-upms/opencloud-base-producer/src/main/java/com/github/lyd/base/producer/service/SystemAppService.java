@@ -7,9 +7,7 @@ import com.github.lyd.base.client.dto.SystemAppDto;
 /**
  * app信息管理
  *
- * @author: liuyadu
- * @date: 2018/11/12 16:26
- * @description:
+ * @author liuyadu
  */
 public interface SystemAppService {
 

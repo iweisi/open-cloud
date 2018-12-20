@@ -33,7 +33,7 @@ import java.util.List;
 public class SystemAppServiceImpl implements SystemAppService {
 
     @Autowired
-    private SystemAppMapper appInfoMapper;
+    private SystemAppMapper systemAppMapper;
 
     @Autowired
     private ClientDetailsRemoteServiceClient clientDetailsRemoteServiceClient;
@@ -49,7 +49,7 @@ public class SystemAppServiceImpl implements SystemAppService {
     @Override
     public PageList<SystemAppDto> findListPage(PageParams pageParams, String keyword) {
         PageHelper.startPage(pageParams.getPage(),pageParams.getLimit(),pageParams.getOrderBy());
-        List<SystemAppDto> list = appInfoMapper.selectAppList(null);
+        List<SystemAppDto> list = systemAppMapper.selectAppList(null);
         return new PageList(list);
     }
 
@@ -61,7 +61,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      */
     @Override
     public SystemAppDto getAppInfo(String appId) {
-        return appInfoMapper.getApp(appId);
+        return systemAppMapper.getApp(appId);
     }
 
     /**
@@ -114,7 +114,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         appInfo.setAppSecret(clientSecret);
         appInfo.setCreateTime(new Date());
         appInfo.setUpdateTime(appInfo.getCreateTime());
-        int result = appInfoMapper.insertSelective(appInfo);
+        int result = systemAppMapper.insertSelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         String grantTypes = RbacConstans.getGrantTypes(appType);
         Boolean autoApprove = RbacConstans.isAutoApprove(appType);
@@ -155,7 +155,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         appInfo.setAppDesc(description);
         appInfo.setAppOs(os);
         appInfo.setUpdateTime(new Date());
-        int result = appInfoMapper.updateByPrimaryKeySelective(appInfo);
+        int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         String grantTypes = RbacConstans.getGrantTypes(appType);
         Boolean autoApprove = RbacConstans.isAutoApprove(appType);
@@ -183,7 +183,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         String clientSecret = RandomValueUtils.uuid();
         appInfo.setAppSecret(clientSecret);
         appInfo.setUpdateTime(new Date());
-        int result = appInfoMapper.updateByPrimaryKeySelective(appInfo);
+        int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.resetSecret(appInfo.getAppId(), clientSecret);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚
@@ -204,7 +204,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
         }
-        int result = appInfoMapper.deleteByPrimaryKey(appInfo.getAppId());
+        int result = systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.removeClinet(appInfo.getAppId());
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物

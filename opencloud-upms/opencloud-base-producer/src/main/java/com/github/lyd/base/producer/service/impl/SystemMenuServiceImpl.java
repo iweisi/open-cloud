@@ -19,12 +19,15 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author liuyadu
+ */
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SystemMenuServiceImpl implements SystemMenuService {
     @Autowired
-    private SystemMenuMapper resourceMenuMapper;
+    private SystemMenuMapper systemMenuMapper;
     @Autowired
     private SystemAccessService systemAccessService;
 
@@ -54,7 +57,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
                 .andEqualTo("enabled", true)
                 .orLike("menuCode", keyword)
                 .orLike("menuName", keyword).end().build();
-        List<SystemMenu> list = resourceMenuMapper.selectByExample(example);
+        List<SystemMenu> list = systemMenuMapper.selectByExample(example);
         return new PageList(list);
     }
 
@@ -66,7 +69,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      */
     @Override
     public SystemMenu getMenu(Long menuId) {
-        return resourceMenuMapper.selectByPrimaryKey(menuId);
+        return systemMenuMapper.selectByPrimaryKey(menuId);
     }
 
     /**
@@ -81,7 +84,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         Example example = builder.criteria()
                 .andEqualTo("menuCode", menuCode)
                 .end().build();
-        int count = resourceMenuMapper.selectCountByExample(example);
+        int count = systemMenuMapper.selectCountByExample(example);
         return count > 0 ? true : false;
     }
 
@@ -104,7 +107,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         }
         menu.setCreateTime(new Date());
         menu.setUpdateTime(menu.getCreateTime());
-        int count = resourceMenuMapper.insertSelective(menu);
+        int count = systemMenuMapper.insertSelective(menu);
         return count > 0;
     }
 
@@ -133,7 +136,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
             menu.setPriority(0);
         }
         menu.setUpdateTime(new Date());
-        int count = resourceMenuMapper.updateByPrimaryKeySelective(menu);
+        int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
         systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
@@ -152,7 +155,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         menu.setMenuId(menuId);
         menu.setEnabled(enable);
         menu.setUpdateTime(new Date());
-        int count = resourceMenuMapper.updateByPrimaryKeySelective(menu);
+        int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
         systemAccessService.updateAccess(RbacConstans.RESOURCE_TYPE_ACTION, menu.getMenuId());
         return count > 0;
@@ -169,7 +172,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         if (systemAccessService.isExist(menuId, RbacConstans.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("%s已被授权使用,不允许删除!", menuId));
         }
-        int count = resourceMenuMapper.deleteByPrimaryKey(menuId);
+        int count = systemMenuMapper.deleteByPrimaryKey(menuId);
         return count > 0;
     }
 
