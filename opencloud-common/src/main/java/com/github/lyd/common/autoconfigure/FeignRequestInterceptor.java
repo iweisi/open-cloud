@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 微服务之间feign调用请求头丢失的问题
@@ -33,7 +34,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             template.header(AUTHORIZATION_HEADER, getHeaders(httpServletRequest).get(AUTHORIZATION_HEADER));
             // 微服务之间传递的唯一标识
             if (getHeaders(httpServletRequest).get(X_REQUEST_SID) == null) {
-                String sid = String.valueOf(System.currentTimeMillis());
+                String sid = String.valueOf(UUID.randomUUID());
                 template.header(X_REQUEST_SID, sid);
             }
             log.debug(template.url());
