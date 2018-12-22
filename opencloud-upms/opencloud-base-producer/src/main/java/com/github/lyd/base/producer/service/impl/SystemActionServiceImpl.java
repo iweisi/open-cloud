@@ -94,6 +94,9 @@ public class SystemActionServiceImpl implements SystemActionService {
         if (action.getPriority() == null) {
             action.setPriority(0);
         }
+        if (action.getStatus() == null) {
+            action.setStatus(BaseConstants.ENABLED);
+        }
         action.setCreateTime(new Date());
         action.setUpdateTime(action.getCreateTime());
         int count = systemActionMapper.insertSelective(action);
@@ -135,14 +138,14 @@ public class SystemActionServiceImpl implements SystemActionService {
      * 更新启用禁用
      *
      * @param actionId
-     * @param enable
+     * @param status
      * @return
      */
     @Override
-    public Boolean updateEnable(Long actionId, Boolean enable) {
+    public Boolean updateStatus(Long actionId, Integer status) {
         SystemAction action = new SystemAction();
         action.setActionId(actionId);
-        action.setEnabled(enable);
+        action.setStatus(status);
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息

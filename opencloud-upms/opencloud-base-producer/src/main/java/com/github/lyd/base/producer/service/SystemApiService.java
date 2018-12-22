@@ -72,10 +72,10 @@ public interface SystemApiService {
      * 更新启用禁用
      *
      * @param apiId
-     * @param enable
+     * @param status
      * @return
      */
-    Boolean updateEnable(Long apiId, Boolean enable);
+    Boolean updateStatus(Long apiId, Integer status);
 
     /**
      * 移除Api

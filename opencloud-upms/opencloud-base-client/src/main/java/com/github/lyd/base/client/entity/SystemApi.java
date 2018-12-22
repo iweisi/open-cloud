@@ -62,9 +62,9 @@ public class SystemApi implements Serializable {
     private String apiDesc;
 
     /**
-     * 是否可用
+     * 状态:0-无效 1-有效
      */
-    private Boolean enabled;
+    private Integer status;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -188,22 +188,12 @@ public class SystemApi implements Serializable {
         this.apiDesc = apiDesc;
     }
 
-    /**
-     * 获取是否可用
-     *
-     * @return enabled - 是否可用
-     */
-    public Boolean getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    /**
-     * 设置是否可用
-     *
-     * @param enabled 是否可用
-     */
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**

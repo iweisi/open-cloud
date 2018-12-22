@@ -66,7 +66,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionName  动作名称
      * @param menuId      归属菜单
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
      * @return
@@ -77,7 +77,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "actionName", required = true, value = "动作名称", paramType = "form"),
             @ApiImplicitParam(name = "menuId", required = true, value = "归属菜单", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "enabled", required = true, defaultValue = "true", allowableValues = "true,false", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -88,7 +88,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
     ) {
@@ -97,7 +97,7 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setActionName(actionName);
         action.setMenuId(menuId);
         action.setUrl(url);
-        action.setEnabled(enabled);
+        action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
         return ResultBody.success(actionService.addAction(action));
@@ -111,7 +111,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionName  动作名称
      * @param menuId      归属菜单
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
      * @return
@@ -123,7 +123,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "actionName", required = true, value = "动作名称", paramType = "form"),
             @ApiImplicitParam(name = "menuId", required = true, value = "归属菜单", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "enabled",required = true, defaultValue = "true", allowableValues = "true,false", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -135,7 +135,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
     ) {
@@ -145,46 +145,30 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setActionName(actionName);
         action.setMenuId(menuId);
         action.setUrl(url);
-        action.setEnabled(enabled);
+        action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
         return ResultBody.success(actionService.updateAction(action));
     }
 
     /**
-     * 禁用动作资源
+     * 更新状态
      *
      * @param actionId 动作ID
      * @return
      */
-    @ApiOperation(value = "禁用动作资源")
+    @ApiOperation(value = "更新状态")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form")
+            @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form"),
+            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
-    @PostMapping("/action/disable")
+    @PostMapping("/action/update/status")
     @Override
-    public ResultBody<Boolean> disableAction(
-            @RequestParam("actionId") Long actionId
+    public ResultBody<Boolean> updateStatus(
+            @RequestParam("actionId") Long actionId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(actionService.updateEnable(actionId, false));
-    }
-
-    /**
-     * 启用动作资源
-     *
-     * @param actionId 动作ID
-     * @return
-     */
-    @ApiOperation(value = "启用动作资源")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form")
-    })
-    @PostMapping("/action/enable")
-    @Override
-    public ResultBody<Boolean> enableAction(
-            @RequestParam("actionId") Long actionId
-    ) {
-        return ResultBody.success(actionService.updateEnable(actionId, true));
+        return ResultBody.success(actionService.updateStatus(actionId, status));
     }
 
     /**

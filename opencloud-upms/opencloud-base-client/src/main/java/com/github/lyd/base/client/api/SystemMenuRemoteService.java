@@ -47,7 +47,7 @@ public interface SystemMenuRemoteService {
      * @param menuName    菜单名称
      * @param icon        图标
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status      是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
      * @param description 描述
@@ -59,7 +59,7 @@ public interface SystemMenuRemoteService {
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "description", required = false, defaultValue = "") String description
@@ -73,7 +73,7 @@ public interface SystemMenuRemoteService {
      * @param menuName    菜单名称
      * @param icon        图标
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status      是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
      * @param description 描述
@@ -86,33 +86,25 @@ public interface SystemMenuRemoteService {
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "description", required = false, defaultValue = "") String description
     );
 
     /**
-     * 禁用菜单资源
+     * 更新状态
      *
      * @param menuId 菜单ID
+     * @param status 状态
      * @return
      */
-    @PostMapping("/menu/disable")
-    ResultBody<Boolean> disableMenu(
-            @RequestParam("menuId") Long menuId
+    @PostMapping("/menu/update/status")
+    ResultBody<Boolean> updateStatus(
+            @RequestParam("menuId") Long menuId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
     );
 
-    /**
-     * 启用菜单资源
-     *
-     * @param menuId 菜单ID
-     * @return
-     */
-    @PostMapping("/menu/enable")
-    ResultBody<Boolean> enableMenu(
-            @RequestParam("menuId") Long menuId
-    );
 
     /**
      * 移除菜单

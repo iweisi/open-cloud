@@ -90,6 +90,10 @@ public class SystemApp implements Serializable {
     private String website;
 
     /**
+     * 状态:0-无效 1-有效
+     */
+    private Integer status;
+    /**
      * @return app_id
      */
     public String getAppId() {
@@ -254,5 +258,13 @@ public class SystemApp implements Serializable {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

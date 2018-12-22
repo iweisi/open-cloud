@@ -34,13 +34,13 @@ public interface SystemApiRemoteService {
     /**
      * 添加Api资源
      *
-     * @param apiCode     Api编码
-     * @param apiName     Api名称
-     * @param serviceId   服务ID
-     * @param url         请求路径
-     * @param enabled     是否启用
-     * @param priority    优先级越小越靠前
-     * @param apiDesc 描述
+     * @param apiCode   Api编码
+     * @param apiName   Api名称
+     * @param serviceId 服务ID
+     * @param url       请求路径
+     * @param status    是否启用
+     * @param priority  优先级越小越靠前
+     * @param apiDesc   描述
      * @return
      */
     @PostMapping("/api/add")
@@ -49,7 +49,7 @@ public interface SystemApiRemoteService {
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
     );
@@ -57,14 +57,14 @@ public interface SystemApiRemoteService {
     /**
      * 编辑Api资源
      *
-     * @param apiId       ApiID
-     * @param apiCode     Api编码
-     * @param apiName     Api名称
-     * @param serviceId   服务ID
-     * @param url         请求路径
-     * @param enabled     是否启用
-     * @param priority    优先级越小越靠前
-     * @param apiDesc 描述
+     * @param apiId     ApiID
+     * @param apiCode   Api编码
+     * @param apiName   Api名称
+     * @param serviceId 服务ID
+     * @param url       请求路径
+     * @param status    是否启用
+     * @param priority  优先级越小越靠前
+     * @param apiDesc   描述
      * @return
      */
     @PostMapping("/api/update")
@@ -74,31 +74,22 @@ public interface SystemApiRemoteService {
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
     );
 
     /**
-     * 禁用Api资源
+     * 更新状态
      *
-     * @param apiId ApiID
+     * @param apiId  ApiID
+     * @param status 状态
      * @return
      */
-    @PostMapping("/api/disable")
-    ResultBody<Boolean> disableApi(
-            @RequestParam("apiId") Long apiId
-    );
-
-    /**
-     * 启用Api资源
-     *
-     * @param apiId ApiID
-     * @return
-     */
-    @PostMapping("/api/enable")
-    ResultBody<Boolean> enableApi(
-            @RequestParam("apiId") Long apiId
+    @PostMapping("/api/update/status")
+    ResultBody<Boolean> updateStatus(
+            @RequestParam("apiId") Long apiId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
     );
 
     /**

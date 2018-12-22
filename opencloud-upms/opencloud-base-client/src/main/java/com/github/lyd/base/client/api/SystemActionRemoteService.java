@@ -41,7 +41,7 @@ public interface SystemActionRemoteService {
      * @param actionName  动作名称
      * @param menuId      归属菜单
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
      * @return
@@ -52,7 +52,7 @@ public interface SystemActionRemoteService {
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
     );
@@ -65,7 +65,7 @@ public interface SystemActionRemoteService {
      * @param actionName  动作名称
      * @param menuId      归属菜单
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
      * @return
@@ -77,31 +77,22 @@ public interface SystemActionRemoteService {
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
     );
 
     /**
-     * 禁用动作资源
+     * 更新状态
      *
      * @param actionId 动作ID
+     * @param status 状态
      * @return
      */
-    @PostMapping("/action/disable")
-    ResultBody<Boolean> disableAction(
-            @RequestParam("actionId") Long actionId
-    );
-
-    /**
-     * 启用动作资源
-     *
-     * @param actionId 动作ID
-     * @return
-     */
-    @PostMapping("/action/enable")
-    ResultBody<Boolean> enableAction(
-            @RequestParam("actionId") Long actionId
+    @PostMapping("/action/update/status")
+    ResultBody<Boolean> updateStatus(
+            @RequestParam("actionId") Long actionId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
     );
 
     /**

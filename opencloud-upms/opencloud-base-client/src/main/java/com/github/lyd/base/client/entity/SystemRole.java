@@ -46,9 +46,9 @@ public class SystemRole implements Serializable {
     private String roleDesc;
 
     /**
-     * 是否可用
+     * 状态:0-无效 1-有效
      */
-    private Integer enabled;
+    private Integer status;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -118,22 +118,12 @@ public class SystemRole implements Serializable {
         this.roleDesc = roleDesc;
     }
 
-    /**
-     * 获取是否可用
-     *
-     * @return enabled - 是否可用
-     */
-    public Integer getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    /**
-     * 设置是否可用
-     *
-     * @param enabled 是否可用
-     */
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**

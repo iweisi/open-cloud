@@ -1,5 +1,6 @@
 package com.github.lyd.gateway.producer.locator;
 
+import com.github.lyd.gateway.client.entity.GatewayRoute;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -86,10 +87,10 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
     public Map<String, ZuulRoute> loadRouteWithDb() {
         Map<String, ZuulProperties.ZuulRoute> routes = Maps.newLinkedHashMap();
         try {
-            List<ZuulRouteVO> results = jdbcTemplate.query("select * from gateway_routes where enabled = true ", new
-                    BeanPropertyRowMapper<>(ZuulRouteVO.class));
+            List<GatewayRoute> results = jdbcTemplate.query("select * from gateway_route where status = 1 ", new
+                    BeanPropertyRowMapper<>(GatewayRoute.class));
             if (results != null && results.size() > 0) {
-                for (ZuulRouteVO result : results) {
+                for (GatewayRoute result : results) {
                     if (StringUtils.isEmpty(result.getPath())) {
                         continue;
                     }
@@ -107,107 +108,4 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
         }
         return routes;
     }
-
-
-    public static class ZuulRouteVO {
-
-        private String id;
-
-        private String path;
-
-        private String serviceId;
-
-        private String url;
-
-        private Boolean stripPrefix = true;
-
-        private Boolean retryable;
-
-        private Boolean enabled;
-
-        private String description;
-
-        private String sensitiveHeaders;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public void setPath(String path) {
-            this.path = path;
-        }
-
-        public String getServiceId() {
-            return serviceId;
-        }
-
-        public void setServiceId(String serviceId) {
-            this.serviceId = serviceId;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public Boolean isStripPrefix() {
-            return stripPrefix;
-        }
-
-        public void setStripPrefix(boolean stripPrefix) {
-            this.stripPrefix = stripPrefix;
-        }
-
-        public Boolean getRetryable() {
-            return retryable;
-        }
-
-        public void setRetryable(Boolean retryable) {
-            this.retryable = retryable;
-        }
-
-        public Boolean getEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(Boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public Boolean getStripPrefix() {
-            return stripPrefix;
-        }
-
-        public void setStripPrefix(Boolean stripPrefix) {
-            this.stripPrefix = stripPrefix;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getSensitiveHeaders() {
-            return sensitiveHeaders;
-        }
-
-        public void setSensitiveHeaders(String sensitiveHeaders) {
-            this.sensitiveHeaders = sensitiveHeaders;
-        }
-    }
-
 }

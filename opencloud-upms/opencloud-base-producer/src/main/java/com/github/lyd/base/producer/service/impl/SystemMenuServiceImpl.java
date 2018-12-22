@@ -54,7 +54,6 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     public PageList<SystemMenu> findList(String keyword) {
         ExampleBuilder builder = new ExampleBuilder(SystemMenu.class);
         Example example = builder.criteria()
-                .andEqualTo("enabled", true)
                 .orLike("menuCode", keyword)
                 .orLike("menuName", keyword).end().build();
         List<SystemMenu> list = systemMenuMapper.selectByExample(example);
@@ -105,6 +104,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         if (menu.getPriority() == null) {
             menu.setPriority(0);
         }
+        if (menu.getStatus() == null) {
+            menu.setStatus(BaseConstants.ENABLED);
+        }
         menu.setCreateTime(new Date());
         menu.setUpdateTime(menu.getCreateTime());
         int count = systemMenuMapper.insertSelective(menu);
@@ -119,6 +121,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      */
     @Override
     public Boolean updateMenu(SystemMenu menu) {
+        if(menu.getMenuId()==null){
+            throw new OpenMessageException("ID不能为空");
+        }
         SystemMenu savedMenu = getMenu(menu.getMenuId());
         if (savedMenu == null) {
             throw new OpenMessageException(String.format("%s菜单不存在", menu.getMenuId()));
@@ -146,14 +151,14 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      * 更新启用禁用
      *
      * @param menuId
-     * @param enable
+     * @param status
      * @return
      */
     @Override
-    public Boolean updateEnable(Long menuId, Boolean enable) {
+    public Boolean updateStatus(Long menuId, Integer status) {
         SystemMenu menu = new SystemMenu();
         menu.setMenuId(menuId);
-        menu.setEnabled(enable);
+        menu.setStatus(status);
         menu.setUpdateTime(new Date());
         int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息

@@ -76,7 +76,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (StringUtils.isBlank(saved.getNickName())) {
             saved.setNickName(saved.getUserName());
         }
-        saved.setState(BaseConstants.USER_STATE_NORMAL);
+        saved.setStatus(BaseConstants.USER_STATE_NORMAL);
         saved.setCreateTime(new Date());
         saved.setUpdateTime(saved.getCreateTime());
         saved.setRegisterTime(saved.getCreateTime());

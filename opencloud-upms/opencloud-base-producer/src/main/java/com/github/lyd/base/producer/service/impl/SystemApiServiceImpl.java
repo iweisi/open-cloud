@@ -97,8 +97,8 @@ public class SystemApiServiceImpl implements SystemApiService {
         if (api.getPriority() == null) {
             api.setPriority(0);
         }
-        if (api.getEnabled() == null) {
-            api.setEnabled(true);
+        if (api.getStatus() == null) {
+            api.setStatus(BaseConstants.ENABLED);
         }
         api.setCreateTime(new Date());
         api.setUpdateTime(api.getCreateTime());
@@ -114,6 +114,9 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public Boolean updateApi(SystemApi api) {
+        if(api.getApiId()==null){
+            throw new OpenMessageException("ID不能为空");
+        }
         SystemApi savedApi = getApi(api.getApiId());
         if (savedApi == null) {
             throw new OpenMessageException(String.format("%sApi不存在", api.getApiId()));
@@ -155,14 +158,14 @@ public class SystemApiServiceImpl implements SystemApiService {
      * 更新启用禁用
      *
      * @param apiId
-     * @param enable
+     * @param status
      * @return
      */
     @Override
-    public Boolean updateEnable(Long apiId, Boolean enable) {
+    public Boolean updateStatus(Long apiId, Integer status) {
         SystemApi api = new SystemApi();
         api.setApiId(apiId);
-        api.setEnabled(enable);
+        api.setStatus(status);
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息

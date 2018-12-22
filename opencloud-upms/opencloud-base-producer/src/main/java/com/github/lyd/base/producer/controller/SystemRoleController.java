@@ -66,7 +66,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleCode    角色编码
      * @param roleName    角色显示名称
      * @param roleDesc 描述
-     * @param enable      启用禁用
+     * @param status      启用禁用
      * @return
      */
     @ApiOperation(value = "添加角色")
@@ -74,7 +74,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleName", value = "角色显示名称", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "enable", value = "启用禁用", defaultValue = "", required = false, paramType = "form")
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/role/add")
     @Override
@@ -82,9 +82,14 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "roleDesc", required = false) String roleDesc,
-            @RequestParam(value = "enable", required = false) boolean enable
+            @RequestParam(value = "status",defaultValue = "1", required = false) Integer status
     ) {
-        boolean result = roleService.addRole(roleCode, roleName, roleDesc, enable);
+        SystemRole role = new SystemRole();
+        role.setRoleCode(roleCode);
+        role.setRoleName(roleName);
+        role.setStatus(status);
+        role.setRoleDesc(roleDesc);
+        boolean result = roleService.addRole(role);
         return ResultBody.success(result);
     }
 
@@ -95,7 +100,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleCode    角色编码
      * @param roleName    角色显示名称
      * @param roleDesc 描述
-     * @param enable      启用禁用
+     * @param status      启用禁用
      * @return
      */
     @ApiOperation(value = "更新角色")
@@ -104,7 +109,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleName", value = "角色显示名称", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleDesc", value = "描述", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "enable", value = "启用禁用", defaultValue = "", required = false, paramType = "form")
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/role/update")
     @Override
@@ -113,10 +118,37 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "roleDesc", required = false) String roleDesc,
-            @RequestParam(value = "enable", required = false) boolean enable
+            @RequestParam(value = "status",defaultValue = "1", required = false) Integer status
     ) {
-        boolean result = roleService.updateRole(roleId, roleCode, roleName, roleDesc, enable);
+        SystemRole role = new SystemRole();
+        role.setRoleId(roleId);
+        role.setRoleCode(roleCode);
+        role.setRoleName(roleName);
+        role.setStatus(status);
+        role.setRoleDesc(roleDesc);
+        boolean result = roleService.updateRole(role);
         return ResultBody.success(result);
+    }
+
+
+    /**
+     * 更新状态
+     *
+     * @param roleId 菜单ID
+     * @return
+     */
+    @ApiOperation(value = "更新状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleId", required = true, value = "roleId", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
+    })
+    @PostMapping("/role/update/status")
+    @Override
+    public ResultBody<Boolean> updateStatus(
+            @RequestParam("roleId") Long roleId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
+    ) {
+        return ResultBody.success(roleService.updateStatus(roleId, status));
     }
 
     /**

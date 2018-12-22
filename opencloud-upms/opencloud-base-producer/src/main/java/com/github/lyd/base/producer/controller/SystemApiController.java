@@ -69,7 +69,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiName     Api名称
      * @param serviceId   服务ID
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param apiDesc 描述
      * @return
@@ -80,7 +80,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "enabled",required = true, defaultValue = "true", allowableValues = "true,false", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -91,7 +91,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
     ) {
@@ -100,7 +100,7 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setApiName(apiName);
         api.setServiceId(serviceId);
         api.setUrl(url);
-        api.setEnabled(enabled);
+        api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
         return ResultBody.success(apiService.addApi(api));
@@ -114,7 +114,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiName     Api名称
      * @param serviceId   服务ID
      * @param url         请求路径
-     * @param enabled     是否启用
+     * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param apiDesc 描述
      * @return
@@ -126,7 +126,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "enabled", required = true,defaultValue = "true", allowableValues = "true,false", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true,defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -138,7 +138,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "url", required = false, defaultValue = "") String url,
-            @RequestParam(value = "enabled", defaultValue = "true") Boolean enabled,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
     ) {
@@ -148,14 +148,14 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setApiName(apiName);
         api.setServiceId(serviceId);
         api.setUrl(url);
-        api.setEnabled(enabled);
+        api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
         return ResultBody.success(apiService.updateApi(api));
     }
 
     /**
-     * 禁用Api资源
+     * 更新状态
      *
      * @param apiId ApiID
      * @return
@@ -163,31 +163,15 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiOperation(value = "禁用Api资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true,defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
-    @PostMapping("/api/disable")
+    @PostMapping("/api/update/status")
     @Override
-    public ResultBody<Boolean> disableApi(
-            @RequestParam("apiId") Long apiId
+    public ResultBody<Boolean> updateStatus(
+            @RequestParam("apiId") Long apiId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(apiService.updateEnable(apiId, false));
-    }
-
-    /**
-     * 启用Api资源
-     *
-     * @param apiId ApiID
-     * @return
-     */
-    @ApiOperation(value = "启用Api资源")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
-    })
-    @PostMapping("/api/enable")
-    @Override
-    public ResultBody<Boolean> enableApi(
-            @RequestParam("apiId") Long apiId
-    ) {
-        return ResultBody.success(apiService.updateEnable(apiId, true));
+        return ResultBody.success(apiService.updateStatus(apiId, status));
     }
 
     /**

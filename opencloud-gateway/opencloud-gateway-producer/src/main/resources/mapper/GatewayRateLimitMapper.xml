@@ -9,7 +9,7 @@
         <result column="limit" property="limit" jdbcType="BIGINT"/>
         <result column="interval" property="interval" jdbcType="BIGINT"/>
         <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
-        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="rules" property="rules" jdbcType="LONGVARCHAR"/>
         <result column="limit_desc" property="limitDesc" jdbcType="VARCHAR"/>

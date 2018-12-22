@@ -62,10 +62,10 @@ public interface SystemMenuService {
      * 更新启用禁用
      *
      * @param menuId
-     * @param enable
+     * @param status
      * @return
      */
-    Boolean updateEnable(Long menuId, Boolean enable);
+    Boolean updateStatus(Long menuId, Integer status);
 
     /**
      * 移除菜单

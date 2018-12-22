@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @date: 2018/10/24 16:21
  * @description:
  */
-@Table(name = "gateway_routes")
-public class GatewayRoutes implements Serializable {
+@Table(name = "gateway_route")
+public class GatewayRoute implements Serializable {
     private static final long serialVersionUID = -2952097064941740301L;
 
     @Id
@@ -55,15 +55,15 @@ public class GatewayRoutes implements Serializable {
     private Boolean retryable;
 
     /**
-     * 0-禁用 1-启用
-     */
-    private Boolean enabled;
-    /**
      * 路由描述
      */
     @Column(name = "route_desc")
     private String routeDesc;
 
+    /**
+     * 状态:0-无效 1-有效
+     */
+    private Integer status;
     /**
      * 获取路由ID
      *
@@ -172,22 +172,20 @@ public class GatewayRoutes implements Serializable {
         this.retryable = retryable;
     }
 
-    /**
-     * 获取0-禁用 1-启用
-     *
-     * @return enabled - 0-禁用 1-启用
-     */
-    public Boolean getEnabled() {
-        return enabled;
+    public String getRouteDesc() {
+        return routeDesc;
     }
 
-    /**
-     * 设置0-禁用 1-启用
-     *
-     * @param enabled 0-禁用 1-启用
-     */
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    public void setRouteDesc(String routeDesc) {
+        this.routeDesc = routeDesc;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getRouteId() {

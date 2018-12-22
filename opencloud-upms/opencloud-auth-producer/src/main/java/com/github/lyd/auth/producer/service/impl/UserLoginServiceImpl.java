@@ -33,9 +33,9 @@ public class UserLoginServiceImpl implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("系统用户 " + username + " 不存在!");
         }
-        boolean accountNonLocked = account.getUserProfile().getState().intValue() != BaseConstants.USER_STATE_LOCKED;
+        boolean accountNonLocked = account.getUserProfile().getStatus().intValue() != BaseConstants.USER_STATE_LOCKED;
         boolean credentialsNonExpired = true;
-        boolean enable = account.getUserProfile().getState().intValue() == BaseConstants.USER_STATE_NORMAL ? true : false;
+        boolean enable = account.getUserProfile().getStatus().intValue() == BaseConstants.USER_STATE_NORMAL ? true : false;
         boolean accountNonExpired = true;
         List<Map> roles = Lists.newArrayList();
         if (account.getRoles() != null) {

@@ -76,9 +76,9 @@ public class SystemAccess implements Serializable {
     @Column(name = "identity_prefix")
     private String identityPrefix;
     /**
-     * 是否可用
+     * 状态:0-无效 1-有效
      */
-    private Boolean enabled;
+    private Integer status;
     /**
      * 获取授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
      *
@@ -203,11 +203,11 @@ public class SystemAccess implements Serializable {
         this.serviceId = serviceId;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.lyd.gateway.producer.locator;
 
 import com.github.lyd.common.utils.StringUtils;
+import com.github.lyd.gateway.client.entity.GatewayRateLimit;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.marcosbarbero.cloud.autoconfigure.zuul.ratelimit.config.properties.RateLimitProperties;
@@ -92,10 +93,10 @@ public class RateLimitLocator {
     protected Map<String, List<RateLimitProperties.Policy>> loadRateLimitWithDb() {
         Map<String, List<RateLimitProperties.Policy>> policyMap = Maps.newLinkedHashMap();
         try{
-            List<PolicyVO> results = jdbcTemplate.query("select * from gateway_rate_limit  where enabled = true ", new
-                    BeanPropertyRowMapper<>(PolicyVO.class));
+            List<GatewayRateLimit> results = jdbcTemplate.query("select * from gateway_rate_limit  where status = 1", new
+                    BeanPropertyRowMapper<>(GatewayRateLimit.class));
             if (results != null && results.size() > 0) {
-                for (PolicyVO result : results) {
+                for (GatewayRateLimit result : results) {
                     List<RateLimitProperties.Policy> policyList = policyMap.get(result.getServiceId());
                     if (policyList == null) {
                         policyList = Lists.newArrayList();
@@ -129,103 +130,4 @@ public class RateLimitLocator {
         }
         return policyMap;
     }
-
-
-    public static class PolicyVO {
-
-        /**
-         * 限制数量
-         */
-        private Long limit;
-        /**
-         * 时间间隔(秒)
-         */
-        private Long interval;
-        /**
-         * 服务ID
-         */
-        private String serviceId;
-
-        /**
-         * 启用禁用
-         */
-        private Boolean enabled;
-
-        /**
-         * 限流方式
-         * url    访问路径
-         * origin 域名IP
-         * user 系统用户
-         */
-        private String type;
-
-        /**
-         * 限流规则
-         * url=/api/user
-         * origin=
-         */
-        private String rules;
-
-        /**
-         * 描述
-         */
-        private String description;
-
-        public Long getLimit() {
-            return limit;
-        }
-
-        public void setLimit(Long limit) {
-            this.limit = limit;
-        }
-
-        public Long getInterval() {
-            return interval;
-        }
-
-        public void setInterval(Long interval) {
-            this.interval = interval;
-        }
-
-        public String getServiceId() {
-            return serviceId;
-        }
-
-        public void setServiceId(String serviceId) {
-            this.serviceId = serviceId;
-        }
-
-        public Boolean getEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(Boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getRules() {
-            return rules;
-        }
-
-        public void setRules(String rules) {
-            this.rules = rules;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-    }
-
 }

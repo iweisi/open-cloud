@@ -10,6 +10,12 @@ public class BaseConstants {
     public final static String SUPER_AUTHORITY = "ROLE_Administrator";
 
     /**
+     * 状态:0-无效 1-有效
+     */
+    public final static int ENABLED = 1;
+    public final static int DISABLED = 0;
+
+    /**
      * 系统用户类型:0-平台、1-服务提供商、2-自研开发者
      */
     public final static int USER_TYPE_PLATFORM = 0;

@@ -27,18 +27,6 @@ public class RoleServiceImplTest extends BaseTest {
     }
 
     @Test
-    public void addRole() throws Exception {
-        boolean result = roleService.addRole("testRole", "测试角色", "备注", true);
-        System.out.println(result);
-    }
-
-    @Test
-    public void updateRole() throws Exception {
-        boolean result = roleService.updateRole(5l, "testRole1", "测试角色", "备注", true);
-        System.out.println(result);
-    }
-
-    @Test
     public void removeRole() throws Exception {
         boolean result = roleService.removeRole(5l);
         System.out.println(result);

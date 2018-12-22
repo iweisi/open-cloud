@@ -35,9 +35,9 @@ public class GatewayRateLimit implements Serializable {
     private String serviceId;
 
     /**
-     * 0-禁用 1-启用
+     * 状态:0-无效 1-有效
      */
-    private Boolean enabled;
+    private Integer status;
 
     /**
      * 限流规则内容
@@ -101,22 +101,12 @@ public class GatewayRateLimit implements Serializable {
         this.serviceId = serviceId;
     }
 
-    /**
-     * 获取0-禁用 1-启用
-     *
-     * @return enabled - 0-禁用 1-启用
-     */
-    public Boolean getEnabled() {
-        return enabled;
+    public Integer getStatus() {
+        return status;
     }
 
-    /**
-     * 设置0-禁用 1-启用
-     *
-     * @param enabled 0-禁用 1-启用
-     */
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**

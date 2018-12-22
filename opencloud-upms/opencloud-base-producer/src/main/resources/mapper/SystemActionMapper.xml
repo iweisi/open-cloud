@@ -12,7 +12,7 @@
         <result column="menu_id" property="menuId" jdbcType="BIGINT"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="action_desc" property="actionDesc" jdbcType="VARCHAR"/>
-        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>

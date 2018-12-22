@@ -42,7 +42,7 @@ public interface SystemRoleRemoteService {
      * @param roleCode    角色编码
      * @param roleName    角色显示名称
      * @param description 描述
-     * @param enable      启用禁用
+     * @param status      启用禁用
      * @return
      */
     @PostMapping("/role/add")
@@ -50,7 +50,7 @@ public interface SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "enable", required = false) boolean enable
+            @RequestParam(value = "status",defaultValue = "1",required = false) Integer status
     );
 
     /**
@@ -60,7 +60,7 @@ public interface SystemRoleRemoteService {
      * @param roleCode    角色编码
      * @param roleName    角色显示名称
      * @param description 描述
-     * @param enable      启用禁用
+     * @param status      启用禁用
      * @return
      */
     @PostMapping("/role/update")
@@ -69,9 +69,22 @@ public interface SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "enable", required = false) boolean enable
+            @RequestParam(value = "status",defaultValue = "1", required = false) Integer status
     );
 
+
+    /**
+     * 更新状态
+     *
+     * @param roleId 角色ID
+     * @param status 状态
+     * @return
+     */
+    @PostMapping("/role/update/status")
+    ResultBody<Boolean> updateStatus(
+            @RequestParam("roleId") Long roleId,
+            @RequestParam(value = "status", defaultValue = "1") Integer status
+    );
 
     /**
      * 删除角色
@@ -83,4 +96,7 @@ public interface SystemRoleRemoteService {
     ResultBody<Boolean> removeRole(
             @RequestParam(value = "roleId") Long roleId
     );
+
+
+
 }

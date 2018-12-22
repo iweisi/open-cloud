@@ -56,10 +56,10 @@ public interface SystemActionService {
      * 更新启用禁用
      *
      * @param actionId
-     * @param enable
+     * @param status
      * @return
      */
-    Boolean updateEnable(Long actionId, Boolean enable);
+    Boolean updateStatus(Long actionId, Integer status);
 
     /**
      * 移除动作

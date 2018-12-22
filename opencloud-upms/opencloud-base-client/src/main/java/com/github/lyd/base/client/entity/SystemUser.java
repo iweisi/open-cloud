@@ -96,7 +96,7 @@ public class SystemUser implements Serializable {
     /**
      * 状态:0-禁用 1-启用 2-锁定
      */
-    private Integer state;
+    private Integer status;
 
     public String getUserName() {
         return userName;
@@ -265,12 +265,12 @@ public class SystemUser implements Serializable {
         this.registerTime = registerTime;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Long getCompanyId() {

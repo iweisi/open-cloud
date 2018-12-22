@@ -1,15 +1,16 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.base.client.entity.SystemRole;
+import com.github.lyd.base.client.entity.SystemUserRole;
+import com.github.lyd.base.producer.mapper.SystemRoleMapper;
+import com.github.lyd.base.producer.mapper.SystemUserRoleMapper;
+import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.base.client.entity.SystemUserRole;
-import com.github.lyd.base.client.entity.SystemRole;
-import com.github.lyd.base.producer.mapper.SystemRoleMapper;
-import com.github.lyd.base.producer.mapper.SystemUserRoleMapper;
-import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.pagehelper.PageHelper;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,29 +61,19 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     /**
      * 添加角色
      *
-     * @param roleCode    角色编码
-     * @param roleName    角色显示名称
-     * @param description 描述
-     * @param enable      启用禁用
+     * @param role 角色
      * @return
      */
     @Override
-    public Boolean addRole(String roleCode, String roleName, String description, Boolean enable) {
-        if (StringUtils.isBlank(roleCode)) {
-            return false;
+    public Boolean addRole(SystemRole role) {
+        if (isExist(role.getRoleCode())) {
+            throw new OpenMessageException(String.format("%s角色编码已存在,不允许重复添加", role.getRoleCode()));
         }
-        if (StringUtils.isBlank(roleName)) {
-            return false;
+        if (role.getStatus() == null) {
+            role.setStatus(BaseConstants.ENABLED);
         }
-        if (isExist(roleCode)) {
-            throw new OpenMessageException(String.format("roleCode=%s已存在", roleCode));
-        }
-        SystemRole role = new SystemRole();
         role.setCreateTime(new Date());
         role.setUpdateTime(role.getCreateTime());
-        role.setRoleCode(roleCode);
-        role.setRoleName(roleName);
-        role.setEnabled(enable ? 1 : 0);
         int result = systemRoleMapper.insertSelective(role);
         return result > 0;
     }
@@ -90,36 +81,25 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     /**
      * 更新角色
      *
-     * @param roleId      角色ID
-     * @param roleCode    角色编码
-     * @param roleName    角色显示名称
-     * @param description 描述
-     * @param enable      启用禁用
+     * @param role 角色
      * @return
      */
     @Override
-    public Boolean updateRole(Long roleId, String roleCode, String roleName, String description, Boolean enable) {
-        if (roleId == null) {
-            return false;
+    public Boolean updateRole(SystemRole role) {
+        if (role.getRoleId() == null) {
+            throw new OpenMessageException("ID不能为空");
         }
-        if (StringUtils.isBlank(roleCode)) {
-            return false;
-        }
-        if (StringUtils.isBlank(roleName)) {
-            return false;
-        }
-        SystemRole role = getRole(roleId);
+        SystemRole savedRole = getRole(role.getRoleId());
         if (role == null) {
-            throw new OpenMessageException(String.format("roleId=%s不存在", roleId));
+            throw new OpenMessageException(String.format("roleId=%s不存在", role.getRoleId()));
         }
-        if (!role.getRoleCode().equals(roleCode) && isExist(roleCode)) {
-            // 和原先不一致 重新校验唯一性
-            throw new OpenMessageException(String.format("roleCode=%s已存在", roleCode));
+        if (!savedRole.getRoleCode().equals(role.getRoleCode())) {
+            // 和原来不一致重新检查唯一性
+            if (isExist(role.getRoleCode())) {
+                throw new OpenMessageException(String.format("%s菜单编码已存在,不允许重复添加", role.getRoleCode()));
+            }
         }
         role.setUpdateTime(new Date());
-        role.setRoleCode(roleCode);
-        role.setRoleName(roleName);
-        role.setEnabled(enable ? 1 : 0);
         int result = systemRoleMapper.updateByPrimaryKeySelective(role);
         return result > 0;
     }
@@ -242,6 +222,23 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         Example example = builder.criteria().andEqualTo("userId", userId).end().build();
         int result = systemUserRoleMapper.deleteByExample(example);
         return result > 0;
+    }
+
+    /**
+     * 更新启用禁用
+     *
+     * @param roleId
+     * @param status
+     * @return
+     */
+    @Override
+    public Boolean updateStatus(Long roleId, Integer status) {
+        SystemRole role = new SystemRole();
+        role.setRoleId(roleId);
+        role.setStatus(status);
+        role.setUpdateTime(new Date());
+        int count = systemRoleMapper.updateByPrimaryKeySelective(role);
+        return count > 0;
     }
 
     /**

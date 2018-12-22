@@ -33,25 +33,18 @@ public interface SystemRoleService {
     /**
      * 添加角色
      *
-     * @param roleCode    角色编码
-     * @param roleName    角色显示名称
-     * @param description 描述
-     * @param enable      启用禁用
+     * @param role      角色
      * @return
      */
-    Boolean addRole(String roleCode, String roleName, String description, Boolean enable);
+    Boolean addRole(SystemRole role);
 
     /**
      * 更新角色
      *
-     * @param roleId      角色ID
-     * @param roleCode    角色编码
-     * @param roleName    角色显示名称
-     * @param description 描述
-     * @param enable      启用禁用
+     * @param role      角色
      * @return
      */
-    Boolean updateRole(Long roleId, String roleCode, String roleName, String description, Boolean enable);
+    Boolean updateRole(SystemRole role);
 
     /**
      * 删除角色
@@ -109,7 +102,14 @@ public interface SystemRoleService {
      * @return
      */
     Boolean removeMemberRoles(Long userId);
-
+    /**
+     * 更新启用禁用
+     *
+     * @param roleId
+     * @param status
+     * @return
+     */
+    Boolean updateStatus(Long roleId, Integer status);
     /**
      * 检测是否存在
      *

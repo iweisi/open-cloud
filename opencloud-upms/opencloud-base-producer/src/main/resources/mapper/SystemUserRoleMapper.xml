@@ -16,12 +16,12 @@
         system_role.role_code,
         system_role.role_name,
         system_role.role_desc,
-        system_role.enabled,
+        system_role.status,
         system_role.create_time,
         system_role.update_time
         FROM
         system_user_role
         LEFT JOIN system_role ON system_user_role.role_id = system_role.role_id
-        WHERE user_id = #{userId}  and enabled = 1
+        WHERE user_id = #{userId}  and status = 1
     </select>
 </mapper>

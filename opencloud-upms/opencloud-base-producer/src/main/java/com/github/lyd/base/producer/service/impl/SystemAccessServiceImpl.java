@@ -81,7 +81,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("identityId", userId)
-                .andEqualTo("enabled",1)
+                .andEqualTo("status",BaseConstants.ENABLED)
                 .end().build();
         List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
@@ -99,7 +99,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                         .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
                         .andIn("identityId", roleIds)
-                        .andEqualTo("enabled",1)
+                        .andEqualTo("status",BaseConstants.ENABLED)
                         .end().build();
                 List<SystemAccess> roleAccesss = systemAccessMapper.selectByExample(example);
                 if (roleAccesss != null) {
@@ -125,7 +125,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("identityId", userId)
-                .andEqualTo("enabled",1)
+                .andEqualTo("status",BaseConstants.ENABLED)
                 .end().build();
         List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
@@ -143,7 +143,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     public List<SystemAccess> getAccessList() {
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("enabled",1)
+                .andEqualTo("status",BaseConstants.ENABLED)
                 .end().build();
         return systemAccessMapper.selectByExample(example);
     }
@@ -213,7 +213,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                         .andEqualTo("resourceType", resourceType).end().build();
                 SystemAccess updateObj = new SystemAccess();
                 updateObj.setCode(permission.getCode());
-                updateObj.setEnabled(permission.getEnabled());
+                updateObj.setStatus(permission.getStatus());
                 updateObj.setServiceId(permission.getServiceId());
                 updateObj.setResourcePid(permission.getResourcePid());
                 updateObj.setName(permission.getName());
@@ -264,7 +264,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         String serviceId = "";
         String name = "";
         String identityCode = null;
-        Boolean enabled = false;
+        Integer status = 0;
         SystemAccess permission = null;
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
@@ -273,7 +273,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             resourceId = menu.getMenuId();
             resourcePid = menu.getParentId();
             serviceId = DEFAULT_SERVICE_ID;
-            enabled = menu.getEnabled();
+            status = menu.getStatus();
             name = menu.getMenuName();
         }
         if (object instanceof SystemAction) {
@@ -284,7 +284,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             resourcePid = action.getMenuId();
             serviceId = DEFAULT_SERVICE_ID;
             name = action.getActionName();
-            enabled = action.getEnabled();
+            status = action.getStatus();
         }
         if (object instanceof SystemApi) {
             SystemApi api = (SystemApi) object;
@@ -294,7 +294,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             resourcePid = 0L;
             serviceId = api.getServiceId();
             name = api.getApiName();
-            enabled = api.getEnabled();
+            status = api.getStatus();
         }
         if (object != null) {
             //授权编码=资源类型_资源编码
@@ -316,7 +316,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             permission.setResourcePid(resourcePid);
             permission.setUrl(url);
             permission.setName(name);
-            permission.setEnabled(enabled);
+            permission.setStatus(status);
             permission.setIdentityCode(identityCode);
             permission.setIdentityPrefix(identityPrefix);
             permission.setIdentityId(identityId);
