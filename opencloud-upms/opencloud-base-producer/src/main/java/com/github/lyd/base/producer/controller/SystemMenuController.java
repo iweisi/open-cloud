@@ -90,8 +90,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
      */
     @ApiOperation(value = "添加菜单资源")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "apiCode", required = true, value = "菜单编码", paramType = "form"),
-            @ApiImplicitParam(name = "apiName", required = true, value = "菜单名称", paramType = "form"),
+            @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
+            @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
             @ApiImplicitParam(name = "icon", required = true, value = "图标", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "parentId", required = false, defaultValue = "0", value = "父节点ID", paramType = "form"),
@@ -140,8 +140,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiOperation(value = "编辑菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "菜单ID", paramType = "form"),
-            @ApiImplicitParam(name = "apiCode", required = true, value = "菜单编码", paramType = "form"),
-            @ApiImplicitParam(name = "apiName", required = true, value = "菜单名称", paramType = "form"),
+            @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
+            @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
             @ApiImplicitParam(name = "icon", required = true, value = "图标", paramType = "form"),
             @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "parentId", required = false, defaultValue = "0", value = "父节点ID", paramType = "form"),
