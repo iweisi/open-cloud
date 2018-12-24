@@ -66,7 +66,7 @@ CREATE TABLE `system_access` (
                                `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
                                `path` varchar(255) COLLATE utf8_bin DEFAULT '',
                                `prefix` varchar(20) COLLATE utf8_bin NOT NULL,
-                               `traget` varchar(20) COLLATE utf8_bin NOT NULL,
+                               `target` varchar(20) COLLATE utf8_bin NOT NULL,
                                `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
                                `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
                                `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
