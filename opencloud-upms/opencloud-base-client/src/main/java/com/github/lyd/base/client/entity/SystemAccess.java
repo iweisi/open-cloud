@@ -27,9 +27,19 @@ public class SystemAccess implements Serializable {
     private String code;
 
     /**
+     * 路径前缀:/,http://,https://
+     */
+    private String prefix;
+
+    /**
      * 请求路径
      */
-    private String url;
+    private String path;
+
+    /**
+     * 打开方式:_self窗口内,_blank新窗口
+     */
+    private String target;
 
     /**
      * 显示名称
@@ -97,18 +107,28 @@ public class SystemAccess implements Serializable {
         this.code = code;
     }
 
-    /**
-     * @return url
-     */
-    public String getUrl() {
-        return url;
+    public String getPrefix() {
+        return prefix;
     }
 
-    /**
-     * @param url
-     */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     /**

@@ -42,7 +42,8 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     private SystemRoleService systemRoleService;
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
-
+    private String DEFAULT_PREFIX="/";
+    private String DEFAULT_TARGET="_self";
     /**
      * 获取mapper
      *
@@ -144,6 +145,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("status", BaseConstants.ENABLED)
+                .andEqualTo("prefix",DEFAULT_PREFIX)
                 .end().build();
         return systemAccessMapper.selectByExample(example);
     }
@@ -217,7 +219,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 updateObj.setServiceId(permission.getServiceId());
                 updateObj.setResourcePid(permission.getResourcePid());
                 updateObj.setName(permission.getName());
-                updateObj.setUrl(permission.getUrl());
+                updateObj.setPath(permission.getPath());
+                updateObj.setPrefix(permission.getPrefix());
+                updateObj.setTarget(permission.getTarget());
                 int count = systemAccessMapper.updateByExampleSelective(updateObj, example);
                 return count > 0;
             }
@@ -258,7 +262,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             return null;
         }
         String code = null;
-        String url = null;
+        String path = null;
+        String prefix = null;
+        String target = null;
         Long resourceId = null;
         Long resourcePid = null;
         String serviceId = "";
@@ -269,7 +275,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
             code = menu.getMenuCode();
-            url = menu.getPrefix() + menu.getPath();
+            path = menu.getPrefix() + menu.getPath();
+            prefix = menu.getPrefix();
+            target = menu.getTarget();
             resourceId = menu.getMenuId();
             resourcePid = menu.getParentId();
             serviceId = DEFAULT_SERVICE_ID;
@@ -279,7 +287,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemAction) {
             SystemAction action = (SystemAction) object;
             code = action.getActionCode();
-            url = action.getPath();
+            path = action.getPath();
+            prefix =DEFAULT_PREFIX;
+            target = DEFAULT_TARGET;
             resourceId = action.getActionId();
             resourcePid = action.getMenuId();
             serviceId = DEFAULT_SERVICE_ID;
@@ -289,7 +299,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemApi) {
             SystemApi api = (SystemApi) object;
             code = api.getApiCode();
-            url = api.getPath();
+            path = api.getPath();
+            prefix =DEFAULT_PREFIX;
+            target = DEFAULT_TARGET;
             resourceId = api.getApiId();
             resourcePid = 0L;
             serviceId = api.getServiceId();
@@ -314,7 +326,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             permission.setServiceId(serviceId);
             permission.setResourceId(resourceId);
             permission.setResourcePid(resourcePid);
-            permission.setUrl(url);
+            permission.setPath(path);
+            permission.setPrefix(prefix);
+            permission.setTarget(target);
             permission.setName(name);
             permission.setStatus(status);
             permission.setIdentityCode(identityCode);

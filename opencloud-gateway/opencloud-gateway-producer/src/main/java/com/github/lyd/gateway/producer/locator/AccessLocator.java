@@ -38,19 +38,17 @@ public class AccessLocator {
     /**
      * 获取路由后的地址
      *
-     * @param permission
+     * @param assess
      * @return
      */
-    protected String getZuulPath(SystemAccess permission) {
+    protected String getZuulPath(SystemAccess assess) {
         List<Route> rotes = zuulRoutesLocator.getRoutes();
         if (rotes != null && !rotes.isEmpty()) {
             for (Route route : rotes) {
                 // 服务ID相同
-                if (route.getId().equals(permission.getServiceId())) {
-                    String path = permission.getUrl();
-                    if (!path.startsWith("/")) {
-                        path = "/" + path;
-                    }
+                if (route.getId().equals(assess.getServiceId())) {
+                    String path = assess.getPath();
+                    path = assess.getPrefix() + assess.getPath();
                     if (route.isPrefixStripped()) {
                         return path;
                     } else {
@@ -59,7 +57,7 @@ public class AccessLocator {
                 }
             }
         }
-        return permission.getUrl();
+        return assess.getPath();
     }
 
     /**
@@ -70,19 +68,19 @@ public class AccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<SystemAccess> permissions = systemAccessApi.access().getData();
-            if (permissions != null) {
-                for (SystemAccess permission : permissions) {
-                    if (StringUtils.isBlank(permission.getUrl())) {
+            List<SystemAccess> assesss = systemAccessApi.access().getData();
+            if (assesss != null) {
+                for (SystemAccess assess : assesss) {
+                    if (StringUtils.isBlank(assess.getPath())) {
                         continue;
                     }
-                    String url = getZuulPath(permission);
+                    String url = getZuulPath(assess);
                     array = map.get(url);
                     if (array == null) {
                         array = new ArrayList<>();
                     }
-                    if (!array.contains(permission.getIdentityCode())) {
-                        cfg = new SecurityConfig(permission.getIdentityCode());
+                    if (!array.contains(assess.getIdentityCode())) {
+                        cfg = new SecurityConfig(assess.getIdentityCode());
                         array.add(cfg);
                     }
                     map.put(url, array);
