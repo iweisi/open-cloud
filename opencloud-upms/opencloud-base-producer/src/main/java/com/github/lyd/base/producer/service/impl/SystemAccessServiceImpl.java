@@ -277,7 +277,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
             code = menu.getMenuCode();
-            path = menu.getPrefix() + menu.getPath();
+            path = menu.getPath();
             prefix = menu.getPrefix();
             target = menu.getTarget();
             resourceId = menu.getMenuId();
