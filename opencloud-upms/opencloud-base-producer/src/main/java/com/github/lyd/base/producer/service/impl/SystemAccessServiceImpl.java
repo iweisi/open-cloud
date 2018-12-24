@@ -11,6 +11,7 @@ import com.github.lyd.base.producer.mapper.SystemApiMapper;
 import com.github.lyd.base.producer.mapper.SystemMenuMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
+import com.github.lyd.common.utils.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,8 +43,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     private SystemRoleService systemRoleService;
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
-    private String DEFAULT_PREFIX="/";
-    private String DEFAULT_TARGET="_self";
+    private String DEFAULT_PREFIX = "/";
+    private String DEFAULT_TARGET = "_self";
+
     /**
      * 获取mapper
      *
@@ -145,7 +147,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("status", BaseConstants.ENABLED)
-                .andEqualTo("prefix",DEFAULT_PREFIX)
+                .andEqualTo("prefix", DEFAULT_PREFIX)
                 .end().build();
         return systemAccessMapper.selectByExample(example);
     }
@@ -288,7 +290,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             SystemAction action = (SystemAction) object;
             code = action.getActionCode();
             path = action.getPath();
-            prefix =DEFAULT_PREFIX;
+            prefix = DEFAULT_PREFIX;
             target = DEFAULT_TARGET;
             resourceId = action.getActionId();
             resourcePid = action.getMenuId();
@@ -300,7 +302,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             SystemApi api = (SystemApi) object;
             code = api.getApiCode();
             path = api.getPath();
-            prefix =DEFAULT_PREFIX;
+            prefix = DEFAULT_PREFIX;
             target = DEFAULT_TARGET;
             resourceId = api.getApiId();
             resourcePid = 0L;
@@ -326,6 +328,11 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             permission.setServiceId(serviceId);
             permission.setResourceId(resourceId);
             permission.setResourcePid(resourcePid);
+            if (StringUtils.isNotBlank(path)) {
+                if (path.startsWith(DEFAULT_PREFIX)) {
+                    path = path.substring(1);
+                }
+            }
             permission.setPath(path);
             permission.setPrefix(prefix);
             permission.setTarget(target);
