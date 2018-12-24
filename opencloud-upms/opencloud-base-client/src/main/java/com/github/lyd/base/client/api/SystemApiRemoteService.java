@@ -21,6 +21,15 @@ public interface SystemApiRemoteService {
             @RequestParam(name = "keyword", required = false) String keyword
     );
 
+    /**
+     * 获取菜单资源列表
+     *
+     * @return
+     */
+    @PostMapping("/api/all")
+    ResultBody<PageList<SystemApi>> apiAll(
+            @RequestParam(name = "keyword", required = false) String keyword
+    );
 
     /**
      * 获取Api资源

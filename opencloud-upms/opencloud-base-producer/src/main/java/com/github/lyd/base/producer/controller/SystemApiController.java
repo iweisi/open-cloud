@@ -1,12 +1,12 @@
 package com.github.lyd.base.producer.controller;
 
+import com.github.lyd.base.client.api.SystemApiRemoteService;
+import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.common.annotation.ApiRateLimit;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.api.SystemApiRemoteService;
-import com.github.lyd.base.client.entity.SystemApi;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -43,6 +43,23 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam(name = "keyword", required = false) String keyword
     ) {
         return ResultBody.success(apiService.findListPage(new PageParams(page, limit), keyword));
+    }
+
+
+    /**
+     * 获取Api资源列表
+     *
+     * @param keyword
+     * @return
+     */
+    @ApiOperation(value = "Api列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/api/all")
+    @Override
+    public ResultBody<PageList<SystemApi>> apiAll(String keyword) {
+        return ResultBody.success(apiService.findList(keyword));
     }
 
     /**

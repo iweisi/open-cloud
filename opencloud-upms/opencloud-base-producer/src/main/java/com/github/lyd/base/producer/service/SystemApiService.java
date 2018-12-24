@@ -1,8 +1,8 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.entity.SystemApi;
 
 /**
  * Api资源
@@ -16,6 +16,13 @@ public interface SystemApiService {
      * @return
      */
     PageList<SystemApi> findListPage(PageParams pageParams, String keyword);
+
+    /**
+     * 查询列表
+     * @param keyword
+     * @return
+     */
+    PageList<SystemApi> findList(String keyword);
 
     /**
      * 根据主键获取Api

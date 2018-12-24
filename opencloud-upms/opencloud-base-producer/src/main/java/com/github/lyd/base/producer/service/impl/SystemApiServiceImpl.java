@@ -1,14 +1,14 @@
 package com.github.lyd.base.producer.service.impl;
 
-import com.github.lyd.common.exception.OpenMessageException;
-import com.github.lyd.common.mapper.ExampleBuilder;
-import com.github.lyd.common.model.PageList;
-import com.github.lyd.common.model.PageParams;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.lyd.base.producer.service.SystemApiService;
+import com.github.lyd.common.exception.OpenMessageException;
+import com.github.lyd.common.mapper.ExampleBuilder;
+import com.github.lyd.common.model.PageList;
+import com.github.lyd.common.model.PageParams;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,21 @@ public class SystemApiServiceImpl implements SystemApiService {
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         return new PageList(list);
     }
-
+    /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemApi> findList(String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
+        Example example = builder.criteria()
+                .orLike("apiCode", keyword)
+                .orLike("apiName", keyword).end().build();
+        List<SystemApi> list = systemApiMapper.selectByExample(example);
+        return new PageList(list);
+    }
     /**
      * 根据主键获取Api
      *
