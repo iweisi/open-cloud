@@ -10,7 +10,7 @@
         <result column="api_name" property="apiName" jdbcType="VARCHAR"/>
         <result column="api_desc" property="apiDesc" jdbcType="VARCHAR"/>
         <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>

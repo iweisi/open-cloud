@@ -37,7 +37,7 @@ public interface SystemApiRemoteService {
      * @param apiCode   Api编码
      * @param apiName   Api名称
      * @param serviceId 服务ID
-     * @param url       请求路径
+     * @param path       请求路径
      * @param status    是否启用
      * @param priority  优先级越小越靠前
      * @param apiDesc   描述
@@ -48,7 +48,7 @@ public interface SystemApiRemoteService {
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
@@ -61,7 +61,7 @@ public interface SystemApiRemoteService {
      * @param apiCode   Api编码
      * @param apiName   Api名称
      * @param serviceId 服务ID
-     * @param url       请求路径
+     * @param path       请求路径
      * @param status    是否启用
      * @param priority  优先级越小越靠前
      * @param apiDesc   描述
@@ -73,7 +73,7 @@ public interface SystemApiRemoteService {
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc

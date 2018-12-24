@@ -46,7 +46,7 @@ public interface SystemMenuRemoteService {
      * @param menuCode    菜单编码
      * @param menuName    菜单名称
      * @param icon        图标
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status      是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
@@ -58,7 +58,9 @@ public interface SystemMenuRemoteService {
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "prefix", required = false, defaultValue = "/") String prefix,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
+            @RequestParam(value = "target", required = false, defaultValue = "_self") String target,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
@@ -72,7 +74,7 @@ public interface SystemMenuRemoteService {
      * @param menuCode    菜单编码
      * @param menuName    菜单名称
      * @param icon        图标
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status      是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
@@ -85,7 +87,9 @@ public interface SystemMenuRemoteService {
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "prefix", required = false, defaultValue = "/") String prefix,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
+            @RequestParam(value = "target", required = false, defaultValue = "_self") String target,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,

@@ -68,7 +68,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiCode     Api编码
      * @param apiName     Api名称
      * @param serviceId   服务ID
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param apiDesc 描述
@@ -79,7 +79,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiCode", required = true, value = "Api编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
@@ -90,7 +90,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
@@ -99,7 +99,7 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setApiCode(apiCode);
         api.setApiName(apiName);
         api.setServiceId(serviceId);
-        api.setUrl(url);
+        api.setPath(path);
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
@@ -113,7 +113,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiCode     Api编码
      * @param apiName     Api名称
      * @param serviceId   服务ID
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param apiDesc 描述
@@ -125,7 +125,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiCode", required = true, value = "Api编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true,defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
@@ -137,7 +137,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "serviceId") String serviceId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "apiDesc", required = false, defaultValue = "") String apiDesc
@@ -147,7 +147,7 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setApiCode(apiCode);
         api.setApiName(apiName);
         api.setServiceId(serviceId);
-        api.setUrl(url);
+        api.setPath(path);
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);

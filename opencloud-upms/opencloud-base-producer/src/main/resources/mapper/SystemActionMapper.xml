@@ -8,7 +8,7 @@
         <id column="action_id" property="actionId" jdbcType="BIGINT"/>
         <result column="action_code" property="actionCode" jdbcType="VARCHAR"/>
         <result column="action_name" property="actionName" jdbcType="VARCHAR"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="menu_id" property="menuId" jdbcType="BIGINT"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="action_desc" property="actionDesc" jdbcType="VARCHAR"/>

@@ -52,9 +52,19 @@ public class SystemMenu implements Serializable {
     private Long parentId;
 
     /**
+     * 路径前缀:/,http://,https://
+     */
+    private String prefix;
+
+    /**
      * 请求路径
      */
-    private String url;
+    private String path;
+
+    /**
+     * 打开方式:_self窗口内,_blank新窗口
+     */
+    private String target;
 
     /**
      * 优先级 越小越靠前
@@ -164,22 +174,28 @@ public class SystemMenu implements Serializable {
         this.parentId = parentId;
     }
 
-    /**
-     * 获取请求路径
-     *
-     * @return url - 请求路径
-     */
-    public String getUrl() {
-        return url;
+    public String getPrefix() {
+        return prefix;
     }
 
-    /**
-     * 设置请求路径
-     *
-     * @param url 请求路径
-     */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     /**

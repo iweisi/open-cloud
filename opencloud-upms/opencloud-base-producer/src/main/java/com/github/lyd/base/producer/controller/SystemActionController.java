@@ -65,7 +65,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionCode  动作编码
      * @param actionName  动作名称
      * @param menuId      归属菜单
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
@@ -76,7 +76,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "actionCode", required = true, value = "动作编码", paramType = "form"),
             @ApiImplicitParam(name = "actionName", required = true, value = "动作名称", paramType = "form"),
             @ApiImplicitParam(name = "menuId", required = true, value = "归属菜单", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
@@ -87,7 +87,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
@@ -96,7 +96,7 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setActionCode(actionCode);
         action.setActionName(actionName);
         action.setMenuId(menuId);
-        action.setUrl(url);
+        action.setPath(path);
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
@@ -110,7 +110,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionCode  动作编码
      * @param actionName  动作名称
      * @param menuId      归属菜单
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
@@ -122,7 +122,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "actionCode", required = true, value = "动作编码", paramType = "form"),
             @ApiImplicitParam(name = "actionName", required = true, value = "动作名称", paramType = "form"),
             @ApiImplicitParam(name = "menuId", required = true, value = "归属菜单", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
@@ -134,7 +134,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
@@ -144,7 +144,7 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setActionCode(actionCode);
         action.setActionName(actionName);
         action.setMenuId(menuId);
-        action.setUrl(url);
+        action.setPath(path);
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);

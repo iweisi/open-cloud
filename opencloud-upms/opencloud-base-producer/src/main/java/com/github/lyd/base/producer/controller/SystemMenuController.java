@@ -81,7 +81,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuCode    菜单编码
      * @param menuName    菜单名称
      * @param icon        图标
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
@@ -93,7 +93,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
             @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
             @ApiImplicitParam(name = "icon", required = true, value = "图标", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "prefix", required = false, value = "请求路径",allowableValues = "/,http://,https://", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "target", required = false, value = "请求路径",allowableValues = "_self,_blank", paramType = "form"),
             @ApiImplicitParam(name = "parentId", required = false, defaultValue = "0", value = "父节点ID", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
@@ -105,7 +107,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
-            @RequestParam(value = "url", required = false) String url,
+            @RequestParam(value = "prefix", required = false, defaultValue = "/") String prefix,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
+            @RequestParam(value = "target", required = false, defaultValue = "_self") String target,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
@@ -115,7 +119,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setMenuCode(menuCode);
         menu.setMenuName(menuName);
         menu.setIcon(icon);
-        menu.setUrl(url);
+        menu.setPath(path);
+        menu.setPrefix(prefix);
+        menu.setTarget(target);
         menu.setStatus(status);
         menu.setParentId(parentId);
         menu.setPriority(priority);
@@ -130,7 +136,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuCode    菜单编码
      * @param menuName    菜单名称
      * @param icon        图标
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param parentId    父节点ID
      * @param priority    优先级越小越靠前
@@ -143,7 +149,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
             @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
             @ApiImplicitParam(name = "icon", required = true, value = "图标", paramType = "form"),
-            @ApiImplicitParam(name = "url", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "prefix", required = false, value = "请求路径",allowableValues = "/,http://,https://", paramType = "form"),
+            @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
+            @ApiImplicitParam(name = "target", required = false, value = "请求路径",allowableValues = "_self,_blank", paramType = "form"),
             @ApiImplicitParam(name = "parentId", required = false, defaultValue = "0", value = "父节点ID", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
@@ -156,7 +164,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon") String icon,
-            @RequestParam(value = "url", required = false) String url,
+            @RequestParam(value = "prefix", required = false, defaultValue = "/") String prefix,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
+            @RequestParam(value = "target", required = false, defaultValue = "_self") String target,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "parentId", required = false, defaultValue = "0") Long parentId,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
@@ -167,7 +177,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setMenuCode(menuCode);
         menu.setMenuName(menuName);
         menu.setIcon(icon);
-        menu.setUrl(url);
+        menu.setPath(path);
+        menu.setPrefix(prefix);
+        menu.setTarget(target);
         menu.setStatus(status);
         menu.setParentId(parentId);
         menu.setPriority(priority);

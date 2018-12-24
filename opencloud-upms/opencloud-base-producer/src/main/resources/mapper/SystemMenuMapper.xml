@@ -10,7 +10,9 @@
         <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
         <result column="icon" property="icon" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="prefix" property="prefix" jdbcType="VARCHAR"/>
+        <result column="target" property="target" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="menu_desc" property="menuDesc" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="TINYINT"/>

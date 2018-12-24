@@ -66,7 +66,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     /**
      * 获取系统用户授权列表
      *
-     * @param userId     系统用户ID
+     * @param userId       系统用户ID
      * @param resourceType 资源类型
      * @return
      */
@@ -81,7 +81,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("identityId", userId)
-                .andEqualTo("status",BaseConstants.ENABLED)
+                .andEqualTo("status", BaseConstants.ENABLED)
                 .end().build();
         List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
@@ -99,7 +99,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                         .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
                         .andIn("identityId", roleIds)
-                        .andEqualTo("status",BaseConstants.ENABLED)
+                        .andEqualTo("status", BaseConstants.ENABLED)
                         .end().build();
                 List<SystemAccess> roleAccesss = systemAccessMapper.selectByExample(example);
                 if (roleAccesss != null) {
@@ -125,7 +125,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         Example example = builder.criteria()
                 .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("identityId", userId)
-                .andEqualTo("status",BaseConstants.ENABLED)
+                .andEqualTo("status", BaseConstants.ENABLED)
                 .end().build();
         List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
@@ -143,7 +143,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     public List<SystemAccess> getAccessList() {
         ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("status",BaseConstants.ENABLED)
+                .andEqualTo("status", BaseConstants.ENABLED)
                 .end().build();
         return systemAccessMapper.selectByExample(example);
     }
@@ -269,7 +269,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
             code = menu.getMenuCode();
-            url = menu.getUrl();
+            url = menu.getPrefix() + menu.getPath();
             resourceId = menu.getMenuId();
             resourcePid = menu.getParentId();
             serviceId = DEFAULT_SERVICE_ID;
@@ -279,7 +279,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemAction) {
             SystemAction action = (SystemAction) object;
             code = action.getActionCode();
-            url = action.getUrl();
+            url = action.getPath();
             resourceId = action.getActionId();
             resourcePid = action.getMenuId();
             serviceId = DEFAULT_SERVICE_ID;
@@ -289,7 +289,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object instanceof SystemApi) {
             SystemApi api = (SystemApi) object;
             code = api.getApiCode();
-            url = api.getUrl();
+            url = api.getPath();
             resourceId = api.getApiId();
             resourcePid = 0L;
             serviceId = api.getServiceId();

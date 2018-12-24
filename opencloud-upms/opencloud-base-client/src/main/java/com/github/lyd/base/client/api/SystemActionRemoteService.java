@@ -40,7 +40,7 @@ public interface SystemActionRemoteService {
      * @param actionCode  动作编码
      * @param actionName  动作名称
      * @param menuId      归属菜单
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
@@ -51,7 +51,7 @@ public interface SystemActionRemoteService {
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc
@@ -64,7 +64,7 @@ public interface SystemActionRemoteService {
      * @param actionCode  动作编码
      * @param actionName  动作名称
      * @param menuId      归属菜单
-     * @param url         请求路径
+     * @param path         请求路径
      * @param status     是否启用
      * @param priority    优先级越小越靠前
      * @param actionDesc 描述
@@ -76,7 +76,7 @@ public interface SystemActionRemoteService {
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
-            @RequestParam(value = "url", required = false, defaultValue = "") String url,
+            @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "priority", required = false, defaultValue = "0") Integer priority,
             @RequestParam(value = "actionDesc", required = false, defaultValue = "") String actionDesc

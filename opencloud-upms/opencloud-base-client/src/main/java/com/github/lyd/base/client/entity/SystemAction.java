@@ -42,7 +42,7 @@ public class SystemAction implements Serializable {
     /**
      * 资源路径
      */
-    private String url;
+    private String path;
 
     /**
      * 资源父节点
@@ -126,22 +126,12 @@ public class SystemAction implements Serializable {
         this.actionName = actionName;
     }
 
-    /**
-     * 获取资源路径
-     *
-     * @return url - 资源路径
-     */
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
-    /**
-     * 设置资源路径
-     *
-     * @param url 资源路径
-     */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     /**
