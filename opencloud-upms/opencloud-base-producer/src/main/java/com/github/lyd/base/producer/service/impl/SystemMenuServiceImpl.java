@@ -143,7 +143,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         menu.setUpdateTime(new Date());
         int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION, menu.getMenuId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_MENU, menu.getMenuId());
         return count > 0;
     }
 

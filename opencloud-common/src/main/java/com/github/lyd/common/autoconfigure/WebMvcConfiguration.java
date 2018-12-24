@@ -1,15 +1,22 @@
 package com.github.lyd.common.autoconfigure;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.jackson.JacksonProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -32,12 +39,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-    /**
-     * Jackson配置
-     *
-     * @param properties
-     * @return
-     */
+
     @Bean
     @Primary
     public JacksonProperties jacksonProperties(JacksonProperties properties) {
@@ -47,4 +49,24 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         properties.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return properties;
     }
+
+    @Bean
+    public HttpMessageConverters httpMessageConverters(List<HttpMessageConverter<?>> converters) {
+        MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.getSerializationConfig().withFeatures(
+                SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        /**
+         * 序列换成json时,将所有的long变成string
+         * js中long过长精度丢失
+         */
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+        objectMapper.registerModule(simpleModule);
+        jackson2HttpMessageConverter.setObjectMapper(objectMapper);
+        return new  HttpMessageConverters(jackson2HttpMessageConverter);
+    }
+
 }

@@ -169,7 +169,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,api.getApiId());
+        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_API,api.getApiId());
         return count > 0;
     }
 
