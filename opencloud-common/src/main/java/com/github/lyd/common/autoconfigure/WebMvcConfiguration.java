@@ -16,6 +16,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -54,9 +55,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public HttpMessageConverters httpMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = new ObjectMapper();
+        // 忽略为空的字段
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.getSerializationConfig().withFeatures(
                 SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         /**
          * 序列换成json时,将所有的long变成string
          * js中long过长精度丢失

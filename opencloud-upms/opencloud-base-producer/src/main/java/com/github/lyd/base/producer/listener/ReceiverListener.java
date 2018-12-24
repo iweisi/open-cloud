@@ -34,14 +34,19 @@ public class ReceiverListener {
         if (list != null && list.size() > 0) {
             log.info("【apiResourceQueue监听到消息】" + list.toString());
             for (Map map : list) {
-                SystemApi api = BeanUtils.mapToBean(map, SystemApi.class);
-                SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
-                if (save == null) {
-                    apiService.addApi(api);
-                } else {
-                    api.setApiId(save.getApiId());
-                    apiService.updateApi(api);
-                }
+             try
+             {
+                 SystemApi api = BeanUtils.mapToBean(map, SystemApi.class);
+                 SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
+                 if (save == null) {
+                     apiService.addApi(api);
+                 } else {
+                     api.setApiId(save.getApiId());
+                     apiService.updateApi(api);
+                 }
+             }catch (Exception e){
+                 log.error("添加资源error:",e.getMessage());
+             }
             }
 
             // 重新刷新网关
