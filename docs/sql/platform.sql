@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2018-12-24 23:22:16
+Date: 2018-12-24 23:48:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,9 @@ CREATE TABLE `system_access` (
                                `id` bigint(20) NOT NULL,
                                `code` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '授权编码: 资源类型+资源名称  API_INFO',
                                `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
-                               `url` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+                               `path` varchar(255) COLLATE utf8_bin DEFAULT '',
+                               `prefix` varchar(20) COLLATE utf8_bin NOT NULL,
+                               `traget` varchar(20) COLLATE utf8_bin NOT NULL,
                                `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
                                `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
                                `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
@@ -79,11 +81,11 @@ CREATE TABLE `system_access` (
 -- ----------------------------
 -- Records of system_access
 -- ----------------------------
-INSERT INTO `system_access` VALUES ('1', 'menu_system', '系统安全', '', '1', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('2', 'menu_authority', '权限管理', '/authoritys/index', '2', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('3', 'menu_menu', '菜单资源', '/menus/index', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('4', 'menu_server', '服务维护', null, '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('5', 'menu_trace', '服务追踪', 'http://www.baidu.com', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('1', 'menu_system', '系统安全', '', '/', '_self', '1', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('2', 'menu_authority', '权限管理', 'authoritys/index', '/', '_self', '2', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('3', 'menu_menu', '菜单资源', 'menus/index', '/', '_self', '3', '1', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('4', 'menu_server', '服务维护', null, '/', '_self', '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('5', 'menu_trace', '服务追踪', 'www.baidu.com', 'http://', '_self', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 
 -- ----------------------------
 -- Table structure for system_account
@@ -323,9 +325,9 @@ CREATE TABLE `system_menu` (
                              `menu_desc` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
                              `icon` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '菜单标题',
                              `parent_id` bigint(20) DEFAULT NULL COMMENT '父级菜单',
-                             `prefix` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '路径前缀',
-                             `path` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '请求路径',
-                             `target` varchar(20) COLLATE utf8_bin DEFAULT '_self' COMMENT '打开方式:_self窗口内,_blank新窗口',
+                             `path` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '请求路径',
+                             `prefix` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '路径前缀',
+                             `target` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '_self' COMMENT '打开方式:_self窗口内,_blank新窗口',
                              `priority` bigint(20) NOT NULL DEFAULT '0' COMMENT '优先级 越小越靠前',
                              `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '状态:0-无效 1-有效',
                              `create_time` datetime NOT NULL COMMENT '创建时间',
@@ -336,13 +338,13 @@ CREATE TABLE `system_menu` (
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
-INSERT INTO `system_menu` VALUES ('1', 'system', '系统安全', '系统安全', '系统安全', '0', '/', '', '_self', '0', '1', '2018-07-29 21:20:10', '2018-12-24 21:55:39');
-INSERT INTO `system_menu` VALUES ('2', 'authority', '权限管理', '权限管理', '权限管理', '1', '/', 'authoritys/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-24 21:59:29');
-INSERT INTO `system_menu` VALUES ('3', 'menu', '菜单资源', '菜单资源管理', '菜单管理', '1', '/', 'menus/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-24 22:08:07');
-INSERT INTO `system_menu` VALUES ('4', 'server', '服务运维', '服务运维', '服务运维', '0', '/', '', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-12 00:17:26');
-INSERT INTO `system_menu` VALUES ('5', 'route', '网关路由', '网关路由', '网关路由', '4', '/', 'gateway/route/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-11 21:40:08');
-INSERT INTO `system_menu` VALUES ('6', 'api', 'API管理', 'API管理', 'API管理', '4', '/', 'gateway/api/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-12 00:02:50');
-INSERT INTO `system_menu` VALUES ('7', 'trace', '服务追踪', '服务追踪', '服务追踪', '4', 'http://', 'www.baidu.com', '_self', '0', '1', '2018-11-30 02:11:18', '2018-12-24 22:32:27');
+INSERT INTO `system_menu` VALUES ('1', 'system', '系统安全', '系统安全', '系统安全', '0', '', '/', '_self', '0', '1', '2018-07-29 21:20:10', '2018-12-24 21:55:39');
+INSERT INTO `system_menu` VALUES ('2', 'authority', '权限管理', '权限管理', '权限管理', '1', 'authoritys/index', '/', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-24 23:30:17');
+INSERT INTO `system_menu` VALUES ('3', 'menu', '菜单资源', '菜单资源管理', '菜单管理', '1', 'menus/index', '/', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-24 22:08:07');
+INSERT INTO `system_menu` VALUES ('4', 'server', '服务运维', '服务运维', '服务运维', '0', '', '/', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-12 00:17:26');
+INSERT INTO `system_menu` VALUES ('5', 'route', '网关路由', '网关路由', '网关路由', '4', 'gateway/route/index', '/', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-11 21:40:08');
+INSERT INTO `system_menu` VALUES ('6', 'api', 'API管理', 'API管理', 'API管理', '4', 'gateway/api/index', '/', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-12 00:02:50');
+INSERT INTO `system_menu` VALUES ('7', 'trace', '服务追踪', '服务追踪', '服务追踪', '4', 'www.baidu.com', 'http://', '_self', '0', '1', '2018-11-30 02:11:18', '2018-12-24 22:32:27');
 
 -- ----------------------------
 -- Table structure for system_role
