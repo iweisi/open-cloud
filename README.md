@@ -1,4 +1,10 @@
 # open-cloud
+[![SpringCloud](https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg)]()
+[![SpringBoot](https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg)]()
+[![License](https://img.shields.io/npm/l/express.svg)]()
+[![iviewUi](https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
+[![vue](https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
+[![License](https://img.shields.io/npm/l/express.svg)]()
 ---
 **开放平台运维系统**  
 
@@ -48,7 +54,8 @@ open-cloud
 
 #### 部署
 ``` lua
--- 安装并启动nacos服务发现 
+-- 依赖服务Nacos服务发现 
+-- 依赖服务Redis,RabbitMq 
 
 -- 修改主pom.xml
 <config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
