@@ -19,8 +19,8 @@ public class ReceiverListener {
     @Autowired
     private OpenRestTemplate platformRestTemplate;
 
-    @RabbitListener(queues = MqAutoConfiguration.QUEUE_API_RESOURCE_LIMIT)
-    public void apiResourceLimitQueue(List<Map> list) {
+    @RabbitListener(queues = MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE_LIMIT)
+    public void ScanResourceLimitQueue(List<Map> list) {
         if (list != null && list.size() > 0) {
             log.info("【apiResourceLimitQueue监听到消息】" + list.toString());
             // 重新刷新网关

@@ -25,28 +25,27 @@ public class ReceiverListener {
     private OpenRestTemplate platformRestTemplate;
 
     /**
-     * 动态添api资源加队列
+     * 接收API资源扫描消息
      *
      * @param list
      */
-    @RabbitListener(queues = MqAutoConfiguration.QUEUE_API_RESOURCE)
-    public void apiResourceQueue(List<Map> list) {
+    @RabbitListener(queues = MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE)
+    public void ScanApiResourceQueue(List<Map> list) {
         if (list != null && list.size() > 0) {
             log.info("【apiResourceQueue监听到消息】" + list.toString());
             for (Map map : list) {
-             try
-             {
-                 SystemApi api = BeanUtils.mapToBean(map, SystemApi.class);
-                 SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
-                 if (save == null) {
-                     apiService.addApi(api);
-                 } else {
-                     api.setApiId(save.getApiId());
-                     apiService.updateApi(api);
-                 }
-             }catch (Exception e){
-                 log.error("添加资源error:",e.getMessage());
-             }
+                try {
+                    SystemApi api = BeanUtils.mapToBean(map, SystemApi.class);
+                    SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
+                    if (save == null) {
+                        apiService.addApi(api);
+                    } else {
+                        api.setApiId(save.getApiId());
+                        apiService.updateApi(api);
+                    }
+                } catch (Exception e) {
+                    log.error("添加资源error:", e.getMessage());
+                }
             }
 
             // 重新刷新网关

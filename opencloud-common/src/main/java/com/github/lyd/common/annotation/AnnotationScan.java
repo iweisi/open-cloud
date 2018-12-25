@@ -103,8 +103,8 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
             }
         }
         if (amqpTemplate != null) {
-            amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_API_RESOURCE, list);
-            amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_API_RESOURCE_LIMIT, limitList);
+            amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE, list);
+            amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE_LIMIT, limitList);
         }
     }
 
