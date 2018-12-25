@@ -51,13 +51,9 @@ open-cloud
  <gateway.server-addr>http://localhost:8888</gateway.server-addr>  -- 网关服务地址
 -- 多环境打包(dev|test|online)
  mvn clean install package -P dev
--- 项目启动
- ./startup.sh {start|stop|restart|status} {service}.jar
--- 启动顺序  
- 1. open-base-producer  
- 2. open-auth-producer  
- 3. open-gateway-producer  
-```
-
+-- 项目启动 (start|stop|restart|status)
+ ./startup.sh start open-base-producer.jar
+ ./startup.sh start open-auth-producer.jar
+ ./startup.sh start open-gateway-producer.jar
    
 
