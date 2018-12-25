@@ -25,24 +25,24 @@
 #### 模块
 ``` lua
 open-cloud
-├── docs -- 文档说明
+├── docs
     ├── bin           -- 执行脚本  
     ├── generator     -- 代码生成器  
     ├── sql           -- sql文件  
 ├── opencloud-common  -- 公共模块(提供微服务相关依赖包、springCloud必要配置类、工具类、统一全局异常解析)
-├── opencloud-gateway -- 开放API
+├── opencloud-gateway 
      ├── opencloud-gateway-client    -- 开放API网关(对外接口)
      ├── opencloud-gateway-producer  -- 开放API网关(资源服务器)(port = 8888)  
-├── opencloud-upms    -- 权限认证模块
+├── opencloud-upms
      ├── opencloud-base-client    -- 基础服务(对外接口)
      ├── opencloud-base-producer  -- 基础服务(资源服务器)(port = 8233)  
      ├── opencloud-auth-client    -- 认证服务(对外接口)
      ├── opencloud-auth-producer  -- 认证服务(认证授权器)(资源服务器)(port = 8211)  
 ├── opencloud-zipkin  -- 链路追踪 
-├── opencloud-msg     -- 消息服务 待开发...  
+├── opencloud-msg     -- 待开发...  
       ├── opencloud-msg-client    -- 消息服务(对外接口)
       ├── opencloud-msg-producer  -- 消息服务(资源服务器)(port = 8266)  
-├── opencloud-acms    -- APP内容管理 待开发...  
+├── opencloud-acms    -- 待开发...  
       ├── opencloud-acms-client   -- APP内容管理(对外接口)
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
