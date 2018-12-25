@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public  class MqAutoConfiguration {
-    public static final String QUEUE_SCAN_API_RESOURCE = "queue.scan.api.resource";
-    public static final String QUEUE_SCAN_API_RESOURCE_LIMIT = "queue.scan.api.resource.limit";
+    public static final String QUEUE_SCAN_API_RESOURCE = "openCloud.scan.api.resource";
+    public static final String QUEUE_SCAN_API_RESOURCE_LIMIT = "openCloud.scan.api.resource.limit";
 
     /**
      * direct模式，直接根据队列名称投递消息
