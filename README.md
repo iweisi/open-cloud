@@ -45,15 +45,15 @@ open-cloud
 ``` lua
 -- 安装并启动nacos服务发现 
 -- 修改主pom.xml
- <config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
- <discovery.server-addr>127.0.0.1:8848</discovery.server-addr> -- 服务发现地址
- <auth.server-addr>http://localhost:8211</auth.server-addr> -- 认证授权地址
- <gateway.server-addr>http://localhost:8888</gateway.server-addr>  -- 网关服务地址
+<config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
+<discovery.server-addr>127.0.0.1:8848</discovery.server-addr> -- 服务发现地址
+<auth.server-addr>http://localhost:8211</auth.server-addr> -- 认证授权地址
+<gateway.server-addr>http://localhost:8888</gateway.server-addr>  -- 网关服务地址
 -- 多环境打包(dev|test|online)
- mvn clean install package -P dev
+mvn clean install package -P dev
 -- 项目启动 (start|stop|restart|status)
- ./startup.sh start open-base-producer.jar
- ./startup.sh start open-auth-producer.jar
- ./startup.sh start open-gateway-producer.jar
+./startup.sh start open-base-producer.jar
+./startup.sh start open-auth-producer.jar
+./startup.sh start open-gateway-producer.jar
    
 
