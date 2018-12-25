@@ -14,6 +14,7 @@
    [ivew](https://www.iviewui.com/docs/guide/install) 前端UI框架     
 #### [前端后台UI](https://gitee.com/liuyadu/open-cloud-ui)
 #### 项目结构
+![Alt text](/docs/云服务开放平台.png)
 * docs(文档说明)
     1. bin          执行脚本
     2. generator    代码生成器
@@ -25,41 +26,20 @@
 * opencloud-gateway(开发API网关)
    1. opencloud-gateway-client    API网关-接口
    2. opencloud-gateway-producer  API网关-资源服务器 (port = 8888)
-      1. 提供接口调用统一入口:路由代理、限流、访问限制、数字验签、开发调试文档(生产环境不生效)
-      2. 提供基于oauth2密码模式登录入口,返回access_token
-      3. 提供内部数字签名接口
-      3. 提供一键刷新路由、限流等配置(自定义bus监控端点) 
         [刷新路由/actuator/refresh-gateway](POST http://localhost:8888/actuator/refresh-gateway )  
         [灰度刷新/actuator/refresh-gateway?destination=application:* ](POST http://localhost:8888/actuator/refresh-gateway?destination=application:* )
 * opencloud-upms(权限认证模块)
    1. opencloud-base-client    基础服务-接口
    2. opencloud-base-producer  基础服务-资源服务器 (port = 8233)
-      1. 系统用户信息、登录账号管理
-      2. 角色管理、
-      3. 菜单资源、操作资源、API资源管理、
-      4. 应用管理、
-      5. 资源授权
    3. opencloud-auth-client   认证服务-接口
    4. opencloud-auth-producer 认证服务-认证授权器和资源服务器 (port = 8211)
-      1. 统一身份认证、授权,颁发有效令牌
-      2. 客户端、令牌、授权管理
-      3. SSO单点登录
-      
 * opencloud-zipkin(微服务链路追踪)
-* opencloud-msg(消息管理) 开发中...
+* opencloud-msg(消息管理) 待开发...
    1. opencloud-msg-client   消息服务-接口
    2. opencloud-msg-producer 消息服务-资源服务器 (port = 8266)
-      1. 邮件消息
-      2. 短信消息
-      3. 推送消息
-* opencloud-acms(APP内容管理) 开发中...
+* opencloud-acms(APP内容管理) 待开发...
    1. opencloud-acms-client   APP内容管理-接口
    2. opencloud-acms-producer APP内容管理-资源服务器 (port = 8255)
-      1. 版本升级
-      2. 闪屏管理
-      3. banner管理
-      3. 广告管理
-      4. 等...
               
 
 #### 项目配置
