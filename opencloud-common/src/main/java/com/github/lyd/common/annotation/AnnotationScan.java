@@ -1,7 +1,7 @@
 package com.github.lyd.common.annotation;
 
-import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
+import com.github.lyd.common.utils.StringUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +13,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;
@@ -39,6 +40,11 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
+        Map<String, Object> resourceServer = applicationContext.getBeansWithAnnotation(EnableResourceServer.class);
+        if(resourceServer ==null || resourceServer.isEmpty()){
+            // 只扫描资源服务器
+            return;
+        }
         amqpTemplate = applicationContext.getBean(RabbitTemplate.class);
         Environment env = applicationContext.getEnvironment();
         String serviceId = env.getProperty("spring.application.name", "application");
