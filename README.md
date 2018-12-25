@@ -14,9 +14,8 @@
 #### [前端后台UI](https://gitee.com/liuyadu/open-cloud-ui)
 #### 项目结构
 ![Alt text](/docs/云服务开放平台.png)
-
  ### 模块说明
-``` lua
+``` java
 open-cloud
 ├── docs(文档说明)  
 ├── bin          执行脚本  
