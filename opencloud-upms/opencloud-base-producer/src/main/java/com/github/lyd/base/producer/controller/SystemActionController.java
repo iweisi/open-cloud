@@ -1,11 +1,11 @@
 package com.github.lyd.base.producer.controller;
 
+import com.github.lyd.base.client.api.SystemActionRemoteService;
+import com.github.lyd.base.client.entity.SystemAction;
 import com.github.lyd.base.producer.service.SystemActionService;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.api.SystemActionRemoteService;
-import com.github.lyd.base.client.entity.SystemAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -59,6 +59,21 @@ public class SystemActionController implements SystemActionRemoteService {
         return ResultBody.success(actionService.getAction(actionId));
     }
 
+    /**
+     * 获取动作资源
+     *
+     * @param keyword keyword
+     * @return
+     */
+    @ApiOperation(value = "操作列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/action/all")
+    @Override
+    public ResultBody<PageList<SystemAction>> actionAll(String keyword) {
+        return ResultBody.success(actionService.findList(keyword));
+    }
     /**
      * 添加动作资源
      *

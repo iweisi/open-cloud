@@ -23,7 +23,7 @@ public interface SystemAppRemoteService {
 
 
     /**
-     * 获取应用信息
+     * 获取
      *
      * @param appId 应用Id
      * @return

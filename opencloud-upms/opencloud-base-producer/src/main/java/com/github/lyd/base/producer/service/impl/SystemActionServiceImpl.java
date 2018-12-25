@@ -1,14 +1,15 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.base.client.entity.SystemAction;
+import com.github.lyd.base.client.entity.SystemMenu;
+import com.github.lyd.base.producer.mapper.SystemActionMapper;
+import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.lyd.base.producer.service.SystemActionService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.constants.BaseConstants;
-import com.github.lyd.base.client.entity.SystemAction;
-import com.github.lyd.base.producer.mapper.SystemActionMapper;
-import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,23 @@ public class SystemActionServiceImpl implements SystemActionService {
         Example example = builder.criteria()
                 .orLike("actionCode", keyword)
                 .orLike("actionName", keyword).end().build();
+        List<SystemAction> list = systemActionMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemAction> findList(String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemAction.class);
+        Example example = builder.criteria()
+                .orLike("actionCode", keyword)
+                .orLike("actionName", keyword).end().build();
+        example.setOrderByClause("priority  asc");
         List<SystemAction> list = systemActionMapper.selectByExample(example);
         return new PageList(list);
     }

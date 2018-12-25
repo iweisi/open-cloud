@@ -11,7 +11,7 @@ public interface SystemAccessRemoteService {
     /**
      * 获取系统用户私有权限
      *
-     * @return 应用信息
+     * @return
      */
     @GetMapping("/access")
     ResultBody<List<SystemAccess>> access();

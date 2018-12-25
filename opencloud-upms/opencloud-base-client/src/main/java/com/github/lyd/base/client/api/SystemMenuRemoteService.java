@@ -35,7 +35,7 @@ public interface SystemMenuRemoteService {
      * 获取菜单资源
      *
      * @param menuId menuId
-     * @return 应用信息
+     * @return
      */
     @GetMapping("/menu/{menuId}")
     ResultBody<SystemMenu> getMenu(@PathVariable("menuId") Long menuId);

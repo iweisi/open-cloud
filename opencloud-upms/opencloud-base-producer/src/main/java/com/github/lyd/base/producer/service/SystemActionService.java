@@ -26,6 +26,7 @@ public interface SystemActionService {
      */
     SystemAction getAction(Long actionId);
 
+    PageList<SystemAction> findList(String keyword);
 
     /**
      * 检查动作编码是否存在

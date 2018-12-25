@@ -60,6 +60,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         Example example = builder.criteria()
                 .orLike("apiCode", keyword)
                 .orLike("apiName", keyword).end().build();
+        example.setOrderByClause("priority  asc");
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         return new PageList(list);
     }

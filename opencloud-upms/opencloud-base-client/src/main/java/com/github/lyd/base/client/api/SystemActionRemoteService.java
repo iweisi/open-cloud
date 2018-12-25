@@ -29,10 +29,19 @@ public interface SystemActionRemoteService {
      * 获取动作资源
      *
      * @param actionId actionId
-     * @return 应用信息
+     * @return
      */
     @GetMapping("/action/{actionId}")
     ResultBody<SystemAction> getAction(@PathVariable("actionId") Long actionId);
+
+    /**
+     * 获取动作资源
+     *
+     * @param keyword keyword
+     * @return
+     */
+    @PostMapping("/action/all")
+    ResultBody<PageList<SystemAction>> actionAll(String keyword);
 
     /**
      * 添加动作资源

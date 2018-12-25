@@ -56,6 +56,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         Example example = builder.criteria()
                 .orLike("menuCode", keyword)
                 .orLike("menuName", keyword).end().build();
+        example.setOrderByClause("priority  asc");
         List<SystemMenu> list = systemMenuMapper.selectByExample(example);
         return new PageList(list);
     }

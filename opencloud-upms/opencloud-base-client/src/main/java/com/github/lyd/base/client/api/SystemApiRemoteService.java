@@ -35,7 +35,7 @@ public interface SystemApiRemoteService {
      * 获取Api资源
      *
      * @param apiId apiId
-     * @return 应用信息
+     * @return
      */
     @GetMapping("/api/{apiId}")
     ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId);
