@@ -11,8 +11,8 @@
    rabbitmq  
    mysql  
    alibaba  [nacos](https://nacos.io/en-us/) 服务发现和配置中心   
-   [layui](https://www.layui.com/) 前端UI框架     
-  
+   [ivew](https://www.iviewui.com/docs/guide/install) 前端UI框架     
+#### [前端后台UI](https://gitee.com/liuyadu/open-cloud-ui)
 #### 项目结构
 * docs(文档说明)
     1. bin          执行脚本
@@ -68,7 +68,7 @@
    1. 配置中心地址:<code><config.server-addr>127.0.0.1:8848</config.server-addr></code>  
    2. 服务发现地址:<code><discovery.server-addr>127.0.0.1:8848</discovery.server-addr></code>  
    3. 认证授权地址:<code><auth.server-addr>http://localhost:8211</auth.server-addr></code>  
-   4. 网关服务地址:<code><gateway.server-addr>http://localhost:8888</gateway.server-addr></code>  
+   4. 网关服务地址:<code><gateway.server-addr>http://localhost:8888</gateway.server-addr></code>    
 #### 项目部署
 打包不同环境:<code>mvn clean install package -P {dev|test|online}</code>  
 启动脚本:<code>./startup.sh {start|stop|restart|status} {service}.jar</code>    
