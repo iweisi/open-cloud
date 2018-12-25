@@ -1,11 +1,12 @@
+<p align="center">
+ <img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg" alt="SpringCloud">
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg" alt="SpringBoot">
+  <img src="https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square" alt="iview">
+  <img src="https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square" alt="vue">
+  <img src="https://img.shields.io/npm/l/express.svg" alt="License">
+</p>  
+
 # open-cloud
-
-[![SpringCloud](https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg)](http://spring.io/projects/spring-cloud)
-[![SpringBoot](https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![iviewUi](https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
-[![vue](https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
-[![License](https://img.shields.io/npm/l/express.svg)]()
-
 ---
 **开放平台运维系统**  
 
