@@ -87,7 +87,7 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                 api.put("apiName", name);
                 api.put("serviceId", serviceId);
                 api.put("path", path);
-                api.put("description", desc);
+                api.put("apiDesc", desc);
                 list.add(api);
                 Map<String, Object> limit = Maps.newHashMap();
                 // 限流
