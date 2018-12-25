@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Nacos-0.7.0-blue.svg" alt="Nacos">
+  <img src="https://img.shields.io/badge/Nacos-laster-blue.svg" alt="Nacos">
   <img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg" alt="SpringCloud">
   <img src="https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg" alt="SpringBoot">
   <img src="https://img.shields.io/badge/Redis-x.x-orange.svg">
