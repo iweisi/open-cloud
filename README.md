@@ -1,6 +1,6 @@
 # 微服务开放平台
 ---
-**基于vue的前后分离开发的运维管理系统**      
+**开放平台运维系统**      
 [开放平台运维系统UI代码](https://gitee.com/liuyadu/open-cloud-ui)  
 #### 前言
 - 搭建基于OAuth2的开放云平台、 
@@ -21,9 +21,9 @@
 ``` lua
 open-cloud
 ├── docs -- 文档说明
-├── bin           -- 执行脚本  
-├── generator     -- 代码生成器  
-├── sql           -- sql文件  
+    ├── bin           -- 执行脚本  
+    ├── generator     -- 代码生成器  
+    ├── sql           -- sql文件  
 ├── opencloud-common -- 公共模块(提供微服务相关依赖包、springCloud必要配置类、工具类、统一全局异常解析)
 ├── opencloud-gateway -- 开放API
      ├── opencloud-gateway-client    -- 开放API网关(对外接口)
@@ -41,7 +41,6 @@ open-cloud
       ├── opencloud-acms-client   -- APP内容管理(对外接口)
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
-
 #### 打包部署
 ``` lua
 -- 安装并启动nacos服务发现 
