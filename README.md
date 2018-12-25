@@ -43,20 +43,20 @@ open-cloud
 ```
 #### 部署打包
 ``` lua
- -- 打包前配置,修改主pom.xml中profiles配置属性
+-- 打包前配置,修改主pom.xml中profiles配置属性
  <config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
  <discovery.server-addr>127.0.0.1:8848</discovery.server-addr> -- 服务发现地址
  <auth.server-addr>http://localhost:8211</auth.server-addr> -- 认证授权地址
  <gateway.server-addr>http://localhost:8888</gateway.server-addr>  -- 网关服务地址
- -- 多环境打包(dev|test|online)
-    mvn clean install package -P dev
- -- 项目启动
-    ./startup.sh {start|stop|restart|status} {service}.jar
- -- 启动顺序   
-   1. 安装并启动nacos服务发现  
-   2. open-base-producer  
-   3. open-auth-producer  
-   4. open-gateway-producer  
+-- 多环境打包(dev|test|online)
+ mvn clean install package -P dev
+-- 项目启动
+ ./startup.sh {start|stop|restart|status} {service}.jar
+-- 启动顺序   
+ 1. 安装并启动nacos服务发现  
+ 2. open-base-producer  
+ 3. open-auth-producer  
+ 4. open-gateway-producer  
 ```
 
    
