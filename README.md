@@ -42,7 +42,7 @@ open-cloud
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
 #### 部署打包
-```
+``` lua
 打包前配置
  -- 支持多环境(dev、test、online):修改主项目pom.xml中的profiles节点  
  <config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
