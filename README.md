@@ -1,12 +1,14 @@
 # 微服务开放平台
 ---
-**开放平台运维系统**      
-<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">开放平台运维系统UI代码</a> 
-#### 前言
-- 搭建基于OAuth2的开放云平台、 
-- 搭建基于计费的API数据平台、 
-- 为APP端提供统一接口管控平台、 
-- 为第三方合作伙伴的业务对接提供授信可控的技术对接平台
+**开放平台运维系统**  
+
+<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">后台UI代码仓库</a>
+
+<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">在线访问</a>
+
+#### 简介
+搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
+
 #### 技术架构
 - springCloud Finchley.RELEASE  
 - springBoot 2.0.4.RELEASE  
@@ -14,10 +16,12 @@
 - rabbitmq  
 - mysql  
 - 阿里巴巴nacos  <a target="_blank" href="https://nacos.io/en-us/">Nacos服务发现和配置中心</a> 
-- vue.js  <a target="_blank" href="https://www.iviewui.com/docs/guide/install">ivew前端UI框架</a> 
-#### 项目结构
+- vue.js  <a target="_blank" href="https://www.iviewui.com/docs/guide/install">ivew前端UI框架</a>
+ 
+#### 功能
 ![Alt text](/docs/云服务开放平台.png)
-#### 模块说明
+
+#### 模块
 ``` lua
 open-cloud
 ├── docs -- 文档说明
@@ -41,6 +45,7 @@ open-cloud
       ├── opencloud-acms-client   -- APP内容管理(对外接口)
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
+
 #### 打包部署
 ``` lua
 -- 安装并启动nacos服务发现 
