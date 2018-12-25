@@ -15,32 +15,33 @@
 #### [前端后台UI](https://gitee.com/liuyadu/open-cloud-ui)
 #### 项目结构
 ![Alt text](/docs/云服务开放平台.png)
-* docs(文档说明)
-    1. bin          执行脚本
-    2. generator    代码生成器
-    3. sql          sql文件
-* opencloud-common(公共模块)
-    1. 提供微服务相关依赖包
-    2. 封装springCloud必要配置类、自动加载、
-    3. 工具类、统一全局异常解析、自定义错误码(支持国际化)、自定义属性配置、
-* opencloud-gateway(开发API网关)
-   1. opencloud-gateway-client    API网关-接口
-   2. opencloud-gateway-producer  API网关-资源服务器 (port = 8888)
+<code>
+|-- docs(文档说明)
+   |-- bin          执行脚本
+   |-- generator    代码生成器
+   |-- sql          sql文件
+|-- opencloud-common(公共模块)
+   |-- 提供微服务相关依赖包
+   |-- 封装springCloud必要配置类、自动加载、
+   |-- 工具类、统一全局异常解析、自定义错误码(支持国际化)、自定义属性配置、
+|-- opencloud-gateway(开发API网关)
+   |-- opencloud-gateway-client    API网关-接口
+   |-- opencloud-gateway-producer  API网关-资源服务器 (port = 8888)
         [刷新路由/actuator/refresh-gateway](POST http://localhost:8888/actuator/refresh-gateway )  
         [灰度刷新/actuator/refresh-gateway?destination=application:* ](POST http://localhost:8888/actuator/refresh-gateway?destination=application:* )
-* opencloud-upms(权限认证模块)
-   1. opencloud-base-client    基础服务-接口
-   2. opencloud-base-producer  基础服务-资源服务器 (port = 8233)
-   3. opencloud-auth-client   认证服务-接口
-   4. opencloud-auth-producer 认证服务-认证授权器和资源服务器 (port = 8211)
-* opencloud-zipkin(微服务链路追踪)
-* opencloud-msg(消息管理) 待开发...
-   1. opencloud-msg-client   消息服务-接口
-   2. opencloud-msg-producer 消息服务-资源服务器 (port = 8266)
-* opencloud-acms(APP内容管理) 待开发...
-   1. opencloud-acms-client   APP内容管理-接口
-   2. opencloud-acms-producer APP内容管理-资源服务器 (port = 8255)
-              
+|-- opencloud-upms(权限认证模块)
+   |-- opencloud-base-client    基础服务-接口
+   |-- opencloud-base-producer  基础服务-资源服务器 (port = 8233)
+   |-- opencloud-auth-client   认证服务-接口
+   |-- opencloud-auth-producer 认证服务-认证授权器和资源服务器 (port = 8211)
+|-- opencloud-zipkin(微服务链路追踪)
+|-- opencloud-msg(消息管理) 待开发...
+   |-- opencloud-msg-client   消息服务-接口
+   |-- opencloud-msg-producer 消息服务-资源服务器 (port = 8266)
+|-- opencloud-acms(APP内容管理) 待开发...
+   |-- opencloud-acms-client   APP内容管理-接口
+   |-- opencloud-acms-producer APP内容管理-资源服务器 (port = 8255)
+<code>
 
 #### 项目配置
 支持多环境(dev、test、online):修改主项目pom.xml中的profiles节点  
