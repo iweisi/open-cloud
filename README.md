@@ -9,7 +9,7 @@
 #### 简介
 搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
-#### 技术架构
+#### 架构
 - springCloud Finchley.RELEASE  
 - springBoot 2.0.4.RELEASE  
 - redis  
@@ -46,7 +46,7 @@ open-cloud
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
 
-#### 打包部署
+#### 部署
 ``` lua
 -- 安装并启动nacos服务发现 
 
