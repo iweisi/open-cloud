@@ -15,10 +15,10 @@
 #### 项目结构
 ![Alt text](/docs/云服务开放平台.png)
  ### 模块说明
-``` java
+``` 
 open-cloud
 ├── docs(文档说明)  
-├── bin          执行脚本  
+├── bin          -- 执行脚本  
 ├── generator    代码生成器  
 ├── sql          sql文件  
 ├── opencloud-common(公共模块)  
