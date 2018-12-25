@@ -11,9 +11,8 @@
 
 # open-cloud
 ---
-**开放平台运维系统**  
 
-<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">vue后台UI源码</a>
+<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">开放平台运维系统UI</a>
 
 <a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">在线访问</a>
 
