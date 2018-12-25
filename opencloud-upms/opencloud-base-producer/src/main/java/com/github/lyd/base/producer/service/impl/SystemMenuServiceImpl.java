@@ -176,7 +176,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     @Override
     public Boolean removeMenu(Long menuId) {
         if (systemAccessService.isExist(menuId, BaseConstants.RESOURCE_TYPE_MENU)) {
-            throw new OpenMessageException(String.format("%s已被授权,不允许删除,请取消授权后,再次尝试!", menuId));
+            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", menuId));
         }
         int count = systemMenuMapper.deleteByPrimaryKey(menuId);
         return count > 0;

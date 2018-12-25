@@ -197,7 +197,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     @Override
     public Boolean removeApi(Long apiId) {
         if (systemAccessService.isExist(apiId, BaseConstants.RESOURCE_TYPE_API)) {
-            throw new OpenMessageException(String.format("%s已被授权,不允许删除,请取消授权后,再次尝试!", apiId));
+            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", apiId));
         }
         int count = systemApiMapper.deleteByPrimaryKey(apiId);
         return count > 0;
