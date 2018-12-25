@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Nacos-laster-blue.svg" alt="Nacos">
-  <img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg" alt="SpringCloud">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg" alt="SpringBoot">
-  <img src="https://img.shields.io/badge/Redis-x.x-orange.svg">
-  <img src="https://img.shields.io/badge/RabbitMq-x.x-orange.svg">
-  <img src="https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square" alt="iview">
-  <img src="https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square" alt="vue">
-  <img src="https://img.shields.io/npm/l/express.svg" alt="License">
+  <a target="_blank" href="https://nacos.io/en-us/"><img src="https://img.shields.io/badge/Nacos-laster-blue.svg" alt="Nacos"></a>
+  <a><img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg" alt="SpringCloud"></a>
+  <a><img src="https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg" alt="SpringBoot"></a>
+  <a><img src="https://img.shields.io/badge/Redis-x.x-orange.svg"></a>
+  <a><img src="https://img.shields.io/badge/RabbitMq-x.x-orange.svg"></a>
+  <a target="_blank" href="https://www.iviewui.com/docs/guide/install"><img src="https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square" alt="iview"></a>
+  <a><img src="https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square" alt="vue"></a>
+  <a><img src="https://img.shields.io/npm/l/express.svg" alt="License"></a>
 </p>  
 
 # open-cloud
@@ -19,15 +19,6 @@
 #### 简介
 搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
-#### 架构
-- springCloud Finchley.RELEASE  
-- springBoot 2.0.4.RELEASE  
-- redis  
-- rabbitmq  
-- mysql  
-- 阿里巴巴nacos  <a target="_blank" href="https://nacos.io/en-us/">Nacos服务发现和配置中心</a> 
-- vue.js  <a target="_blank" href="https://www.iviewui.com/docs/guide/install">ivew前端UI框架</a>
- 
 #### 功能
 ![Alt text](/docs/云服务开放平台.png)
 
