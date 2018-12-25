@@ -4,7 +4,7 @@
 3. 为APP端提供统一接口管控平台
 4. 为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 #### 技术架构
-   全新升级spring boot2.0+ 稳定版 
+   全新升级spring boot2.0+ 稳定版  
    springCloud  Finchley.RELEASE  
    springBoot   2.0.4.RELEASE  
    redis  
