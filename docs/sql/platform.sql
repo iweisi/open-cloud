@@ -87,7 +87,7 @@ INSERT INTO `system_access` VALUES ('3', 'menu_ResourceMenu', '菜单资源', '/
 INSERT INTO `system_access` VALUES ('4', 'menu_Server', '服务运维', '/', '', '_self', '4', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 INSERT INTO `system_access` VALUES ('5', 'menu_Trace', '服务追踪', 'http://', 'www.baidu.com', '_self', '7', '4', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 INSERT INTO `system_access` VALUES ('6', 'menu_Resource', '资源管理', '/', '', '_self', '8', '0', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
-INSERT INTO `system_access` VALUES ('7', 'menu_ResourceApi', 'API资源', '/', 'resource/api/index', '_self', '6', '8', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
+INSERT INTO `system_access` VALUES ('7', 'menu_ResourceApi', '接口资源', '/', 'resource/api/index', '_self', '6', '8', 'menu', '1', 'ROLE_superAdmin', 'ROLE_', 'opencloud-base-producer', '1');
 
 -- ----------------------------
 -- Table structure for system_account
@@ -341,7 +341,7 @@ INSERT INTO `system_menu` VALUES ('2', 'Authority', '权限管理', '权限管�
 INSERT INTO `system_menu` VALUES ('3', 'ResourceMenu', '菜单资源', '菜单资源管理', '菜单管理', '8', '/', 'resource/menus/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-25 00:35:35');
 INSERT INTO `system_menu` VALUES ('4', 'Server', '服务运维', '服务运维', '服务运维', '0', '/', '', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-25 00:30:32');
 INSERT INTO `system_menu` VALUES ('5', 'Route', '网关路由', '网关路由', '网关路由', '4', '/', 'gateway/route/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-25 00:30:39');
-INSERT INTO `system_menu` VALUES ('6', 'ResourceApi', 'API资源', '开发API', 'API管理', '8', '/', 'resource/api/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-25 00:35:43');
+INSERT INTO `system_menu` VALUES ('6', 'ResourceApi', '接口资源', '开发API接口资源', 'API管理', '8', '/', 'resource/api/index', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-25 00:35:43');
 INSERT INTO `system_menu` VALUES ('7', 'Trace', '服务追踪', '服务追踪', '服务追踪', '4', 'http://', 'www.baidu.com', '_self', '0', '1', '2018-11-30 02:11:18', '2018-12-25 00:30:51');
 INSERT INTO `system_menu` VALUES ('8', 'Resource', '资源管理', '', '', '0', '/', '', '_self', '0', '1', '2018-12-25 00:21:37', '2018-12-25 00:30:03');
 
