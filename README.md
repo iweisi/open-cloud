@@ -1,20 +1,23 @@
 # 微服务开放平台
 ---
-#### 搭建基于OAuth2的开放云平台
-搭建基于API的生态体系,利用开放平台、搭建基于计费的API数据平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
+**基于vue的前后分离开发的运维管理系统**      
+[开放平台运维系统UI代码](https://gitee.com/liuyadu/open-cloud-ui)  
+#### 前言
+- 搭建基于OAuth2的开放云平台、 
+- 搭建基于计费的API数据平台、 
+- 为APP端提供统一接口管控平台、 
+- 为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 #### 技术架构
-   全新升级spring boot2.0+ 稳定版  
-   springCloud  Finchley.RELEASE  
-   springBoot   2.0.4.RELEASE  
-   redis  
-   rabbitmq  
-   mysql  
-   alibaba  [nacos](https://nacos.io/en-us/) 服务发现和配置中心   
-   [ivew](https://www.iviewui.com/docs/guide/install) 前端UI框架     
-#### [前端后台UI](https://gitee.com/liuyadu/open-cloud-ui)
+- springCloud Finchley.RELEASE  
+- springBoot 2.0.4.RELEASE  
+- redis  
+- rabbitmq  
+- mysql  
+- 阿里巴巴nacos  [Nacos服务发现和配置中心](https://nacos.io/en-us/) 
+- vue.js [ivew前端UI框架](https://www.iviewui.com/docs/guide/install)
 #### 项目结构
 ![Alt text](/docs/云服务开放平台.png)
- ### 模块说明
+#### 模块说明
 ``` lua
 open-cloud
 ├── docs -- 文档说明
@@ -38,22 +41,24 @@ open-cloud
       ├── opencloud-acms-client   -- APP内容管理(对外接口)
       ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
 ```
-#### 项目配置
-支持多环境(dev、test、online):修改主项目pom.xml中的profiles节点  
-修改关键配置项:  
-   1. 配置中心地址:<code><config.server-addr>127.0.0.1:8848</config.server-addr></code>  
-   2. 服务发现地址:<code><discovery.server-addr>127.0.0.1:8848</discovery.server-addr></code>  
-   3. 认证授权地址:<code><auth.server-addr>http://localhost:8211</auth.server-addr></code>  
-   4. 网关服务地址:<code><gateway.server-addr>http://localhost:8888</gateway.server-addr></code>    
-#### 项目部署
-打包不同环境:<code>mvn clean install package -P {dev|test|online}</code>  
-启动脚本:<code>./startup.sh {start|stop|restart|status} {service}.jar</code>    
+#### 部署打包
+```
+打包前配置
+ -- 支持多环境(dev、test、online):修改主项目pom.xml中的profiles节点  
+ <config.server-addr>127.0.0.1:8848</config.server-addr> -- 配置中心地址
+ <discovery.server-addr>127.0.0.1:8848</discovery.server-addr> -- 服务发现地址
+ <auth.server-addr>http://localhost:8211</auth.server-addr> -- 认证授权地址
+ <gateway.server-addr>http://localhost:8888</gateway.server-addr>  -- 网关服务地址
+项目部署
+打包不同环境:mvn clean install package -P {dev|test|online}
+启动脚本:./startup.sh {start|stop|restart|status} {service}.jar  
 启动顺序:   
    1. 安装并启动nacos服务发现  
    2. open-base-producer  
    3. open-auth-producer  
    4. open-gateway-producer  
 访问API网关:[http://localhost:8888/](http://localhost:8888/)  
+```
 
    
 
