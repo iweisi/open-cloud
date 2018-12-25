@@ -2,7 +2,6 @@ package com.github.lyd.base.producer.service.impl;
 
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemAction;
-import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.base.producer.mapper.SystemActionMapper;
 import com.github.lyd.base.producer.service.SystemAccessService;
 import com.github.lyd.base.producer.service.SystemActionService;
@@ -57,11 +56,15 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public PageList<SystemAction> findList(String keyword) {
+    public PageList<SystemAction> findList(String keyword,Long menuId) {
         ExampleBuilder builder = new ExampleBuilder(SystemAction.class);
-        Example example = builder.criteria()
+        Example example = builder
+                .criteria()
                 .orLike("actionCode", keyword)
-                .orLike("actionName", keyword).end().build();
+                .orLike("actionName", keyword).end()
+                .and()
+                .andEqualTo("menuId",menuId).end()
+                .build();
         example.setOrderByClause("priority  asc");
         List<SystemAction> list = systemActionMapper.selectByExample(example);
         return new PageList(list);

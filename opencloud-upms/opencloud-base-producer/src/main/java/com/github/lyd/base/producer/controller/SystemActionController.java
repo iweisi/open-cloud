@@ -69,10 +69,10 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/action/all")
+    @PostMapping("/action/list")
     @Override
-    public ResultBody<PageList<SystemAction>> actionAll(String keyword) {
-        return ResultBody.success(actionService.findList(keyword));
+    public ResultBody<PageList<SystemAction>> actionList(String keyword,Long menuId) {
+        return ResultBody.success(actionService.findList(keyword, menuId));
     }
     /**
      * 添加动作资源

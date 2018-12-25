@@ -26,7 +26,7 @@ public interface SystemActionService {
      */
     SystemAction getAction(Long actionId);
 
-    PageList<SystemAction> findList(String keyword);
+    PageList<SystemAction> findList(String keyword,Long menuId);
 
     /**
      * 检查动作编码是否存在

@@ -1,8 +1,9 @@
 package com.github.lyd.base.client.api;
 
+import com.github.lyd.base.client.entity.SystemAction;
+import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.entity.SystemMenu;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,8 @@ public interface SystemMenuRemoteService {
      *
      * @return
      */
-    @PostMapping("/menu/all")
-    ResultBody<PageList<SystemMenu>> menuAll(
+    @PostMapping("/menu/list")
+    ResultBody<PageList<SystemMenu>> menuList(
             @RequestParam(name = "keyword", required = false) String keyword
     );
 

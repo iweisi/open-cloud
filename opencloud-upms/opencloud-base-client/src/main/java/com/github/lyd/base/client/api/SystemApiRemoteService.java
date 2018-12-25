@@ -26,8 +26,8 @@ public interface SystemApiRemoteService {
      *
      * @return
      */
-    @PostMapping("/api/all")
-    ResultBody<PageList<SystemApi>> apiAll(
+    @PostMapping("/api/list")
+    ResultBody<PageList<SystemApi>> apiList(
             @RequestParam(name = "keyword", required = false) String keyword
     );
 

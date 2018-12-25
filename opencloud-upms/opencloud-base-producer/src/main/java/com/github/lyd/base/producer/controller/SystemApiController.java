@@ -56,9 +56,9 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/api/all")
+    @PostMapping("/api/list")
     @Override
-    public ResultBody<PageList<SystemApi>> apiAll(String keyword) {
+    public ResultBody<PageList<SystemApi>> apiList(String keyword) {
         return ResultBody.success(apiService.findList(keyword));
     }
 

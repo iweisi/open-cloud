@@ -40,8 +40,10 @@ public interface SystemActionRemoteService {
      * @param keyword keyword
      * @return
      */
-    @PostMapping("/action/all")
-    ResultBody<PageList<SystemAction>> actionAll(String keyword);
+    @PostMapping("/action/list")
+    ResultBody<PageList<SystemAction>> actionList(String keyword,Long menuId);
+
+
 
     /**
      * 添加动作资源

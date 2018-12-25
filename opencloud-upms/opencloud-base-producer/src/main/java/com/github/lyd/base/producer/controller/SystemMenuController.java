@@ -1,5 +1,6 @@
 package com.github.lyd.base.producer.controller;
 
+import com.github.lyd.base.client.entity.SystemAction;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
@@ -53,9 +54,9 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/menu/all")
+    @PostMapping("/menu/list")
     @Override
-    public ResultBody<PageList<SystemMenu>> menuAll(String keyword) {
+    public ResultBody<PageList<SystemMenu>> menuList(String keyword) {
         return ResultBody.success(menuService.findList(keyword));
     }
 
