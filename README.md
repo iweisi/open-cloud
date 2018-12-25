@@ -17,11 +17,11 @@
  ### 模块说明
 ``` 
 open-cloud
-├── docs(文档说明)  
-├── bin          -- 执行脚本  
-├── generator    代码生成器  
-├── sql          sql文件  
-├── opencloud-common(公共模块)  
+├── docs -- 文档说明
+├── bin           -- 执行脚本  
+├── generator     -- 代码生成器  
+├── sql           -- sql文件  
+├── opencloud-common -- 公共模块
 ├    ├── 提供微服务相关依赖包  
 ├    ├── 封装springCloud必要配置类、自动加载、  
 ├    ├── 工具类、统一全局异常解析、自定义错误码(支持国际化)、自定义属性配置、  
