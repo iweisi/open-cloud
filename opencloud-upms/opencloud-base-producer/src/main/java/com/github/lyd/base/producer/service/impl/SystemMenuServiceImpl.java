@@ -178,13 +178,6 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         if (systemAccessService.isExist(menuId, BaseConstants.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", menuId));
         }
-        ExampleBuilder builder = new ExampleBuilder(SystemMenu.class);
-        Example example = builder.criteria()
-                .andEqualTo("parentId", menuId).end().build();
-        int rows = systemMenuMapper.selectCountByExample(example);
-        if(rows>0){
-            throw new OpenMessageException(String.format("当前菜单存在子菜单,不允许删除", menuId));
-        }
         int count = systemMenuMapper.deleteByPrimaryKey(menuId);
         return count > 0;
     }
