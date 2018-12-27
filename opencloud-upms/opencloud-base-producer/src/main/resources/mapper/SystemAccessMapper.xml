@@ -10,6 +10,7 @@
         <result column="prefix" property="prefix" jdbcType="VARCHAR"/>
         <result column="target" property="target" jdbcType="VARCHAR"/>
         <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="resource_id" property="resourceId" jdbcType="BIGINT"/>
         <result column="resource_pid" property="resourcePid" jdbcType="BIGINT"/>

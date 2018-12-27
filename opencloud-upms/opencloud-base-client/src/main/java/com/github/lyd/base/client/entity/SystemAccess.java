@@ -45,7 +45,10 @@ public class SystemAccess implements Serializable {
      * 显示名称
      */
     private String name;
-
+    /**
+     * 图标
+     */
+    private String icon;
     /**
      * 资源ID
      */
@@ -229,5 +232,13 @@ public class SystemAccess implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

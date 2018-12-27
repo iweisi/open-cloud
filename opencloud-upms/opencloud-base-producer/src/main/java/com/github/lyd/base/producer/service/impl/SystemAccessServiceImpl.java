@@ -221,6 +221,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 updateObj.setServiceId(permission.getServiceId());
                 updateObj.setResourcePid(permission.getResourcePid());
                 updateObj.setName(permission.getName());
+                updateObj.setIcon(permission.getIcon());
                 updateObj.setPath(permission.getPath());
                 updateObj.setPrefix(permission.getPrefix());
                 updateObj.setTarget(permission.getTarget());
@@ -273,6 +274,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         String name = "";
         String identityCode = null;
         Integer status = 0;
+        String icon = null;
         SystemAccess permission = null;
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
@@ -285,6 +287,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             serviceId = DEFAULT_SERVICE_ID;
             status = menu.getStatus();
             name = menu.getMenuName();
+            icon = menu.getIcon();
         }
         if (object instanceof SystemAction) {
             SystemAction action = (SystemAction) object;
@@ -337,6 +340,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             permission.setPrefix(prefix);
             permission.setTarget(target);
             permission.setName(name);
+            permission.setIcon(icon);
             permission.setStatus(status);
             permission.setIdentityCode(identityCode);
             permission.setIdentityPrefix(identityPrefix);
