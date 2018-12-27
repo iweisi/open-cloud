@@ -39,7 +39,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {"com.github.lyd"})
-@MapperScan(basePackages = "com.github.lyd.oauth.producer.mapper")
+@MapperScan(basePackages = "com.github.lyd.auth.producer.mapper")
 public class AuthApplication {
 
     public static void main(String[] args) {
