@@ -8,7 +8,7 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemMenu;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     @Autowired
     private SystemMenuMapper systemMenuMapper;
     @Autowired
-    private SystemAccessService systemAccessService;
+    private SystemGrantAccessService systemAccessService;
 
     /**
      * 分页查询

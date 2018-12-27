@@ -1,8 +1,8 @@
 package com.github.lyd.gateway.producer.locator;
 
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.gateway.producer.service.feign.SystemAccessApi;
-import com.github.lyd.base.client.entity.SystemAccess;
+import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.Route;
@@ -20,10 +20,10 @@ import java.util.List;
 @Slf4j
 public class AccessLocator {
     private HashMap<String, Collection<ConfigAttribute>> map = Maps.newHashMap();
-    private SystemAccessApi systemAccessApi;
+    private SystemGrantAccessApi systemAccessApi;
     private ZuulRoutesLocator zuulRoutesLocator;
 
-    public AccessLocator(SystemAccessApi systemAccessApi, ZuulRoutesLocator zuulRoutesLocator) {
+    public AccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRoutesLocator zuulRoutesLocator) {
         this.systemAccessApi = systemAccessApi;
         this.zuulRoutesLocator = zuulRoutesLocator;
     }
@@ -41,7 +41,7 @@ public class AccessLocator {
      * @param assess
      * @return
      */
-    protected String getZuulPath(SystemAccess assess) {
+    protected String getZuulPath(SystemGrantAccess assess) {
         List<Route> rotes = zuulRoutesLocator.getRoutes();
         if (rotes != null && !rotes.isEmpty()) {
             for (Route route : rotes) {
@@ -68,9 +68,9 @@ public class AccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<SystemAccess> assesss = systemAccessApi.access().getData();
+            List<SystemGrantAccess> assesss = systemAccessApi.access().getData();
             if (assesss != null) {
-                for (SystemAccess assess : assesss) {
+                for (SystemGrantAccess assess : assesss) {
                     if (StringUtils.isBlank(assess.getPath())) {
                         continue;
                     }
@@ -79,8 +79,8 @@ public class AccessLocator {
                     if (array == null) {
                         array = new ArrayList<>();
                     }
-                    if (!array.contains(assess.getIdentityCode())) {
-                        cfg = new SecurityConfig(assess.getIdentityCode());
+                    if (!array.contains(assess.getGrantOwnerCode())) {
+                        cfg = new SecurityConfig(assess.getGrantOwnerCode());
                         array.add(cfg);
                     }
                     map.put(url, array);

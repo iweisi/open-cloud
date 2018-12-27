@@ -10,7 +10,7 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.producer.mapper.SystemAccountMapper;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.google.common.collect.Lists;
@@ -44,7 +44,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
     @Autowired
     private SystemRoleService roleService;
     @Autowired
-    private SystemAccessService systemAccessService;
+    private SystemGrantAccessService systemAccessService;
 
     /**
      * 添加系统用户
@@ -76,7 +76,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (StringUtils.isBlank(saved.getNickName())) {
             saved.setNickName(saved.getUserName());
         }
-        saved.setStatus(BaseConstants.USER_STATE_NORMAL);
+        saved.setStatus(BaseConstants.USER_STATE_DISABLE);
         saved.setCreateTime(new Date());
         saved.setUpdateTime(saved.getCreateTime());
         saved.setRegisterTime(saved.getCreateTime());
@@ -150,10 +150,10 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                 }
             }
             //获取系统用户私有权限
-            List<SystemAccess> selfList = systemAccessService.getUserPrivateAccess(userAccount.getUserId());
+            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateAccess(userAccount.getUserId());
             if (selfList != null) {
-                for (SystemAccess self : selfList) {
-                    authorities.add(self.getIdentityCode());
+                for (SystemGrantAccess self : selfList) {
+                    authorities.add(self.getGrantOwnerCode());
                 }
             }
             accountDto.setRoles(rolesList);

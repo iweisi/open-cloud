@@ -3,8 +3,8 @@ package com.github.lyd.base.producer.controller;
 import com.github.lyd.base.client.api.SystemUserRemoteService;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemUserDto;
-import com.github.lyd.base.client.entity.SystemAccess;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
@@ -33,7 +33,7 @@ public class SystemUserController implements SystemUserRemoteService {
     @Autowired
     private SystemUserService systemUserService;
     @Autowired
-    private SystemAccessService permissionService;
+    private SystemGrantAccessService permissionService;
     /**
      * 系统用户列表
      *
@@ -96,19 +96,19 @@ public class SystemUserController implements SystemUserRemoteService {
 
     @ApiOperation(value = "当前用户可访问菜单资源")
     @GetMapping("/user/menus")
-    public ResultBody<List<SystemAccess>> userMenus() {
+    public ResultBody<List<SystemGrantAccess>> userMenus() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
     }
 
     @ApiOperation(value = "当前用户可访问操作资源")
     @GetMapping("/user/actions")
-    public ResultBody<List<SystemAccess>> userActions() {
+    public ResultBody<List<SystemGrantAccess>> userActions() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
     }
 
     @ApiOperation(value = "当前用户可访问API资源")
     @GetMapping("/user/apis")
-    public ResultBody<List<SystemAccess>> userApis() {
+    public ResultBody<List<SystemGrantAccess>> userApis() {
         return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_API));
     }
 }

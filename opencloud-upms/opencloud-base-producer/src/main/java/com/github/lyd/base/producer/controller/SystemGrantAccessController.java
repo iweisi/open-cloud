@@ -1,9 +1,9 @@
 package com.github.lyd.base.producer.controller;
 
+import com.github.lyd.base.client.api.SystemGrantAccessRemoteService;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.api.SystemAccessRemoteService;
-import com.github.lyd.base.client.entity.SystemAccess;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ import java.util.List;
  */
 @Api(tags = "授权管理")
 @RestController
-public class SystemAccessController implements SystemAccessRemoteService {
+public class SystemGrantAccessController implements SystemGrantAccessRemoteService {
     @Autowired
-    private SystemAccessService systemAccessService;
+    private SystemGrantAccessService systemAccessService;
 
     /**
      * 获取授权列表
@@ -31,7 +31,7 @@ public class SystemAccessController implements SystemAccessRemoteService {
     @ApiOperation(value = "获取授权列表")
     @GetMapping("/access")
     @Override
-    public ResultBody<List<SystemAccess>> access() {
+    public ResultBody<List<SystemGrantAccess>> access() {
         return ResultBody.success(systemAccessService.getAccessList());
     }
 }

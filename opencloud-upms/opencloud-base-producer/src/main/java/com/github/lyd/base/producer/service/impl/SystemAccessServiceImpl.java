@@ -1,7 +1,7 @@
 package com.github.lyd.base.producer.service.impl;
 
 import com.github.lyd.base.client.entity.*;
-import com.github.lyd.base.producer.mapper.SystemAccessMapper;
+import com.github.lyd.base.producer.mapper.SystemGrantAccessMapper;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.CrudMapper;
 import com.github.lyd.common.mapper.ExampleBuilder;
@@ -9,7 +9,7 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.producer.mapper.SystemActionMapper;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
 import com.github.lyd.base.producer.mapper.SystemMenuMapper;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.common.utils.StringUtils;
 import org.assertj.core.util.Lists;
@@ -30,9 +30,9 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SystemAccessServiceImpl implements SystemAccessService {
+public class SystemAccessServiceImpl implements SystemGrantAccessService {
     @Autowired
-    private SystemAccessMapper systemAccessMapper;
+    private SystemGrantAccessMapper systemAccessMapper;
     @Autowired
     private SystemMenuMapper systemMenuMapper;
     @Autowired
@@ -74,19 +74,19 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      * @return
      */
     @Override
-    public List<SystemAccess> getUserAccess(Long userId, String resourceType) {
+    public List<SystemGrantAccess> getUserAccess(Long userId, String resourceType) {
         List<SystemRole> roles = systemRoleService.getUserRoles(userId);
         List<Long> roleIds = Lists.newArrayList();
-        List<SystemAccess> permissions = Lists.newArrayList();
+        List<SystemGrantAccess> permissions = Lists.newArrayList();
         // 系统用户私有权限
-        ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
+                .andEqualTo("grantOwnerType", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
                 .andEqualTo("resourceType", resourceType)
-                .andEqualTo("identityId", userId)
+                .andEqualTo("grantOwnerId", userId)
                 .andEqualTo("status", BaseConstants.ENABLED)
                 .end().build();
-        List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
+        List<SystemGrantAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
             permissions.addAll(userAccesss);
         }
@@ -99,12 +99,12 @@ public class SystemAccessServiceImpl implements SystemAccessService {
                 //强制清空查询
                 example.clear();
                 example = builder.criteria()
-                        .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE)
+                        .andEqualTo("grantOwnerType", BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE)
                         .andEqualTo("resourceType", resourceType)
-                        .andIn("identityId", roleIds)
+                        .andIn("grantOwnerId", roleIds)
                         .andEqualTo("status", BaseConstants.ENABLED)
                         .end().build();
-                List<SystemAccess> roleAccesss = systemAccessMapper.selectByExample(example);
+                List<SystemGrantAccess> roleAccesss = systemAccessMapper.selectByExample(example);
                 if (roleAccesss != null) {
                     permissions.addAll(roleAccesss);
                 }
@@ -121,16 +121,16 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      * @return
      */
     @Override
-    public List<SystemAccess> getUserPrivateAccess(Long userId) {
-        List<SystemAccess> permissions = Lists.newArrayList();
+    public List<SystemGrantAccess> getUserPrivateAccess(Long userId) {
+        List<SystemGrantAccess> permissions = Lists.newArrayList();
         // 系统用户私有权限
-        ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("identityPrefix", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
-                .andEqualTo("identityId", userId)
+                .andEqualTo("grantOwnerType", BaseConstants.PERMISSION_IDENTITY_PREFIX_USER)
+                .andEqualTo("grantOwnerId", userId)
                 .andEqualTo("status", BaseConstants.ENABLED)
                 .end().build();
-        List<SystemAccess> userAccesss = systemAccessMapper.selectByExample(example);
+        List<SystemGrantAccess> userAccesss = systemAccessMapper.selectByExample(example);
         if (userAccesss != null) {
             permissions.addAll(userAccesss);
         }
@@ -143,8 +143,8 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      * @return
      */
     @Override
-    public List<SystemAccess> getAccessList() {
-        ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+    public List<SystemGrantAccess> getAccessList() {
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("status", BaseConstants.ENABLED)
                 .andEqualTo("prefix", DEFAULT_PREFIX)
@@ -155,25 +155,25 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     /**
      * 添加授权
      *
-     * @param identityId     所有者ID
-     * @param identityPrefix 所有者类型
+     * @param grantOwnerId     所有者ID
+     * @param grantOwnerType 所有者类型
      * @param resourceType   资源类型:
      * @param resourceIds
      * @return
      */
     @Override
-    public Boolean addAccess(Long identityId, String identityPrefix, String resourceType, Long... resourceIds) {
-        if (!BaseConstants.PERMISSION_IDENTITY_PREFIX_USER.equals(identityPrefix) && !BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
-            throw new OpenMessageException(String.format("%s所有者类型暂不支持!", identityPrefix));
+    public Boolean addAccess(Long grantOwnerId, String grantOwnerType, String resourceType, Long... resourceIds) {
+        if (!BaseConstants.PERMISSION_IDENTITY_PREFIX_USER.equals(grantOwnerType) && !BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(grantOwnerType)) {
+            throw new OpenMessageException(String.format("%s所有者类型暂不支持!", grantOwnerType));
         }
         CrudMapper crudMapper = getMapper(resourceType);
         if (crudMapper == null) {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
-        List<SystemAccess> permissions = Lists.newArrayList();
+        List<SystemGrantAccess> permissions = Lists.newArrayList();
         for (Long resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
-            SystemAccess permission = buildAccess(resourceType, identityPrefix, identityId, object);
+            SystemGrantAccess permission = buildAccess(resourceType, grantOwnerType, grantOwnerId, object);
             if (permission != null) {
                 permissions.add(permission);
             }
@@ -182,10 +182,10 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             return false;
         }
         //先清空所有者的权限
-        ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
-                .andEqualTo("identityPrefix", identityPrefix)
-                .andEqualTo("identityId", identityId)
+                .andEqualTo("grantOwnerType", grantOwnerType)
+                .andEqualTo("grantOwnerId", grantOwnerId)
                 .end().build();
         systemAccessMapper.deleteByExample(example);
         // 再重新批量授权
@@ -210,12 +210,12 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         }
         Object object = crudMapper.selectByPrimaryKey(resourceId);
         if (object != null) {
-            SystemAccess permission = buildAccess(resourceType, null, null, object);
+            SystemGrantAccess permission = buildAccess(resourceType, null, null, object);
             if (permission != null) {
-                ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+                ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
                 Example example = builder.criteria().andEqualTo("resourceId", resourceId)
                         .andEqualTo("resourceType", resourceType).end().build();
-                SystemAccess updateObj = new SystemAccess();
+                SystemGrantAccess updateObj = new SystemGrantAccess();
                 updateObj.setCode(permission.getCode());
                 updateObj.setStatus(permission.getStatus());
                 updateObj.setServiceId(permission.getServiceId());
@@ -242,7 +242,7 @@ public class SystemAccessServiceImpl implements SystemAccessService {
      */
     @Override
     public Boolean isExist(Long resourceId, String resourceType) {
-        ExampleBuilder builder = new ExampleBuilder(SystemAccess.class);
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("resourceId", resourceId)
                 .andEqualTo("resourceType", resourceType)
@@ -254,13 +254,13 @@ public class SystemAccessServiceImpl implements SystemAccessService {
     /**
      * 构建授权对象
      *
-     * @param resourceType   资源类型
-     * @param identityPrefix 授权身份前缀
-     * @param identityId     授权身份ID
-     * @param object         资源对象
+     * @param resourceType 资源类型
+     * @param grantOwnerType    授权所有者类型
+     * @param grantOwnerId      授权所有者ID
+     * @param object       资源对象
      * @return
      */
-    protected SystemAccess buildAccess(String resourceType, String identityPrefix, Long identityId, Object object) {
+    protected SystemGrantAccess buildAccess(String resourceType, String grantOwnerType, Long grantOwnerId, Object object) {
         if (object == null) {
             return null;
         }
@@ -272,10 +272,10 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         Long resourcePid = null;
         String serviceId = "";
         String name = "";
-        String identityCode = null;
+        String ownerCode = null;
         Integer status = 0;
         String icon = null;
-        SystemAccess permission = null;
+        SystemGrantAccess permission = null;
         if (object instanceof SystemMenu) {
             SystemMenu menu = (SystemMenu) object;
             code = menu.getMenuCode();
@@ -316,17 +316,17 @@ public class SystemAccessServiceImpl implements SystemAccessService {
         if (object != null) {
             //授权编码=资源类型_资源编码
             code = resourceType + BaseConstants.PERMISSION_SEPARATOR + code;
-            if (identityPrefix != null) {
-                if (BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(identityPrefix)) {
-                    SystemRole role = systemRoleService.getRole(identityId);
+            if (grantOwnerType != null) {
+                if (BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE.equals(grantOwnerType)) {
+                    SystemRole role = systemRoleService.getRole(grantOwnerId);
                     // 角色授权标识=ROLE_角色编码
-                    identityCode = identityPrefix + role.getRoleCode();
+                    ownerCode = grantOwnerType + role.getRoleCode();
                 } else {
                     // 个人授权特殊标识=USER_资源编码_用户标识
-                    identityCode = identityPrefix + code + identityId;
+                    ownerCode = grantOwnerType + code + grantOwnerId;
                 }
             }
-            permission = new SystemAccess();
+            permission = new SystemGrantAccess();
             permission.setCode(code);
             permission.setServiceId(serviceId);
             permission.setResourceId(resourceId);
@@ -342,9 +342,9 @@ public class SystemAccessServiceImpl implements SystemAccessService {
             permission.setName(name);
             permission.setIcon(icon);
             permission.setStatus(status);
-            permission.setIdentityCode(identityCode);
-            permission.setIdentityPrefix(identityPrefix);
-            permission.setIdentityId(identityId);
+            permission.setGrantOwnerCode(ownerCode);
+            permission.setGrantOwnerType(grantOwnerType);
+            permission.setGrantOwnerId(grantOwnerId);
         }
         return permission;
     }

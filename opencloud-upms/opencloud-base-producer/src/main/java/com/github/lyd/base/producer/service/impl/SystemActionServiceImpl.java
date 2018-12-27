@@ -3,7 +3,7 @@ package com.github.lyd.base.producer.service.impl;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemAction;
 import com.github.lyd.base.producer.mapper.SystemActionMapper;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemActionService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
@@ -29,7 +29,7 @@ public class SystemActionServiceImpl implements SystemActionService {
     @Autowired
     private SystemActionMapper systemActionMapper;
     @Autowired
-    private SystemAccessService systemAccessService;
+    private SystemGrantAccessService systemAccessService;
 
     /**
      * 分页查询

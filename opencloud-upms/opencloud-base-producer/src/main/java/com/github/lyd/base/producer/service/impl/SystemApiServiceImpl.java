@@ -3,7 +3,7 @@ package com.github.lyd.base.producer.service.impl;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
-import com.github.lyd.base.producer.service.SystemAccessService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
@@ -29,7 +29,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     @Autowired
     private SystemApiMapper systemApiMapper;
     @Autowired
-    private SystemAccessService systemAccessService;
+    private SystemGrantAccessService systemAccessService;
 
     /**
      * 分页查询

@@ -7,7 +7,7 @@ import com.github.lyd.gateway.producer.filter.ZuulPreFilter;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRoutesLocator;
-import com.github.lyd.gateway.producer.service.feign.SystemAccessApi;
+import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
 import com.marcosbarbero.cloud.autoconfigure.zuul.ratelimit.config.properties.RateLimitProperties;
 import com.netflix.zuul.ZuulFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class BusEndpointConfiguration {
     private ZuulRoutesLocator zuulRoutesLocator;
     private AccessLocator permissionLocator;
     @Bean
-    public AccessLocator permissionLocator(ZuulRoutesLocator zuulRoutesLocator, SystemAccessApi systemAccessApi) {
+    public AccessLocator permissionLocator(ZuulRoutesLocator zuulRoutesLocator, SystemGrantAccessApi systemAccessApi) {
         permissionLocator = new AccessLocator(systemAccessApi, zuulRoutesLocator);
         return permissionLocator;
     }

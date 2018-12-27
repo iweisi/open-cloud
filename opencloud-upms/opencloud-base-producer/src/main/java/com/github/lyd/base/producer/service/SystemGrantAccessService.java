@@ -1,6 +1,6 @@
 package com.github.lyd.base.producer.service;
 
-import com.github.lyd.base.client.entity.SystemAccess;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author liuyadu
  */
-public interface SystemAccessService {
+public interface SystemGrantAccessService {
 
     /**
      * 获取系统用户已授权资源(包含个人特殊权限和所拥有角色的所以权限)
@@ -18,7 +18,7 @@ public interface SystemAccessService {
      * @param resourceType 资源类型
      * @return
      */
-    List<SystemAccess> getUserAccess(Long userId, String resourceType);
+    List<SystemGrantAccess> getUserAccess(Long userId, String resourceType);
 
     /**
      * 获取系统用户授权列表
@@ -26,25 +26,25 @@ public interface SystemAccessService {
      * @param userId
      * @return
      */
-    List<SystemAccess> getUserPrivateAccess(Long userId);
+    List<SystemGrantAccess> getUserPrivateAccess(Long userId);
 
     /**
      * 获取所有授权列表
      *
      * @return
      */
-    List<SystemAccess> getAccessList();
+    List<SystemGrantAccess> getAccessList();
 
     /**
      * 添加授权
      *
-     * @param identityId      所有者ID
-     * @param identityPrefix    所有者类型:user-系统用户 role-角色
+     * @param grantOwnerId      所有者ID
+     * @param grantOwnerType    所有者类型:user-系统用户 role-角色
      * @param resourceType 资源类型:
      * @param resourceIds
      * @return
      */
-    Boolean addAccess(Long identityId, String identityPrefix, String resourceType, Long... resourceIds);
+    Boolean addAccess(Long grantOwnerId, String grantOwnerType, String resourceType, Long... resourceIds);
 
     /**
      * 更新授权信息

@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @date: 2018/10/24 16:21
  * @description:
  */
-@Table(name = "system_access")
-public class SystemAccess implements Serializable {
+@Table(name = "system_grant_access")
+public class SystemGrantAccess implements Serializable {
     private static final long serialVersionUID = 3218590056425312760L;
     @Id
     @KeySql(genId = SnowflakeId.class)
@@ -72,22 +72,22 @@ public class SystemAccess implements Serializable {
     @Column(name = "service_id")
     private String serviceId;
     /**
-     * 授权身份ID
+     * 授权所有者ID
      */
-    @Column(name = "identity_id")
-    private Long identityId;
+    @Column(name = "grant_owner_id")
+    private Long grantOwnerId;
 
     /**
-     * 授权身份编码
+     * 授权所有者编码
      */
-    @Column(name = "identity_code")
-    private String identityCode;
+    @Column(name = "grant_owner_code")
+    private String grantOwnerCode;
 
     /**
-     * 授权身份前缀:系统用户(USER_) 、角色(ROLE_)
+     * 授权所有者类型:系统用户(USER_) 、角色(ROLE_)
      */
-    @Column(name = "identity_prefix")
-    private String identityPrefix;
+    @Column(name = "grant_owner_type")
+    private String grantOwnerType;
     /**
      * 状态:0-无效 1-有效
      */
@@ -170,28 +170,28 @@ public class SystemAccess implements Serializable {
         this.resourceType = resourceType;
     }
 
-    public Long getIdentityId() {
-        return identityId;
+    public Long getGrantOwnerId() {
+        return grantOwnerId;
     }
 
-    public void setIdentityId(Long identityId) {
-        this.identityId = identityId;
+    public void setGrantOwnerId(Long grantOwnerId) {
+        this.grantOwnerId = grantOwnerId;
     }
 
-    public String getIdentityCode() {
-        return identityCode;
+    public String getGrantOwnerCode() {
+        return grantOwnerCode;
     }
 
-    public void setIdentityCode(String identityCode) {
-        this.identityCode = identityCode;
+    public void setGrantOwnerCode(String grantOwnerCode) {
+        this.grantOwnerCode = grantOwnerCode;
     }
 
-    public String getIdentityPrefix() {
-        return identityPrefix;
+    public String getGrantOwnerType() {
+        return grantOwnerType;
     }
 
-    public void setIdentityPrefix(String identityPrefix) {
-        this.identityPrefix = identityPrefix;
+    public void setGrantOwnerType(String grantOwnerType) {
+        this.grantOwnerType = grantOwnerType;
     }
 
     public Long getId() {
