@@ -39,7 +39,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 //只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(BaseConstants.SUPER_AUTHORITY)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
                 // 内部调用直接放行
                 .antMatchers("/account/login", "/account/logs/add", "/grant/access","/app/{appId}").permitAll()
                 .anyRequest().authenticated()

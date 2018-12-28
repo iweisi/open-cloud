@@ -73,7 +73,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 // 放行自定义Oauth2登录
                 .antMatchers("/login/token").permitAll()
                 // 只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(BaseConstants.SUPER_AUTHORITY)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
                 .anyRequest().authenticated()
                 // SSO退出
                 .and().logout().logoutSuccessHandler(new SsoLogoutSuccessHandler(gatewayProperties.getServerAddr() + "/auth/logout", restTemplate))
