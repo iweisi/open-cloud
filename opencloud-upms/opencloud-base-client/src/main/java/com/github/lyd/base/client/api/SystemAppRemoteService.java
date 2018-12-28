@@ -1,8 +1,8 @@
 package com.github.lyd.base.client.api;
 
+import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.dto.SystemAppDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,14 +36,15 @@ public interface SystemAppRemoteService {
      *
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
+     * @param appOs        手机应用操作系统:ios-苹果 android-安卓
      * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appDesc  应用说明
-     * @param os           手机应用操作系统:ios-苹果 android-安卓
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param appDesc      应用说明
+     * @param status       状态
+     * @param website      官网地址
+     * @param redirectUrls 第三方应用授权回调地址
+     * @param userId       开发者
+     * @param userType     开发者类型
      * @return
      */
     @PostMapping("/app/add")
@@ -51,29 +52,31 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
-            @RequestParam(value = "appIcon",required = false) String appIcon,
-            @RequestParam(value = "appDesc",required = false) String appDesc,
-            @RequestParam(value = "appOs",required = false) String appOs,
-            @RequestParam(value = "redirectUrls",required = false) String redirectUrls,
-            @RequestParam(value = "scopes",required = false) String scopes,
-            @RequestParam(value = "resourceIds",required = false) String resourceIds,
-            @RequestParam(value = "authorities",required = false) String authorities
+            @RequestParam(value = "appOs", required = false) String appOs,
+            @RequestParam(value = "appIcon", required = false) String appIcon,
+            @RequestParam(value = "appDesc", required = false) String appDesc,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
+            @RequestParam(value = "website") String website,
+            @RequestParam(value = "redirectUrls") String redirectUrls,
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userType") String userType
     );
 
     /**
      * 更新应用
      *
+     * @param appId
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
+     * @param appOs        手机应用操作系统:ios-苹果 android-安卓
      * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appDesc  应用说明
-     * @param os           手机应用操作系统:ios-苹果 android-安卓
-     * @param appId        应用Id
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param appDesc      应用说明
+     * @param status       状态
+     * @param website      官网地址
+     * @param redirectUrls 第三方应用授权回调地址
+     * @param userId       开发者
+     * @param userType     开发者类型
      * @return
      */
     @PostMapping("/app/update")
@@ -82,13 +85,14 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
-            @RequestParam(value = "appIcon",required = false) String appIcon,
-            @RequestParam(value = "appDesc",required = false) String appDesc,
-            @RequestParam(value = "appOs",required = false) String appOs,
-            @RequestParam(value = "redirectUrls",required = false) String redirectUrls,
-            @RequestParam(value = "scopes",required = false) String scopes,
-            @RequestParam(value = "resourceIds",required = false) String resourceIds,
-            @RequestParam(value = "authorities",required = false) String authorities
+            @RequestParam(value = "appOs", required = false) String appOs,
+            @RequestParam(value = "appIcon", required = false) String appIcon,
+            @RequestParam(value = "appDesc", required = false) String appDesc,
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
+            @RequestParam(value = "website") String website,
+            @RequestParam(value = "redirectUrls") String redirectUrls,
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userType") String userType
     );
 
     /**

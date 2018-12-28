@@ -1,6 +1,7 @@
 package com.github.lyd.base.producer.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
@@ -10,8 +11,6 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.utils.RandomValueUtils;
-import com.github.lyd.base.client.constants.BaseConstants;
-import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,38 +86,20 @@ public class SystemAppServiceImpl implements SystemAppService {
     /**
      * 添加应用
      *
-     * @param appName      应用名称
-     * @param appNameEn    应用英文名称
-     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appIcon      应用图标
-     * @param description  应用说明
-     * @param os           手机应用操作系统:ios-苹果 android-安卓
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param app
      * @return 应用信息
      */
     @Override
-    public Boolean addAppInfo(String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
+    public Boolean addAppInfo(SystemAppDto app) {
         String clientId = String.valueOf(idGenerator.nextId());
         String clientSecret = RandomValueUtils.uuid();
-        SystemAppDto appInfo = new SystemAppDto();
-        appInfo.setAppName(appName);
-        appInfo.setAppNameEn(appNameEn);
-        appInfo.setAppType(appType);
-        appInfo.setAppIcon(appIcon);
-        appInfo.setAppDesc(description);
-        appInfo.setAppOs(os);
-        appInfo.setAppId(clientId);
-        appInfo.setAppSecret(clientSecret);
-        appInfo.setCreateTime(new Date());
-        appInfo.setUpdateTime(appInfo.getCreateTime());
-        int result = systemAppMapper.insertSelective(appInfo);
-        String clientInfoJson = JSONObject.toJSONString(appInfo);
-        String grantTypes = BaseConstants.getGrantTypes(appType);
-        Boolean autoApprove = BaseConstants.isAutoApprove(appType);
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
+        app.setAppId(clientId);
+        app.setAppSecret(clientSecret);
+        app.setCreateTime(new Date());
+        app.setUpdateTime(app.getCreateTime());
+        int result = systemAppMapper.insertSelective(app);
+        String clientInfoJson = JSONObject.toJSONString(app);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, app.getGrantTypes(), false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -129,37 +110,19 @@ public class SystemAppServiceImpl implements SystemAppService {
     /**
      * 修改应用
      *
-     * @param appId        应用ID
-     * @param appName      应用名称
-     * @param appNameEn    应用英文名称
-     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appIcon      应用图标
-     * @param description  应用说明
-     * @param os           手机应用操作系统:ios-苹果 android-安卓
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param app        应用
      * @return 应用信息
      */
     @Override
-    public Boolean updateInfo(String appId, String appName, String appNameEn, String appType, String appIcon, String description, String os, String redirectUrls, String scopes, String resourceIds, String authorities) {
-        SystemAppDto appInfo = getAppInfo(appId);
+    public Boolean updateInfo(SystemAppDto app) {
+        SystemAppDto appInfo = getAppInfo(app.getAppId());
         if (appInfo == null) {
-            throw new OpenMessageException(appId + "应用不存在!");
+            throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
-        appInfo.setAppName(appName);
-        appInfo.setAppNameEn(appNameEn);
-        appInfo.setAppIcon(appIcon);
-        appInfo.setAppType(appType);
-        appInfo.setAppDesc(description);
-        appInfo.setAppOs(os);
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
-        String grantTypes = BaseConstants.getGrantTypes(appType);
-        Boolean autoApprove = BaseConstants.isAutoApprove(appType);
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(appInfo.getAppId(), grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(),  app.getGrantTypes(), false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

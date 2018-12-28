@@ -89,7 +89,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
      */
     @Override
     public boolean updateClient(String clientId, String grantTypes, boolean autoApprove, String redirectUrls, String scopes, String resourceIds, String authorities, String clientInfo) {
-        ClientDetailsDto client = new ClientDetailsDto(clientId, "", grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+        ClientDetailsDto client = new ClientDetailsDto(clientId, null, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
         try {
             jdbcClientDetailsService.updateClientDetails(client);
         } catch (Exception e) {

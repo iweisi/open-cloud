@@ -71,28 +71,30 @@ public class SystemAppController implements SystemAppRemoteService {
      *
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
-     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appIcon      应用图标
-     * @param appDesc      应用说明
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param appIcon      应用图标
+     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appDesc      应用说明
+     * @param status       状态
+     * @param website      官网地址
+     * @param redirectUrls 第三方应用授权回调地址
+     * @param userId       开发者
+     * @param userType     开发者类型
      * @return
      */
     @ApiOperation(value = "添加应用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "appName", value = "应用名称", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", defaultValue = "", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appIcon", value = "应用图标", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "appDesc", value = "应用说明", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "os", value = "手机应用操作系统", allowableValues = "android,ios", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "redirectUrls", value = "重定向地址(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "scopes", value = "授权范围(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "resourceIds", value = "资源服务器ID(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "authorities", value = "应用权限(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appIcon", value = "应用图标", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appDesc", value = "应用说明", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "website", value = "官网地址", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "redirectUrls", value = "第三方应用授权回调地址", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "userId", value = "0-平台,其他填写真实Id", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form")
     })
     @PostMapping("/app/add")
     @Override
@@ -100,47 +102,62 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
+            @RequestParam(value = "appOs", required = false) String appOs,
             @RequestParam(value = "appIcon", required = false) String appIcon,
             @RequestParam(value = "appDesc", required = false) String appDesc,
-            @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
-            @RequestParam(value = "scopes", required = false) String scopes,
-            @RequestParam(value = "resourceIds", required = false) String resourceIds,
-            @RequestParam(value = "authorities", required = false) String authorities
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
+            @RequestParam(value = "website") String website,
+            @RequestParam(value = "redirectUrls") String redirectUrls,
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userType") String userType
     ) {
-        Boolean result = appInfoService.addAppInfo(appName, appNameEn, appType, appIcon, appDesc, appOs, redirectUrls, scopes, resourceIds, authorities);
+        SystemAppDto app = new SystemAppDto();
+        app.setAppName(appName);
+        app.setAppNameEn(appNameEn);
+        app.setAppType(appType);
+        app.setAppOs(appOs);
+        app.setAppIcon(appIcon);
+        app.setAppDesc(appDesc);
+        app.setStatus(status);
+        app.setWebsite(website);
+        app.setRedirectUrls(redirectUrls);
+        app.setUserId(userId);
+        app.setUserType(userType);
+        Boolean result = appInfoService.addAppInfo(app);
         return ResultBody.success(result);
     }
 
     /**
      * 编辑应用
      *
-     * @param appId        应用Id
+     * @param appId
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
-     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
-     * @param appIcon      应用图标
-     * @param appDesc      应用说明
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param redirectUrls 重定向地址
-     * @param scopes       授权范围
-     * @param resourceIds  资源服务器ID
-     * @param authorities  应用权限,多个用逗号隔开
+     * @param appIcon      应用图标
+     * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appDesc      应用说明
+     * @param status       状态
+     * @param website      官网地址
+     * @param redirectUrls 第三方应用授权回调地址
+     * @param userId       开发者
+     * @param userType     开发者类型
      * @return
      */
     @ApiOperation(value = "编辑应用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appName", value = "应用名称", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", defaultValue = "", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appType", value = "应用类型(server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用)", allowableValues = "server,app,pc,wap", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "appIcon", value = "应用图标", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "appDesc", value = "应用说明", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "os", value = "手机应用操作系统", allowableValues = "android,ios", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "redirectUrls", value = "重定向地址(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "scopes", value = "授权范围(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "resourceIds", value = "资源服务器ID(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
-            @ApiImplicitParam(name = "authorities", value = "应用权限(多个用“,”隔开)", defaultValue = "", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appOs", value = "手机应用操作系统", allowableValues = "android,ios", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appIcon", value = "应用图标", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "appDesc", value = "应用说明", required = false, paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "website", value = "官网地址", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "redirectUrls", value = "第三方应用授权回调地址", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "userId", value = "0-平台,其他填写真实Id", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form")
     })
     @PostMapping("/app/update")
     @Override
@@ -149,15 +166,29 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
+            @RequestParam(value = "appOs", required = false) String appOs,
             @RequestParam(value = "appIcon", required = false) String appIcon,
             @RequestParam(value = "appDesc", required = false) String appDesc,
-            @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
-            @RequestParam(value = "scopes", required = false) String scopes,
-            @RequestParam(value = "resourceIds", required = false) String resourceIds,
-            @RequestParam(value = "authorities", required = false) String authorities
+            @RequestParam(value = "status", defaultValue = "1") Integer status,
+            @RequestParam(value = "website") String website,
+            @RequestParam(value = "redirectUrls") String redirectUrls,
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userType") String userType
     ) {
-        Boolean result = appInfoService.updateInfo(appId, appName, appNameEn, appType, appIcon, appDesc, appOs, redirectUrls, scopes, resourceIds, authorities);
+        SystemAppDto app = new SystemAppDto();
+        app.setAppId(appId);
+        app.setAppName(appName);
+        app.setAppNameEn(appNameEn);
+        app.setAppType(appType);
+        app.setAppOs(appOs);
+        app.setAppIcon(appIcon);
+        app.setAppDesc(appDesc);
+        app.setStatus(status);
+        app.setWebsite(website);
+        app.setRedirectUrls(redirectUrls);
+        app.setUserId(userId);
+        app.setUserType(userType);
+        Boolean result = appInfoService.updateInfo(app);
         return ResultBody.success(result);
     }
 
@@ -169,7 +200,7 @@ public class SystemAppController implements SystemAppRemoteService {
      */
     @ApiOperation(value = "重置秘钥")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })
     @PostMapping("/app/reset")
     @Override
@@ -188,7 +219,7 @@ public class SystemAppController implements SystemAppRemoteService {
      */
     @ApiOperation(value = "删除应用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "appId", value = "应用Id", defaultValue = "", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })
     @PostMapping("/app/remove")
     @Override

@@ -58,6 +58,10 @@ public class ClientDetailsDto implements Serializable, ClientDetails {
                 .tokenizeToStringArray(redirectUrls, ","))) : null;
         try {
             this.clientInfo = JSONObject.parseObject(clientInfo, Map.class);
+            if ("0".equals(this.clientInfo.get("status"))) {
+                // 如果应用被禁用，强制清空权限
+                this.authorities = null;
+            }
         } catch (Exception e) {
 
         }

@@ -54,8 +54,8 @@ public interface ClientDetailsRemoteService {
     ResultBody<Boolean> addClient(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret,
-            @RequestParam(value = "grantTypes") String grantTypes,
-            @RequestParam(value = "autoApprove") boolean autoApprove,
+            @RequestParam(value = "grantTypes", required = false) String grantTypes,
+            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,
@@ -79,8 +79,8 @@ public interface ClientDetailsRemoteService {
     @PostMapping("/client/update")
     ResultBody<Boolean> updateClient(
             @RequestParam(value = "clientId") String clientId,
-            @RequestParam(value = "grantTypes") String grantTypes,
-            @RequestParam(value = "autoApprove") boolean autoApprove,
+            @RequestParam(value = "grantTypes", required = false) String grantTypes,
+            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,

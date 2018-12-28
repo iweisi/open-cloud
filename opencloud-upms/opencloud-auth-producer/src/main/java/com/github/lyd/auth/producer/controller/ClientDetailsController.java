@@ -1,12 +1,10 @@
 package com.github.lyd.auth.producer.controller;
 
-import com.github.lyd.auth.producer.service.ClientDetailsService;
-import com.github.lyd.common.constants.ResultEnum;
-import com.github.lyd.common.model.PageList;
-import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.auth.client.api.ClientDetailsRemoteService;
 import com.github.lyd.auth.client.dto.ClientDetailsDto;
+import com.github.lyd.auth.producer.service.ClientDetailsService;
+import com.github.lyd.common.model.PageList;
+import com.github.lyd.common.model.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,17 +67,14 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
     public ResultBody<Boolean> addClient(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret,
-            @RequestParam(value = "grantTypes") String grantTypes,
-            @RequestParam(value = "autoApprove") boolean autoApprove,
+            @RequestParam(value = "grantTypes", required = false) String grantTypes,
+            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        if (!autoApprove && StringUtils.isBlank(scopes)) {
-            return ResultBody.failed(ResultEnum.BAD_REQUEST, "缺少scopes");
-        }
         return ResultBody.success(clinetInfoService.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo));
     }
 
@@ -100,17 +95,14 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
     @Override
     public ResultBody<Boolean> updateClient(
             @RequestParam(value = "clientId") String clientId,
-            @RequestParam(value = "grantTypes") String grantTypes,
-            @RequestParam(value = "autoApprove") boolean autoApprove,
+            @RequestParam(value = "grantTypes", required = false) String grantTypes,
+            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        if (!autoApprove && StringUtils.isBlank(scopes)) {
-            return ResultBody.failed(ResultEnum.BAD_REQUEST, "缺少scopes");
-        }
         return ResultBody.success(clinetInfoService.updateClient(clientId, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo));
     }
 
