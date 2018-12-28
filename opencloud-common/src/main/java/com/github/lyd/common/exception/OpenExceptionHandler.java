@@ -103,6 +103,12 @@ public class OpenExceptionHandler {
             if ("Bad credentials".equals(ex.getMessage())) {
                 code = ResultEnum.BAD_CREDENTIALS;
             }
+            if("User is disabled".equals(ex.getMessage())){
+                code = ResultEnum.ACCOUNT_DISABLED;
+            }
+            if("User account is locked".equals(ex.getMessage())){
+                code = ResultEnum.ACCOUNT_LOCKED;
+            }
         } else if (ex instanceof InvalidScopeException) {
             code = ResultEnum.INVALID_SCOPE;
         } else if (ex instanceof InvalidTokenException) {
