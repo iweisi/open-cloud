@@ -13,7 +13,6 @@ import java.util.List;
  * @author liuyadu
  */
 @Repository
-@CacheNamespace
 public interface SystemUserRoleMapper extends CrudMapper<SystemUserRole> {
     /**
      * 查询系统用户角色

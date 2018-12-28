@@ -15,7 +15,6 @@ import java.util.Map;
  * @author liuyadu
  */
 @Repository
-@CacheNamespace
 public interface SystemAppMapper extends CrudMapper<SystemApp> {
 
     /**

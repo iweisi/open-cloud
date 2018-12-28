@@ -4,6 +4,7 @@ import com.github.lyd.base.client.api.SystemUserRemoteService;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.client.entity.SystemGrantAccess;
+import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.model.PageList;
@@ -47,7 +48,7 @@ public class SystemUserController implements SystemUserRemoteService {
     })
     @PostMapping("/user")
     @Override
-    public ResultBody<PageList<SystemUserDto>> user(
+    public ResultBody<PageList<SystemUser>> user(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -60,7 +61,7 @@ public class SystemUserController implements SystemUserRemoteService {
      *
      * @param username
      * @param password
-     * @param state
+     * @param status
      * @return
      */
     @ApiOperation(value = "添加系统用户")
@@ -69,7 +70,7 @@ public class SystemUserController implements SystemUserRemoteService {
     public ResultBody<SystemUserDto> addUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "state") Integer state
+            @RequestParam(value = "status") Integer status
     ) {
         return null;
     }
@@ -79,7 +80,7 @@ public class SystemUserController implements SystemUserRemoteService {
      *
      * @param username
      * @param password
-     * @param state
+     * @param status
      * @return
      */
     @ApiOperation(value = "更新系统用户")
@@ -88,7 +89,7 @@ public class SystemUserController implements SystemUserRemoteService {
     public ResultBody<SystemUserDto> updateUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "state") Integer state
+            @RequestParam(value = "status") Integer status
     ) {
         return null;
     }

@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
  * @author liuyadu
  */
 @Repository
-@CacheNamespace
 public interface SystemApiMapper extends CrudMapper<SystemApi> {
 }

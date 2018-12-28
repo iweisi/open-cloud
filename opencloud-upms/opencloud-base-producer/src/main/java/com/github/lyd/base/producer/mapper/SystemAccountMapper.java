@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author liuyadu
  */
 @Repository
-@CacheNamespace
 public interface SystemAccountMapper extends CrudMapper<SystemAccount> {
 }

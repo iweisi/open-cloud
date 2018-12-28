@@ -11,7 +11,7 @@
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
-        <result column="status" jdbcType="TINYINT" property="state"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="company_id" property="companyId" jdbcType="BIGINT"/>
         <result column="user_type" property="userType" jdbcType="VARCHAR"/>
         <result column="user_desc" jdbcType="VARCHAR" property="userDesc"/>
@@ -22,12 +22,4 @@
         <result column="register_ip" jdbcType="VARCHAR" property="registerIp"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
     </resultMap>
-
-    <resultMap id="UserDto" extends="BaseResultMap" type="com.github.lyd.base.client.dto.SystemUserDto">
-
-    </resultMap>
-
-    <select id="selectUserList" resultMap="UserDto">
-    select * from  system_user
-  </select>
 </mapper>

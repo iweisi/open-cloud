@@ -12,7 +12,6 @@ import java.util.Map;
  * @author liuyadu
  */
 @Repository
-@CacheNamespace
 public interface SystemRoleMapper extends CrudMapper<SystemRole> {
 
     List<SystemRole> selectRoleList(Map params);

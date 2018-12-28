@@ -1,9 +1,8 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.dto.SystemUserDto;
-import com.github.lyd.base.client.entity.SystemUser;
 
 /**
  * 系统用户资料管理
@@ -37,7 +36,7 @@ public interface SystemUserService {
      * @param keyword
      * @return
      */
-    PageList<SystemUserDto> findListPage(PageParams pageParams, String keyword);
+    PageList<SystemUser> findListPage(PageParams pageParams, String keyword);
 
     /**
      * 依据登录名查询系统用户信息

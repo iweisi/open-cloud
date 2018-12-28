@@ -1,13 +1,12 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.base.client.entity.SystemAction;
+import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.base.producer.mapper.SystemUserMapper;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.dto.SystemUserDto;
-import com.github.lyd.base.client.entity.SystemUser;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,9 +65,10 @@ public class SystemUserServiceImpl implements SystemUserService {
      * @return
      */
     @Override
-    public PageList<SystemUserDto> findListPage(PageParams pageParams, String keyword) {
-        PageHelper.startPage(pageParams.getPage(), pageParams.getLimit(), pageParams.getOrderBy());
-        List<SystemUserDto> list = systemUserMapper.selectUserList(null);
+    public PageList<SystemUser> findListPage(PageParams pageParams, String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemAction.class);
+        Example example = builder.build();
+        List<SystemUser> list = systemUserMapper.selectByExample(example);
         return new PageList(list);
     }
 

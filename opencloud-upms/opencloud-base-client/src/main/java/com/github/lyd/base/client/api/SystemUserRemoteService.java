@@ -24,9 +24,10 @@
  */
 package com.github.lyd.base.client.api;
 
+import com.github.lyd.base.client.dto.SystemUserDto;
+import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.dto.SystemUserDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,7 +46,7 @@ public interface SystemUserRemoteService {
      * @return
      */
     @PostMapping("/user")
-    ResultBody<PageList<SystemUserDto>> user(
+    ResultBody<PageList<SystemUser>> user(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -56,14 +57,14 @@ public interface SystemUserRemoteService {
      *
      * @param username
      * @param password
-     * @param state
+     * @param status
      * @return
      */
     @PostMapping("/user/add")
     ResultBody<SystemUserDto> addUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "state") Integer state
+            @RequestParam(value = "status") Integer status
     );
 
     /**
@@ -71,13 +72,13 @@ public interface SystemUserRemoteService {
      *
      * @param username
      * @param password
-     * @param state
+     * @param status
      * @return
      */
     @PostMapping("/user/update")
     ResultBody<SystemUserDto> updateUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "state") Integer state
+            @RequestParam(value = "status") Integer status
     );
 }
