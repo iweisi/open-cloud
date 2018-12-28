@@ -46,6 +46,11 @@ public class SystemApi implements Serializable {
     private String serviceId;
 
     /**
+     * 接口分类
+     */
+    @Column(name = "api_category")
+    private String apiCategory;
+    /**
      * 资源路径
      */
     private String path;
@@ -212,5 +217,13 @@ public class SystemApi implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getApiCategory() {
+        return apiCategory;
+    }
+
+    public void setApiCategory(String apiCategory) {
+        this.apiCategory = apiCategory;
     }
 }

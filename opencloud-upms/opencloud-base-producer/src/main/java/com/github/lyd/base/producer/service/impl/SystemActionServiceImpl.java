@@ -151,7 +151,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
     }
 
@@ -170,7 +170,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
         return count > 0;
     }
 

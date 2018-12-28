@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
-    <title>开放平台-授权</title>
+    <title>开放平台-第三方授权</title>
     <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/static/bootstrap/css/bootstrap.min.css}"/>
     <script type="text/javascript" charset="utf-8" src="../static/bootstrap/js/bootstrap.min.js" th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -13,7 +13,7 @@
     <nav class="navbar navbar-default container-fluid">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">开放平台授权登陆</a>
+                <a class="navbar-brand" href="#">开放平台第三方授权</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
                 <p class="navbar-text navbar-right">
@@ -27,7 +27,7 @@
     <div style="padding-top: 30px;width: 300px; color: #555; margin:0px auto;">
         <form id='confirmationForm' name='confirmationForm' th:action="@{/oauth/authorize}" method='post'>
         <input name='user_oauth_approval' value='true' type='hidden' />
-        <p><a href="#" th:text="${app.appName}">XX</a> 将获得以下权限：</p>
+        <p><a th:href="${app.website}" target="_blank" th:text="${app.appName}">应用</a> 将获得以下权限：</p>
         <ul class="list-group" >
             <li class="list-group-item"> <span ><input type="checkbox" class="disabled" checked="checked" onclick="return false" th:name="${s.key}" value="true"  th:each="s : ${scopes}" /> <label th:text="#{${s.key}}"  th:each="s : ${scopes}"></label> </span></li>
         </ul>

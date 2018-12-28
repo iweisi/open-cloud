@@ -46,10 +46,10 @@ public class AccessUrlMetadataSource implements
                 return map.get(resUrl);
             }
         }
-        // 防止为空,否则不进入,accessDecisionManager
+        // 必须有权限才访问.防止为空,否则不进入,accessDecisionManager
         // 随便给一个无效的权限,让投票器决策.
         Collection<ConfigAttribute> array = new ArrayList<>();
-        array.add(new SecurityConfig("PERMISSION_NOT_FOUND"));
+        array.add(new SecurityConfig("ACCESS_NOT_FOUND"));
         return array;
     }
 

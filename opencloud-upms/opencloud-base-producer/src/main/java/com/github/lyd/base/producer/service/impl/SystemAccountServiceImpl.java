@@ -146,14 +146,14 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             List<SystemRole> rolesList = roleService.getUserRoles(userAccount.getUserId());
             if (rolesList != null) {
                 for (SystemRole role : rolesList) {
-                    authorities.add(BaseConstants.PERMISSION_IDENTITY_PREFIX_ROLE + role.getRoleCode());
+                    authorities.add(BaseConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode());
                 }
             }
             //获取系统用户私有权限
-            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateAccess(userAccount.getUserId());
+            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateGrantAccess(userAccount.getUserId());
             if (selfList != null) {
                 for (SystemGrantAccess self : selfList) {
-                    authorities.add(self.getGrantOwnerCode());
+                    authorities.add(self.getAuthority());
                 }
             }
             accountDto.setRoles(rolesList);

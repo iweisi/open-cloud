@@ -5,7 +5,7 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 
 /**
- * Api资源
+ * 接口资源
  */
 public interface SystemApiService {
     /**
@@ -25,7 +25,7 @@ public interface SystemApiService {
     PageList<SystemApi> findList(String keyword);
 
     /**
-     * 根据主键获取Api
+     * 根据主键获取接口
      *
      * @param apiId
      * @return
@@ -34,7 +34,7 @@ public interface SystemApiService {
 
 
     /**
-     * 检查Api编码是否存在
+     * 检查接口编码是否存在
      *
      * @param apiCode
      * @return
@@ -42,7 +42,7 @@ public interface SystemApiService {
     Boolean isExist(String apiCode);
 
     /**
-     * 检查Api编码是否存在
+     * 检查接口编码是否存在
      *
      * @param apiCode
      * @param serviceId
@@ -51,7 +51,7 @@ public interface SystemApiService {
     Boolean isExist(String apiCode, String serviceId);
 
     /**
-     * 添加Api资源
+     * 添加接口
      *
      * @param api
      * @return
@@ -59,7 +59,7 @@ public interface SystemApiService {
     Boolean addApi(SystemApi api);
 
     /**
-     * 修改Api资源
+     * 修改接口
      *
      * @param api
      * @return
@@ -67,7 +67,7 @@ public interface SystemApiService {
     Boolean updateApi(SystemApi api);
 
     /**
-     * 查询api
+     * 查询接口
      *
      * @param apiCode
      * @param serviceId
@@ -85,7 +85,7 @@ public interface SystemApiService {
     Boolean updateStatus(Long apiId, Integer status);
 
     /**
-     * 移除Api
+     * 移除接口
      *
      * @param apiId
      * @return

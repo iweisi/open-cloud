@@ -6,19 +6,15 @@
           WARNING - @mbg.generated
         -->
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="prefix" property="prefix" jdbcType="VARCHAR"/>
-        <result column="target" property="target" jdbcType="VARCHAR"/>
         <result column="path" property="path" jdbcType="VARCHAR"/>
-        <result column="icon" property="icon" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="authority" property="authority" jdbcType="VARCHAR"/>
+        <result column="authority_prefix" property="authorityPrefix" jdbcType="VARCHAR"/>
+        <result column="authority_owner" property="authorityOwner" jdbcType="VARCHAR"/>
         <result column="resource_id" property="resourceId" jdbcType="BIGINT"/>
         <result column="resource_pid" property="resourcePid" jdbcType="BIGINT"/>
-        <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
         <result column="resource_type" property="resourceType" jdbcType="VARCHAR"/>
-        <result column="grant_owner_id" property="grantOwnerId" jdbcType="BIGINT"/>
-        <result column="grant_owner_code" property="grantOwnerCode" jdbcType="VARCHAR"/>
-        <result column="grant_owner_type" property="grantOwnerType" jdbcType="VARCHAR"/>
+        <result column="resource_info" property="resourceInfo" jdbcType="VARCHAR"/>
+        <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
     </resultMap>
 </mapper>

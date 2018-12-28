@@ -93,22 +93,21 @@ public class SystemUserController implements SystemUserRemoteService {
         return null;
     }
 
-
     @ApiOperation(value = "当前用户可访问菜单资源")
-    @GetMapping("/user/menus")
-    public ResultBody<List<SystemGrantAccess>> userMenus() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
+    @GetMapping("/user/grant/menus")
+    public ResultBody<List<SystemGrantAccess>> userGrantMenus() {
+        return ResultBody.success(permissionService.getUserGrantAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
     }
 
     @ApiOperation(value = "当前用户可访问操作资源")
-    @GetMapping("/user/actions")
-    public ResultBody<List<SystemGrantAccess>> userActions() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
+    @GetMapping("/user/grant/actions")
+    public ResultBody<List<SystemGrantAccess>> userGrantActions() {
+        return ResultBody.success(permissionService.getUserGrantAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
     }
 
     @ApiOperation(value = "当前用户可访问API资源")
-    @GetMapping("/user/apis")
-    public ResultBody<List<SystemGrantAccess>> userApis() {
-        return ResultBody.success(permissionService.getUserAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_API));
+    @GetMapping("/user/grant/apis")
+    public ResultBody<List<SystemGrantAccess>> userGrantApis() {
+        return ResultBody.success(permissionService.getUserGrantAccess(OpenHelper.getPrincipal().getUserId(), BaseConstants.RESOURCE_TYPE_API));
     }
 }

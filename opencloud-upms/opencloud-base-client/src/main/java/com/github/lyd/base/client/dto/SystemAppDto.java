@@ -13,7 +13,6 @@ public class SystemAppDto extends SystemApp implements Serializable {
     private static final long serialVersionUID = 7902161098976147412L;
     @Transient
     private ClientDetailsDto clientInfo;
-    private String redirectUrls;
     private String grantTypes;
     private boolean autoApprove;
     private String scopes;
@@ -26,14 +25,6 @@ public class SystemAppDto extends SystemApp implements Serializable {
 
     public void setClientInfo(ClientDetailsDto clientInfo) {
         this.clientInfo = clientInfo;
-    }
-
-    public String getRedirectUrls() {
-        return redirectUrls;
-    }
-
-    public void setRedirectUrls(String redirectUrls) {
-        this.redirectUrls = redirectUrls;
     }
 
     public String getGrantTypes() {

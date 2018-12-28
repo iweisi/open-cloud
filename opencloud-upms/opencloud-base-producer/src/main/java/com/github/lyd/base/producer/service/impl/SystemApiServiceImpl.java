@@ -65,7 +65,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         return new PageList(list);
     }
     /**
-     * 根据主键获取Api
+     * 根据主键获取接口
      *
      * @param apiId
      * @return
@@ -77,7 +77,7 @@ public class SystemApiServiceImpl implements SystemApiService {
 
 
     /**
-     * 检查Api编码是否存在
+     * 检查接口编码是否存在
      *
      * @param apiCode
      * @return
@@ -99,7 +99,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     }
 
     /**
-     * 添加Api动作
+     * 添加接口
      *
      * @param api
      * @return
@@ -122,7 +122,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     }
 
     /**
-     * 修改Api动作
+     * 修改接口
      *
      * @param api
      * @return
@@ -148,12 +148,12 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
         return count > 0;
     }
 
     /**
-     * 查询api
+     * 查询接口
      *
      * @param apiCode
      * @param serviceId
@@ -184,12 +184,12 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateAccess(BaseConstants.RESOURCE_TYPE_API,api.getApiId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API,api.getApiId());
         return count > 0;
     }
 
     /**
-     * 移除Api
+     * 移除接口
      *
      * @param apiId
      * @return

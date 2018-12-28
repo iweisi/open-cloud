@@ -1,12 +1,18 @@
 package com.github.lyd.base.client.entity;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.lyd.common.gen.SnowflakeId;
+import com.github.lyd.common.utils.StringUtils;
+import com.google.common.collect.Maps;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 资源授权表
@@ -22,33 +28,10 @@ public class SystemGrantAccess implements Serializable {
     @KeySql(genId = SnowflakeId.class)
     private Long id;
     /**
-     * 授权编码: 资源类型+资源名称  API_INFO
-     */
-    private String code;
-
-    /**
-     * 路径前缀:/,http://,https://
-     */
-    private String prefix;
-
-    /**
      * 请求路径
      */
     private String path;
 
-    /**
-     * 打开方式:_self窗口内,_blank新窗口
-     */
-    private String target;
-
-    /**
-     * 显示名称
-     */
-    private String name;
-    /**
-     * 图标
-     */
-    private String icon;
     /**
      * 资源ID
      */
@@ -66,56 +49,48 @@ public class SystemGrantAccess implements Serializable {
      */
     @Column(name = "resource_type")
     private String resourceType;
+
+    /**
+     * 资源详情:resource_info,必须为JSON字符串
+     */
+    @JsonIgnore
+    @Column(name = "resource_info")
+    private String resourceInfo;
+
     /**
      * 服务ID
      */
     @Column(name = "service_id")
     private String serviceId;
     /**
-     * 授权所有者ID
+     * 授权权限所有者ID
      */
-    @Column(name = "grant_owner_id")
-    private Long grantOwnerId;
+    @Column(name = "authority_owner")
+    private String authorityOwner;
 
     /**
-     * 授权所有者编码
+     * 权限标识
      */
-    @Column(name = "grant_owner_code")
-    private String grantOwnerCode;
+    @Column(name = "authority")
+    private String authority;
 
     /**
-     * 授权所有者类型:系统用户(USER_) 、角色(ROLE_)
+     * 权限前缀:用户(USER_) 、角色(ROLE_)、APP(APP_)
      */
-    @Column(name = "grant_owner_type")
-    private String grantOwnerType;
+    @Column(name = "authority_prefix")
+    private String authorityPrefix;
+
     /**
      * 状态:0-无效 1-有效
      */
     private Integer status;
-    /**
-     * 获取授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
-     *
-     * @return code - 授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
-     */
-    public String getCode() {
-        return code;
+
+    public Long getId() {
+        return id;
     }
 
-    /**
-     * 设置授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
-     *
-     * @param code 授权编码: {权限拥有者}+{资源类型}+{资源名称}  user:api:getInfo
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPath() {
@@ -126,88 +101,12 @@ public class SystemGrantAccess implements Serializable {
         this.path = path;
     }
 
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    /**
-     * 获取资源ID
-     *
-     * @return resource_id - 资源ID
-     */
     public Long getResourceId() {
         return resourceId;
     }
 
-    /**
-     * 设置资源ID
-     *
-     * @param resourceId 资源ID
-     */
     public void setResourceId(Long resourceId) {
         this.resourceId = resourceId;
-    }
-
-    /**
-     * 获取资源类型:api,menu,button
-     *
-     * @return resource_type - 资源类型:api,menu,button
-     */
-    public String getResourceType() {
-        return resourceType;
-    }
-
-    /**
-     * 设置资源类型:api,menu,button
-     *
-     * @param resourceType 资源类型:api,menu,button
-     */
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public Long getGrantOwnerId() {
-        return grantOwnerId;
-    }
-
-    public void setGrantOwnerId(Long grantOwnerId) {
-        this.grantOwnerId = grantOwnerId;
-    }
-
-    public String getGrantOwnerCode() {
-        return grantOwnerCode;
-    }
-
-    public void setGrantOwnerCode(String grantOwnerCode) {
-        this.grantOwnerCode = grantOwnerCode;
-    }
-
-    public String getGrantOwnerType() {
-        return grantOwnerType;
-    }
-
-    public void setGrantOwnerType(String grantOwnerType) {
-        this.grantOwnerType = grantOwnerType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Long getResourcePid() {
@@ -218,6 +117,42 @@ public class SystemGrantAccess implements Serializable {
         this.resourcePid = resourcePid;
     }
 
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public String getResourceInfo() {
+        return resourceInfo;
+    }
+
+    @Transient
+    public Map getResource() {
+        if (StringUtils.isNotBlank(this.resourceInfo)) {
+            try {
+                return JSONObject.parseObject(this.resourceInfo, Map.class);
+            } catch (Exception e) {
+                return Maps.newHashMap();
+            }
+        }
+        return Maps.newHashMap();
+    }
+
+    public void setResourceInfo(String resourceInfo) {
+        this.resourceInfo = resourceInfo;
+    }
+
+    @Transient
+    public void setResourceInfo(Object resourceInfo) {
+        try {
+            this.resourceInfo = JSONObject.toJSONString(resourceInfo);
+        } catch (Exception e) {
+        }
+    }
+
     public String getServiceId() {
         return serviceId;
     }
@@ -226,19 +161,35 @@ public class SystemGrantAccess implements Serializable {
         this.serviceId = serviceId;
     }
 
+    public String getAuthorityOwner() {
+        return authorityOwner;
+    }
+
+    public void setAuthorityOwner(String authorityOwner) {
+        this.authorityOwner = authorityOwner;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public String getAuthorityPrefix() {
+        return authorityPrefix;
+    }
+
+    public void setAuthorityPrefix(String authorityPrefix) {
+        this.authorityPrefix = authorityPrefix;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 }

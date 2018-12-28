@@ -9,6 +9,7 @@
         <result column="api_code" property="apiCode" jdbcType="VARCHAR"/>
         <result column="api_name" property="apiName" jdbcType="VARCHAR"/>
         <result column="api_desc" property="apiDesc" jdbcType="VARCHAR"/>
+        <result column="api_category" property="apiCategory" jdbcType="VARCHAR"/>
         <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
         <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>

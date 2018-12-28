@@ -10,6 +10,11 @@ public class BaseConstants {
     public final static String SUPER_AUTHORITY = "ROLE_Administrator";
 
     /**
+     * 默认oauth2授权类型
+     */
+    public final static String DEFAULT_OAUTH2_GRANT_TYPES = "authorization_code,refresh_token,client_credentials";
+
+    /**
      * 状态:0-无效 1-有效
      */
     public final static int ENABLED = 1;
@@ -50,11 +55,12 @@ public class BaseConstants {
 
     /**
      * 权限所有者
-     * user:系统用户权限、role:角色权限
+     * user:系统用户权限、role:角色权限、app:应用权限
      */
-    public final static String PERMISSION_SEPARATOR = "_";
-    public final static String PERMISSION_IDENTITY_PREFIX_USER = "USER_";
-    public final static String PERMISSION_IDENTITY_PREFIX_ROLE = "ROLE_";
+    public final static String AUTHORITY_SEPARATOR = "_";
+    public final static String AUTHORITY_PREFIX_ROLE = "ROLE_";
+    public final static String AUTHORITY_PREFIX_USER = "USER_";
+    public final static String AUTHORITY_PREFIX_APP = "APP_";
 
     /**
      * 应用服务
@@ -66,54 +72,4 @@ public class BaseConstants {
 
     public final static String APP_IOS = "ios";
     public final static String APP_ANDROID = "android";
-
-
-    public static boolean validateOs(String os) {
-        if (os == null) {
-            return false;
-        }
-        if (APP_ANDROID.equals(os) || APP_IOS.equals(os)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean validateAppType(String appType) {
-        if (appType == null) {
-            return false;
-        }
-        if (APP_TYPE_SERVER.equals(appType) || APP_TYPE_APP.equals(appType) || APP_TYPE_PC.equals(appType) || APP_TYPE_WAP.equals(appType)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isAutoApprove(String appType) {
-        if (appType == null) {
-            return false;
-        }
-        if (APP_TYPE_SERVER.equals(appType) || APP_TYPE_APP.equals(appType)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static String getGrantTypes(String appType) {
-        if (appType == null) {
-            return null;
-        }
-        if (APP_TYPE_SERVER.equals(appType)) {
-            return "authorization_code,refresh_token,client_credentials";
-        }
-        if (APP_TYPE_APP.equals(appType)) {
-            return "authorization_code,refresh_token,client_credentials";
-        }
-        if (APP_TYPE_PC.equals(appType)) {
-            return "authorization_code,refresh_token,implicit";
-        }
-        if (APP_TYPE_WAP.equals(appType)) {
-            return "authorization_code,refresh_token,implicit";
-        }
-        return null;
-    }
 }

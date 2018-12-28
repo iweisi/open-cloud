@@ -18,7 +18,7 @@ public interface SystemGrantAccessService {
      * @param resourceType 资源类型
      * @return
      */
-    List<SystemGrantAccess> getUserAccess(Long userId, String resourceType);
+    List<SystemGrantAccess> getUserGrantAccess(Long userId, String resourceType);
 
     /**
      * 获取系统用户授权列表
@@ -26,25 +26,25 @@ public interface SystemGrantAccessService {
      * @param userId
      * @return
      */
-    List<SystemGrantAccess> getUserPrivateAccess(Long userId);
+    List<SystemGrantAccess> getUserPrivateGrantAccess(Long userId);
 
     /**
      * 获取所有授权列表
      *
      * @return
      */
-    List<SystemGrantAccess> getAccessList();
+    List<SystemGrantAccess> getGrantAccessList();
 
     /**
      * 添加授权
      *
-     * @param grantOwnerId      所有者ID
-     * @param grantOwnerType    所有者类型:user-系统用户 role-角色
-     * @param resourceType 资源类型:
-     * @param resourceIds
+     * @param authorityOwner  权限所有者ID
+     * @param authorityPrefix 权限前缀:用户(USER_) 、角色(ROLE_)、APP(APP_)
+     * @param resourceType    资源类型:
+     * @param resourceIds     授权资源ID
      * @return
      */
-    Boolean addAccess(Long grantOwnerId, String grantOwnerType, String resourceType, Long... resourceIds);
+    Boolean addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
 
     /**
      * 更新授权信息
@@ -55,7 +55,7 @@ public interface SystemGrantAccessService {
      * @param resourceId
      * @return
      */
-    Boolean updateAccess(String resourceType, Long resourceId);
+    Boolean updateGrantAccess(String resourceType, Long resourceId);
 
     /**
      * 检查资源是否存在

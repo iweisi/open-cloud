@@ -304,7 +304,7 @@ CREATE TABLE `system_grant_access` (
                                      `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
                                      `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
                                      `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
-                                     `grant_owner_id` bigint(20) NOT NULL COMMENT '授权所有者ID',
+                                     `grant_owner_id` bigint(20) NOT NULL COMMENT '授权权限所有者ID',
                                      `grant_owner_code` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '授权所有者编码',
                                      `grant_owner_type` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '授权所有者类型:用户(USER_) 、角色(ROLE_)',
                                      `service_id` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '所属服务',
@@ -395,7 +395,7 @@ CREATE TABLE `system_user` (
                              `avatar` varchar(255) DEFAULT '' COMMENT '头像',
                              `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
                              `mobile` varchar(50) DEFAULT NULL COMMENT '手机号',
-                             `user_type` int(11) DEFAULT '0' COMMENT '用户类型:0-内部用户 1-服务提供商 2-自研开发者',
+                             `user_type` varchar(20) DEFAULT 'platform' COMMENT '用户类型:platform-平台 isp-服务提供商 dev-自研开发者',
                              `company_id` bigint(20) DEFAULT NULL COMMENT '企业ID',
                              `register_ip` varchar(100) DEFAULT NULL COMMENT '注册IP',
                              `register_time` datetime DEFAULT NULL COMMENT '注册时间',
@@ -409,7 +409,7 @@ CREATE TABLE `system_user` (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES ('521677655146233856', 'admin', 'admin', null, '515608851@qq.com', '18518226890', '0', null, null, '2018-12-10 13:20:45', '1', null, '2018-12-10 13:20:45', '2018-12-10 13:20:45');
+INSERT INTO `system_user` VALUES ('521677655146233856', 'admin', 'admin', null, '515608851@qq.com', '18518226890', 'platform', null, null, '2018-12-10 13:20:45', '1', null, '2018-12-10 13:20:45', '2018-12-10 13:20:45');
 
 -- ----------------------------
 -- Table structure for system_user_role

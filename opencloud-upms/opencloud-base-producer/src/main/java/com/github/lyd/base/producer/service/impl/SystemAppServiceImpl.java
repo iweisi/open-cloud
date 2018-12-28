@@ -1,6 +1,7 @@
 package com.github.lyd.base.producer.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
 import com.github.lyd.base.producer.service.SystemAppService;
@@ -99,7 +100,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setUpdateTime(app.getCreateTime());
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, app.getGrantTypes(), false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

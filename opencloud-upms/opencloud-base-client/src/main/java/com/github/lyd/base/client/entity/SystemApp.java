@@ -90,6 +90,12 @@ public class SystemApp implements Serializable {
     private String website;
 
     /**
+     * 第三方授权回掉地址,多个,号隔开
+     */
+    @Column(name = "redirect_uris")
+    private String redirectUrls;
+
+    /**
      * 状态:0-无效 1-有效
      */
     private Integer status;
@@ -266,5 +272,13 @@ public class SystemApp implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getRedirectUrls() {
+        return redirectUrls;
+    }
+
+    public void setRedirectUrls(String redirectUrls) {
+        this.redirectUrls = redirectUrls;
     }
 }

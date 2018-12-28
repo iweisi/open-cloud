@@ -31,10 +31,10 @@ public class SystemUser implements Serializable {
     private String userName;
 
     /**
-     * 系统用户类型:0-平台、1-服务提供商、2-自研开发者
+     * 用户类型:platform-平台 isp-服务提供商 dev-自研开发者
      */
     @Column(name = "user_type")
-    private Integer userType;
+    private String userType;
 
     /**
      * 企业ID
@@ -114,11 +114,11 @@ public class SystemUser implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 

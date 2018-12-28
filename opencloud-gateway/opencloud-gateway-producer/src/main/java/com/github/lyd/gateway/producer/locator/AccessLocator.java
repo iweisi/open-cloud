@@ -48,7 +48,8 @@ public class AccessLocator {
                 // 服务ID相同
                 if (route.getId().equals(assess.getServiceId())) {
                     String path = assess.getPath();
-                    path = assess.getPrefix() + assess.getPath();
+                    String prefix = assess.getResource().getOrDefault("prefix", "/").toString();
+                    path = prefix + assess.getPath();
                     if (route.isPrefixStripped()) {
                         return path;
                     } else {
@@ -68,7 +69,7 @@ public class AccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<SystemGrantAccess> assesss = systemAccessApi.access().getData();
+            List<SystemGrantAccess> assesss = systemAccessApi.grantAccess().getData();
             if (assesss != null) {
                 for (SystemGrantAccess assess : assesss) {
                     if (StringUtils.isBlank(assess.getPath())) {
@@ -79,8 +80,8 @@ public class AccessLocator {
                     if (array == null) {
                         array = new ArrayList<>();
                     }
-                    if (!array.contains(assess.getGrantOwnerCode())) {
-                        cfg = new SecurityConfig(assess.getGrantOwnerCode());
+                    if (!array.contains(assess.getAuthority())) {
+                        cfg = new SecurityConfig(assess.getAuthority());
                         array.add(cfg);
                     }
                     map.put(url, array);

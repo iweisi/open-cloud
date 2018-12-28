@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @author liuyadu
+ */
 public interface SystemAppRemoteService {
     /**
      * 获取应用列表
@@ -37,8 +40,8 @@ public interface SystemAppRemoteService {
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appIcon      应用图标
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
@@ -52,8 +55,8 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
+            @RequestParam(value = "appIcon") String appIcon,
             @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "appIcon", required = false) String appIcon,
             @RequestParam(value = "appDesc", required = false) String appDesc,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "website") String website,
@@ -69,8 +72,8 @@ public interface SystemAppRemoteService {
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appIcon      应用图标
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
@@ -85,8 +88,8 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
+            @RequestParam(value = "appIcon") String appIcon,
             @RequestParam(value = "appOs", required = false) String appOs,
-            @RequestParam(value = "appIcon", required = false) String appIcon,
             @RequestParam(value = "appDesc", required = false) String appDesc,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
             @RequestParam(value = "website") String website,

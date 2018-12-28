@@ -64,12 +64,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .addLogoutHandler(new CookieClearingLogoutHandler("token", "remember-me"))
                 .logoutSuccessHandler(new LogoutSuccessHandler())
                 .and()
-                //认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。
+                // 认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。
                 .exceptionHandling()
                 .accessDeniedHandler(new OpenAccessDeniedHandler())
                 .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
                 .and()
-                .csrf().disable().httpBasic().disable();
+                .csrf().disable()
+                // 禁用httpBasic
+                .httpBasic().disable();
     }
 
 

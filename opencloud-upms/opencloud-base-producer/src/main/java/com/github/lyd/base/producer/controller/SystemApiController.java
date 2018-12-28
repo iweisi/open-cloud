@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author liuyadu
  */
-@Api(tags = "Api资源管理")
+@Api(tags = "接口资源管理")
 @RestController
 public class SystemApiController implements SystemApiRemoteService {
     @Autowired
@@ -28,14 +28,14 @@ public class SystemApiController implements SystemApiRemoteService {
      *
      * @return
      */
-    @ApiOperation(value = "Api列表")
+    @ApiOperation(value = "接口列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
     @PostMapping("/api")
-    @ApiRateLimit(limit = 10,interval = 1000)
+    @ApiRateLimit(limit = 10, interval = 1000)
     @Override
     public ResultBody<PageList<SystemApi>> api(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
@@ -52,7 +52,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "Api列表")
+    @ApiOperation(value = "接口列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -68,11 +68,11 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiId ApiId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取Api资源")
+    @ApiOperation(value = "获取接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
-    @ApiRateLimit(limit = 20,interval = 1000)
+    @ApiRateLimit(limit = 20, interval = 1000)
     @GetMapping("/api/{apiId}")
     @Override
     public ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId) {
@@ -80,24 +80,24 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 添加Api资源
+     * 添加接口资源
      *
-     * @param apiCode     Api编码
-     * @param apiName     Api名称
-     * @param serviceId   服务ID
-     * @param path         请求路径
-     * @param status     是否启用
-     * @param priority    优先级越小越靠前
-     * @param apiDesc 描述
+     * @param apiCode   接口编码
+     * @param apiName   接口名称
+     * @param serviceId 服务ID
+     * @param path      请求路径
+     * @param status    是否启用
+     * @param priority  优先级越小越靠前
+     * @param apiDesc   描述
      * @return
      */
     @ApiOperation(value = "添加Api资源")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "apiCode", required = true, value = "Api编码", paramType = "form"),
-            @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
+            @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
+            @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -124,26 +124,26 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 编辑Api资源
+     * 编辑接口资源
      *
-     * @param apiId       ApiID
-     * @param apiCode     Api编码
-     * @param apiName     Api名称
-     * @param serviceId   服务ID
-     * @param path         请求路径
-     * @param status     是否启用
-     * @param priority    优先级越小越靠前
-     * @param apiDesc 描述
+     * @param apiId     接口ID
+     * @param apiCode   接口编码
+     * @param apiName   接口名称
+     * @param serviceId 服务ID
+     * @param path      请求路径
+     * @param status    是否启用
+     * @param priority  优先级越小越靠前
+     * @param apiDesc   描述
      * @return
      */
     @ApiOperation(value = "编辑Api资源")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "apiId", required = true, value = "apiId", paramType = "form"),
-            @ApiImplicitParam(name = "apiCode", required = true, value = "Api编码", paramType = "form"),
-            @ApiImplicitParam(name = "apiName", required = true, value = "Api名称", paramType = "form"),
+            @ApiImplicitParam(name = "apiId", required = true, value = "接口Id", paramType = "form"),
+            @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
+            @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true,defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "apiDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -174,13 +174,13 @@ public class SystemApiController implements SystemApiRemoteService {
     /**
      * 更新状态
      *
-     * @param apiId ApiID
+     * @param apiId 接口ID
      * @return
      */
-    @ApiOperation(value = "禁用Api资源")
+    @ApiOperation(value = "禁用接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
-            @ApiImplicitParam(name = "status", required = true,defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/api/update/status")
     @Override
@@ -192,12 +192,12 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 移除Api
+     * 移除接口
      *
      * @param apiId ApiID
      * @return
      */
-    @ApiOperation(value = "移除Api")
+    @ApiOperation(value = "移除接口")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })

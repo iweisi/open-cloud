@@ -13,7 +13,7 @@
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="status" jdbcType="TINYINT" property="state"/>
         <result column="company_id" property="companyId" jdbcType="BIGINT"/>
-        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="user_type" property="userType" jdbcType="VARCHAR"/>
         <result column="user_desc" jdbcType="VARCHAR" property="userDesc"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>

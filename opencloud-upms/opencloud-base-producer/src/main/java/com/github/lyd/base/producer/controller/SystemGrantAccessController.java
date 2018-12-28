@@ -29,9 +29,9 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
      * @return 应用信息
      */
     @ApiOperation(value = "获取授权列表")
-    @GetMapping("/access")
+    @GetMapping("/grant/access")
     @Override
-    public ResultBody<List<SystemGrantAccess>> access() {
-        return ResultBody.success(systemAccessService.getAccessList());
+    public ResultBody<List<SystemGrantAccess>> grantAccess() {
+        return ResultBody.success(systemAccessService.getGrantAccessList());
     }
 }

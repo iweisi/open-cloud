@@ -19,6 +19,7 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AbstractAccessDecisionManager;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
@@ -70,7 +71,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 // 放行自定义Oauth2登录
-                .antMatchers("/rest/login").permitAll()
+                .antMatchers("/login/token").permitAll()
                 // 只有超级管理员角色可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority(BaseConstants.SUPER_AUTHORITY)
                 .anyRequest().authenticated()
@@ -122,13 +123,18 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         decisionVoters.add(new AuthenticatedVoter());
         //自定义URL投票器
         AccessUrlVoter accessUrlVoter = new AccessUrlVoter(gatewayProperties);
+        //默认角色投票器,默认前缀为ROLE_
+        RoleVoter roleVoter = new RoleVoter();
+        //用户权限投票器,修改前缀为USER_
+        RoleVoter userVoter = new RoleVoter();
+        userVoter.setRolePrefix(BaseConstants.AUTHORITY_PREFIX_USER);
+        //应用权限投票器,修改前缀为APP_
+        RoleVoter appVoter = new RoleVoter();
+        appVoter.setRolePrefix(BaseConstants.AUTHORITY_PREFIX_APP);
+        decisionVoters.add(roleVoter);
+        decisionVoters.add(userVoter);
+        decisionVoters.add(appVoter);
         decisionVoters.add(accessUrlVoter);
-        //自定义角色投票器,默认前缀为ROLE_
-        decisionVoters.add(new AccessRoleVoter());
-        //特殊权限投票器,修改前缀为USER_
-        AccessRoleVoter accessRoleVoter = new AccessRoleVoter();
-        accessRoleVoter.setRolePrefix(BaseConstants.PERMISSION_IDENTITY_PREFIX_USER);
-        decisionVoters.add(accessRoleVoter);
         AbstractAccessDecisionManager accessDecisionManager = new AffirmativeBased(decisionVoters);
         return accessDecisionManager;
     }

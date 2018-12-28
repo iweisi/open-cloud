@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+/**
+ * @author liuyadu
+ */
 public interface SystemGrantAccessRemoteService {
 
     /**
@@ -13,7 +16,7 @@ public interface SystemGrantAccessRemoteService {
      *
      * @return
      */
-    @GetMapping("/access")
-    ResultBody<List<SystemGrantAccess>> access();
+    @GetMapping("/grant/access")
+    ResultBody<List<SystemGrantAccess>> grantAccess();
 
 }
