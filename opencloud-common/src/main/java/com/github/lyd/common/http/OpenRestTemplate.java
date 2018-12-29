@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 平台Oauth2请求工具类
+ * 自定义RestTemplate请求工具类
  *
  * @author: liuyadu
  * @date: 2018/12/11 15:51
