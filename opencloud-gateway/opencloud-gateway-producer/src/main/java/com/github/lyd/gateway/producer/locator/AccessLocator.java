@@ -69,7 +69,7 @@ public class AccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<SystemGrantAccess> assesss = systemAccessApi.grantAccess().getData();
+            List<SystemGrantAccess> assesss = systemAccessApi.grantAccessList().getData();
             if (assesss != null) {
                 for (SystemGrantAccess assess : assesss) {
                     if (StringUtils.isBlank(assess.getPath())) {

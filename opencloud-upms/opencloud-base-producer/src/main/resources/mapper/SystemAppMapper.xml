@@ -18,17 +18,4 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <!--APP 应用信息-->
-    <resultMap id="AppResultMap" type="com.github.lyd.base.client.dto.SystemAppDto"
-               extends="BaseResultMap"></resultMap>
-
-    <!--查询应用列表-->
-    <select id="selectAppList" resultMap="AppResultMap">
-       SELECT * FROM system_app
-    </select>
-
-    <select id="getApp" resultMap="AppResultMap">
-         SELECT * FROM system_app WHERE app_id = #{appId}
-    </select>
-
 </mapper>

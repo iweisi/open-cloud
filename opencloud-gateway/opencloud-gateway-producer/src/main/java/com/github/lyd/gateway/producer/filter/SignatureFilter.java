@@ -1,16 +1,16 @@
 package com.github.lyd.gateway.producer.filter;
 
+import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.common.autoconfigure.GatewayProperties;
 import com.github.lyd.common.exception.OpenSignatureDeniedHandler;
 import com.github.lyd.common.exception.OpenSignatureException;
 import com.github.lyd.common.exception.SignatureDeniedHandler;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.security.OpenHelper;
+import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
-import com.github.lyd.base.client.dto.SystemAppDto;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,15 +60,15 @@ public class SignatureFilter implements Filter {
                     // 验证请求参数
                     SignatureUtils.validateParams(params);
                     // 获取客户端信息
-                    ResultBody<SystemAppDto> result = systemAppApi.getApp(appId);
-                    SystemAppDto appInfoDto = result.getData();
-                    if (appInfoDto == null) {
+                    ResultBody<SystemApp> result = systemAppApi.getApp(appId);
+                    SystemApp app = result.getData();
+                    if (app == null) {
                         throw new OpenSignatureException("clientId无效");
                     }
                     //强制覆盖请求参数clientId
-                    params.put("clientId", appInfoDto.getAppId());
+                    params.put("clientId", app.getAppId());
                     //服务器验签
-                    if (!SignatureUtils.validateSign(params, appInfoDto.getAppSecret())) {
+                    if (!SignatureUtils.validateSign(params, app.getAppSecret())) {
                         throw new OpenSignatureException("签名验证失败!");
                     }
                 }

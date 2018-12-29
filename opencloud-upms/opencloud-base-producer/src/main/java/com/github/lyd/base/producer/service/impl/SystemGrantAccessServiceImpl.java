@@ -11,7 +11,10 @@ import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.CrudMapper;
 import com.github.lyd.common.mapper.ExampleBuilder;
+import com.github.lyd.common.model.PageList;
+import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.utils.StringUtils;
+import com.github.pagehelper.PageHelper;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,9 +27,8 @@ import java.util.List;
 
 
 /**
- * 资源授权
+ * 访问授权
  * 对菜单、操作、API等进行权限分配操作
- *
  * @author liuyadu
  */
 @Service
@@ -73,7 +75,23 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     }
 
     /**
-     * 获取系统用户授权列表
+     * 获取已授权访问列表
+     *
+     * @param pageParams
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemGrantAccess> findListPage(PageParams pageParams, String keyword) {
+        PageHelper.startPage(pageParams.getPage(), pageParams.getLimit(), pageParams.getOrderBy());
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
+        Example example = builder.build();
+        List<SystemGrantAccess> list = systemAccessMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
+     * 获取系统用户已授权列表(包含个人特殊权限和所拥有角色的所以权限)
      *
      * @param userId       系统用户ID
      * @param resourceType 资源类型
@@ -121,7 +139,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
 
 
     /**
-     * 获取系统用户私有授权
+     * 获取系统用户已授权私有列表(不包含角色权限)
      *
      * @param userId 系统用户ID
      * @return
@@ -144,7 +162,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     }
 
     /**
-     * 获取所有授权列表
+     * 获取所有已授权访问列表
      *
      * @return
      */
@@ -162,8 +180,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      *
      * @param authorityOwner  权限所有者ID
      * @param authorityPrefix 所有者类型
-     * @param resourceType    资源类型:
-     * @param resourceIds
+     * @param resourceType    资源类型
+     * @param resourceIds     资源ID
      * @return
      */
     @Override
@@ -235,7 +253,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     }
 
     /**
-     * 检查资源是否存在
+     * 检查资源是否已授权
      *
      * @param resourceId
      * @param resourceType

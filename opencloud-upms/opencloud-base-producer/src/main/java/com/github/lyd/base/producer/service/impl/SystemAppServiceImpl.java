@@ -3,21 +3,24 @@ package com.github.lyd.base.producer.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
+import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.gen.SnowflakeIdGenerator;
+import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
+import com.github.lyd.common.utils.BeanUtils;
 import com.github.lyd.common.utils.RandomValueUtils;
-import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -47,9 +50,12 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return
      */
     @Override
-    public PageList<SystemAppDto> findListPage(PageParams pageParams, String keyword) {
-        PageHelper.startPage(pageParams.getPage(),pageParams.getLimit(),pageParams.getOrderBy());
-        List<SystemAppDto> list = systemAppMapper.selectAppList(null);
+    public PageList<SystemApp> findListPage(PageParams pageParams, String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemApp.class);
+        Example example = builder.criteria()
+                .orLike("appName", keyword)
+                .orLike("appNameEn", keyword).end().build();
+        List<SystemApp> list = systemAppMapper.selectByExample(example);
         return new PageList(list);
     }
 
@@ -60,8 +66,8 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return
      */
     @Override
-    public SystemAppDto getAppInfo(String appId) {
-        return systemAppMapper.getApp(appId);
+    public SystemApp getAppInfo(String appId) {
+        return systemAppMapper.selectByPrimaryKey(appId);
     }
 
     /**
@@ -72,16 +78,19 @@ public class SystemAppServiceImpl implements SystemAppService {
      */
     @Override
     public SystemAppDto getAppWithClientInfo(String appId) {
-        SystemAppDto appInfo = getAppInfo(appId);
+        SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             return null;
         }
         try {
-            appInfo.setClientInfo(clientDetailsRemoteServiceClient.getClient(appInfo.getAppId()).getData());
-        }catch (Exception e){
-            log.error("clientDetailsRemoteServiceClient.getClient error:{}",e.getMessage());
+            SystemAppDto appDto = new SystemAppDto();
+            BeanUtils.copyProperties(appInfo, appDto);
+            appDto.setClientInfo(clientDetailsRemoteServiceClient.getClient(appInfo.getAppId()).getData());
+            return appDto;
+        } catch (Exception e) {
+            log.error("clientDetailsRemoteServiceClient.getClient error:{}", e.getMessage());
         }
-        return appInfo;
+        return null;
     }
 
     /**
@@ -100,7 +109,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setUpdateTime(app.getCreateTime());
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -111,19 +120,19 @@ public class SystemAppServiceImpl implements SystemAppService {
     /**
      * 修改应用
      *
-     * @param app        应用
+     * @param app 应用
      * @return 应用信息
      */
     @Override
     public Boolean updateInfo(SystemAppDto app) {
-        SystemAppDto appInfo = getAppInfo(app.getAppId());
+        SystemApp appInfo = getAppInfo(app.getAppId());
         if (appInfo == null) {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(),  app.getGrantTypes(), false,  app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -139,7 +148,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      */
     @Override
     public Boolean restSecret(String appId) {
-        SystemAppDto appInfo = getAppInfo(appId);
+        SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
         }
@@ -164,7 +173,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      */
     @Override
     public Boolean removeApp(String appId) {
-        SystemAppDto appInfo = getAppInfo(appId);
+        SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
         }

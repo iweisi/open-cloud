@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @author liuyadu
  */
-public class BeanUtils {
+public class BeanUtils extends org.springframework.beans.BeanUtils{
     /**
      * 
     * @Title: mapToObject

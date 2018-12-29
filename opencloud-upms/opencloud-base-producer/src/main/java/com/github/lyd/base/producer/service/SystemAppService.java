@@ -1,8 +1,9 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.dto.SystemAppDto;
+import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.dto.SystemAppDto;
 
 /**
  * app信息管理
@@ -18,7 +19,7 @@ public interface SystemAppService {
      * @param keyword
      * @return
      */
-    PageList<SystemAppDto> findListPage(PageParams pageParams, String keyword);
+    PageList<SystemApp> findListPage(PageParams pageParams, String keyword);
 
     /**
      * 获取app信息
@@ -26,7 +27,7 @@ public interface SystemAppService {
      * @param appId
      * @return
      */
-    SystemAppDto getAppInfo(String appId);
+    SystemApp getAppInfo(String appId);
 
     /**
      * 获取app和应用信息

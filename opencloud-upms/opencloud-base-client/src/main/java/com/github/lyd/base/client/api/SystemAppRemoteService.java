@@ -1,6 +1,7 @@
 package com.github.lyd.base.client.api;
 
-import com.github.lyd.base.client.dto.SystemAppDto;
+import com.github.lyd.auth.client.dto.ClientDetailsDto;
+import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public interface SystemAppRemoteService {
      * @return
      */
     @PostMapping("/app")
-    ResultBody<PageList<SystemAppDto>> app(
+    ResultBody<PageList<SystemApp>> app(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
@@ -26,13 +27,22 @@ public interface SystemAppRemoteService {
 
 
     /**
-     * 获取
+     * 获取应用基础信息
      *
      * @param appId 应用Id
      * @return
      */
     @GetMapping("/app/{appId}")
-    ResultBody<SystemAppDto> getApp(@PathVariable("appId") String appId);
+    ResultBody<SystemApp> getApp(@PathVariable("appId") String appId);
+
+    /**
+     * 获取应用开发配置
+     *
+     * @param appId 应用Id
+     * @return
+     */
+    @GetMapping("/app/dev/{appId}")
+    ResultBody<ClientDetailsDto> getAppDevInfo(@PathVariable("appId") String appId);
 
     /**
      * 添加应用

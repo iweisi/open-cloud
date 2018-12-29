@@ -41,7 +41,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 //只有超级管理员角色可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
                 // 内部调用直接放行
-                .antMatchers("/account/login", "/account/logs/add", "/grant/access","/app/{appId}").permitAll()
+                .antMatchers("/account/login", "/account/logs/add", "/grant/access/list","/app/{appId}").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。

@@ -1,11 +1,13 @@
 package com.github.lyd.base.producer.controller;
 
+import com.github.lyd.auth.client.dto.ClientDetailsDto;
+import com.github.lyd.base.client.api.SystemAppRemoteService;
+import com.github.lyd.base.client.dto.SystemAppDto;
+import com.github.lyd.base.client.entity.SystemApp;
+import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.api.SystemAppRemoteService;
-import com.github.lyd.base.client.dto.SystemAppDto;
-import com.github.lyd.base.producer.service.SystemAppService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -38,17 +40,17 @@ public class SystemAppController implements SystemAppRemoteService {
     })
     @PostMapping("/app")
     @Override
-    public ResultBody<PageList<SystemAppDto>> app(
+    public ResultBody<PageList<SystemApp>> app(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
             @RequestParam(name = "keyword", required = false) String keyword
     ) {
-        PageList<SystemAppDto> pageList = appInfoService.findListPage(new PageParams(page, limit), keyword);
+        PageList<SystemApp> pageList = appInfoService.findListPage(new PageParams(page, limit), keyword);
         return ResultBody.success(pageList);
     }
 
     /**
-     * 获取应用信息
+     * 获取应用基础信息
      *
      * @param appId appId
      * @return 应用信息
@@ -59,11 +61,28 @@ public class SystemAppController implements SystemAppRemoteService {
     })
     @GetMapping("/app/{appId}")
     @Override
-    public ResultBody<SystemAppDto> getApp(
+    public ResultBody<SystemApp> getApp(
             @PathVariable("appId") String appId
     ) {
-        SystemAppDto appInfo = appInfoService.getAppInfo(appId);
+        SystemApp appInfo = appInfoService.getAppInfo(appId);
         return ResultBody.success(appInfo);
+    }
+
+    /**
+     * 获取应用开发配置
+     *
+     * @param appId 应用Id
+     * @return
+     */
+    @Override
+    public ResultBody<ClientDetailsDto> getAppDevInfo(
+            @PathVariable("appId") String appId
+    ) {
+        SystemAppDto appInfo = appInfoService.getAppWithClientInfo(appId);
+        if(appInfo==null){
+            return ResultBody.success(null);
+        }
+        return ResultBody.success(appInfo.getClientInfo());
     }
 
     /**

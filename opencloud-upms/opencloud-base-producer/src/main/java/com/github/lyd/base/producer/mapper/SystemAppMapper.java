@@ -17,19 +17,4 @@ import java.util.Map;
 @Repository
 public interface SystemAppMapper extends CrudMapper<SystemApp> {
 
-    /**
-     * 条件查询APP列表
-     *
-     * @param params
-     * @return
-     */
-    List<SystemAppDto> selectAppList(Map params);
-
-    /**
-     * 获取APP详情
-     *
-     * @param appId
-     * @return
-     */
-    SystemAppDto getApp(@Param("appId") String appId);
 }
