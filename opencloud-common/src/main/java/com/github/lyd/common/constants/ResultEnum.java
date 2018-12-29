@@ -31,7 +31,7 @@ public enum ResultEnum {
     ACCESS_DENIED(2010, "access_denied"),
     TEMPORARILY_UNAVAILABLE(2011, "temporarily_unavailable"),
     UNAUTHORIZED(2012, "unauthorized"),
-    SIGNATURE_DENIED(2888, "signature_denied"),
+    SIGNATURE_DENIED(2013, "signature_denied"),
 
     /**
      * 账号错误
