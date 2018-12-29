@@ -178,8 +178,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     /**
      * 添加授权
      *
-     * @param authorityOwner  权限所有者ID
-     * @param authorityPrefix 所有者类型
+     * @param authorityOwner  权限拥有者ID
+     * @param authorityPrefix 拥有者类型
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
      * @return
@@ -204,7 +204,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         if (permissions.isEmpty()) {
             return false;
         }
-        //先清空所有者的权限
+        //先清空拥有者的权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("authorityPrefix", authorityPrefix)
@@ -274,8 +274,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * 构建授权对象
      *
      * @param resourceType    资源类型
-     * @param authorityPrefix 授权所有者类型
-     * @param authorityOwner  授权权限所有者ID
+     * @param authorityPrefix 授权拥有者类型
+     * @param authorityOwner  授权权限拥有者ID
      * @param object          资源对象
      * @return
      */

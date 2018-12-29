@@ -48,7 +48,7 @@ public interface SystemGrantAccessService {
     /**
      * 添加授权
      *
-     * @param authorityOwner  权限所有者ID
+     * @param authorityOwner  权限拥有者ID
      * @param authorityPrefix 权限前缀:用户(USER_) 、角色(ROLE_)、APP(APP_)
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
