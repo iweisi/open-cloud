@@ -98,7 +98,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public List<SystemGrantAccess> getUserGrantAccess(Long userId, String resourceType) {
+    public List<SystemGrantAccess> getUserGrantAccessList(Long userId, String resourceType) {
         List<SystemRole> roles = systemRoleService.getUserRoles(userId);
         List<Long> roleIds = Lists.newArrayList();
         List<SystemGrantAccess> permissions = Lists.newArrayList();
@@ -144,7 +144,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public List<SystemGrantAccess> getGrantAccess(String resourceType) {
+    public List<SystemGrantAccess> getGrantAccessList(String resourceType) {
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("resourceType", resourceType)
@@ -162,7 +162,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public List<SystemGrantAccess> getUserPrivateGrantAccess(Long userId) {
+    public List<SystemGrantAccess> getUserPrivateGrantAccessList(Long userId) {
         List<SystemGrantAccess> permissions = Lists.newArrayList();
         // 系统用户私有权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);

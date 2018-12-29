@@ -150,7 +150,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                 }
             }
             //获取系统用户私有权限
-            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateGrantAccess(userAccount.getUserId());
+            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateGrantAccessList(userAccount.getUserId());
             if (selfList != null) {
                 for (SystemGrantAccess self : selfList) {
                     authorities.add(self.getAuthority());
