@@ -12,8 +12,7 @@ public enum ResultEnum {
      */
     OK(0, "success"),
     FAIL(1000, "fail"),
-    PARAMETER_ERROR(1001, "parameter_error"),
-    ALERT_ERROR(1002, "alert_error"),
+    ALERT(1001, "alert"),
 
     /**
      * oauth2返回码

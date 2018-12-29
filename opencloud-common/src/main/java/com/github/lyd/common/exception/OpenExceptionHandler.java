@@ -144,7 +144,7 @@ public class OpenExceptionHandler {
     public static ResultBody openException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ResultEnum code = ResultEnum.ERROR;
         if (ex instanceof OpenMessageException) {
-            code = ResultEnum.ALERT_ERROR;
+            code = ResultEnum.ALERT;
         }
         if (ex instanceof OpenSignatureException) {
             code = ResultEnum.SIGNATURE_DENIED;
@@ -183,11 +183,11 @@ public class OpenExceptionHandler {
         } else if (ex instanceof MethodArgumentNotValidException) {
             BindingResult bindingResult = ((MethodArgumentNotValidException) ex).getBindingResult();
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            code = ResultEnum.PARAMETER_ERROR;
+            code = ResultEnum.ALERT;
             return ResultBody.failed(code.getCode(), bindingResult.getFieldError().getDefaultMessage());
         } else if (ex instanceof IllegalArgumentException) {
             //参数错误
-            code = ResultEnum.PARAMETER_ERROR;
+            code = ResultEnum.ALERT;
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         } else if (ex instanceof AccessDeniedException) {
             code = ResultEnum.ACCESS_DENIED;
@@ -230,9 +230,8 @@ public class OpenExceptionHandler {
         }
         //提示消息
         String message = "";
-        if (resultCode.getCode() == ResultEnum.ALERT_ERROR.getCode()
-                || resultCode.getCode() == ResultEnum.SIGNATURE_DENIED.getCode()
-                || resultCode.getCode() == ResultEnum.PARAMETER_ERROR.getCode()) {
+        if (resultCode.getCode() == ResultEnum.ALERT.getCode()
+                || resultCode.getCode() == ResultEnum.SIGNATURE_DENIED.getCode()) {
             message = i18n(ex.getMessage());
         } else {
             message = i18n(resultCode.getMessage());
