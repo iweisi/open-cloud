@@ -128,7 +128,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setParentId(parentId);
         menu.setPriority(priority);
         menu.setMenuDesc(menuDesc);
-        return ResultBody.success(menuService.addMenu(menu));
+        Boolean result = menuService.addMenu(menu);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -187,7 +188,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setParentId(parentId);
         menu.setPriority(priority);
         menu.setMenuDesc(menuDesc);
-        return ResultBody.success(menuService.updateMenu(menu));
+        Boolean result = menuService.updateMenu(menu);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -207,7 +209,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(menuService.updateStatus(menuId, status));
+        Boolean result = menuService.updateStatus(menuId,status);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -225,6 +228,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     public ResultBody<Boolean> removeMenu(
             @RequestParam("menuId") Long menuId
     ) {
-        return ResultBody.success(menuService.removeMenu(menuId));
+        Boolean result = menuService.removeMenu(menuId);
+        return result? ResultBody.success():ResultBody.failed();
     }
 }

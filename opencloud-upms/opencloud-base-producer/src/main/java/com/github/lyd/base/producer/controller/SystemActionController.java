@@ -71,18 +71,19 @@ public class SystemActionController implements SystemActionRemoteService {
     })
     @PostMapping("/action/list")
     @Override
-    public ResultBody<PageList<SystemAction>> actionList(String keyword,Long menuId) {
+    public ResultBody<PageList<SystemAction>> actionList(String keyword, Long menuId) {
         return ResultBody.success(actionService.findList(keyword, menuId));
     }
+
     /**
      * 添加动作资源
      *
-     * @param actionCode  动作编码
-     * @param actionName  动作名称
-     * @param menuId      归属菜单
-     * @param path         请求路径
+     * @param actionCode 动作编码
+     * @param actionName 动作名称
+     * @param menuId     归属菜单
+     * @param path       请求路径
      * @param status     是否启用
-     * @param priority    优先级越小越靠前
+     * @param priority   优先级越小越靠前
      * @param actionDesc 描述
      * @return
      */
@@ -115,19 +116,20 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
-        return ResultBody.success(actionService.addAction(action));
+        boolean result = actionService.addAction(action);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
      * 编辑动作资源
      *
-     * @param actionId    动作ID
-     * @param actionCode  动作编码
-     * @param actionName  动作名称
-     * @param menuId      归属菜单
-     * @param path         请求路径
+     * @param actionId   动作ID
+     * @param actionCode 动作编码
+     * @param actionName 动作名称
+     * @param menuId     归属菜单
+     * @param path       请求路径
      * @param status     是否启用
-     * @param priority    优先级越小越靠前
+     * @param priority   优先级越小越靠前
      * @param actionDesc 描述
      * @return
      */
@@ -138,7 +140,7 @@ public class SystemActionController implements SystemActionRemoteService {
             @ApiImplicitParam(name = "actionName", required = true, value = "动作名称", paramType = "form"),
             @ApiImplicitParam(name = "menuId", required = true, value = "归属菜单", paramType = "form"),
             @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
-            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
             @ApiImplicitParam(name = "priority", required = false, value = "优先级越小越靠前", paramType = "form"),
             @ApiImplicitParam(name = "actionDesc", required = false, value = "描述", paramType = "form"),
     })
@@ -163,7 +165,8 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
-        return ResultBody.success(actionService.updateAction(action));
+        boolean result = actionService.updateAction(action);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
@@ -175,7 +178,7 @@ public class SystemActionController implements SystemActionRemoteService {
     @ApiOperation(value = "更新状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "动作ID", paramType = "form"),
-            @ApiImplicitParam(name = "status",required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
+            @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/action/update/status")
     @Override
@@ -183,7 +186,8 @@ public class SystemActionController implements SystemActionRemoteService {
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(actionService.updateStatus(actionId, status));
+        boolean result = actionService.updateStatus(actionId, status);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
@@ -201,6 +205,7 @@ public class SystemActionController implements SystemActionRemoteService {
     public ResultBody<Boolean> removeAction(
             @RequestParam("actionId") Long actionId
     ) {
-        return ResultBody.success(actionService.removeAction(actionId));
+        boolean result = actionService.removeAction(actionId);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 }

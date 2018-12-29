@@ -120,7 +120,8 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
-        return ResultBody.success(apiService.addApi(api));
+        boolean result = apiService.addApi(api);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
@@ -168,7 +169,8 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
-        return ResultBody.success(apiService.updateApi(api));
+        boolean result = apiService.updateApi(api);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
@@ -188,7 +190,8 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(apiService.updateStatus(apiId, status));
+        boolean result = apiService.updateStatus(apiId, status);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 
     /**
@@ -206,6 +209,7 @@ public class SystemApiController implements SystemApiRemoteService {
     public ResultBody<Boolean> removeApi(
             @RequestParam("apiId") Long apiId
     ) {
-        return ResultBody.success(apiService.removeApi(apiId));
+        boolean result = apiService.removeApi(apiId);
+        return result ? ResultBody.success() : ResultBody.failed();
     }
 }

@@ -90,7 +90,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
         role.setStatus(status);
         role.setRoleDesc(roleDesc);
         boolean result = roleService.addRole(role);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -127,7 +127,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
         role.setStatus(status);
         role.setRoleDesc(roleDesc);
         boolean result = roleService.updateRole(role);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
 
@@ -148,7 +148,8 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam("roleId") Long roleId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        return ResultBody.success(roleService.updateStatus(roleId, status));
+        boolean result = roleService.updateStatus(roleId,status);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -167,6 +168,6 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId
     ) {
         boolean result = roleService.removeRole(roleId);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 }

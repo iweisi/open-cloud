@@ -75,7 +75,8 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        return ResultBody.success(clinetInfoService.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo));
+        boolean result = clinetInfoService.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -103,7 +104,8 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        return ResultBody.success(clinetInfoService.updateClient(clientId, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo));
+        boolean result = clinetInfoService.updateClient(clientId, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -119,7 +121,8 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret
     ) {
-        return ResultBody.success(clinetInfoService.restSecret(clientId, clientSecret));
+        boolean result = clinetInfoService.restSecret(clientId, clientSecret);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
