@@ -7,6 +7,7 @@ import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.utils.WebUtils;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author liuyadu
  */
+@Slf4j
 @Api(tags = "账号管理")
 @RestController
 public class SystemAccountController implements SystemAccountRemoteService {
@@ -38,17 +40,21 @@ public class SystemAccountController implements SystemAccountRemoteService {
     public ResultBody<SystemAccountDto> login(@RequestParam(value = "username") String username) {
         SystemAccountDto account = systemAccountService.login(username);
         if (account != null) {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            //添加登录日志
-            SystemAccountLogs log = new SystemAccountLogs();
-            log.setUserId(account.getUserId());
-            log.setAccount(account.getAccount());
-            log.setAccountType(account.getAccountType());
-            log.setLoginIp(WebUtils.getIpAddr(request));
-            log.setLoginAgent(request.getHeader("User-Agent"));
-            systemAccountService.addLoginLog(log);
+            try {
+                HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+                //添加登录日志
+                SystemAccountLogs log = new SystemAccountLogs();
+                log.setUserId(account.getUserId());
+                log.setAccount(account.getAccount());
+                log.setAccountType(account.getAccountType());
+                log.setLoginIp(WebUtils.getIpAddr(request));
+                log.setLoginAgent(request.getHeader("User-Agent"));
+                systemAccountService.addLoginLog(log);
+            } catch (Exception e) {
+                log.error("添加登录日志失败");
+            }
         }
-        return ResultBody.success();
+        return ResultBody.success(account);
     }
 
 }
