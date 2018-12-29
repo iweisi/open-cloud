@@ -277,7 +277,7 @@ CREATE TABLE `system_app` (
   `app_type` varchar(50) NOT NULL COMMENT 'app类型:server-服务应用 app-手机应用 pc-PC网页应用 wap-手机网页应用',
   `app_desc` varchar(255) DEFAULT NULL COMMENT 'app描述',
   `app_os` varchar(25) DEFAULT NULL COMMENT '移动应用操作系统:ios-苹果 android-安卓',
-  `web_site` varchar(255) NOT NULL COMMENT '官网地址',
+  `website` varchar(255) NOT NULL COMMENT '官网地址',
   `redirect_uris` varchar(255) NOT NULL COMMENT '第三方授权回掉地址,多个,号隔开',
   `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户ID:默认为0',
   `user_type` varchar(20) NOT NULL DEFAULT 'platform' COMMENT '用户类型:platform-平台 isp-服务提供商 dev-自研开发者',
