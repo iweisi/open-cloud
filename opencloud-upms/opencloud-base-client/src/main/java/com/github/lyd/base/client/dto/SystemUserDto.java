@@ -3,11 +3,11 @@ package com.github.lyd.base.client.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.lyd.base.client.entity.SystemUser;
-import com.github.lyd.base.client.entity.SystemRole;
 
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author: liuyadu
@@ -16,8 +16,15 @@ import java.util.List;
  */
 public class SystemUserDto extends SystemUser implements Serializable {
     private static final long serialVersionUID = 6717800085953996702L;
+    /**
+     * 用户角色
+     */
+    private Collection<Map> roles;
+    /**
+     * 用户权限
+     */
+    private Collection<String> authorities;
 
-    private List<SystemRole> roles;
     /**
      * 密码凭证
      */
@@ -26,12 +33,20 @@ public class SystemUserDto extends SystemUser implements Serializable {
     @JSONField(serialize = false)
     private String password;
 
-    public List<SystemRole> getRoles() {
+    public Collection<Map> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<SystemRole> roles) {
+    public void setRoles(Collection<Map> roles) {
         this.roles = roles;
+    }
+
+    public Collection<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<String> authorities) {
+        this.authorities = authorities;
     }
 
     public String getPassword() {

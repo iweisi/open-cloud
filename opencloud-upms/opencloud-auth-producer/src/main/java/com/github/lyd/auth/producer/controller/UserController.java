@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     /**
-     * 当前已认证用户
+     * 当前登录用户资料
      * @return
      */
-    @ApiOperation(value = "当前已认证用户")
+    @ApiOperation(value = "当前登录用户资料")
     @GetMapping("/user")
-    public ResultBody authUser() {
-        return ResultBody.success(OpenHelper.getPrincipal());
+    public ResultBody userProfile() {
+        return ResultBody.success(OpenHelper.getUserProfile());
     }
 }

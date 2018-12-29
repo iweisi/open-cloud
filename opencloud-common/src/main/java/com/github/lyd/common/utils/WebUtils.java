@@ -3,6 +3,8 @@ package com.github.lyd.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.google.common.net.HttpHeaders;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -17,6 +19,7 @@ import java.util.Map.Entry;
 
 /**
  * Http与Servlet工具类.
+ *
  * @author liuyadu
  */
 public class WebUtils {
@@ -290,11 +293,11 @@ public class WebUtils {
      * @param request
      * @return
      */
-    public static Map<String,String> getParameterMap(HttpServletRequest request) {
+    public static Map<String, String> getParameterMap(HttpServletRequest request) {
         // 参数Map
         Map properties = request.getParameterMap();
         // 返回值Map
-        Map<String,String> returnMap = new HashMap();
+        Map<String, String> returnMap = new HashMap();
         Iterator entries = properties.entrySet().iterator();
         Map.Entry entry;
         String name = "";
@@ -435,5 +438,30 @@ public class WebUtils {
 
     public static String getContextPath(HttpServletRequest request) {
         return request.getContextPath();
+    }
+
+    public static HttpServletRequest getHttpServletRequest() {
+        try {
+            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Map<String, String> getHttpHeaders() {
+        HttpServletRequest request = getHttpServletRequest();
+        Map<String, String> map = new LinkedHashMap<>();
+        if (request != null) {
+            Enumeration<String> enumeration = request.getHeaderNames();
+            if (enumeration != null) {
+                while (enumeration.hasMoreElements()) {
+                    String key = enumeration.nextElement();
+                    String value = request.getHeader(key);
+                    map.put(key, value);
+                }
+            }
+        }
+
+        return map;
     }
 }

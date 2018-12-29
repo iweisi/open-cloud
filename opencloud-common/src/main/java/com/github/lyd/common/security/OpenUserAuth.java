@@ -18,18 +18,11 @@ import java.util.Map;
  */
 public class OpenUserAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
-    /**
-     * 登录账号类型
-     */
-    private String accountType;
+    private Map userProfile;
     /**
      * 用户ID
      */
     private Long userId;
-    /**
-     * 用户头像
-     */
-    private String avatar;
     /**
      * 登录名
      */
@@ -38,14 +31,7 @@ public class OpenUserAuth implements UserDetails {
      * 密码
      */
     private String password;
-    /**
-     * 昵称
-     */
-    private String nickName;
-    /**
-     * 用户角色
-     */
-    private Collection<Map> roles;
+
     /**
      * 用户权限
      */
@@ -78,20 +64,17 @@ public class OpenUserAuth implements UserDetails {
     public OpenUserAuth() {
     }
 
-    public OpenUserAuth(String authCenterId, String accountType, Long userId, String avatar, String username, String nickName, String password, Collection<Map> roles, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenUserAuth(String authCenterId, Long userId, String username, String password, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired, Map userProfile) {
         this.authCenterId = authCenterId;
-        this.accountType = accountType;
         this.userId = userId;
-        this.avatar = avatar;
         this.username = username;
-        this.nickName = nickName;
-        this.roles = roles;
         this.password = password;
         this.authorities = authorities;
         this.accountNonLocked = accountNonLocked;
         this.accountNonExpired = accountNonExpired;
         this.enabled = enabled;
         this.credentialsNonExpired = credentialsNonExpired;
+        this.userProfile = userProfile;
     }
 
     @Override
@@ -135,14 +118,6 @@ public class OpenUserAuth implements UserDetails {
         return this.enabled;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -157,14 +132,6 @@ public class OpenUserAuth implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Collection<Map> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Map> roles) {
-        this.roles = roles;
     }
 
     public void setAccountNonLocked(boolean accountNonLocked) {
@@ -183,28 +150,12 @@ public class OpenUserAuth implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
     public String getAuthAppId() {
         return authAppId;
     }
 
     public void setAuthAppId(String authAppId) {
         this.authAppId = authAppId;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public void setAuthorities(Collection<String> authorities) {
@@ -217,5 +168,13 @@ public class OpenUserAuth implements UserDetails {
 
     public void setAuthCenterId(String authCenterId) {
         this.authCenterId = authCenterId;
+    }
+
+    public Map getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(Map userProfile) {
+        this.userProfile = userProfile;
     }
 }

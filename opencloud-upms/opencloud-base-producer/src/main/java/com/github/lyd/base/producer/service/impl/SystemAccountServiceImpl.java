@@ -1,29 +1,34 @@
 package com.github.lyd.base.producer.service.impl;
 
-import com.github.lyd.base.client.entity.*;
-import com.github.lyd.base.producer.mapper.SystemAccountLogsMapper;
-import com.github.lyd.base.producer.service.SystemAccountService;
-import com.github.lyd.common.exception.OpenMessageException;
-import com.github.lyd.common.mapper.ExampleBuilder;
-import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
+import com.github.lyd.base.client.entity.*;
+import com.github.lyd.base.producer.mapper.SystemAccountLogsMapper;
 import com.github.lyd.base.producer.mapper.SystemAccountMapper;
+import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
+import com.github.lyd.common.exception.OpenMessageException;
+import com.github.lyd.common.mapper.ExampleBuilder;
+import com.github.lyd.common.utils.StringUtils;
+import com.github.lyd.common.utils.WebUtils;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liuyadu
@@ -139,27 +144,50 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         }
 
         if (userAccount != null) {
-            accountDto = new SystemAccountDto();
-            BeanUtils.copyProperties(userAccount, accountDto);
             List<String> authorities = Lists.newArrayList();
+            List<Map> roles = Lists.newArrayList();
             //查询角色权限
             List<SystemRole> rolesList = roleService.getUserRoles(userAccount.getUserId());
             if (rolesList != null) {
                 for (SystemRole role : rolesList) {
                     authorities.add(BaseConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode());
+                    Map map = Maps.newHashMap();
+                    map.put("code", role.getRoleCode());
+                    map.put("name", role.getRoleName());
                 }
             }
             //获取系统用户私有权限
-            List<SystemGrantAccess> selfList = systemAccessService.getUserPrivateGrantAccessList(userAccount.getUserId());
-            if (selfList != null) {
-                for (SystemGrantAccess self : selfList) {
-                    authorities.add(self.getAuthority());
+            List<SystemGrantAccess> userAccessList = systemAccessService.getUserPrivateGrantAccessList(userAccount.getUserId());
+            if (userAccessList != null) {
+                for (SystemGrantAccess access : userAccessList) {
+                    authorities.add(access.getAuthority());
                 }
             }
-            accountDto.setRoles(rolesList);
-            accountDto.setAuthorities(authorities);
             //查询系统用户资料
-            accountDto.setUserProfile(systemUserService.getProfile(userAccount.getUserId()));
+            SystemUser systemUser = systemUserService.getProfile(userAccount.getUserId());
+            SystemUserDto userProfile = new SystemUserDto();
+            BeanUtils.copyProperties(systemUser, userProfile);
+            //设置用户资料,权限信息
+            userProfile.setAuthorities(authorities);
+            userProfile.setRoles(roles);
+            accountDto = new SystemAccountDto();
+            BeanUtils.copyProperties(account, accountDto);
+            accountDto.setUserProfile(userProfile);
+            //添加登录日志
+            try {
+                HttpServletRequest request = WebUtils.getHttpServletRequest();
+                if (request != null) {
+                    SystemAccountLogs log = new SystemAccountLogs();
+                    log.setUserId(userAccount.getUserId());
+                    log.setAccount(userAccount.getAccount());
+                    log.setAccountType(userAccount.getAccountType());
+                    log.setLoginIp(WebUtils.getIpAddr(request));
+                    log.setLoginAgent(request.getHeader(HttpHeaders.USER_AGENT));
+                    addLoginLog(log);
+                }
+            } catch (Exception e) {
+                log.error("添加登录日志失败");
+            }
         }
         return accountDto;
     }

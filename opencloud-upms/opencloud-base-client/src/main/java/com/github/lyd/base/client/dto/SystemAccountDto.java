@@ -1,12 +1,8 @@
 package com.github.lyd.base.client.dto;
 
-import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.base.client.entity.SystemAccount;
-import com.github.lyd.base.client.entity.SystemUser;
-import com.google.common.collect.Lists;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author: liuyadu
@@ -19,40 +15,13 @@ public class SystemAccountDto extends SystemAccount implements Serializable {
     /**
      * 系统用户资料
      */
-    private SystemUser userProfile;
+    private SystemUserDto userProfile;
 
-    /**
-     * 系统用户权限
-     */
-    private List<String> authorities = Lists.newArrayList();
-
-    /**
-     * 系统用户角色
-     */
-    private List<SystemRole> roles = Lists.newArrayList();
-
-
-    public SystemUser getUserProfile() {
+    public SystemUserDto getUserProfile() {
         return userProfile;
     }
 
-    public void setUserProfile(SystemUser userProfile) {
+    public void setUserProfile(SystemUserDto userProfile) {
         this.userProfile = userProfile;
-    }
-
-    public List<SystemRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<SystemRole> roles) {
-        this.roles = roles;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
     }
 }

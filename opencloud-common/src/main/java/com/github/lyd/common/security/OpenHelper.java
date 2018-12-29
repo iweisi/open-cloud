@@ -15,11 +15,11 @@ import java.util.Map;
  */
 public class OpenHelper {
     /**
-     * 获取登陆系统用户
+     * 获取登录用户认证信息
      *
      * @return
      */
-    public static OpenUserAuth getPrincipal() {
+    public static OpenUserAuth getUserAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() != null) {
             if (authentication.getPrincipal() instanceof OpenUserAuth) {
@@ -32,8 +32,21 @@ public class OpenHelper {
         return null;
     }
 
+    /**
+     * 获取登录用户详细资料
+     *
+     * @return
+     */
+    public static Map getUserProfile() {
+        OpenUserAuth userAuth = getUserAuth();
+        if (userAuth != null) {
+            return userAuth.getUserProfile();
+        }
+        return null;
+    }
+
     public static Boolean hasAuthority(String authority) {
-        OpenUserAuth auth = getPrincipal();
+        OpenUserAuth auth = getUserAuth();
         if (auth == null) {
             return false;
         }

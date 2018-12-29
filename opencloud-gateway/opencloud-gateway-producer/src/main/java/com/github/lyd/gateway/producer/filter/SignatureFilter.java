@@ -50,7 +50,7 @@ public class SignatureFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         AntPathRequestMatcher matcher = new AntPathRequestMatcher("/platform/sign");
-        OpenUserAuth auth = OpenHelper.getPrincipal();
+        OpenUserAuth auth = OpenHelper.getUserAuth();
         if (auth != null && gatewayProperties.getEnabledValidateSign() && !matcher.matches(request)) {
             try {
                 //开始验证签名
