@@ -237,7 +237,7 @@ public class OpenExceptionHandler {
         } else {
             message = i18n(resultCode.getMessage());
         }
-        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, exception);
+        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, ex);
         return ResultBody.failed(resultCode.getCode(), message).setPath(path);
     }
 

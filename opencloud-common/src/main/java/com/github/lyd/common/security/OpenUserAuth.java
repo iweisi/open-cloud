@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * 公共认证用户信息
+ * 自定义认证用户信息
  *
  * @author liuyadu
  */

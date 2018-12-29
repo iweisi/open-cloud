@@ -1,6 +1,6 @@
 package com.github.lyd.common.security;
 
-import com.github.lyd.common.utils.BeanUtils;
+import com.github.lyd.common.utils.BeanConvertUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 自定义认证用户信息转换器
  * @author liuyadu
  */
 @Slf4j
@@ -25,6 +26,11 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
     public OpenUserAuthenticationConverter() {
     }
 
+    /**
+     * 转换为自定义信息
+     * @param map
+     * @return
+     */
     private Object converter(Map<String, ?> map) {
         Map<String, Object> params = new HashMap<String, Object>();
         for (String key : map.keySet()) {
@@ -34,12 +40,17 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
                 params.put(key, map.get(key));
             }
         }
-        OpenUserAuth auth = BeanUtils.mapToBean(params, OpenUserAuth.class);
+        OpenUserAuth auth = BeanConvertUtils.mapToObject(params, OpenUserAuth.class);
         auth.setAuthAppId(params.get(AccessTokenConverter.CLIENT_ID).toString());
         auth.setAuthorities(AuthorityUtils.authorityListToSet(getAuthorities(map)));
         return auth;
     }
 
+    /**
+     * 转换用户
+     * @param authentication
+     * @return
+     */
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap();
@@ -50,6 +61,11 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
         return response;
     }
 
+    /**
+     * 读取认证信息
+     * @param map
+     * @return
+     */
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
@@ -64,6 +80,11 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
         return null;
     }
 
+    /**
+     * 获取权限
+     * @param map
+     * @return
+     */
     private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
         if (!map.containsKey(AUTHORITIES)) {
             return AuthorityUtils.NO_AUTHORITIES;

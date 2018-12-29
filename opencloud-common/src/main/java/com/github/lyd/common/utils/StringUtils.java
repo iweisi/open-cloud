@@ -199,7 +199,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * url追加参数
      *
-     * @param url   传入的url ex："http://exp.kunnr.com/so/index.html?kunnrId=16&openid=16#/app/home"
+     * @param url   传入的url ex："http://exp.kunnr.com/so/index.html?kunnrId=16&userProfile=16#/app/home"
      * @param name  参数名
      * @param value 参数值
      * @return

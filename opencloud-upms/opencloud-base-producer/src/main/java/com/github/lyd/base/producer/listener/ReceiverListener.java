@@ -3,7 +3,7 @@ package com.github.lyd.base.producer.listener;
 import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
 import com.github.lyd.common.http.OpenRestTemplate;
-import com.github.lyd.common.utils.BeanUtils;
+import com.github.lyd.common.utils.BeanConvertUtils;
 import com.github.lyd.base.client.entity.SystemApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -35,7 +35,7 @@ public class ReceiverListener {
             log.info("【apiResourceQueue监听到消息】" + list.toString());
             for (Map map : list) {
                 try {
-                    SystemApi api = BeanUtils.mapToBean(map, SystemApi.class);
+                    SystemApi api = BeanConvertUtils.mapToObject(map, SystemApi.class);
                     SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
                     if (save == null) {
                         apiService.addApi(api);

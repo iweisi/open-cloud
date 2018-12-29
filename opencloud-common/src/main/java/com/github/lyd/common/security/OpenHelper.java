@@ -1,6 +1,6 @@
 package com.github.lyd.common.security;
 
-import com.github.lyd.common.utils.BeanUtils;
+import com.github.lyd.common.utils.BeanConvertUtils;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import java.util.Map;
 
 /**
+ * 认证信息帮助类
  * @author liuyadu
  */
 public class OpenHelper {
@@ -26,7 +27,7 @@ public class OpenHelper {
                 return (OpenUserAuth) authentication.getPrincipal();
             }
             if (authentication.getPrincipal() instanceof Map) {
-                return BeanUtils.mapToBean((Map) authentication.getPrincipal(), OpenUserAuth.class);
+                return BeanConvertUtils.mapToObject((Map) authentication.getPrincipal(), OpenUserAuth.class);
             }
         }
         return null;

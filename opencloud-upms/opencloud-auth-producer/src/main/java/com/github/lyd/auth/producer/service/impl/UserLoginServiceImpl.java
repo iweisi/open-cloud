@@ -5,7 +5,7 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenUserAuth;
-import com.github.lyd.common.utils.BeanUtils;
+import com.github.lyd.common.utils.BeanConvertUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +43,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean enable = account.getUserProfile().getStatus().intValue() == BaseConstants.USER_STATE_NORMAL ? true : false;
         boolean accountNonExpired = true;
-        Map userProfile =  BeanUtils.beanToMap(account.getUserProfile());
+        Map userProfile =  BeanConvertUtils.objectToMap(account.getUserProfile());
         return new OpenUserAuth(AUTH_SERVICE_ID, account.getUserId(), account.getAccount(), account.getPassword(),account.getUserProfile().getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired,userProfile);
     }
 }
