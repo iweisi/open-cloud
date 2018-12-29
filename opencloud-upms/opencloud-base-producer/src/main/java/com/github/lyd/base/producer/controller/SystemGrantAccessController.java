@@ -39,7 +39,7 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
-    @PostMapping("/user")
+    @PostMapping("/grant/access")
     @Override
     public ResultBody<PageList<SystemGrantAccess>> grantAccess(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
