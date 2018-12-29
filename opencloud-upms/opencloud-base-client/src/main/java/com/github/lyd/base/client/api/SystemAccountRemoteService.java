@@ -18,21 +18,4 @@ public interface SystemAccountRemoteService {
      */
     @GetMapping("/account/login")
     ResultBody<SystemAccountDto> login(@RequestParam(value = "username") String username);
-
-    /**
-     * 添加登录日志
-     *
-     * @param userId
-     * @param ipAddress
-     * @param userAgent
-     * @return
-     */
-    @PostMapping("/account/logs/add")
-    ResultBody addLoginLog(
-            @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "account") String account,
-            @RequestParam(value = "accountType") String accountType,
-            @RequestParam(value = "ipAddress") String ipAddress,
-            @RequestParam(value = "userAgent") String userAgent);
-
 }
