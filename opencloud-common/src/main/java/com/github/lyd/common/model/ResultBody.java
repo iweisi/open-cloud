@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author admin
  */
-public class ResultBody<T> implements Serializable {
+public class ResultBody<T extends Object> implements Serializable {
     private static final long serialVersionUID = -6190689122701100762L;
     /**
      * 消息码
@@ -58,6 +58,11 @@ public class ResultBody<T> implements Serializable {
         return new ResultBody().setMessage("success");
     }
 
+
+    public static <T> ResultBody success(String msg) {
+        return new ResultBody().setMessage("success");
+    }
+
     public static <T> ResultBody success(T data) {
         return new ResultBody().setData(data).setMessage("success");
     }
@@ -67,10 +72,14 @@ public class ResultBody<T> implements Serializable {
     }
 
     public static ResultBody failed(String msg) {
-        return new ResultBody().setCode(ResultEnum.ERROR.getCode()).setMessage(msg);
+        return new ResultBody().setCode(ResultEnum.FAIL.getCode()).setMessage(msg);
     }
 
     public static ResultBody failed() {
+        return new ResultBody().setCode(ResultEnum.FAIL.getCode()).setMessage(ResultEnum.FAIL.getMessage());
+    }
+
+    public static ResultBody error() {
         return new ResultBody().setCode(ResultEnum.ERROR.getCode()).setMessage(ResultEnum.ERROR.getMessage());
     }
 

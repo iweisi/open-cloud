@@ -143,7 +143,7 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setUserId(userId);
         app.setUserType(userType);
         Boolean result = appInfoService.addAppInfo(app);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -208,7 +208,7 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setUserId(userId);
         app.setUserType(userType);
         Boolean result = appInfoService.updateInfo(app);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -227,7 +227,7 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam("appId") String appId
     ) {
         Boolean result = appInfoService.restSecret(appId);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
@@ -246,6 +246,6 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam("appId") String appId
     ) {
         Boolean result = appInfoService.removeApp(appId);
-        return ResultBody.success(result);
+        return result? ResultBody.success():ResultBody.failed();
     }
 }
