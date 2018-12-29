@@ -111,17 +111,17 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (StringUtils.isBlank(account)) {
             return null;
         }
-        SystemAccount userAccount = null;
-        SystemAccountDto accountDto = null;
+        SystemAccount systemAccount = null;
+        SystemAccountDto systemAccountDto = null;
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("account", account)
                 .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
         //默认用户名登录
-        userAccount = systemAccountMapper.selectOneByExample(example);
+        systemAccount = systemAccountMapper.selectOneByExample(example);
 
-        if (userAccount == null && StringUtils.matchMobile(account)) {
+        if (systemAccount == null && StringUtils.matchMobile(account)) {
             //强制清空
             example.clear();
             //  尝试手机号登录
@@ -129,10 +129,10 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
                     .end().build();
-            userAccount = systemAccountMapper.selectOneByExample(example);
+            systemAccount = systemAccountMapper.selectOneByExample(example);
         }
 
-        if (userAccount == null && StringUtils.matchEmail(account)) {
+        if (systemAccount == null && StringUtils.matchEmail(account)) {
             //强制清空
             example.clear();
             //  尝试邮箱登录
@@ -140,47 +140,48 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                     .andEqualTo("account", account)
                     .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
                     .end().build();
-            userAccount = systemAccountMapper.selectOneByExample(example);
+            systemAccount = systemAccountMapper.selectOneByExample(example);
         }
 
-        if (userAccount != null) {
+        if (systemAccount != null) {
             List<String> authorities = Lists.newArrayList();
             List<Map> roles = Lists.newArrayList();
             //查询角色权限
-            List<SystemRole> rolesList = roleService.getUserRoles(userAccount.getUserId());
+            List<SystemRole> rolesList = roleService.getUserRoles(systemAccount.getUserId());
             if (rolesList != null) {
                 for (SystemRole role : rolesList) {
                     authorities.add(BaseConstants.AUTHORITY_PREFIX_ROLE + role.getRoleCode());
                     Map map = Maps.newHashMap();
                     map.put("code", role.getRoleCode());
                     map.put("name", role.getRoleName());
+                    roles.add(map);
                 }
             }
             //获取系统用户私有权限
-            List<SystemGrantAccess> userAccessList = systemAccessService.getUserPrivateGrantAccessList(userAccount.getUserId());
+            List<SystemGrantAccess> userAccessList = systemAccessService.getUserPrivateGrantAccessList(systemAccount.getUserId());
             if (userAccessList != null) {
                 for (SystemGrantAccess access : userAccessList) {
                     authorities.add(access.getAuthority());
                 }
             }
             //查询系统用户资料
-            SystemUser systemUser = systemUserService.getProfile(userAccount.getUserId());
+            SystemUser systemUser = systemUserService.getProfile(systemAccount.getUserId());
             SystemUserDto userProfile = new SystemUserDto();
             BeanUtils.copyProperties(systemUser, userProfile);
             //设置用户资料,权限信息
             userProfile.setAuthorities(authorities);
             userProfile.setRoles(roles);
-            accountDto = new SystemAccountDto();
-            BeanUtils.copyProperties(account, accountDto);
-            accountDto.setUserProfile(userProfile);
+            systemAccountDto = new SystemAccountDto();
+            BeanUtils.copyProperties(systemAccount, systemAccountDto);
+            systemAccountDto.setUserProfile(userProfile);
             //添加登录日志
             try {
                 HttpServletRequest request = WebUtils.getHttpServletRequest();
                 if (request != null) {
                     SystemAccountLogs log = new SystemAccountLogs();
-                    log.setUserId(userAccount.getUserId());
-                    log.setAccount(userAccount.getAccount());
-                    log.setAccountType(userAccount.getAccountType());
+                    log.setUserId(systemAccount.getUserId());
+                    log.setAccount(systemAccount.getAccount());
+                    log.setAccountType(systemAccount.getAccountType());
                     log.setLoginIp(WebUtils.getIpAddr(request));
                     log.setLoginAgent(request.getHeader(HttpHeaders.USER_AGENT));
                     addLoginLog(log);
@@ -189,7 +190,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                 log.error("添加登录日志失败");
             }
         }
-        return accountDto;
+        return systemAccountDto;
     }
 
 
@@ -206,8 +207,8 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, username, password, BaseConstants.USER_ACCOUNT_TYPE_USERNAME);
-        int result = systemAccountMapper.insertSelective(userAccount);
+        SystemAccount systemAccount = new SystemAccount(userId, username, password, BaseConstants.USER_ACCOUNT_TYPE_USERNAME);
+        int result = systemAccountMapper.insertSelective(systemAccount);
         return result > 0;
     }
 
@@ -227,8 +228,8 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, email, password, BaseConstants.USER_ACCOUNT_TYPE_EMAIL);
-        int result = systemAccountMapper.insertSelective(userAccount);
+        SystemAccount systemAccount = new SystemAccount(userId, email, password, BaseConstants.USER_ACCOUNT_TYPE_EMAIL);
+        int result = systemAccountMapper.insertSelective(systemAccount);
         return result > 0;
     }
 
@@ -248,8 +249,8 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             //已经注册
             return false;
         }
-        SystemAccount userAccount = new SystemAccount(userId, mobile, password, BaseConstants.USER_ACCOUNT_TYPE_MOBILE);
-        int result = systemAccountMapper.insertSelective(userAccount);
+        SystemAccount systemAccount = new SystemAccount(userId, mobile, password, BaseConstants.USER_ACCOUNT_TYPE_MOBILE);
+        int result = systemAccountMapper.insertSelective(systemAccount);
         return result > 0;
     }
 
@@ -277,16 +278,16 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                 .andEqualTo("account", userProfile.getUserName())
                 .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
                 .end().build();
-        SystemAccount userAccount = systemAccountMapper.selectOneByExample(example);
-        if (userAccount == null) {
+        SystemAccount systemAccount = systemAccountMapper.selectOneByExample(example);
+        if (systemAccount == null) {
             return false;
         }
         String oldPasswordEncoder = passwordEncoder.encode(oldPassword);
-        if (!passwordEncoder.matches(userAccount.getPassword(), oldPasswordEncoder)) {
+        if (!passwordEncoder.matches(systemAccount.getPassword(), oldPasswordEncoder)) {
             throw new OpenMessageException("原密码不正确");
         }
-        userAccount.setPassword(passwordEncoder.encode(newPassword));
-        int count = systemAccountMapper.updateByPrimaryKey(userAccount);
+        systemAccount.setPassword(passwordEncoder.encode(newPassword));
+        int count = systemAccountMapper.updateByPrimaryKey(systemAccount);
         return count > 0;
     }
 
