@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.locator;
 
-import com.github.lyd.gateway.client.entity.GatewayRoute;
+import com.github.lyd.base.client.entity.SystemGatewayRoute;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -87,10 +87,10 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
     public Map<String, ZuulRoute> loadRouteWithDb() {
         Map<String, ZuulProperties.ZuulRoute> routes = Maps.newLinkedHashMap();
         try {
-            List<GatewayRoute> results = jdbcTemplate.query("select * from gateway_route where status = 1 ", new
-                    BeanPropertyRowMapper<>(GatewayRoute.class));
+            List<SystemGatewayRoute> results = jdbcTemplate.query("select * from system_gateway_route where status = 1 ", new
+                    BeanPropertyRowMapper<>(SystemGatewayRoute.class));
             if (results != null && results.size() > 0) {
-                for (GatewayRoute result : results) {
+                for (SystemGatewayRoute result : results) {
                     if (StringUtils.isEmpty(result.getPath())) {
                         continue;
                     }

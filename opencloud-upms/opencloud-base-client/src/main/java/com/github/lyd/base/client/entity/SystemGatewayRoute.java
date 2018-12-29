@@ -1,4 +1,4 @@
-package com.github.lyd.gateway.client.entity;
+package com.github.lyd.base.client.entity;
 
 import com.github.lyd.common.gen.SnowflakeId;
 import tk.mybatis.mapper.annotation.KeySql;
@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @date: 2018/10/24 16:21
  * @description:
  */
-@Table(name = "gateway_route")
-public class GatewayRoute implements Serializable {
+@Table(name = "system_gateway_route")
+public class SystemGatewayRoute implements Serializable {
     private static final long serialVersionUID = -2952097064941740301L;
 
     @Id

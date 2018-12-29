@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.github.lyd.gateway.producer.mapper.GatewayRateLimitMapper">
-    <resultMap id="BaseResultMap" type="com.github.lyd.gateway.client.entity.GatewayRateLimit">
+<mapper namespace="com.github.lyd.base.producer.mapper.SystemGatewayRateLimitMapper">
+    <resultMap id="BaseResultMap" type="com.github.lyd.base.client.entity.SystemGatewayRateLimit">
         <!--
           WARNING - @mbg.generated
         -->

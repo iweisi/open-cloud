@@ -1,7 +1,7 @@
 package com.github.lyd.gateway.producer.locator;
 
+import com.github.lyd.base.client.entity.SystemGatewayRateLimit;
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.gateway.client.entity.GatewayRateLimit;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.marcosbarbero.cloud.autoconfigure.zuul.ratelimit.config.properties.RateLimitProperties;
@@ -93,10 +93,10 @@ public class RateLimitLocator {
     protected Map<String, List<RateLimitProperties.Policy>> loadRateLimitWithDb() {
         Map<String, List<RateLimitProperties.Policy>> policyMap = Maps.newLinkedHashMap();
         try{
-            List<GatewayRateLimit> results = jdbcTemplate.query("select * from gateway_rate_limit  where status = 1", new
-                    BeanPropertyRowMapper<>(GatewayRateLimit.class));
+            List<SystemGatewayRateLimit> results = jdbcTemplate.query("select * from system_gateway_rate_limit  where status = 1", new
+                    BeanPropertyRowMapper<>(SystemGatewayRateLimit.class));
             if (results != null && results.size() > 0) {
-                for (GatewayRateLimit result : results) {
+                for (SystemGatewayRateLimit result : results) {
                     List<RateLimitProperties.Policy> policyList = policyMap.get(result.getServiceId());
                     if (policyList == null) {
                         policyList = Lists.newArrayList();
