@@ -12,9 +12,11 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * 公共认证用户信息
+ *
  * @author liuyadu
  */
-public class OpenAuth implements UserDetails {
+public class OpenUserAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
     /**
      * 登录账号类型
@@ -73,10 +75,10 @@ public class OpenAuth implements UserDetails {
      */
     private String authCenterId;
 
-    public OpenAuth() {
+    public OpenUserAuth() {
     }
 
-    public OpenAuth(String authCenterId, String accountType, Long userId, String avatar, String username, String nickName, String password, Collection<Map> roles, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenUserAuth(String authCenterId, String accountType, Long userId, String avatar, String username, String nickName, String password, Collection<Map> roles, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
         this.authCenterId = authCenterId;
         this.accountType = accountType;
         this.userId = userId;

@@ -4,7 +4,7 @@ import com.github.lyd.auth.producer.service.feign.SystemAccountApi;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.security.OpenAuth;
+import com.github.lyd.common.security.OpenUserAuth;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +52,6 @@ public class UserLoginServiceImpl implements UserDetailsService {
                 roles.add(map);
             });
         }
-        return new OpenAuth(AUTH_SERVICE_ID,account.getAccountType(), account.getUserId(), account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
+        return new OpenUserAuth(AUTH_SERVICE_ID,account.getAccountType(), account.getUserId(), account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
     }
 }

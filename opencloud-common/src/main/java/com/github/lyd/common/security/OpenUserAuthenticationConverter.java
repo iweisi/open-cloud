@@ -34,7 +34,7 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
                 params.put(key, map.get(key));
             }
         }
-        OpenAuth auth = BeanUtils.mapToBean(params, OpenAuth.class);
+        OpenUserAuth auth = BeanUtils.mapToBean(params, OpenUserAuth.class);
         auth.setAuthAppId(params.get(AccessTokenConverter.CLIENT_ID).toString());
         auth.setAuthorities(AuthorityUtils.authorityListToSet(getAuthorities(map)));
         return auth;
@@ -56,7 +56,7 @@ public class OpenUserAuthenticationConverter extends DefaultUserAuthenticationCo
             Object principal = converter(map);
             Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
             if (principal != null) {
-                OpenAuth user = (OpenAuth) principal;
+                OpenUserAuth user = (OpenUserAuth) principal;
                 authorities = user.getAuthorities();
             }
             return new UsernamePasswordAuthenticationToken(principal, "N/A", authorities);

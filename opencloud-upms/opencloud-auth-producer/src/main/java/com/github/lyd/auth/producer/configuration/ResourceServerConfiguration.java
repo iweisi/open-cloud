@@ -4,7 +4,7 @@ import com.github.lyd.auth.producer.service.feign.SystemAccountApi;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
-import com.github.lyd.common.security.OpenAuth;
+import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.security.OpenHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +95,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
             try {
-                OpenAuth userLoginDetails = (OpenAuth) authentication.getPrincipal();
+                OpenUserAuth userLoginDetails = (OpenUserAuth) authentication.getPrincipal();
                 WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) authentication.getDetails();
                 //添加登录日志
                 systemAccountApi.addLoginLog(userLoginDetails.getUserId(), webAuthenticationDetails.getRemoteAddress(), request.getHeader("User-Agent"));

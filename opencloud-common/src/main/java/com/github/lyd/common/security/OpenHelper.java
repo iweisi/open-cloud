@@ -18,14 +18,14 @@ public class OpenHelper {
      *
      * @return
      */
-    public static OpenAuth getPrincipal() {
+    public static OpenUserAuth getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() != null) {
-            if (authentication.getPrincipal() instanceof OpenAuth) {
-                return (OpenAuth) authentication.getPrincipal();
+            if (authentication.getPrincipal() instanceof OpenUserAuth) {
+                return (OpenUserAuth) authentication.getPrincipal();
             }
             if (authentication.getPrincipal() instanceof Map) {
-                return BeanUtils.mapToBean((Map) authentication.getPrincipal(), OpenAuth.class);
+                return BeanUtils.mapToBean((Map) authentication.getPrincipal(), OpenUserAuth.class);
             }
         }
         return null;

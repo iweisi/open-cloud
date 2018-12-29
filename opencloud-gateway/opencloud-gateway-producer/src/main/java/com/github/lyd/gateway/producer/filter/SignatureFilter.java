@@ -5,7 +5,7 @@ import com.github.lyd.common.exception.OpenSignatureDeniedHandler;
 import com.github.lyd.common.exception.OpenSignatureException;
 import com.github.lyd.common.exception.SignatureDeniedHandler;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.security.OpenAuth;
+import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
@@ -50,7 +50,7 @@ public class SignatureFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         AntPathRequestMatcher matcher = new AntPathRequestMatcher("/platform/sign");
-        OpenAuth auth = OpenHelper.getPrincipal();
+        OpenUserAuth auth = OpenHelper.getPrincipal();
         if (auth != null && gatewayProperties.getEnabledValidateSign() && !matcher.matches(request)) {
             try {
                 //开始验证签名
