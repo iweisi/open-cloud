@@ -28,6 +28,11 @@ public interface SystemAccountRemoteService {
      * @return
      */
     @PostMapping("/account/logs/add")
-    ResultBody addLoginLog(@RequestParam(value = "userId") Long userId, @RequestParam(value = "ipAddress") String ipAddress, @RequestParam(value = "userAgent") String userAgent);
+    ResultBody addLoginLog(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "account") String account,
+            @RequestParam(value = "accountType") String accountType,
+            @RequestParam(value = "ipAddress") String ipAddress,
+            @RequestParam(value = "userAgent") String userAgent);
 
 }

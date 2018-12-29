@@ -2,6 +2,7 @@ package com.github.lyd.base.producer.controller;
 
 import com.github.lyd.base.client.api.SystemAccountRemoteService;
 import com.github.lyd.base.client.dto.SystemAccountDto;
+import com.github.lyd.base.client.entity.SystemAccountLogs;
 import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.common.model.ResultBody;
 import io.swagger.annotations.Api;
@@ -44,8 +45,19 @@ public class SystemAccountController implements SystemAccountRemoteService {
      */
     @PostMapping("/account/logs/add")
     @Override
-    public ResultBody addLoginLog(@RequestParam(value = "userId") Long userId, @RequestParam(value = "ipAddress") String ipAddress, @RequestParam(value = "userAgent") String userAgent) {
-        systemAccountService.addLoginLog(userId, ipAddress, userAgent);
+    public ResultBody addLoginLog(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "account") String account,
+            @RequestParam(value = "accountType") String accountType,
+            @RequestParam(value = "ipAddress") String ipAddress,
+            @RequestParam(value = "userAgent") String userAgent) {
+        SystemAccountLogs log = new SystemAccountLogs();
+        log.setUserId(userId);
+        log.setAccount(account);
+        log.setAccountType(accountType);
+        log.setLoginIp(ipAddress);
+        log.setLoginAgent(userAgent);
+        systemAccountService.addLoginLog(log);
         return ResultBody.success();
     }
 

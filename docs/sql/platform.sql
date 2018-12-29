@@ -35,6 +35,7 @@ INSERT INTO `system_account` VALUES ('521677655368531968', '521677655146233856',
 INSERT INTO `system_account` VALUES ('521677655444029440', '521677655146233856', '515608851@qq.com', '$2a$10$A7EHximvrsa4ESX1uSlkJupbg2PLO2StzDzy67NX4YV25MxmbGvXu', 'email');
 INSERT INTO `system_account` VALUES ('521677655586635776', '521677655146233856', '18518226890', '$2a$10$A7EHximvrsa4ESX1uSlkJupbg2PLO2StzDzy67NX4YV25MxmbGvXu', 'mobile');
 
+
 -- ----------------------------
 -- Table structure for system_account_logs
 -- ----------------------------
@@ -42,16 +43,15 @@ DROP TABLE IF EXISTS `system_account_logs`;
 CREATE TABLE `system_account_logs` (
   `id` bigint(20) NOT NULL,
   `login_time` datetime NOT NULL,
-  `login_ip` varchar(255) DEFAULT NULL COMMENT '登录Ip',
-  `login_agent` varchar(500) DEFAULT NULL COMMENT '登录设备',
-  `login_nums` int(11) DEFAULT NULL COMMENT '登录次数',
+  `login_ip` varchar(255) NOT NULL COMMENT '登录Ip',
+  `login_agent` varchar(500) NOT NULL COMMENT '登录设备',
+  `login_nums` int(11) NOT NULL COMMENT '登录次数',
   `user_id` bigint(20) NOT NULL,
+  `account` varchar(100) NOT NULL,
+  `account_type` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账号登录日志';
 
--- ----------------------------
--- Records of system_account_logs
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_action

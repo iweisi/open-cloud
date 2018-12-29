@@ -5,21 +5,27 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenUserAuth;
+import com.github.lyd.common.utils.WebUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author liuyadu
  */
+@Slf4j
 @Service("userDetailService")
 public class UserLoginServiceImpl implements UserDetailsService {
 
@@ -31,6 +37,14 @@ public class UserLoginServiceImpl implements UserDetailsService {
     @Value("${spring.application.name}")
     private String AUTH_SERVICE_ID;
 
+    private HttpServletRequest getHttpServletRequest() {
+        try {
+            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
@@ -39,6 +53,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("系统用户 " + username + " 不存在!");
         }
+        HttpServletRequest request = getHttpServletRequest();
         boolean accountNonLocked = account.getUserProfile().getStatus().intValue() != BaseConstants.USER_STATE_LOCKED;
         boolean credentialsNonExpired = true;
         boolean enable = account.getUserProfile().getStatus().intValue() == BaseConstants.USER_STATE_NORMAL ? true : false;
@@ -52,6 +67,8 @@ public class UserLoginServiceImpl implements UserDetailsService {
                 roles.add(map);
             });
         }
-        return new OpenUserAuth(AUTH_SERVICE_ID,account.getAccountType(), account.getUserId(), account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
+        //添加登录日志
+        systemAccountApi.addLoginLog(account.getUserId(), account.getAccount(),account.getAccountType(), WebUtils.getIpAddr(request), request.getHeader("User-Agent"));
+        return new OpenUserAuth(AUTH_SERVICE_ID, account.getAccountType(), account.getUserId(), account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
     }
 }

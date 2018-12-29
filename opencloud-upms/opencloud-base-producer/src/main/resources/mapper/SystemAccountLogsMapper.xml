@@ -10,6 +10,8 @@
         <result column="login_ip" property="loginIp" jdbcType="VARCHAR"/>
         <result column="login_agent" property="loginAgent" jdbcType="VARCHAR"/>
         <result column="login_nums" property="loginNums" jdbcType="INTEGER"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="account_type" property="accountType" jdbcType="VARCHAR"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
     </resultMap>
 </mapper>

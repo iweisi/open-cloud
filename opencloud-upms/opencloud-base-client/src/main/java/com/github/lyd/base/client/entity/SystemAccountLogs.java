@@ -41,6 +41,10 @@ public class SystemAccountLogs {
     @Column(name = "user_id")
     private Long userId;
 
+    private String account;
+
+    @Column(name = "account_type")
+    private String accountType;
     /**
      * @return id
      */
@@ -129,5 +133,21 @@ public class SystemAccountLogs {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

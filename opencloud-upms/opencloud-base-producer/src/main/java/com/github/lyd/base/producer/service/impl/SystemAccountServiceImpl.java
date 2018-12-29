@@ -265,25 +265,16 @@ public class SystemAccountServiceImpl implements SystemAccountService {
     /**
      * 更新系统用户登录Ip
      *
-     * @param userId
-     * @param ipAddress
+     * @param log
      */
     @Override
-    public void addLoginLog(Long userId, String ipAddress, String agent) {
-        if (userId == null) {
-            return;
-        }
+    public void addLoginLog(SystemAccountLogs log) {
         ExampleBuilder builder = new ExampleBuilder(SystemAccountLogs.class);
-        Example example = builder.criteria().andEqualTo("userId", userId).end().build();
+        Example example = builder.criteria().andEqualTo("userId", log.getUserId()).end().build();
         int count = systemAccountLogsMapper.selectCountByExample(example);
-
-        SystemAccountLogs logs = new SystemAccountLogs();
-        logs.setUserId(userId);
-        logs.setLoginTime(new Date());
-        logs.setLoginIp(ipAddress);
-        logs.setLoginAgent(agent);
-        logs.setLoginNums(count + 1);
-        systemAccountLogsMapper.insertSelective(logs);
+        log.setLoginTime(new Date());
+        log.setLoginNums(count + 1);
+        systemAccountLogsMapper.insertSelective(log);
     }
 
     /**

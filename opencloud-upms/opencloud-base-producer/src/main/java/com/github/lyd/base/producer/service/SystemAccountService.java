@@ -2,6 +2,7 @@ package com.github.lyd.base.producer.service;
 
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
+import com.github.lyd.base.client.entity.SystemAccountLogs;
 
 /**
  * 系统用户登录账号管理
@@ -72,11 +73,9 @@ public interface SystemAccountService {
     /**
      * 添加登录日志
      *
-     * @param userId
-     * @param userAgent
-     * @param ipAddress
+     * @param log
      */
-    void addLoginLog(Long userId, String ipAddress, String userAgent);
+    void addLoginLog(SystemAccountLogs log);
 
     /**
      * 检查账号是否存在
