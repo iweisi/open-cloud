@@ -16,30 +16,74 @@ import java.util.Map;
  */
 public class OpenAuth implements UserDetails {
     private static final long serialVersionUID = -123308657146774881L;
+    /**
+     * 登录账号类型
+     */
     private String accountType;
+    /**
+     * 用户ID
+     */
     private Long userId;
+    /**
+     * 用户头像
+     */
     private String avatar;
+    /**
+     * 登录名
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 昵称
+     */
     private String nickName;
+    /**
+     * 用户角色
+     */
     private Collection<Map> roles;
+    /**
+     * 用户权限
+     */
     private Collection<String> authorities;
+    /**
+     * 是否已锁定
+     */
     private boolean accountNonLocked;
+    /**
+     * 是否已过期
+     */
     private boolean accountNonExpired;
+    /**
+     * 是否启用
+     */
     private boolean enabled;
+    /**
+     * 密码是否已过期
+     */
     private boolean credentialsNonExpired;
+    /**
+     * 认证客户端ID
+     */
     private String authAppId;
+    /**
+     * 认证中心ID,适用于区分多用户源,多认证中心
+     */
+    private String authCenterId;
 
     public OpenAuth() {
     }
 
-    public OpenAuth(String accountType, Long userId, String avatar,String username, String nickName, String password,Collection<Map> roles , Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+    public OpenAuth(String authCenterId, String accountType, Long userId, String avatar, String username, String nickName, String password, Collection<Map> roles, Collection<String> authorities, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, boolean credentialsNonExpired) {
+        this.authCenterId = authCenterId;
         this.accountType = accountType;
         this.userId = userId;
         this.avatar = avatar;
         this.username = username;
         this.nickName = nickName;
-        this.roles =  roles;
+        this.roles = roles;
         this.password = password;
         this.authorities = authorities;
         this.accountNonLocked = accountNonLocked;
@@ -163,5 +207,13 @@ public class OpenAuth implements UserDetails {
 
     public void setAuthorities(Collection<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getAuthCenterId() {
+        return authCenterId;
+    }
+
+    public void setAuthCenterId(String authCenterId) {
+        this.authCenterId = authCenterId;
     }
 }

@@ -8,6 +8,7 @@ import com.github.lyd.common.security.OpenAuth;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +25,11 @@ public class UserLoginServiceImpl implements UserDetailsService {
 
     @Autowired
     private SystemAccountApi systemAccountApi;
+    /**
+     * 认证中心名称
+     */
+    @Value("${spring.application.name}")
+    private String AUTH_SERVICE_ID;
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -46,6 +52,6 @@ public class UserLoginServiceImpl implements UserDetailsService {
                 roles.add(map);
             });
         }
-        return new OpenAuth(account.getAccountType(), account.getUserId(),account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
+        return new OpenAuth(AUTH_SERVICE_ID,account.getAccountType(), account.getUserId(), account.getUserProfile().getAvatar(), account.getAccount(), account.getUserProfile().getNickName(), account.getPassword(), roles, account.getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired);
     }
 }
