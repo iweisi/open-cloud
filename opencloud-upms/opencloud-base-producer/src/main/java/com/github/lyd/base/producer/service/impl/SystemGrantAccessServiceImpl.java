@@ -137,6 +137,23 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         return permissions;
     }
 
+    /**
+     * 获取已授权列表
+     *
+     * @param resourceType
+     * @return
+     */
+    @Override
+    public List<SystemGrantAccess> getGrantAccess(String resourceType) {
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
+        Example example = builder.criteria()
+                .andEqualTo("resourceType", resourceType)
+                .andEqualTo("status", BaseConstants.ENABLED)
+                .end().build();
+        List<SystemGrantAccess> accessList = systemAccessMapper.selectByExample(example);
+        return accessList;
+    }
+
 
     /**
      * 获取系统用户已授权私有列表(不包含角色权限)

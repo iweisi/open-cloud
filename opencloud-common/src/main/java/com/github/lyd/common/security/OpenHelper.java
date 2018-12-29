@@ -3,6 +3,7 @@ package com.github.lyd.common.security;
 import com.github.lyd.common.utils.BeanUtils;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
@@ -29,6 +30,17 @@ public class OpenHelper {
             }
         }
         return null;
+    }
+
+    public static Boolean hasAuthority(String authority) {
+        OpenUserAuth auth = getPrincipal();
+        if (auth == null) {
+            return false;
+        }
+        if (AuthorityUtils.authorityListToSet(auth.getAuthorities()).contains(authority)) {
+            return true;
+        }
+        return false;
     }
 
     /**

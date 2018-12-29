@@ -28,7 +28,15 @@ public interface SystemGrantAccessService {
      * @param resourceType 资源类型
      * @return
      */
-    List<SystemGrantAccess> getUserGrantAccess(Long userId, String resourceType);
+    List<SystemGrantAccess> getUserGrantAccessList(Long userId, String resourceType);
+
+    /**
+     * 获取已授权列表
+     *
+     * @param resourceType
+     * @return
+     */
+    List<SystemGrantAccess> getGrantAccessList(String resourceType);
 
     /**
      * 获取系统用户已授权私有列表(不包含角色权限)
@@ -36,7 +44,7 @@ public interface SystemGrantAccessService {
      * @param userId
      * @return
      */
-    List<SystemGrantAccess> getUserPrivateGrantAccess(Long userId);
+    List<SystemGrantAccess> getUserPrivateGrantAccessList(Long userId);
 
     /**
      * 获取所有已授权访问列表

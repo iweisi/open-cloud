@@ -8,7 +8,7 @@ public class BaseConstants {
      * 超级权限
      */
     public final static String SUPER_ROLE = "superAdmin";
-
+    public final static String SUPER_ROLE_AUTHORITY = "ROLE_superAdmin";
     /**
      * 默认oauth2授权类型
      */
