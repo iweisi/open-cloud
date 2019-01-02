@@ -42,15 +42,6 @@ public interface SystemApiService {
     Boolean isExist(String apiCode);
 
     /**
-     * 检查接口编码是否存在
-     *
-     * @param apiCode
-     * @param serviceId
-     * @return
-     */
-    Boolean isExist(String apiCode, String serviceId);
-
-    /**
      * 添加接口
      *
      * @param api

@@ -78,23 +78,11 @@ public class SystemApiServiceImpl implements SystemApiService {
     }
 
 
-    /**
-     * 检查接口编码是否存在
-     *
-     * @param apiCode
-     * @return
-     */
     @Override
     public Boolean isExist(String apiCode) {
-        return isExist(apiCode, null);
-    }
-
-    @Override
-    public Boolean isExist(String apiCode, String serviceId) {
         ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
         Example example = builder.criteria()
                 .andEqualTo("apiCode", apiCode)
-                .andEqualTo("serviceId", serviceId)
                 .end().build();
         int count = systemApiMapper.selectCountByExample(example);
         return count > 0 ? true : false;
@@ -108,7 +96,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public Boolean addApi(SystemApi api) {
-        if (isExist(api.getApiCode(), api.getServiceId())) {
+        if (isExist(api.getApiCode())) {
             throw new OpenMessageException(String.format("%sApi编码已存在,不允许重复添加", api.getApiCode()));
         }
         if (api.getPriority() == null) {
@@ -143,7 +131,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         }
         if (!savedApi.getApiCode().equals(api.getApiCode())) {
             // 和原来不一致重新检查唯一性
-            if (isExist(api.getApiCode(), api.getServiceId())) {
+            if (isExist(api.getApiCode())) {
                 throw new OpenMessageException(String.format("%sApi编码已存在,不允许重复添加", api.getApiCode()));
             }
         }

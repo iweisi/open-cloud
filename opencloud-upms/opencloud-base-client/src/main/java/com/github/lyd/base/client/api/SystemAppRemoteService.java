@@ -55,9 +55,12 @@ public interface SystemAppRemoteService {
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
-     * @param redirectUrls 第三方应用授权回调地址
+     * @param redirectUrls 第三方应用授权回调地址(多个使用,号隔开)
      * @param userId       开发者
      * @param userType     开发者类型
+     * @param scopes       用户授权范围(多个使用,号隔开)
+     * @param authorities  功能权限.这里指的是接口标识(多个使用,号隔开)
+     * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
      */
     @PostMapping("/app/add")
@@ -72,7 +75,11 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "website") String website,
             @RequestParam(value = "redirectUrls") String redirectUrls,
             @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "userType") String userType
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "scopes") String scopes,
+            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "grantTypes") String grantTypes
+
     );
 
     /**
@@ -87,10 +94,14 @@ public interface SystemAppRemoteService {
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
-     * @param redirectUrls 第三方应用授权回调地址
+     * @param redirectUrls 第三方应用授权回调地址(多个使用,号隔开)
      * @param userId       开发者
      * @param userType     开发者类型
+     * @param scopes       用户授权范围(多个使用,号隔开)
+     * @param authorities  功能权限.这里指的是接口标识(多个使用,号隔开)
+     * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
+     * @
      */
     @PostMapping("/app/update")
     ResultBody<Boolean> updateApp(
@@ -105,7 +116,10 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "website") String website,
             @RequestParam(value = "redirectUrls") String redirectUrls,
             @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "userType") String userType
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "scopes") String scopes,
+            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "grantTypes") String grantTypes
     );
 
     /**

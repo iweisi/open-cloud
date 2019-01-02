@@ -70,11 +70,16 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 获取应用开发配置
+     * 获取应用开发信息
      *
      * @param appId 应用Id
      * @return
      */
+    @ApiOperation(value = "获取应用开发信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
+    })
+    @GetMapping("/app/dev/{appId}")
     @Override
     public ResultBody<ClientDetailsDto> getAppDevInfo(
             @PathVariable("appId") String appId
@@ -92,14 +97,17 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appIcon      应用图标
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
-     * @param redirectUrls 第三方应用授权回调地址
+     * @param redirectUrls 第三方应用授权回调地址(多个使用,号隔开)
      * @param userId       开发者
      * @param userType     开发者类型
+     * @param scopes       用户授权范围(多个使用,号隔开)
+     * @param authorities  功能权限.这里指的是接口标识(多个使用,号隔开)
+     * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
      */
     @ApiOperation(value = "添加应用")
@@ -114,7 +122,10 @@ public class SystemAppController implements SystemAppRemoteService {
             @ApiImplicitParam(name = "website", value = "官网地址", required = true, paramType = "form"),
             @ApiImplicitParam(name = "redirectUrls", value = "第三方应用授权回调地址", required = true, paramType = "form"),
             @ApiImplicitParam(name = "userId", value = "0-平台,其他填写真实Id", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form")
+            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "scopes", value = "用户授权范围(多个使用,号隔开)", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "authorities", value = "功能权限.这里指的是接口标识(多个使用,号隔开)", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "grantTypes", value = "授权类型(多个使用,号隔开)", required = true, paramType = "form")
     })
     @PostMapping("/app/add")
     @Override
@@ -129,7 +140,10 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam(value = "website") String website,
             @RequestParam(value = "redirectUrls") String redirectUrls,
             @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "userType") String userType
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "scopes") String scopes,
+            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "grantTypes") String grantTypes
     ) {
         SystemAppDto app = new SystemAppDto();
         app.setAppName(appName);
@@ -143,26 +157,33 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setRedirectUrls(redirectUrls);
         app.setUserId(userId);
         app.setUserType(userType);
+        app.setScopes(scopes);
+        app.setAuthorities(authorities);
+        app.setGrantTypes(grantTypes);
         Boolean result = appInfoService.addAppInfo(app);
         return result? ResultBody.success():ResultBody.failed();
     }
 
     /**
-     * 编辑应用
+     * 更新应用
      *
      * @param appId
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
      * @param appOs        手机应用操作系统:ios-苹果 android-安卓
-     * @param appIcon      应用图标
      * @param appType      应用类型:server-应用服务 app-手机应用 pc-PC网页应用 wap-手机网页应用
+     * @param appIcon      应用图标
      * @param appDesc      应用说明
      * @param status       状态
      * @param website      官网地址
-     * @param redirectUrls 第三方应用授权回调地址
+     * @param redirectUrls 第三方应用授权回调地址(多个使用,号隔开)
      * @param userId       开发者
      * @param userType     开发者类型
+     * @param scopes       用户授权范围(多个使用,号隔开)
+     * @param authorities  功能权限.这里指的是接口标识(多个使用,号隔开)
+     * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
+     * @
      */
     @ApiOperation(value = "编辑应用")
     @ApiImplicitParams({
@@ -177,7 +198,10 @@ public class SystemAppController implements SystemAppRemoteService {
             @ApiImplicitParam(name = "website", value = "官网地址", required = true, paramType = "form"),
             @ApiImplicitParam(name = "redirectUrls", value = "第三方应用授权回调地址", required = true, paramType = "form"),
             @ApiImplicitParam(name = "userId", value = "0-平台,其他填写真实Id", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form")
+            @ApiImplicitParam(name = "userType", value = "开发者类型", allowableValues = "platform,isp,dev", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "scopes", value = "用户授权范围(多个使用,号隔开)", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "authorities", value = "功能权限.这里指的是接口标识(多个使用,号隔开)", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "grantTypes", value = "授权类型(多个使用,号隔开)", required = true, paramType = "form")
     })
     @PostMapping("/app/update")
     @Override
@@ -193,7 +217,10 @@ public class SystemAppController implements SystemAppRemoteService {
             @RequestParam(value = "website") String website,
             @RequestParam(value = "redirectUrls") String redirectUrls,
             @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "userType") String userType
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "scopes") String scopes,
+            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "grantTypes") String grantTypes
     ) {
         SystemAppDto app = new SystemAppDto();
         app.setAppId(appId);
@@ -208,6 +235,9 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setRedirectUrls(redirectUrls);
         app.setUserId(userId);
         app.setUserType(userType);
+        app.setScopes(scopes);
+        app.setAuthorities(authorities);
+        app.setGrantTypes(grantTypes);
         Boolean result = appInfoService.updateInfo(app);
         return result? ResultBody.success():ResultBody.failed();
     }

@@ -5,6 +5,7 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
+import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
 import com.github.lyd.common.exception.OpenMessageException;
@@ -37,11 +38,12 @@ public class SystemAppServiceImpl implements SystemAppService {
 
     @Autowired
     private SystemAppMapper systemAppMapper;
-
     @Autowired
     private ClientDetailsRemoteServiceClient clientDetailsRemoteServiceClient;
     @Autowired
     private SnowflakeIdGenerator idGenerator;
+    @Autowired
+    private SystemApiService systemApiService;
 
     /**
      * 查询应用列表
@@ -82,15 +84,14 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo == null) {
             return null;
         }
+        SystemAppDto appDto = new SystemAppDto();
+        BeanUtils.copyProperties(appInfo, appDto);
         try {
-            SystemAppDto appDto = new SystemAppDto();
-            BeanUtils.copyProperties(appInfo, appDto);
             appDto.setClientInfo(clientDetailsRemoteServiceClient.getClient(appInfo.getAppId()).getData());
-            return appDto;
         } catch (Exception e) {
             log.error("clientDetailsRemoteServiceClient.getClient error:{}", e.getMessage());
         }
-        return null;
+        return appDto;
     }
 
     /**
@@ -107,6 +108,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setAppSecret(clientSecret);
         app.setCreateTime(new Date());
         app.setUpdateTime(app.getCreateTime());
+        resetAppDevInfo(app);
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
@@ -130,6 +132,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
         appInfo.setUpdateTime(new Date());
+        resetAppDevInfo(app);
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
@@ -138,6 +141,20 @@ public class SystemAppServiceImpl implements SystemAppService {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return result > 0 && resp.isOk() && resp.getData();
+    }
+
+    private void resetAppDevInfo(SystemAppDto app) {
+        if (app.getScopes() != null) {
+            String[] scopes = app.getScopes().split(",");
+            for (String scope : scopes) {
+                if (!systemApiService.isExist(scope)) {
+                    throw new OpenMessageException(String.format("scope=%s缺少对应接口", scope));
+                }
+            }
+            String authorities = app.getAuthorities() != null && !app.getAuthorities().startsWith(",") ? "," + app.getAuthorities() : app.getAuthorities();
+            // 把授权范围添加到接口权限中
+            app.setAuthorities(app.getScopes().concat(authorities));
+        }
     }
 
     /**
@@ -162,7 +179,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return (result > 0 && resp.isOk() && resp.getData())?clientSecret:null;
+        return (result > 0 && resp.isOk() && resp.getData()) ? clientSecret : null;
     }
 
     /**
