@@ -48,6 +48,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         return new PageList(list);
     }
+
     /**
      * 查询列表
      *
@@ -64,6 +65,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         return new PageList(list);
     }
+
     /**
      * 根据主键获取接口
      *
@@ -115,6 +117,9 @@ public class SystemApiServiceImpl implements SystemApiService {
         if (api.getStatus() == null) {
             api.setStatus(BaseConstants.ENABLED);
         }
+        if (api.getApiCategory() == null) {
+            api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
+        }
         api.setCreateTime(new Date());
         api.setUpdateTime(api.getCreateTime());
         int count = systemApiMapper.insertSelective(api);
@@ -129,7 +134,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public Boolean updateApi(SystemApi api) {
-        if(api.getApiId()==null){
+        if (api.getApiId() == null) {
             throw new OpenMessageException("ID不能为空");
         }
         SystemApi savedApi = getApi(api.getApiId());
@@ -144,6 +149,9 @@ public class SystemApiServiceImpl implements SystemApiService {
         }
         if (api.getPriority() == null) {
             api.setPriority(0);
+        }
+        if (api.getApiCategory() == null) {
+            api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
@@ -184,7 +192,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         api.setUpdateTime(new Date());
         int count = systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
-        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API,api.getApiId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
         return count > 0;
     }
 

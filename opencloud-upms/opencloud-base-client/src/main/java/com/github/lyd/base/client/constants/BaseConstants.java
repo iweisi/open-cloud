@@ -15,6 +15,10 @@ public class BaseConstants {
     public final static String DEFAULT_OAUTH2_GRANT_TYPES = "authorization_code,refresh_token,client_credentials";
 
     /**
+     * 默认接口分类
+     */
+    public final static String DEFAULT_API_CATEGORY = "default";
+    /**
      * 状态:0-无效 1-有效
      */
     public final static int ENABLED = 1;
