@@ -272,7 +272,7 @@ CREATE TABLE `system_menu` (
 -- Records of system_menu
 -- ----------------------------
 INSERT INTO `system_menu` VALUES ('1', '0', 'system', '系统安全', '系统安全', '/', '', null, '_self', '0', '1', '2018-07-29 21:20:10', '2018-12-25 00:30:22');
-INSERT INTO `system_menu` VALUES ('2', '1', 'SystemGrantAccess', '网关访问控制', '网关服务动态权限控制,菜单资源、操作资源、接口资源列表', '/', 'system/grant-access/index', '', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-29 16:59:24');
+INSERT INTO `system_menu` VALUES ('2', '1', 'SystemGrantAccess', '访问控制', '权限分配,菜单资源、操作资源、接口资源列表', '/', 'system/grant-access/index', '', '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-29 16:59:24');
 INSERT INTO `system_menu` VALUES ('3', '1', 'SystemMenu', '菜单资源', '菜单资源管理', '/', 'system/menus/index', null, '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-29 14:55:19');
 INSERT INTO `system_menu` VALUES ('4', '0', 'Service', '服务维护', '服务维护', '/', '', null, '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-29 14:58:52');
 INSERT INTO `system_menu` VALUES ('5', '4', 'GatewayRoute', '网关路由', '网关路由', '/', 'gateway/route/index', null, '_self', '0', '1', '2018-07-29 21:20:13', '2018-12-29 15:00:47');
