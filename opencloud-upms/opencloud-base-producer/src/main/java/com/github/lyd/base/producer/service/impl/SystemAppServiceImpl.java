@@ -136,6 +136,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo == null) {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
+        BeanUtils.copyProperties(app,appInfo);
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
