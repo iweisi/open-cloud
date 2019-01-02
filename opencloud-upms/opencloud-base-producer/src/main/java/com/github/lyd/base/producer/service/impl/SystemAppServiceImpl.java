@@ -5,7 +5,6 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
-import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
 import com.github.lyd.common.exception.OpenMessageException;
