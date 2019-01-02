@@ -42,8 +42,6 @@ public class SystemAppServiceImpl implements SystemAppService {
     private ClientDetailsRemoteServiceClient clientDetailsRemoteServiceClient;
     @Autowired
     private SnowflakeIdGenerator idGenerator;
-    @Autowired
-    private SystemApiService systemApiService;
 
     /**
      * 查询应用列表
@@ -108,7 +106,6 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setAppSecret(clientSecret);
         app.setCreateTime(new Date());
         app.setUpdateTime(app.getCreateTime());
-        resetAppDevInfo(app);
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
@@ -132,7 +129,6 @@ public class SystemAppServiceImpl implements SystemAppService {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
         appInfo.setUpdateTime(new Date());
-        resetAppDevInfo(app);
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
@@ -141,20 +137,6 @@ public class SystemAppServiceImpl implements SystemAppService {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return result > 0 && resp.isOk() && resp.getData();
-    }
-
-    private void resetAppDevInfo(SystemAppDto app) {
-        if (app.getScopes() != null) {
-            String[] scopes = app.getScopes().split(",");
-            for (String scope : scopes) {
-                if (!systemApiService.isExist(scope)) {
-                    throw new OpenMessageException(String.format("scope=%s缺少对应接口", scope));
-                }
-            }
-            String authorities = app.getAuthorities() != null && !app.getAuthorities().startsWith(",") ? "," + app.getAuthorities() : app.getAuthorities();
-            // 把授权范围添加到接口权限中
-            app.setAuthorities(app.getScopes().concat(authorities));
-        }
     }
 
     /**

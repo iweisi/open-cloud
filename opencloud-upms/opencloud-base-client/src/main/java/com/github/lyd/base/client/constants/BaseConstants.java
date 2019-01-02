@@ -2,6 +2,7 @@ package com.github.lyd.base.client.constants;
 
 /**
  * 通用权限常量
+ * @author liuyadu
  */
 public class BaseConstants {
     /**

@@ -15,6 +15,10 @@ import java.util.Map;
 public class ClientDetailsDto extends BaseClientDetails implements Serializable {
     private static final long serialVersionUID = 3725084953460581042L;
 
+    public ClientDetailsDto() {
+        super();
+    }
+
     public ClientDetailsDto(ClientDetails prototype) {
        super(prototype);
     }
