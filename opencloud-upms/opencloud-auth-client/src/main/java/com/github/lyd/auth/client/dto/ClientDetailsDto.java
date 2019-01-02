@@ -39,10 +39,6 @@ public class ClientDetailsDto extends BaseClientDetails implements Serializable 
             this.setClientSecret(clientSecret);
             Map appInfo = JSONObject.parseObject(additionalInfo, Map.class);
             this.setAdditionalInformation(appInfo);
-            if ("0".equals(appInfo.get("status"))) {
-                // 如果应用被禁用，强制清空权限
-                this.setAuthorities(null);
-            }
         } catch (Exception e) {
 
         }
