@@ -99,7 +99,7 @@ public class SystemActionServiceImpl implements SystemActionService {
     }
 
     /**
-     * 添加Action动作
+     * 添加Action操作
      *
      * @param action
      * @return
@@ -125,7 +125,7 @@ public class SystemActionServiceImpl implements SystemActionService {
     }
 
     /**
-     * 修改Action动作
+     * 修改Action操作
      *
      * @param action
      * @return

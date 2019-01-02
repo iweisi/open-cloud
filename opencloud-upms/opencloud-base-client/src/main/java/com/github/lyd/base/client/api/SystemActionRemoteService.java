@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface SystemActionRemoteService {
     /**
-     * 获取动作资源列表
+     * 获取操作资源列表
      *
      * @return
      */
@@ -26,7 +26,7 @@ public interface SystemActionRemoteService {
 
 
     /**
-     * 获取动作资源
+     * 获取操作资源
      *
      * @param actionId actionId
      * @return
@@ -35,7 +35,7 @@ public interface SystemActionRemoteService {
     ResultBody<SystemAction> getAction(@PathVariable("actionId") Long actionId);
 
     /**
-     * 获取动作资源
+     * 获取操作资源
      *
      * @param keyword keyword
      * @return
@@ -46,10 +46,10 @@ public interface SystemActionRemoteService {
 
 
     /**
-     * 添加动作资源
+     * 添加操作资源
      *
-     * @param actionCode  动作编码
-     * @param actionName  动作名称
+     * @param actionCode  操作编码
+     * @param actionName  操作名称
      * @param menuId      归属菜单
      * @param path         请求路径
      * @param status     是否启用
@@ -69,11 +69,11 @@ public interface SystemActionRemoteService {
     );
 
     /**
-     * 编辑动作资源
+     * 编辑操作资源
      *
-     * @param actionId    动作ID
-     * @param actionCode  动作编码
-     * @param actionName  动作名称
+     * @param actionId    操作ID
+     * @param actionCode  操作编码
+     * @param actionName  操作名称
      * @param menuId      归属菜单
      * @param path         请求路径
      * @param status     是否启用
@@ -96,7 +96,7 @@ public interface SystemActionRemoteService {
     /**
      * 更新状态
      *
-     * @param actionId 动作ID
+     * @param actionId 操作ID
      * @param status 状态
      * @return
      */
@@ -107,9 +107,9 @@ public interface SystemActionRemoteService {
     );
 
     /**
-     * 移除动作
+     * 移除操作
      *
-     * @param actionId 动作ID
+     * @param actionId 操作ID
      * @return
      */
     @PostMapping("/action/remove")
