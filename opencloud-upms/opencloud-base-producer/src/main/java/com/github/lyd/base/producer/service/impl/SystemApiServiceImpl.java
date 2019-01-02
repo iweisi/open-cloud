@@ -10,6 +10,7 @@ import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -197,6 +198,28 @@ public class SystemApiServiceImpl implements SystemApiService {
         }
         int count = systemApiMapper.deleteByPrimaryKey(apiId);
         return count > 0;
+    }
+
+    /**
+     * 根据编码查询ID
+     *
+     * @param codes
+     * @return
+     */
+    @Override
+    public List<Long> findIdsByCodes(String... codes) {
+        ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
+        Example example = builder.criteria()
+                .andIn("apiCode", codes)
+                .end().build();
+        List<SystemApi> list = systemApiMapper.selectByExample(example);
+        List<Long> ids = Lists.newArrayList();
+        if (list != null && !list.isEmpty()) {
+            list.forEach(item -> {
+                ids.add(item.getApiId());
+            });
+        }
+        return ids;
     }
 
 

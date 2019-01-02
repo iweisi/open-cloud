@@ -4,6 +4,8 @@ import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 
+import java.util.List;
+
 /**
  * 接口资源
  */
@@ -82,4 +84,11 @@ public interface SystemApiService {
      * @return
      */
     Boolean removeApi(Long apiId);
+
+    /**
+     * 根据编码查询ID
+     * @param codes
+     * @return
+     */
+     List<Long> findIdsByCodes(String...codes);
 }

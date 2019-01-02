@@ -57,6 +57,7 @@ public class BaseConstants {
     public final static String RESOURCE_TYPE_MENU = "menu";
     public final static String RESOURCE_TYPE_ACTION = "action";
     public final static String RESOURCE_TYPE_API = "api";
+    public final static String RESOURCE_TYPE_APP = "app";
 
     /**
      * 权限所有者

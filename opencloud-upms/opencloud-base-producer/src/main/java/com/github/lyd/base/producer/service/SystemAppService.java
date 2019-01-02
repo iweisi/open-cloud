@@ -68,4 +68,11 @@ public interface SystemAppService {
      * @return
      */
     Boolean removeApp(String appId);
+
+    /**
+     * 授权功能
+     * @param apiCodes
+     * @return
+     */
+    Boolean grantApi(String appId, String ...apiCodes);
 }

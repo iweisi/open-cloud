@@ -2,10 +2,7 @@ package com.github.lyd.base.producer.service.impl;
 
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.*;
-import com.github.lyd.base.producer.mapper.SystemActionMapper;
-import com.github.lyd.base.producer.mapper.SystemApiMapper;
-import com.github.lyd.base.producer.mapper.SystemGrantAccessMapper;
-import com.github.lyd.base.producer.mapper.SystemMenuMapper;
+import com.github.lyd.base.producer.mapper.*;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.common.exception.OpenMessageException;
@@ -29,6 +26,7 @@ import java.util.List;
 /**
  * 访问授权
  * 对菜单、操作、API等进行权限分配操作
+ *
  * @author liuyadu
  */
 @Service
@@ -42,6 +40,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     private SystemActionMapper systemActionMapper;
     @Autowired
     private SystemApiMapper systemApiMapper;
+    @Autowired
+    private SystemAppMapper systemAppMapper;
     @Autowired
     private SystemRoleService systemRoleService;
     @Value("${spring.application.name}")
@@ -342,9 +342,17 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                     // 角色授权标识=ROLE_角色编码
                     authority = authorityPrefix + role.getRoleCode();
                 } else if (BaseConstants.AUTHORITY_PREFIX_USER.equals(authorityPrefix)) {
-                    // 个人授权特殊标识=USER_用户ID_资源类型_资源编码 => USER_1_MENU_LIST
+                    // 个人授权权限标识=USER_用户ID_资源类型_资源编码 => USER_1_MENU_LIST
                     authority = authorityPrefix + authorityOwner + BaseConstants.AUTHORITY_SEPARATOR + resourceType + BaseConstants.AUTHORITY_SEPARATOR + resourceId;
                 } else {
+                    // APP授权状态
+                    if (BaseConstants.AUTHORITY_PREFIX_APP.equals(authorityPrefix)) {
+                        SystemApp systemApp = systemAppMapper.selectByPrimaryKey(authorityOwner);
+                        if (systemApp != null) {
+                            // 根据APP的状态强制覆盖
+                            status = systemApp.getStatus();
+                        }
+                    }
                     // 默认权限标识:前缀+资源编码
                     authority = authorityPrefix + code;
                 }

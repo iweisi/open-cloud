@@ -5,7 +5,9 @@ import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.base.producer.mapper.SystemAppMapper;
+import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.base.producer.service.SystemAppService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.gen.SnowflakeIdGenerator;
@@ -41,6 +43,10 @@ public class SystemAppServiceImpl implements SystemAppService {
     private ClientDetailsRemoteServiceClient clientDetailsRemoteServiceClient;
     @Autowired
     private SnowflakeIdGenerator idGenerator;
+    @Autowired
+    private SystemApiService systemApiService;
+    @Autowired
+    private SystemGrantAccessService systemGrantAccessService;
 
     /**
      * 查询应用列表
@@ -107,6 +113,9 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setUpdateTime(app.getCreateTime());
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
+        // 功能授权
+        grantApi(app.getAppId(), app.getAuthorities().split(","));
+        // 保持客户端信息
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 回滚事物
@@ -130,6 +139,9 @@ public class SystemAppServiceImpl implements SystemAppService {
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
+        // 功能授权
+        grantApi(app.getAppId(), app.getAuthorities().split(","));
+        // 修改客户端信息
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!(resp.isOk() && resp.getData())) {
             // 手动事物回滚
@@ -182,6 +194,18 @@ public class SystemAppServiceImpl implements SystemAppService {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return result > 0 && resp.isOk() && resp.getData();
+    }
+
+    /**
+     * 授权功能
+     *
+     * @param apiCodes
+     * @return
+     */
+    @Override
+    public Boolean grantApi(String appId, String... apiCodes) {
+        List<Long> apiIds = systemApiService.findIdsByCodes(apiCodes);
+        return systemGrantAccessService.addGrantAccess(appId, BaseConstants.AUTHORITY_PREFIX_APP, BaseConstants.RESOURCE_TYPE_API, apiIds.toArray(new Long[apiIds.size()]));
     }
 
 }
