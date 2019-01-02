@@ -1,6 +1,7 @@
 package com.github.lyd.auth.client.dto;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.lyd.auth.client.constants.AuthConstants;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 
@@ -39,6 +40,8 @@ public class ClientDetailsDto extends BaseClientDetails implements Serializable 
             this.setClientSecret(clientSecret);
             Map appInfo = JSONObject.parseObject(additionalInfo, Map.class);
             this.setAdditionalInformation(appInfo);
+            this.setAccessTokenValiditySeconds(AuthConstants.ACCESS_TOKEN_VALIDITY_SECONDS);
+            this.setRefreshTokenValiditySeconds(AuthConstants.REFRESH_TOKEN_VALIDITY_SECONDS);
         } catch (Exception e) {
 
         }
