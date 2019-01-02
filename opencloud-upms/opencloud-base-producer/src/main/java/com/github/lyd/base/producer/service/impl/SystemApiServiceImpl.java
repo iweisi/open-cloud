@@ -3,8 +3,8 @@ package com.github.lyd.base.producer.service.impl;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.mapper.SystemApiMapper;
-import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemApiService;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -209,12 +208,17 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public List<Long> findIdsByCodes(String... codes) {
+        List codeList = Lists.newArrayList(codes);
+        List<Long> ids = Lists.newArrayList();
+        if (codeList.contains("all")) {
+            ids.add(1L);
+            return ids;
+        }
         ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
         Example example = builder.criteria()
-                .andIn("apiCode", Arrays.asList(codes))
+                .andIn("apiCode", codeList)
                 .end().build();
         List<SystemApi> list = systemApiMapper.selectByExample(example);
-        List<Long> ids = Lists.newArrayList();
         if (list != null && !list.isEmpty()) {
             list.forEach(item -> {
                 ids.add(item.getApiId());

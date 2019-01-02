@@ -12,14 +12,13 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -49,7 +48,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     private String DEFAULT_PREFIX = "/";
     private String DEFAULT_TARGET = "_self";
 
-    private final List<String> AUTH_PREFIX_LIST = Arrays.asList(new String[]{
+    private final List<String> AUTH_PREFIX_LIST = Lists.newArrayList(new String[]{
             BaseConstants.AUTHORITY_PREFIX_ROLE,
             BaseConstants.AUTHORITY_PREFIX_USER,
             BaseConstants.AUTHORITY_PREFIX_APP});
@@ -199,10 +198,10 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @param authorityPrefix 拥有者类型
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
-     * @return
+     * @return authorities
      */
     @Override
-    public Boolean addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds) {
+    public String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds) {
         if (!AUTH_PREFIX_LIST.contains(authorityPrefix)) {
             throw new OpenMessageException(String.format("%s授权类型暂不支持!", authorityPrefix));
         }
@@ -211,15 +210,17 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
         List<SystemGrantAccess> access = Lists.newArrayList();
+        List<String> authorities= Lists.newArrayList();
         for (Long resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
             SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
             if (access != null) {
                 access.add(grantAccess);
+                authorities.add(grantAccess.getAuthority());
             }
         }
         if (access.isEmpty()) {
-            return false;
+            return null;
         }
         //先清空拥有者的权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
@@ -229,8 +230,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 .end().build();
         systemAccessMapper.deleteByExample(example);
         // 再重新批量授权
-        int result = systemAccessMapper.insertList(access);
-        return result > 0;
+        systemAccessMapper.insertList(access);
+        return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
     }
 
 

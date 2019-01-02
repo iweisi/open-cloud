@@ -1,5 +1,6 @@
 package com.github.lyd.common.autoconfigure;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,8 +12,6 @@ import org.springframework.core.Ordered;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import java.util.Arrays;
 
 /**
  * 跨域auto-configuration
@@ -33,9 +32,9 @@ public class CorsAutoConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(corsProperties.getAllowCredentials());
-        config.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigin().split(",")));
-        config.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethod().split(",")));
-        config.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeader().split(",")));
+        config.setAllowedOrigins(Lists.newArrayList(corsProperties.getAllowedOrigin().split(",")));
+        config.setAllowedMethods(Lists.newArrayList(corsProperties.getAllowedMethod().split(",")));
+        config.setAllowedHeaders(Lists.newArrayList(corsProperties.getAllowedHeader().split(",")));
         config.setMaxAge(corsProperties.getMaxAge());
         config.addExposedHeader("Authorization");
         source.registerCorsConfiguration("/**", config);

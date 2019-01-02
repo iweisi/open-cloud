@@ -62,7 +62,7 @@ public interface SystemGrantAccessService {
      * @param resourceIds     资源ID
      * @return
      */
-    Boolean addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
+    String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
 
     /**
      * 更新授权信息

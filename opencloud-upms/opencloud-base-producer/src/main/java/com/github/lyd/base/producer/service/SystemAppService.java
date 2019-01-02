@@ -74,5 +74,5 @@ public interface SystemAppService {
      * @param apiCodes
      * @return
      */
-    Boolean grantApi(String appId, String ...apiCodes);
+    String grantApi(String appId, String ...apiCodes);
 }
