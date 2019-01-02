@@ -56,16 +56,16 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public PageList<SystemAction> findList(String keyword,Long menuId) {
+    public PageList<SystemAction> findList(String keyword, Long menuId) {
         ExampleBuilder builder = new ExampleBuilder(SystemAction.class);
         Example example = builder
                 .criteria()
                 .orLike("actionCode", keyword)
                 .orLike("actionName", keyword).end()
                 .and()
-                .andEqualTo("menuId",menuId).end()
+                .andEqualTo("menuId", menuId).end()
                 .build();
-        example.setOrderByClause("priority  asc");
+        example.setOrderByClause("action_id asc,priority  asc");
         List<SystemAction> list = systemActionMapper.selectByExample(example);
         return new PageList(list);
     }
@@ -151,7 +151,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION, action.getActionId());
         return count > 0;
     }
 
@@ -170,7 +170,7 @@ public class SystemActionServiceImpl implements SystemActionService {
         action.setUpdateTime(new Date());
         int count = systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
-        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION,action.getActionId());
+        systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION, action.getActionId());
         return count > 0;
     }
 

@@ -136,7 +136,6 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
     public ResultBody removeClinet(
             @RequestParam(value = "clientId") String clientId
     ) {
-        return ResultBody.failed("暂不支持");
-       // return ResultBody.success(clinetInfoService.removeClinet(clientId));
+       return ResultBody.success(clinetInfoService.removeClinet(clientId));
     }
 }

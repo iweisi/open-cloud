@@ -188,6 +188,8 @@ public class SystemAppServiceImpl implements SystemAppService {
             throw new OpenMessageException(appId + "应用不存在!");
         }
         int result = systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
+        // 移除授权
+        systemGrantAccessService.removeGrantAccess(appInfo.getAppId(), BaseConstants.AUTHORITY_PREFIX_APP);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.removeClinet(appInfo.getAppId());
         if (!resp.isOk()) {
             // 回滚事物

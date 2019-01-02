@@ -65,6 +65,15 @@ public interface SystemGrantAccessService {
     String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
 
     /**
+     * 移除授权
+     *
+     * @param authorityOwner
+     * @param authorityPrefix
+     * @return
+     */
+    Boolean removeGrantAccess(String authorityOwner, String authorityPrefix);
+
+    /**
      * 更新授权信息
      * 支持更新name,url,resourcePid,serviceId
      * 不允许修改权限标识

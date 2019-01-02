@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     /**
-     * 当前登录用户资料
+     * 平台登录信息
      * @return
      */
-    @ApiOperation(value = "当前登录用户资料")
+    @ApiOperation(value = "平台登录信息")
     @GetMapping("/user")
     public ResultBody userProfile() {
         return ResultBody.success(OpenHelper.getUserProfile());

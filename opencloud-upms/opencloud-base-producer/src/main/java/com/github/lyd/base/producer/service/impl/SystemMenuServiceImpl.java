@@ -56,7 +56,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         Example example = builder.criteria()
                 .orLike("menuCode", keyword)
                 .orLike("menuName", keyword).end().build();
-        example.setOrderByClause("priority  asc");
+        example.setOrderByClause("menu_id asc,priority  asc");
         List<SystemMenu> list = systemMenuMapper.selectByExample(example);
         return new PageList(list);
     }
@@ -122,7 +122,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      */
     @Override
     public Boolean updateMenu(SystemMenu menu) {
-        if(menu.getMenuId()==null){
+        if (menu.getMenuId() == null) {
             throw new OpenMessageException("ID不能为空");
         }
         SystemMenu savedMenu = getMenu(menu.getMenuId());

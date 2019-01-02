@@ -210,7 +210,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
         List<SystemGrantAccess> access = Lists.newArrayList();
-        List<String> authorities= Lists.newArrayList();
+        List<String> authorities = Lists.newArrayList();
         for (Long resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
             SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
@@ -223,15 +223,29 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             return null;
         }
         //先清空拥有者的权限
+        removeGrantAccess(authorityOwner, authorityPrefix);
+        // 再重新批量授权
+        systemAccessMapper.insertList(access);
+        return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
+    }
+
+    /**
+     * 移除授权
+     *
+     * @param authorityOwner
+     * @param authorityPrefix
+     * @return
+     */
+    @Override
+    public Boolean removeGrantAccess(String authorityOwner, String authorityPrefix) {
+        //先清空拥有者的权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("authorityPrefix", authorityPrefix)
                 .andEqualTo("authorityOwner", authorityOwner)
                 .end().build();
-        systemAccessMapper.deleteByExample(example);
-        // 再重新批量授权
-        systemAccessMapper.insertList(access);
-        return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
+        int count = systemAccessMapper.deleteByExample(example);
+        return count > 0;
     }
 
 
