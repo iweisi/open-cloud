@@ -121,7 +121,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk() && resp.getData();
+        return result > 0 && resp.isOk();
     }
 
     /**
@@ -147,7 +147,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk() && resp.getData();
+        return result > 0 && resp.isOk();
     }
 
     /**
@@ -172,7 +172,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return (result > 0 && resp.isOk() && resp.getData()) ? clientSecret : null;
+        return (result > 0 && resp.isOk()) ? clientSecret : null;
     }
 
     /**
@@ -193,7 +193,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk() && resp.getData();
+        return result > 0 && resp.isOk();
     }
 
     /**
