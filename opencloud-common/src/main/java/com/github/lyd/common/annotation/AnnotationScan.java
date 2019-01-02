@@ -81,6 +81,10 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                 if (StringUtils.isBlank(name)) {
                     name = code;
                 }
+
+                if(StringUtils.isBlank(desc)){
+                    desc = aClass.getName();
+                }
                 path = prefix + path;
                 Map<String, Object> api = Maps.newHashMap();
                 api.put("apiCode", code);
