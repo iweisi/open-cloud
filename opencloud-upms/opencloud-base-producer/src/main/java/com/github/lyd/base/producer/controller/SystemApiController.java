@@ -95,6 +95,7 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
+            @ApiImplicitParam(name = "apiCategory", required = true, value = "接口分类", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
@@ -106,6 +107,7 @@ public class SystemApiController implements SystemApiRemoteService {
     public ResultBody<Boolean> addApi(
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
+            @RequestParam(value = "apiCategory") String apiCategory,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
@@ -115,6 +117,7 @@ public class SystemApiController implements SystemApiRemoteService {
         SystemApi api = new SystemApi();
         api.setApiCode(apiCode);
         api.setApiName(apiName);
+        api.setApiCategory(apiCategory);
         api.setServiceId(serviceId);
         api.setPath(path);
         api.setStatus(status);
@@ -142,6 +145,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "apiId", required = true, value = "接口Id", paramType = "form"),
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
+            @ApiImplicitParam(name = "apiCategory", required = true, value = "接口分类", paramType = "form"),
             @ApiImplicitParam(name = "serviceId", required = true, value = "服务ID", paramType = "form"),
             @ApiImplicitParam(name = "path", required = false, value = "请求路径", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form"),
@@ -154,6 +158,7 @@ public class SystemApiController implements SystemApiRemoteService {
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
+            @RequestParam(value = "apiCategory") String apiCategory,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
@@ -164,6 +169,7 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setApiId(apiId);
         api.setApiCode(apiCode);
         api.setApiName(apiName);
+        api.setApiCategory(apiCategory);
         api.setServiceId(serviceId);
         api.setPath(path);
         api.setStatus(status);

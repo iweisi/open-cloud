@@ -43,19 +43,21 @@ public interface SystemApiRemoteService {
     /**
      * 添加Api资源
      *
-     * @param apiCode   Api编码
-     * @param apiName   Api名称
-     * @param serviceId 服务ID
-     * @param path       请求路径
-     * @param status    是否启用
-     * @param priority  优先级越小越靠前
-     * @param apiDesc   描述
+     * @param apiCode     Api编码
+     * @param apiName     Api名称
+     * @param apiCategory 接口分类
+     * @param serviceId   服务ID
+     * @param path        请求路径
+     * @param status      是否启用
+     * @param priority    优先级越小越靠前
+     * @param apiDesc     描述
      * @return
      */
     @PostMapping("/api/add")
     ResultBody<Boolean> addApi(
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
+            @RequestParam(value = "apiCategory") String apiCategory,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
@@ -69,8 +71,9 @@ public interface SystemApiRemoteService {
      * @param apiId     ApiID
      * @param apiCode   Api编码
      * @param apiName   Api名称
+     * @param apiCategory 接口分类
      * @param serviceId 服务ID
-     * @param path       请求路径
+     * @param path      请求路径
      * @param status    是否启用
      * @param priority  优先级越小越靠前
      * @param apiDesc   描述
@@ -81,6 +84,7 @@ public interface SystemApiRemoteService {
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
+            @RequestParam(value = "apiCategory") String apiCategory,
             @RequestParam(value = "serviceId") String serviceId,
             @RequestParam(value = "path", required = false, defaultValue = "") String path,
             @RequestParam(value = "status", defaultValue = "1") Integer status,
