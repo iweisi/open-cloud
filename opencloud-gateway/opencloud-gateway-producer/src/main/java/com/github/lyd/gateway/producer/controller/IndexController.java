@@ -8,6 +8,7 @@ import com.github.lyd.common.utils.DateUtils;
 import com.github.lyd.common.utils.RandomValueUtils;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
+import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -37,6 +38,8 @@ public class IndexController {
     private OpenRestTemplate openRestTemplate;
     @Autowired
     private GatewayProperties gatewayProperties;
+    @Autowired
+    private AccessLocator accessLocator;
 
     @GetMapping("/")
     public String index() {
@@ -107,4 +110,16 @@ public class IndexController {
         return ResultBody.success(appMap);
     }
 
+    /**
+     * 参数签名
+     *
+     * @param
+     * @return
+     */
+    @ApiOperation(value = "获取网关缓存的访问限制", notes = "获取网关缓存的访问限制")
+    @GetMapping(value = "/access/cache")
+    @ResponseBody
+    public ResultBody accessCache() {
+        return ResultBody.success(accessLocator.getAccessList());
+    }
 }

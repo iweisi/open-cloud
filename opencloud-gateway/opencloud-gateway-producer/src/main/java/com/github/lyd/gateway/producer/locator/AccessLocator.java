@@ -23,6 +23,16 @@ public class AccessLocator {
     private SystemGrantAccessApi systemAccessApi;
     private ZuulRoutesLocator zuulRoutesLocator;
 
+    private List<SystemGrantAccess> accessList;
+
+    public List<SystemGrantAccess> getAccessList() {
+        return accessList;
+    }
+
+    public void setAccessList(List<SystemGrantAccess> accessList) {
+        this.accessList = accessList;
+    }
+
     public AccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRoutesLocator zuulRoutesLocator) {
         this.systemAccessApi = systemAccessApi;
         this.zuulRoutesLocator = zuulRoutesLocator;
@@ -69,9 +79,9 @@ public class AccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            List<SystemGrantAccess> assesss = systemAccessApi.grantAccessList().getData();
-            if (assesss != null) {
-                for (SystemGrantAccess assess : assesss) {
+            accessList = systemAccessApi.grantAccessList().getData();
+            if (accessList != null) {
+                for (SystemGrantAccess assess : accessList) {
                     if (StringUtils.isBlank(assess.getPath())) {
                         continue;
                     }
