@@ -39,7 +39,7 @@ public class AccessUrlVoter extends WebExpressionVoter {
         }
         // 获取当前系统用户,认证通过就可以访问
         AntPathRequestMatcher pathMatcher = new AntPathRequestMatcher("/auth/user");
-        if (authentication.isAuthenticated() && pathMatcher.matches(request)) {
+        if (authentication.isAuthenticated()  && pathMatcher.matches(request)) {
             return 1;
         }
         return super.vote(authentication, filterInvocation, attributes);

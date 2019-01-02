@@ -1,15 +1,18 @@
 package com.github.lyd.gateway.producer.configuration;
 
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.common.autoconfigure.GatewayProperties;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.WebUtils;
-import com.github.lyd.gateway.producer.filter.*;
+import com.github.lyd.gateway.producer.filter.AccessUrlFilter;
+import com.github.lyd.gateway.producer.filter.AccessUrlMetadataSource;
+import com.github.lyd.gateway.producer.filter.AccessUrlVoter;
+import com.github.lyd.gateway.producer.filter.SignatureFilter;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
-import com.github.lyd.base.client.constants.BaseConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -18,7 +21,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AbstractAccessDecisionManager;
 import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -120,7 +122,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
      */
     private AbstractAccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList();
-        decisionVoters.add(new AuthenticatedVoter());
         //自定义URL投票器
         AccessUrlVoter accessUrlVoter = new AccessUrlVoter(gatewayProperties);
         //默认角色投票器,默认前缀为ROLE_

@@ -46,8 +46,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                // 必须是认证用户,客户端模式不能访问
-                .antMatchers("/user").access("#oauth2.user")
                 //只有超级管理员角色可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
                 .anyRequest().authenticated()
