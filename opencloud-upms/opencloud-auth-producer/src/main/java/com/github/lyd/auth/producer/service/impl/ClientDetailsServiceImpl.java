@@ -56,7 +56,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
      * @param clientId     应用ID
      * @param clientSecret 应用秘钥
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
+     * @param autoApproveScopes  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID
@@ -64,8 +64,8 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
      * @param clientInfo   客户端附加信息,json字符串
      */
     @Override
-    public boolean addClient(String clientId, String clientSecret, String grantTypes, boolean autoApprove, String redirectUrls, String scopes, String resourceIds, String authorities, String clientInfo) {
-        ClientDetailsDto client = new ClientDetailsDto(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+    public boolean addClient(String clientId, String clientSecret, String grantTypes, String autoApproveScopes, String redirectUrls, String scopes, String resourceIds, String authorities, String clientInfo) {
+        ClientDetailsDto client = new ClientDetailsDto(clientId, clientSecret, grantTypes, autoApproveScopes, redirectUrls, scopes, resourceIds, authorities, clientInfo);
         try {
             jdbcClientDetailsService.addClientDetails(client);
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
      *
      * @param clientId     应用ID
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
+     * @param autoApproveScopes  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID
@@ -88,8 +88,8 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
      * @param clientInfo   客户端附加信息,json字符串
      */
     @Override
-    public boolean updateClient(String clientId, String grantTypes, boolean autoApprove, String redirectUrls, String scopes, String resourceIds, String authorities, String clientInfo) {
-        ClientDetailsDto client = new ClientDetailsDto(clientId, null, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+    public boolean updateClient(String clientId, String grantTypes, String autoApproveScopes, String redirectUrls, String scopes, String resourceIds, String authorities, String clientInfo) {
+        ClientDetailsDto client = new ClientDetailsDto(clientId, null, grantTypes, autoApproveScopes, redirectUrls, scopes, resourceIds, authorities, clientInfo);
         try {
             jdbcClientDetailsService.updateClientDetails(client);
         } catch (Exception e) {

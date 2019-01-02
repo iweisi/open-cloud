@@ -116,7 +116,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         // 功能授权
         app.setAuthorities(grantApi(app.getAppId(), app.getAuthorities().split(",")));
         // 保持客户端信息
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, "", app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!resp.isOk()) {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -143,7 +143,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         // 功能授权
         app.setAuthorities(grantApi(app.getAppId(), app.getAuthorities().split(",")));
         // 修改客户端信息
-        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), false, app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
+        ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), "", app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!resp.isOk()) {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

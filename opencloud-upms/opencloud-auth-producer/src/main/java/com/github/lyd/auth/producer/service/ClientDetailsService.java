@@ -33,7 +33,7 @@ public interface ClientDetailsService {
      * @param clientId     客户端ID
      * @param clientSecret 客户端秘钥
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
+     * @param autoApproveScopes  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID
@@ -43,7 +43,7 @@ public interface ClientDetailsService {
     boolean addClient(String clientId,
                       String clientSecret,
                       String grantTypes,
-                      boolean autoApprove,
+                      String autoApproveScopes,
                       String redirectUrls,
                       String scopes,
                       String resourceIds,
@@ -55,7 +55,7 @@ public interface ClientDetailsService {
      *
      * @param clientId     客户端ID
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
+     * @param autoApproveScopes  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID
@@ -64,7 +64,7 @@ public interface ClientDetailsService {
      */
     boolean updateClient(String clientId,
                          String grantTypes,
-                         boolean autoApprove,
+                         String autoApproveScopes,
                          String redirectUrls,
                          String scopes,
                          String resourceIds,

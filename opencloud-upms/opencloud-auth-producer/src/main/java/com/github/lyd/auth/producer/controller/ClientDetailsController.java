@@ -54,7 +54,7 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      * @param clientId     客户端ID
      * @param clientSecret 客户端秘钥
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
+     * @param autoApproveScopes  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID
@@ -68,14 +68,14 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "clientSecret") String clientSecret,
             @RequestParam(value = "grantTypes", required = false) String grantTypes,
-            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
+            @RequestParam(value = "autoApprove", required = false) String autoApproveScopes,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        boolean result = clinetInfoService.addClient(clientId, clientSecret, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+        boolean result = clinetInfoService.addClient(clientId, clientSecret, grantTypes, autoApproveScopes, redirectUrls, scopes, resourceIds, authorities, clientInfo);
         return result? ResultBody.success():ResultBody.failed();
     }
 
@@ -97,14 +97,14 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
     public ResultBody<Boolean> updateClient(
             @RequestParam(value = "clientId") String clientId,
             @RequestParam(value = "grantTypes", required = false) String grantTypes,
-            @RequestParam(value = "autoApprove", required = false) boolean autoApprove,
+            @RequestParam(value = "autoApprove", required = false) String autoApproveScopes,
             @RequestParam(value = "redirectUrls", required = false) String redirectUrls,
             @RequestParam(value = "scopes", required = false) String scopes,
             @RequestParam(value = "resourceIds", required = false) String resourceIds,
             @RequestParam(value = "authorities", required = false) String authorities,
             @RequestParam(value = "clientInfo", required = false) String clientInfo
     ) {
-        boolean result = clinetInfoService.updateClient(clientId, grantTypes, autoApprove, redirectUrls, scopes, resourceIds, authorities, clientInfo);
+        boolean result = clinetInfoService.updateClient(clientId, grantTypes, autoApproveScopes, redirectUrls, scopes, resourceIds, authorities, clientInfo);
         return result? ResultBody.success():ResultBody.failed();
     }
 
