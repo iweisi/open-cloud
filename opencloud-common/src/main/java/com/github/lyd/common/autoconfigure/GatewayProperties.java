@@ -2,6 +2,8 @@ package com.github.lyd.common.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * 自定义网关配置
  *

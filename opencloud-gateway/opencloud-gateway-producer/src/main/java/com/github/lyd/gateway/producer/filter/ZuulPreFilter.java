@@ -10,6 +10,9 @@ import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author liuyadu
+ */
 @Slf4j
 public class ZuulPreFilter extends ZuulFilter {
 

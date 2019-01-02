@@ -11,15 +11,18 @@ import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
+import com.google.common.collect.Lists;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +36,10 @@ public class SignatureFilter implements Filter {
     private SignatureDeniedHandler signatureDeniedHandler;
     private SystemAppApi systemAppApi;
     private GatewayProperties gatewayProperties;
+    /**
+     * 忽略签名
+     */
+    private final static List<RequestMatcher> IGNORE_MATCHER = getIgnoreMatchers("/sign");
 
     public SignatureFilter(SystemAppApi systemAppApi, GatewayProperties gatewayProperties) {
         this.systemAppApi = systemAppApi;
@@ -45,13 +52,31 @@ public class SignatureFilter implements Filter {
 
     }
 
+    protected static List<RequestMatcher> getIgnoreMatchers(String... antPatterns) {
+        List<RequestMatcher> matchers = Lists.newArrayList();
+        for (String path : antPatterns) {
+            matchers.add(new AntPathRequestMatcher(path));
+        }
+        return matchers;
+    }
+
+    protected boolean isIgnore(HttpServletRequest request) {
+        for (RequestMatcher match : IGNORE_MATCHER) {
+            if (match.matches(request)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    ;
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        AntPathRequestMatcher matcher = new AntPathRequestMatcher("/platform/sign");
         OpenUserAuth auth = OpenHelper.getUserAuth();
-        if (auth != null && gatewayProperties.getEnabledValidateSign() && !matcher.matches(request)) {
+        if (isAuthenticated() && gatewayProperties.getEnabledValidateSign() && !isIgnore(request)) {
             try {
                 //开始验证签名
                 String appId = auth.getAuthAppId();
@@ -65,9 +90,11 @@ public class SignatureFilter implements Filter {
                     if (app == null) {
                         throw new OpenSignatureException("clientId无效");
                     }
-                    //强制覆盖请求参数clientId
+                    // 强制覆盖请求参数clientId
                     params.put("clientId", app.getAppId());
-                    //服务器验签
+                    // 校验必填参数
+                    SignatureUtils.validateParams(params);
+                    // 服务器验证签名结果
                     if (!SignatureUtils.validateSign(params, app.getAppSecret())) {
                         throw new OpenSignatureException("签名验证失败!");
                     }
