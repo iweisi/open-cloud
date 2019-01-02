@@ -210,15 +210,15 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         if (crudMapper == null) {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
-        List<SystemGrantAccess> permissions = Lists.newArrayList();
+        List<SystemGrantAccess> access = Lists.newArrayList();
         for (Long resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
-            SystemGrantAccess permission = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
-            if (permission != null) {
-                permissions.add(permission);
+            SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
+            if (access != null) {
+                access.add(grantAccess);
             }
         }
-        if (permissions.isEmpty()) {
+        if (access.isEmpty()) {
             return false;
         }
         //先清空拥有者的权限
@@ -229,7 +229,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 .end().build();
         systemAccessMapper.deleteByExample(example);
         // 再重新批量授权
-        int result = systemAccessMapper.insertList(permissions);
+        int result = systemAccessMapper.insertList(access);
         return result > 0;
     }
 
@@ -367,6 +367,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                     path = path.substring(1);
                 }
             }
+            grantAccess.setResourceType(resourceType);
             grantAccess.setPath(path);
             grantAccess.setStatus(status);
             grantAccess.setAuthority(authority);

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -210,7 +211,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     public List<Long> findIdsByCodes(String... codes) {
         ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
         Example example = builder.criteria()
-                .andIn("apiCode", codes)
+                .andIn("apiCode", Arrays.asList(codes))
                 .end().build();
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         List<Long> ids = Lists.newArrayList();
