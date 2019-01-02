@@ -59,7 +59,7 @@ public interface SystemAppService {
      * @param appId
      * @return
      */
-    Boolean restSecret(String appId);
+    String restSecret(String appId);
 
     /**
      * 删除应用

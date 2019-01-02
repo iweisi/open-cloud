@@ -5,6 +5,7 @@ import com.github.lyd.base.client.api.SystemAppRemoteService;
 import com.github.lyd.base.client.dto.SystemAppDto;
 import com.github.lyd.base.client.entity.SystemApp;
 import com.github.lyd.base.producer.service.SystemAppService;
+import com.github.lyd.common.constants.ResultEnum;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
@@ -226,8 +227,8 @@ public class SystemAppController implements SystemAppRemoteService {
     public ResultBody<Boolean> resetSecret(
             @RequestParam("appId") String appId
     ) {
-        Boolean result = appInfoService.restSecret(appId);
-        return result? ResultBody.success():ResultBody.failed();
+        String result = appInfoService.restSecret(appId);
+        return result!=null? ResultBody.success(ResultEnum.OK.getMessage(),result):ResultBody.failed();
     }
 
     /**

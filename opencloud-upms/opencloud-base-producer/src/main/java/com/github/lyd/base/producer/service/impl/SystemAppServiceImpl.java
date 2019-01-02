@@ -147,7 +147,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return
      */
     @Override
-    public Boolean restSecret(String appId) {
+    public String restSecret(String appId) {
         SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
@@ -162,7 +162,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk() && resp.getData();
+        return (result > 0 && resp.isOk() && resp.getData())?clientSecret:null;
     }
 
     /**
