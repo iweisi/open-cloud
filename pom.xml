@@ -103,7 +103,7 @@
         <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 
-        <alibaba.nacos.version>0.2.0.RELEASE</alibaba.nacos.version>
+        <alibaba.nacos.version>0.2.1.RELEASE</alibaba.nacos.version>
         <alibaba.fastjson.version>1.2.37</alibaba.fastjson.version>
         <alibaba.druid.version>1.1.9</alibaba.druid.version>
 
