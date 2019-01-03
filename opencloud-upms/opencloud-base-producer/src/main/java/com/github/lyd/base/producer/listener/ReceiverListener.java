@@ -1,5 +1,6 @@
 package com.github.lyd.base.producer.listener;
 
+import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
 import com.github.lyd.common.http.OpenRestTemplate;
@@ -38,6 +39,7 @@ public class ReceiverListener {
                     SystemApi api = BeanConvertUtils.mapToObject(map, SystemApi.class);
                     SystemApi save = apiService.getApi(api.getApiCode(), api.getServiceId());
                     if (save == null) {
+                        api.setIsPersist(BaseConstants.ENABLED);
                         apiService.addApi(api);
                     } else {
                         api.setApiId(save.getApiId());

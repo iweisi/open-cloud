@@ -68,7 +68,7 @@ public class BusEndpointConfiguration {
      */
     @Bean
     public ZuulRouteLocator zuulRouteLocator(ZuulProperties zuulProperties, ServerProperties serverProperties, JdbcTemplate jdbcTemplate) {
-        zuulRoutesLocator = new ZuulRouteLocator(serverProperties.getServlet().getPath(), zuulProperties, jdbcTemplate);
+        zuulRoutesLocator = new ZuulRouteLocator(serverProperties.getServlet().getContextPath(), zuulProperties, jdbcTemplate);
         zuulRoutesLocator.setJdbcTemplate(jdbcTemplate);
         log.debug("注入ZuulRoutesLocator", zuulRoutesLocator);
         return zuulRoutesLocator;

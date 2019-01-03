@@ -1,14 +1,14 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.base.producer.mapper.SystemMenuMapper;
+import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemMenuService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.constants.BaseConstants;
-import com.github.lyd.base.client.entity.SystemMenu;
-import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +108,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         if (menu.getStatus() == null) {
             menu.setStatus(BaseConstants.ENABLED);
         }
+        if(menu.getIsPersist()==null){
+            menu.setIsPersist(BaseConstants.DISABLED);
+        }
         menu.setCreateTime(new Date());
         menu.setUpdateTime(menu.getCreateTime());
         int count = systemMenuMapper.insertSelective(menu);
@@ -175,6 +178,10 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      */
     @Override
     public Boolean removeMenu(Long menuId) {
+        SystemMenu menu = getMenu(menuId);
+        if(menu!=null && menu.getIsPersist().equals(BaseConstants.ENABLED)){
+            throw new OpenMessageException(String.format("保留数据,不允许删除"));
+        }
         if (systemAccessService.isExist(menuId, BaseConstants.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", menuId));
         }

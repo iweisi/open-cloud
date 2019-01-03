@@ -109,6 +109,9 @@ public class SystemApiServiceImpl implements SystemApiService {
         if (api.getApiCategory() == null) {
             api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
+        if(api.getIsPersist()==null){
+            api.setIsPersist(BaseConstants.DISABLED);
+        }
         api.setCreateTime(new Date());
         api.setUpdateTime(api.getCreateTime());
         int count = systemApiMapper.insertSelective(api);
@@ -193,8 +196,12 @@ public class SystemApiServiceImpl implements SystemApiService {
      */
     @Override
     public Boolean removeApi(Long apiId) {
+        SystemApi api = getApi(apiId);
+        if(api!=null && api.getIsPersist().equals(BaseConstants.ENABLED)){
+            throw new OpenMessageException(String.format("保留数据,不允许删除"));
+        }
         if (systemAccessService.isExist(apiId, BaseConstants.RESOURCE_TYPE_API)) {
-            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", apiId));
+            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!"));
         }
         int count = systemApiMapper.deleteByPrimaryKey(apiId);
         return count > 0;

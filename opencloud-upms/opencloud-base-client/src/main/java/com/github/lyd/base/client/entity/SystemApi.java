@@ -78,6 +78,12 @@ public class SystemApi implements Serializable {
     private Date updateTime;
 
     /**
+     * 保留数据0-否 1-是 不允许删除
+     */
+    @Column(name = "is_persist")
+    private Integer isPersist;
+
+    /**
      * 获取资源ID
      *
      * @return api_id - 资源ID
@@ -225,5 +231,13 @@ public class SystemApi implements Serializable {
 
     public void setApiCategory(String apiCategory) {
         this.apiCategory = apiCategory;
+    }
+
+    public Integer getIsPersist() {
+        return isPersist;
+    }
+
+    public void setIsPersist(Integer isPersist) {
+        this.isPersist = isPersist;
     }
 }

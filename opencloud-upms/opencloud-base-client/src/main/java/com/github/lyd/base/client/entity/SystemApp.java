@@ -99,6 +99,13 @@ public class SystemApp implements Serializable {
      * 状态:0-无效 1-有效
      */
     private Integer status;
+
+    /**
+     * 保留数据0-否 1-是 不允许删除
+     */
+    @Column(name = "is_persist")
+    private Integer isPersist;
+
     /**
      * @return app_id
      */
@@ -280,5 +287,13 @@ public class SystemApp implements Serializable {
 
     public void setRedirectUrls(String redirectUrls) {
         this.redirectUrls = redirectUrls;
+    }
+
+    public Integer getIsPersist() {
+        return isPersist;
+    }
+
+    public void setIsPersist(Integer isPersist) {
+        this.isPersist = isPersist;
     }
 }

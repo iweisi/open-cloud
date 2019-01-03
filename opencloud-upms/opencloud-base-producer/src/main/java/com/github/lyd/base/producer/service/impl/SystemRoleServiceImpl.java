@@ -72,6 +72,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (role.getStatus() == null) {
             role.setStatus(BaseConstants.ENABLED);
         }
+        if (role.getIsPersist() == null) {
+            role.setIsPersist(BaseConstants.DISABLED);
+        }
         role.setCreateTime(new Date());
         role.setUpdateTime(role.getCreateTime());
         int result = systemRoleMapper.insertSelective(role);
@@ -112,6 +115,10 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      */
     @Override
     public Boolean removeRole(Long roleId) {
+        SystemRole role = getRole(roleId);
+        if (role != null && role.getIsPersist().equals(BaseConstants.ENABLED)) {
+            throw new OpenMessageException(String.format("保留数据,不允许删除"));
+        }
         if (roleId == null) {
             return false;
         }

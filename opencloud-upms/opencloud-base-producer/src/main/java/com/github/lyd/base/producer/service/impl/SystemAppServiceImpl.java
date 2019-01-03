@@ -111,6 +111,9 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setAppSecret(clientSecret);
         app.setCreateTime(new Date());
         app.setUpdateTime(app.getCreateTime());
+        if(app.getIsPersist()==null){
+            app.setIsPersist(BaseConstants.DISABLED);
+        }
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         // 功能授权
@@ -187,6 +190,9 @@ public class SystemAppServiceImpl implements SystemAppService {
         SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
+        }
+        if(appInfo.getIsPersist().equals(BaseConstants.ENABLED)){
+            throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
         int result = systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
         // 移除授权

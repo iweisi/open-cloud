@@ -118,6 +118,9 @@ public class SystemActionServiceImpl implements SystemActionService {
         if (action.getStatus() == null) {
             action.setStatus(BaseConstants.ENABLED);
         }
+        if(action.getIsPersist()==null){
+            action.setIsPersist(BaseConstants.DISABLED);
+        }
         action.setCreateTime(new Date());
         action.setUpdateTime(action.getCreateTime());
         int count = systemActionMapper.insertSelective(action);
@@ -182,8 +185,12 @@ public class SystemActionServiceImpl implements SystemActionService {
      */
     @Override
     public Boolean removeAction(Long actionId) {
+        SystemAction action = getAction(actionId);
+        if(action!=null && action.getIsPersist().equals(BaseConstants.ENABLED)){
+            throw new OpenMessageException(String.format("保留数据,不允许删除"));
+        }
         if (systemAccessService.isExist(actionId, BaseConstants.RESOURCE_TYPE_ACTION)) {
-            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", actionId));
+            throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!"));
         }
         int count = systemActionMapper.deleteByPrimaryKey(actionId);
         return count > 0;

@@ -73,6 +73,12 @@ public class SystemAction implements Serializable {
     private Date updateTime;
 
     /**
+     * 保留数据0-否 1-是 不允许删除
+     */
+    @Column(name = "is_persist")
+    private Integer isPersist;
+
+    /**
      * 获取资源ID
      *
      * @return action_id - 资源ID
@@ -212,5 +218,13 @@ public class SystemAction implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getIsPersist() {
+        return isPersist;
+    }
+
+    public void setIsPersist(Integer isPersist) {
+        this.isPersist = isPersist;
     }
 }
