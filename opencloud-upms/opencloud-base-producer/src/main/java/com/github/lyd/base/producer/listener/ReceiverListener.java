@@ -52,4 +52,18 @@ public class ReceiverListener {
             platformRestTemplate.refreshGateway();
         }
     }
+
+    /**
+     * 接收限流扫描结果
+     *
+     * @param list
+     */
+    @RabbitListener(queues = MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE_LIMIT)
+    public void ScanResourceLimitQueue(List<Map> list) {
+        if (list != null && list.size() > 0) {
+            log.info("【apiResourceLimitQueue监听到消息】" + list.toString());
+            // 重新刷新网关
+            platformRestTemplate.refreshGateway();
+        }
+    }
 }
