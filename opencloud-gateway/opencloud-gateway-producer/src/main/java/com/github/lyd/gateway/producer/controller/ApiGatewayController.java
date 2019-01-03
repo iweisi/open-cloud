@@ -71,6 +71,8 @@ public class ApiGatewayController implements ApiGatewayRemoteService {
         postParameters.add("grant_type", "password");
         // 使用客户端的请求头,发起请求
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        // 强制移除 原来的请求头,防止token失效
+        headers.remove(HttpHeaders.AUTHORIZATION);
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity(postParameters, headers);
         Map result = openRestTemplate.postForObject(gatewayProperties.getAccessTokenUri(), request, Map.class);
         if (result.containsKey("access_token")) {
