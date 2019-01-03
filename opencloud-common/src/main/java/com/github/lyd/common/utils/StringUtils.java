@@ -511,9 +511,49 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return value;
     }
 
+    /**
+     * 密码强度
+     *
+     * @return Z = 字母 S = 数字 T = 特殊字符
+     */
+    public static String checkPassword(String passwordStr) {
+        String regexZ = "\\d*";
+        String regexS = "[a-zA-Z]+";
+        String regexT = "\\W+$";
+        String regexZT = "\\D*";
+        String regexST = "[\\d\\W]*";
+        String regexZS = "\\w*";
+        String regexZST = "[\\w\\W]*";
+
+        if (passwordStr.matches(regexZ)) {
+            return "弱";
+        }
+        if (passwordStr.matches(regexS)) {
+            return "弱";
+        }
+        if (passwordStr.matches(regexT)) {
+            return "弱";
+        }
+        if (passwordStr.matches(regexZT)) {
+            return "中";
+        }
+        if (passwordStr.matches(regexST)) {
+            return "中";
+        }
+        if (passwordStr.matches(regexZS)) {
+            return "中";
+        }
+        if (passwordStr.matches(regexZST)) {
+            return "强";
+        }
+        return passwordStr;
+    }
+
 
     public static void main(String[] args) {
-        String value = null;
+
+        System.out.println(checkPassword("f0a2adfdf56241bf839d714f7f74f4d1"));
+     /*   String value = null;
         value = stripXss("<script language=text/javascript>alert(document.cookie);</script>");
         System.out.println("type-1: '" + value + "'");
 
@@ -551,7 +591,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         System.out.println("type-12: '" + value + "'");
 
         value = stripXss("<=img onstop=");
-        System.out.println("type-13: '" + value + "'");
+        System.out.println("type-13: '" + value + "'");*/
 
         // System.out.println(formatBytes(1222));
         //System.out.println(underlineToCamel("create_time"));
