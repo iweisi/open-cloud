@@ -114,7 +114,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         int result = systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         // 功能授权
-        app.setAuthorities(grantApi(app.getAppId(), app.getAuthorities().split(",")));
+        app.setAuthorities(grantAccess(app.getAppId(), app.getAuthorities().split(",")));
         // 保持客户端信息
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, "", app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!resp.isOk()) {
@@ -141,7 +141,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
         // 功能授权
-        app.setAuthorities(grantApi(app.getAppId(), app.getAuthorities().split(",")));
+        app.setAuthorities(grantAccess(app.getAppId(), app.getAuthorities().split(",")));
         // 修改客户端信息
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.updateClient(app.getAppId(), app.getGrantTypes(), "", app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!resp.isOk()) {
@@ -201,12 +201,12 @@ public class SystemAppServiceImpl implements SystemAppService {
 
     /**
      * 授权功能
-     *
-     * @param apiCodes
-     * @return
+     * @param appId 应用ID
+     * @param apiCodes api编码
+     * @return authorities 授权后的权限标识
      */
     @Override
-    public String grantApi(String appId, String... apiCodes) {
+    public String grantAccess(String appId, String... apiCodes) {
         List<Long> apiIds = systemApiService.findIdsByCodes(apiCodes);
         return systemGrantAccessService.addGrantAccess(appId, BaseConstants.AUTHORITY_PREFIX_APP, BaseConstants.RESOURCE_TYPE_API, apiIds.toArray(new Long[apiIds.size()]));
     }

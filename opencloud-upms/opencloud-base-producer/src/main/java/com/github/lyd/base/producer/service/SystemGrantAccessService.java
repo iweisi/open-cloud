@@ -60,7 +60,7 @@ public interface SystemGrantAccessService {
      * @param authorityPrefix 权限前缀:用户(USER_) 、角色(ROLE_)、APP(APP_)
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
-     * @return
+     * @return authorities 授权后的权限标识
      */
     String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
 

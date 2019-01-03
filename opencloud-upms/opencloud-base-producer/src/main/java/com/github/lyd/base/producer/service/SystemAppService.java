@@ -70,9 +70,11 @@ public interface SystemAppService {
     Boolean removeApp(String appId);
 
     /**
-     * 授权功能
-     * @param apiCodes
-     * @return
+     * APP授权功能
+     *
+     * @param appId    应用ID
+     * @param apiCodes api编码
+     * @return authorities 授权后的权限标识
      */
-    String grantApi(String appId, String ...apiCodes);
+    String grantAccess(String appId, String... apiCodes);
 }

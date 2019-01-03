@@ -46,7 +46,6 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
     private String DEFAULT_PREFIX = "/";
-    private String DEFAULT_TARGET = "_self";
 
     private final List<String> AUTH_PREFIX_LIST = Lists.newArrayList(new String[]{
             BaseConstants.AUTHORITY_PREFIX_ROLE,
@@ -198,7 +197,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @param authorityPrefix 拥有者类型
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
-     * @return authorities
+     * @return authorities 授权后的权限标识
      */
     @Override
     public String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds) {

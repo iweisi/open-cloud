@@ -7,6 +7,7 @@ import com.github.lyd.common.utils.DateUtils;
 import com.github.lyd.common.utils.RandomValueUtils;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
+import com.github.lyd.gateway.client.api.ApiGatewayRemoteService;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,8 +24,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author liuyadu
+ */
 @RestController
-public class ApiController {
+public class ApiGatewayController implements ApiGatewayRemoteService {
     @Autowired
     private OpenRestTemplate openRestTemplate;
     @Autowired
@@ -99,6 +103,7 @@ public class ApiController {
      */
     @ApiOperation(value = "获取网关缓存的访问限制", notes = "获取网关缓存的访问限制")
     @GetMapping(value = "/access/cache")
+    @Override
     public ResultBody accessCache() {
         return ResultBody.success(accessLocator.getAccessList());
     }
