@@ -110,7 +110,7 @@ public class SystemActionServiceImpl implements SystemActionService {
             throw new OpenMessageException(String.format("%sAction编码已存在,不允许重复添加", action.getActionCode()));
         }
         if (action.getMenuId() == null) {
-            action.setMenuId(0l);
+            action.setMenuId(0L);
         }
         if (action.getPriority() == null) {
             action.setPriority(0);

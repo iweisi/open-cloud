@@ -1,7 +1,11 @@
 package com.github.lyd.gateway.producer.controller;
 
+import com.github.lyd.base.client.entity.SystemGatewayRateLimit;
+import com.github.lyd.base.client.entity.SystemGatewayRoute;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.github.lyd.common.autoconfigure.GatewayProperties;
 import com.github.lyd.common.http.OpenRestTemplate;
+import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.utils.DateUtils;
 import com.github.lyd.common.utils.RandomValueUtils;
@@ -9,6 +13,8 @@ import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.client.api.ApiGatewayRemoteService;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.locator.RateLimitLocator;
+import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,6 +28,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,6 +42,10 @@ public class ApiGatewayController implements ApiGatewayRemoteService {
     private GatewayProperties gatewayProperties;
     @Autowired
     private AccessLocator accessLocator;
+    @Autowired
+    private ZuulRouteLocator zuulRouteLocator;
+    @Autowired
+    private RateLimitLocator rateLimitLocator;
 
     /**
      * 平台登录
@@ -96,15 +107,43 @@ public class ApiGatewayController implements ApiGatewayRemoteService {
     }
 
     /**
-     * 参数签名
+     * 获取网关缓存的访问限制列表
      *
      * @param
      * @return
      */
-    @ApiOperation(value = "获取网关缓存的访问限制", notes = "获取网关缓存的访问限制")
+    @ApiOperation(value = "获取网关缓存的访问限制列表", notes = "获取网关缓存的访问限制列表")
     @GetMapping(value = "/access/cache")
     @Override
-    public ResultBody accessCache() {
-        return ResultBody.success(accessLocator.getAccessList());
+    public ResultBody<PageList<SystemGrantAccess>> accessCache() {
+        List list = accessLocator.getAccessList();
+        return ResultBody.success(new PageList(list, list.size()));
+    }
+
+    /**
+     * 获取网关限流缓存
+     *
+     * @param
+     * @return
+     */
+    @ApiOperation(value = "获取网关缓存的限流列表", notes = "获取网关缓存的限流列表")
+    @GetMapping(value = "/limit/cache")
+    @Override
+    public ResultBody<PageList<SystemGatewayRateLimit>> limitCache() {
+        List list = rateLimitLocator.getLimitList();
+        return ResultBody.success(new PageList(list, list.size()));
+    }
+
+    /**
+     * 获取网关缓存的路由列表
+     *
+     * @return
+     */
+    @ApiOperation(value = "获取网关缓存的路由列表", notes = "获取网关缓存的路由列表")
+    @GetMapping(value = "/route/cache")
+    @Override
+    public ResultBody<PageList<SystemGatewayRoute>> routeCache() {
+        List list = zuulRouteLocator.getRouteList();
+        return ResultBody.success(new PageList(list, list.size()));
     }
 }

@@ -19,11 +19,6 @@
             <artifactId>opencloud-gateway-client</artifactId>
             <version>${opencloud.gateway-client.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.lyd</groupId>
-            <artifactId>opencloud-base-client</artifactId>
-            <version>${opencloud.base-client.version}</version>
-        </dependency>
         <!--zuul网关-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

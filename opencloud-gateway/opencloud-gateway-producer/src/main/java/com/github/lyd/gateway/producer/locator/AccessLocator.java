@@ -21,7 +21,7 @@ import java.util.List;
 public class AccessLocator {
     private HashMap<String, Collection<ConfigAttribute>> map = Maps.newHashMap();
     private SystemGrantAccessApi systemAccessApi;
-    private ZuulRoutesLocator zuulRoutesLocator;
+    private ZuulRouteLocator zuulRoutesLocator;
 
     private List<SystemGrantAccess> accessList;
 
@@ -33,7 +33,7 @@ public class AccessLocator {
         this.accessList = accessList;
     }
 
-    public AccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRoutesLocator zuulRoutesLocator) {
+    public AccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRouteLocator zuulRoutesLocator) {
         this.systemAccessApi = systemAccessApi;
         this.zuulRoutesLocator = zuulRoutesLocator;
     }

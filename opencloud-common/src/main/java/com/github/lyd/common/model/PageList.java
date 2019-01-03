@@ -17,4 +17,9 @@ public class PageList<T> extends PageSerializable {
     public PageList(List<T> rows) {
         super(rows);
     }
+
+    public PageList(List<T> rows,long total) {
+        super(rows);
+        super.setTotal(total);
+    }
 }

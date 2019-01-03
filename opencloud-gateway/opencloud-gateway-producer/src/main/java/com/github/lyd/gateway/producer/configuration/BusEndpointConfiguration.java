@@ -6,7 +6,7 @@ import com.github.lyd.gateway.producer.filter.ZuulErrorFilter;
 import com.github.lyd.gateway.producer.filter.ZuulPreFilter;
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
-import com.github.lyd.gateway.producer.locator.ZuulRoutesLocator;
+import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
 import com.marcosbarbero.cloud.autoconfigure.zuul.ratelimit.config.properties.RateLimitProperties;
 import com.netflix.zuul.ZuulFilter;
@@ -32,10 +32,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class BusEndpointConfiguration {
     private RateLimitLocator rateLimitLocator;
-    private ZuulRoutesLocator zuulRoutesLocator;
+    private ZuulRouteLocator zuulRoutesLocator;
     private AccessLocator permissionLocator;
     @Bean
-    public AccessLocator permissionLocator(ZuulRoutesLocator zuulRoutesLocator, SystemGrantAccessApi systemAccessApi) {
+    public AccessLocator permissionLocator(ZuulRouteLocator zuulRoutesLocator, SystemGrantAccessApi systemAccessApi) {
         permissionLocator = new AccessLocator(systemAccessApi, zuulRoutesLocator);
         return permissionLocator;
     }
@@ -67,8 +67,8 @@ public class BusEndpointConfiguration {
      * @return
      */
     @Bean
-    public ZuulRoutesLocator zuulRouteLocator(ZuulProperties zuulProperties, ServerProperties serverProperties, JdbcTemplate jdbcTemplate) {
-        zuulRoutesLocator = new ZuulRoutesLocator(serverProperties.getServlet().getPath(), zuulProperties, jdbcTemplate);
+    public ZuulRouteLocator zuulRouteLocator(ZuulProperties zuulProperties, ServerProperties serverProperties, JdbcTemplate jdbcTemplate) {
+        zuulRoutesLocator = new ZuulRouteLocator(serverProperties.getServlet().getPath(), zuulProperties, jdbcTemplate);
         zuulRoutesLocator.setJdbcTemplate(jdbcTemplate);
         log.debug("注入ZuulRoutesLocator", zuulRoutesLocator);
         return zuulRoutesLocator;

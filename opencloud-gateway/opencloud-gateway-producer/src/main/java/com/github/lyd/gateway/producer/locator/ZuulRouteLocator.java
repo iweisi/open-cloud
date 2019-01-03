@@ -23,10 +23,11 @@ import java.util.Map;
  * @description:
  */
 @Slf4j
-public class ZuulRoutesLocator extends SimpleRouteLocator {
+public class ZuulRouteLocator extends SimpleRouteLocator {
 
     private JdbcTemplate jdbcTemplate;
     private ZuulProperties properties;
+    private List<SystemGatewayRoute> routeList;
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
@@ -36,7 +37,7 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
         jdbcTemplate = jdbcTemplate;
     }
 
-    public ZuulRoutesLocator(String servletPath, ZuulProperties properties, JdbcTemplate jdbcTemplate) {
+    public ZuulRouteLocator(String servletPath, ZuulProperties properties, JdbcTemplate jdbcTemplate) {
         super(servletPath, properties);
         this.properties = properties;
         this.jdbcTemplate = jdbcTemplate;
@@ -87,10 +88,10 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
     public Map<String, ZuulRoute> loadRouteWithDb() {
         Map<String, ZuulProperties.ZuulRoute> routes = Maps.newLinkedHashMap();
         try {
-            List<SystemGatewayRoute> results = jdbcTemplate.query("select * from system_gateway_route where status = 1 ", new
+            routeList = jdbcTemplate.query("select * from system_gateway_route where status = 1 ", new
                     BeanPropertyRowMapper<>(SystemGatewayRoute.class));
-            if (results != null && results.size() > 0) {
-                for (SystemGatewayRoute result : results) {
+            if (routeList != null && routeList.size() > 0) {
+                for (SystemGatewayRoute result : routeList) {
                     if (StringUtils.isEmpty(result.getPath())) {
                         continue;
                     }
@@ -107,5 +108,13 @@ public class ZuulRoutesLocator extends SimpleRouteLocator {
             log.error("加载动态路由错误:{}", e.getMessage());
         }
         return routes;
+    }
+
+    public List<SystemGatewayRoute> getRouteList() {
+        return routeList;
+    }
+
+    public void setRouteList(List<SystemGatewayRoute> routeList) {
+        this.routeList = routeList;
     }
 }

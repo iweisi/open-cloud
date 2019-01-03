@@ -26,7 +26,7 @@ public class RateLimitLocator {
     private JdbcTemplate jdbcTemplate;
     private RateLimitProperties properties;
     private StringToMatchTypeConverter converter;
-
+    private  List<SystemGatewayRateLimit> limitList;
     public RateLimitLocator(JdbcTemplate jdbcTemplate, RateLimitProperties properties) {
         this.jdbcTemplate = jdbcTemplate;
         this.properties = properties;
@@ -93,10 +93,10 @@ public class RateLimitLocator {
     protected Map<String, List<RateLimitProperties.Policy>> loadRateLimitWithDb() {
         Map<String, List<RateLimitProperties.Policy>> policyMap = Maps.newLinkedHashMap();
         try{
-            List<SystemGatewayRateLimit> results = jdbcTemplate.query("select * from system_gateway_rate_limit  where status = 1", new
+            limitList = jdbcTemplate.query("select * from system_gateway_rate_limit  where status = 1", new
                     BeanPropertyRowMapper<>(SystemGatewayRateLimit.class));
-            if (results != null && results.size() > 0) {
-                for (SystemGatewayRateLimit result : results) {
+            if (limitList != null && limitList.size() > 0) {
+                for (SystemGatewayRateLimit result : limitList) {
                     List<RateLimitProperties.Policy> policyList = policyMap.get(result.getServiceId());
                     if (policyList == null) {
                         policyList = Lists.newArrayList();
@@ -129,5 +129,13 @@ public class RateLimitLocator {
             log.error("加载动态限流错误:{}",e.getMessage());
         }
         return policyMap;
+    }
+
+    public List<SystemGatewayRateLimit> getLimitList() {
+        return limitList;
+    }
+
+    public void setLimitList(List<SystemGatewayRateLimit> limitList) {
+        this.limitList = limitList;
     }
 }

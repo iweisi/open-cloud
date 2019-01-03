@@ -27,7 +27,7 @@ package com.github.lyd.gateway.producer.configuration;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.github.lyd.common.autoconfigure.SwaggerProperties;
-import com.github.lyd.gateway.producer.locator.ZuulRoutesLocator;
+import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.alibaba.nacos.NacosDiscoveryProperties;
@@ -52,7 +52,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
 
     private SwaggerProperties swaggerProperties;
 
-    private ZuulRoutesLocator zuulRoutesLocator;
+    private ZuulRouteLocator zuulRoutesLocator;
 
     private NamingService namingService;
 
@@ -60,7 +60,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
     }
 
     @Autowired
-    public  DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRoutesLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
+    public  DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRouteLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
         this.swaggerProperties = swaggerProperties;
         this.zuulRoutesLocator = zuulRoutesLocator;
         this.namingService = discoveryProperties.namingServiceInstance();

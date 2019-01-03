@@ -2,7 +2,7 @@ package com.github.lyd.gateway.producer.event;
 
 import com.github.lyd.gateway.producer.locator.AccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
-import com.github.lyd.gateway.producer.locator.ZuulRoutesLocator;
+import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import org.springframework.context.ApplicationListener;
 
 /**
@@ -18,14 +18,14 @@ public class GatewayRefreshRemoteListener implements ApplicationListener<Gateway
     /**
      * 路由加载器
      */
-    private ZuulRoutesLocator routesLocator;
+    private ZuulRouteLocator routesLocator;
 
     /**
      * 权限加载器
      */
     private AccessLocator permissionLocator;
 
-    public GatewayRefreshRemoteListener(RateLimitLocator rateLimitLocator, ZuulRoutesLocator routesLocator,AccessLocator permissionLocator) {
+    public GatewayRefreshRemoteListener(RateLimitLocator rateLimitLocator, ZuulRouteLocator routesLocator, AccessLocator permissionLocator) {
         this.rateLimitLocator = rateLimitLocator;
         this.routesLocator = routesLocator;
         this.permissionLocator = permissionLocator;
@@ -39,11 +39,11 @@ public class GatewayRefreshRemoteListener implements ApplicationListener<Gateway
         this.rateLimitLocator = rateLimitLocator;
     }
 
-    public ZuulRoutesLocator getRoutesLocator() {
+    public ZuulRouteLocator getRoutesLocator() {
         return routesLocator;
     }
 
-    public void setRoutesLocator(ZuulRoutesLocator routesLocator) {
+    public void setRoutesLocator(ZuulRouteLocator routesLocator) {
         this.routesLocator = routesLocator;
     }
 

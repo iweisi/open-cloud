@@ -197,7 +197,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @param authorityPrefix 拥有者类型
      * @param resourceType    资源类型
      * @param resourceIds     资源ID
-     * @return authorities 授权后的权限标识
+     * @return authorities
      */
     @Override
     public String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds) {

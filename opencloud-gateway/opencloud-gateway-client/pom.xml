@@ -19,6 +19,11 @@
             <groupId>com.github.lyd</groupId>
             <version>${opencloud.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.lyd</groupId>
+            <artifactId>opencloud-base-client</artifactId>
+            <version>${opencloud.base-client.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <!-- 打包后文件的最终名字-->
