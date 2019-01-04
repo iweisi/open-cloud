@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.event;
 
-import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import org.springframework.context.ApplicationListener;
@@ -23,9 +23,9 @@ public class GatewayRefreshRemoteListener implements ApplicationListener<Gateway
     /**
      * 权限加载器
      */
-    private AccessLocator permissionLocator;
+    private GrantAccessLocator permissionLocator;
 
-    public GatewayRefreshRemoteListener(RateLimitLocator rateLimitLocator, ZuulRouteLocator routesLocator, AccessLocator permissionLocator) {
+    public GatewayRefreshRemoteListener(RateLimitLocator rateLimitLocator, ZuulRouteLocator routesLocator, GrantAccessLocator permissionLocator) {
         this.rateLimitLocator = rateLimitLocator;
         this.routesLocator = routesLocator;
         this.permissionLocator = permissionLocator;

@@ -57,7 +57,7 @@ public class OpenExceptionHandler {
     public static ResultBody authenticationException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ResultEnum code = ResultEnum.ERROR;
         if (ex instanceof UsernameNotFoundException) {
-            code = ResultEnum.USERNAME_NOTFOUND;
+            code = ResultEnum.USERNAME_NOT_FOUND;
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else if (ex instanceof BadCredentialsException) {
             code = ResultEnum.BAD_CREDENTIALS;

@@ -18,7 +18,7 @@ import java.util.List;
  * @author liuyadu
  */
 @Slf4j
-public class AccessLocator {
+public class GrantAccessLocator {
     private HashMap<String, Collection<ConfigAttribute>> map = Maps.newHashMap();
     private SystemGrantAccessApi systemAccessApi;
     private ZuulRouteLocator zuulRoutesLocator;
@@ -33,7 +33,7 @@ public class AccessLocator {
         this.accessList = accessList;
     }
 
-    public AccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRouteLocator zuulRoutesLocator) {
+    public GrantAccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRouteLocator zuulRoutesLocator) {
         this.systemAccessApi = systemAccessApi;
         this.zuulRoutesLocator = zuulRoutesLocator;
     }
@@ -57,14 +57,9 @@ public class AccessLocator {
             for (Route route : rotes) {
                 // 服务ID相同
                 if (route.getId().equals(assess.getServiceId())) {
-                    String path = assess.getPath();
                     String prefix = assess.getResource().getOrDefault("prefix", "/").toString();
-                    path = prefix + assess.getPath();
-                    if (route.isPrefixStripped()) {
-                        return path;
-                    } else {
-                        return route.getPrefix().concat(path);
-                    }
+                    String path = prefix + assess.getPath();
+                    return route.getPrefix().concat(path);
                 }
             }
         }

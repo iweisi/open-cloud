@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.common.constants.GlobalConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenHelper;
@@ -46,8 +46,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                //只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
+                // 只有拥有actuator权限可执行远程端点
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(GlobalConstants.AUTHORITY_ACTUATOR)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

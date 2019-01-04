@@ -2,16 +2,15 @@ package com.github.lyd.gateway.producer.configuration;
 
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.constants.GlobalConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.WebUtils;
-import com.github.lyd.gateway.producer.filter.AccessUrlFilter;
-import com.github.lyd.gateway.producer.filter.AccessUrlMetadataSource;
-import com.github.lyd.gateway.producer.filter.AccessUrlVoter;
+import com.github.lyd.gateway.producer.filter.GrantAccessMetadataSource;
 import com.github.lyd.gateway.producer.filter.SignatureFilter;
-import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,16 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointR
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AbstractAccessDecisionManager;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
@@ -54,7 +54,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private ResourceServerProperties properties;
     @Autowired
-    private AccessLocator permissionLocator;
+    private GrantAccessLocator accessLocator;
     @Autowired
     private GatewayProperties gatewayProperties;
     @Autowired
@@ -69,13 +69,32 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        // 增加签名过滤器
+        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
                 // 放行自定义Oauth2登录
-                .antMatchers("/login/token").permitAll()
-                // 只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(BaseConstants.SUPER_ROLE)
+                .antMatchers("/login/**",
+                        "/**/oauth/token/**",
+                        "/**/oauth/check_token/**").permitAll()
+                // 只有拥有actuator权限可执行远程端点
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(GlobalConstants.AUTHORITY_ACTUATOR)
+                // 自定义FilterSecurityInterceptor
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(
+                            O fsi) {
+                        //追加到默认投票器链,支持默认表达式方式
+                        if (fsi.getAccessDecisionManager() instanceof AffirmativeBased) {
+                            AffirmativeBased affirmativeBased = (AffirmativeBased) fsi.getAccessDecisionManager();
+                            affirmativeBased.getDecisionVoters().addAll(decisionVoters());
+                        }
+                        // 设置权限配置并引用默认的权限配置
+                        fsi.setSecurityMetadataSource(grantAccessMetadataSource(fsi.getSecurityMetadataSource()));
+                        return fsi;
+                    }
+                })
                 .anyRequest().authenticated()
                 // SSO退出
                 .and().logout().logoutSuccessHandler(new SsoLogoutSuccessHandler(gatewayProperties.getServerAddr() + "/auth/logout", restTemplate))
@@ -86,15 +105,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
                 .and()
                 .csrf().disable();
-        /**
-         * 增加签名过滤器
-         */
-        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
-        /**
-         * 自定义动态权限过滤器
-         */
-        http.addFilterBefore(new AccessUrlFilter(accessDecisionManager(), new AccessUrlMetadataSource(permissionLocator)), FilterSecurityInterceptor.class);
-
     }
 
     static class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
@@ -111,19 +121,17 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             try {
                 restTemplate.getForEntity(defaultTargetUrl, String.class);
             } catch (Exception e) {
-                log.error("sso logout error:",e);
+                log.error("sso logout error:", e);
             }
             WebUtils.writeJson(response, ResultBody.success("退出成功", null));
         }
     }
 
     /**
-     * 权限管理,投票器
+     * 自定义投票器
      */
-    private AbstractAccessDecisionManager accessDecisionManager() {
+    private List<AccessDecisionVoter<? extends Object>> decisionVoters() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList();
-        //自定义URL投票器
-        AccessUrlVoter accessUrlVoter = new AccessUrlVoter(gatewayProperties);
         //默认角色投票器,默认前缀为ROLE_
         RoleVoter roleVoter = new RoleVoter();
         //用户权限投票器,修改前缀为USER_
@@ -135,10 +143,18 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         decisionVoters.add(roleVoter);
         decisionVoters.add(userVoter);
         decisionVoters.add(appVoter);
-        decisionVoters.add(accessUrlVoter);
-        AbstractAccessDecisionManager accessDecisionManager = new AffirmativeBased(decisionVoters);
-        return accessDecisionManager;
+        return decisionVoters;
     }
 
+    /**
+     * 自定义权限配置
+     *
+     * @param filterInvocationSecurityMetadataSource
+     * @return
+     */
+    public GrantAccessMetadataSource grantAccessMetadataSource(FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource) {
+        GrantAccessMetadataSource securityMetadataSource = new GrantAccessMetadataSource(accessLocator, gatewayProperties, filterInvocationSecurityMetadataSource);
+        return securityMetadataSource;
+    }
 }
 

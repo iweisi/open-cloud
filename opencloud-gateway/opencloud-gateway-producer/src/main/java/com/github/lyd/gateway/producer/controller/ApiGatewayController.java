@@ -12,7 +12,7 @@ import com.github.lyd.common.utils.RandomValueUtils;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.client.api.ApiGatewayRemoteService;
-import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import com.google.common.collect.Maps;
@@ -41,7 +41,7 @@ public class ApiGatewayController implements ApiGatewayRemoteService {
     @Autowired
     private GatewayProperties gatewayProperties;
     @Autowired
-    private AccessLocator accessLocator;
+    private GrantAccessLocator accessLocator;
     @Autowired
     private ZuulRouteLocator zuulRouteLocator;
     @Autowired

@@ -4,7 +4,7 @@ import com.github.lyd.gateway.producer.endpoint.GatewayRefreshBusEndpoint;
 import com.github.lyd.gateway.producer.event.GatewayRefreshRemoteListener;
 import com.github.lyd.gateway.producer.filter.ZuulErrorFilter;
 import com.github.lyd.gateway.producer.filter.ZuulPreFilter;
-import com.github.lyd.gateway.producer.locator.AccessLocator;
+import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
@@ -33,10 +33,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class BusEndpointConfiguration {
     private RateLimitLocator rateLimitLocator;
     private ZuulRouteLocator zuulRoutesLocator;
-    private AccessLocator permissionLocator;
+    private GrantAccessLocator permissionLocator;
     @Bean
-    public AccessLocator permissionLocator(ZuulRouteLocator zuulRoutesLocator, SystemGrantAccessApi systemAccessApi) {
-        permissionLocator = new AccessLocator(systemAccessApi, zuulRoutesLocator);
+    public GrantAccessLocator permissionLocator(ZuulRouteLocator zuulRoutesLocator, SystemGrantAccessApi systemAccessApi) {
+        permissionLocator = new GrantAccessLocator(systemAccessApi, zuulRoutesLocator);
         return permissionLocator;
     }
     @Bean

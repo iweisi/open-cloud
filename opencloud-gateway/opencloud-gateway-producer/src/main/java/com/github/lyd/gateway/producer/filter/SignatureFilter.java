@@ -39,7 +39,11 @@ public class SignatureFilter implements Filter {
     /**
      * 忽略签名
      */
-    private final static List<RequestMatcher> IGNORE_MATCHER = getIgnoreMatchers("/sign");
+    private final static List<RequestMatcher> NOT_SIGN = getIgnoreMatchers(
+            "/sign",
+            "/**/login/**",
+            "/**/logout/**"
+    );
 
     public SignatureFilter(SystemAppApi systemAppApi, GatewayProperties gatewayProperties) {
         this.systemAppApi = systemAppApi;
@@ -60,8 +64,8 @@ public class SignatureFilter implements Filter {
         return matchers;
     }
 
-    protected boolean isIgnore(HttpServletRequest request) {
-        for (RequestMatcher match : IGNORE_MATCHER) {
+    protected boolean notSign(HttpServletRequest request) {
+        for (RequestMatcher match : NOT_SIGN) {
             if (match.matches(request)) {
                 return true;
             }
@@ -76,7 +80,7 @@ public class SignatureFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         OpenUserAuth auth = OpenHelper.getUserAuth();
-        if (isAuthenticated() && gatewayProperties.getEnabledValidateSign() && !isIgnore(request)) {
+        if (isAuthenticated() && gatewayProperties.getEnabledValidateSign() && !notSign(request)) {
             try {
                 //开始验证签名
                 String appId = auth.getAuthAppId();
@@ -92,8 +96,6 @@ public class SignatureFilter implements Filter {
                     }
                     // 强制覆盖请求参数clientId
                     params.put("clientId", app.getAppId());
-                    // 校验必填参数
-                    SignatureUtils.validateParams(params);
                     // 服务器验证签名结果
                     if (!SignatureUtils.validateSign(params, app.getAppSecret())) {
                         throw new OpenSignatureException("签名验证失败!");
