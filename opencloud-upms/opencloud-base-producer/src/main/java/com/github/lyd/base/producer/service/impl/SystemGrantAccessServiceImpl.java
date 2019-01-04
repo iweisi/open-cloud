@@ -350,8 +350,24 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             code = api.getApiCode();
         }
         if (object != null) {
-            // 默认权限标识:前缀+资源编码
-            authority = authorityPrefix + code;
+            if (authorityPrefix != null) {
+                if (BaseConstants.AUTHORITY_PREFIX_ROLE.equals(authorityPrefix)) {
+                    SystemRole role = systemRoleService.getRole(Long.parseLong(authorityOwner));
+                    // 角色授权标识=ROLE_角色编码
+                    authority = authorityPrefix + role.getRoleCode();
+                } else {
+                    // APP授权状态
+                    if (BaseConstants.AUTHORITY_PREFIX_APP.equals(authorityPrefix)) {
+                        SystemApp systemApp = systemAppMapper.selectByPrimaryKey(authorityOwner);
+                        if (systemApp != null) {
+                            // 根据APP的状态强制覆盖
+                            status = systemApp.getStatus();
+                        }
+                    }
+                    // 默认权限标识:前缀+资源编码
+                    authority = authorityPrefix + code;
+                }
+            }
             grantAccess = new SystemGrantAccess();
             grantAccess.setServiceId(serviceId);
             grantAccess.setResourceId(resourceId);
