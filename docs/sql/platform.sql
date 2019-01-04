@@ -119,6 +119,7 @@ CREATE TABLE `system_api` (
 -- Records of system_api
 -- ----------------------------
 INSERT INTO `system_api` VALUES ('1', 'all', '全部', 'default', '', 'opencloud-base-producer', '/action/update', '0', '1', '2018-12-28 14:27:16', '2019-01-02 23:00:08', '1');
+INSERT INTO `system_api` VALUES ('2', 'actuator', '监控端点', 'default', '监控端点', 'opencloud-base-producer', '/actuator/**', '0', '1', '2018-12-28 14:27:16', '2019-01-02 23:00:08', '1');
 INSERT INTO `system_api` VALUES ('530161332444463104', 'login', 'login', 'default', 'com.github.lyd.base.producer.controller.SystemAccountController', 'opencloud-base-producer', '/account/login', '0', '1', '2019-01-02 23:11:51', '2019-01-03 20:33:50', '1');
 INSERT INTO `system_api` VALUES ('530161332704509952', 'action', '操作列表', 'default', 'com.github.lyd.base.producer.controller.SystemActionController', 'opencloud-base-producer', '/action', '0', '1', '2019-01-02 23:11:51', '2019-01-03 20:33:50', '1');
 INSERT INTO `system_api` VALUES ('530161333014888448', 'updateStatus', '更新状态', 'default', 'com.github.lyd.base.producer.controller.SystemRoleController', 'opencloud-base-producer', '/role/update/status', '0', '1', '2019-01-02 23:11:51', '2019-01-03 20:33:51', '1');
