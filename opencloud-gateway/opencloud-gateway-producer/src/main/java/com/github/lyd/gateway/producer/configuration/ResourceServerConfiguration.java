@@ -75,7 +75,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 // 放行自定义Oauth2登录
-                .antMatchers("/login/**",
+                .antMatchers("/**/login/**",
+                        "/**/logout/**",
                         "/**/oauth/token/**",
                         "/**/oauth/check_token/**").permitAll()
                 // 只有拥有actuator权限可执行远程端点
