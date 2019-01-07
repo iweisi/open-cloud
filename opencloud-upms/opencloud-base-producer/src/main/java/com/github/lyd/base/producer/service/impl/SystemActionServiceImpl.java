@@ -65,7 +65,7 @@ public class SystemActionServiceImpl implements SystemActionService {
                 .and()
                 .andEqualTo("menuId", menuId).end()
                 .build();
-        example.setOrderByClause("action_id asc,priority  asc");
+        example.orderBy("actionId").asc().orderBy("priority").asc();
         List<SystemAction> list = systemActionMapper.selectByExample(example);
         return new PageList(list);
     }

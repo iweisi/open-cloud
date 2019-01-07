@@ -62,7 +62,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         Example example = builder.criteria()
                 .orLike("apiCode", keyword)
                 .orLike("apiName", keyword).end().build();
-        example.setOrderByClause("api_id asc,priority asc");
+        example.orderBy("apiId").asc().orderBy("priority").asc();
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         return new PageList(list);
     }
@@ -109,7 +109,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         if (api.getApiCategory() == null) {
             api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
-        if(api.getIsPersist()==null){
+        if (api.getIsPersist() == null) {
             api.setIsPersist(BaseConstants.DISABLED);
         }
         api.setCreateTime(new Date());
@@ -197,7 +197,7 @@ public class SystemApiServiceImpl implements SystemApiService {
     @Override
     public Boolean removeApi(Long apiId) {
         SystemApi api = getApi(apiId);
-        if(api!=null && api.getIsPersist().equals(BaseConstants.ENABLED)){
+        if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
         if (systemAccessService.isExist(apiId, BaseConstants.RESOURCE_TYPE_API)) {
