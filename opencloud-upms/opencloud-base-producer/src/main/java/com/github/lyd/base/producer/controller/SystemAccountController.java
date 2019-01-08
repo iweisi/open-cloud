@@ -27,12 +27,12 @@ public class SystemAccountController implements SystemAccountRemoteService {
     private SystemAccountService systemAccountService;
 
     /**
-     * 平台登录
+     * 获取账号登录信息
      *
      * @param username 登录名
      * @return
      */
-    @ApiOperation(value = "平台登录",notes = "仅限系统内部调用")
+    @ApiOperation(value = "获取账号登录信息",notes = "获取账号登录信息,仅限系统内部调用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
     })
