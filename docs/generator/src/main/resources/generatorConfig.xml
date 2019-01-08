@@ -54,7 +54,7 @@
         <javaClientGenerator targetPackage="com.github.lyd.mapper"
                              targetProject="docs/generator/src/main/java"
                              type="XMLMAPPER"/>
-        <table tableName="platform_user_login_logs%">
+        <table tableName="%">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
     </context>
