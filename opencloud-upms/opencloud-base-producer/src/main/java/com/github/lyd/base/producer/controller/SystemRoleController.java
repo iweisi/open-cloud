@@ -215,7 +215,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("actionIds") String actionIds
     ) {
-        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_MENU, actionIds.split(","));
+        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_ACTION, actionIds.split(","));
         return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
     }
 
@@ -237,7 +237,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("apiIds") String apiIds
     ) {
-        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_MENU, apiIds.split(","));
+        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_API, apiIds.split(","));
         return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
     }
 

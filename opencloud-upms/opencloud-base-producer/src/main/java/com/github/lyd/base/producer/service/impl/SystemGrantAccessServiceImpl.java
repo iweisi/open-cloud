@@ -364,8 +364,11 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                             status = systemApp.getStatus();
                         }
                     }
-                    // 默认权限标识:前缀+资源编码
-                    authority = authorityPrefix + code;
+                    if ("all".equals(code)) {
+                        authority = authorityPrefix + code;
+                    } else {
+                        authority = authorityPrefix + resourceType + "_" + code;
+                    }
                 }
             }
             grantAccess = new SystemGrantAccess();
