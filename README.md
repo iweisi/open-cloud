@@ -1,9 +1,9 @@
 <p align="center">
-  <a target="_blank" href="https://nacos.io/en-us/"><img src="https://img.shields.io/badge/Nacos-laster-blue.svg" alt="Nacos"></a>
-  <a><img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.RELEASE-brightgreen.svg" alt="SpringCloud"></a>
-  <a><img src="https://img.shields.io/badge/Spring%20Boot-2.0.4-brightgreen.svg" alt="SpringBoot"></a>
-  <a><img src="https://img.shields.io/badge/Redis-x.x-orange.svg"></a>
-  <a><img src="https://img.shields.io/badge/RabbitMq-x.x-orange.svg"></a>
+  <a target="_blank" href="https://nacos.io/en-us/"><img src="https://img.shields.io/badge/Nacos-0.2.1-blue.svg" alt="Nacos"></a>
+  <a><img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.SR2-brightgreen.svg" alt="SpringCloud"></a>
+  <a><img src="https://img.shields.io/badge/Spring%20Boot-2.0.6-brightgreen.svg" alt="SpringBoot"></a>
+  <a><img src="https://img.shields.io/badge/Redis-orange.svg"></a>
+  <a><img src="https://img.shields.io/badge/RabbitMq-orange.svg"></a>
   <a target="_blank" href="https://www.iviewui.com/docs/guide/install"><img src="https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square" alt="iview"></a>
   <a><img src="https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square" alt="vue"></a>
   <a><img src="https://img.shields.io/npm/l/express.svg" alt="License"></a>

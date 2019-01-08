@@ -9,6 +9,7 @@ import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.utils.WebUtils;
 import com.github.lyd.gateway.producer.filter.GrantAccessMetadataSource;
+import com.github.lyd.gateway.producer.filter.GrantAccessVoter;
 import com.github.lyd.gateway.producer.filter.SignatureFilter;
 import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
@@ -19,7 +20,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -77,8 +77,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/**/logout/**",
                         "/**/oauth/token/**",
                         "/**/oauth/check_token/**").permitAll()
-                // 匹配全部功能权限
-                .antMatchers("/**").hasAnyAuthority(GlobalConstants.AUTHORITY_ALL)
                 // 匹配监控权限actuator可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(GlobalConstants.AUTHORITY_ACTUATOR)
                 // 自定义动态全新拦截,支持原有表达式方式和自定义权限投票
@@ -137,12 +135,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private List<AccessDecisionVoter<? extends Object>> decisionVoters() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList();
         //默认角色投票器,默认前缀为ROLE_
-        RoleVoter roleVoter = new RoleVoter();
+        GrantAccessVoter roleVoter = new GrantAccessVoter();
         //用户权限投票器,修改前缀为USER_
-        RoleVoter userVoter = new RoleVoter();
+        GrantAccessVoter userVoter = new GrantAccessVoter();
         userVoter.setRolePrefix(BaseConstants.AUTHORITY_PREFIX_USER);
         //应用权限投票器,修改前缀为APP_
-        RoleVoter appVoter = new RoleVoter();
+        GrantAccessVoter appVoter = new GrantAccessVoter();
         appVoter.setRolePrefix(BaseConstants.AUTHORITY_PREFIX_APP);
         decisionVoters.add(roleVoter);
         decisionVoters.add(userVoter);

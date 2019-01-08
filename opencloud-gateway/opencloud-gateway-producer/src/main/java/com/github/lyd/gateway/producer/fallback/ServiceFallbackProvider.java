@@ -27,6 +27,7 @@ package com.github.lyd.gateway.producer.fallback;
 import com.alibaba.fastjson.JSONObject;
 import com.github.lyd.common.constants.ResultEnum;
 import com.github.lyd.common.model.ResultBody;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,7 @@ import java.io.InputStream;
  * @description:
  */
 @Component
+@Slf4j
 public class ServiceFallbackProvider implements FallbackProvider {
 
     @Override
@@ -78,6 +80,7 @@ public class ServiceFallbackProvider implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
+                log.error(s,throwable);
                 //响应体
                 String content = JSONObject.toJSONString(ResultBody.failed(ResultEnum.SERVICE_NOT_FOUND.getCode(), "微服务不可用，请稍后再试"));
                 return new ByteArrayInputStream(content.getBytes());

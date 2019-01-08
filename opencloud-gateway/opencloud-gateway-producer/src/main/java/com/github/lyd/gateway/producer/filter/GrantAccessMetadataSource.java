@@ -62,7 +62,7 @@ public class GrantAccessMetadataSource implements
         }
         Collection<ConfigAttribute> attributes = expressionSecurityMetadataSource.getAttributes(object);
         // 表达式匹配未直接放行,并且开启动态权限验证.则返回默认权限.
-        if (!attributes.toString().contains("permitAll") && gatewayProperties.getEnabledValidateAccess()) {
+        if (!attributes.toString().contains("permitAll")) {
             attributes = SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS");
         }
         return attributes;
