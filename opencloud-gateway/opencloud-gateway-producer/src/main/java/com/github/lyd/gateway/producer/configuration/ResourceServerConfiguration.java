@@ -69,19 +69,19 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // 增加签名过滤器
-        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                // 放行自定义Oauth2登录
+                // 匹配不需要鉴权请求
                 .antMatchers("/**/login/**",
                         "/**/logout/**",
                         "/**/oauth/token/**",
                         "/**/oauth/check_token/**").permitAll()
-                // 只有拥有actuator权限可执行远程端点
+                // 匹配全部功能权限
+                .antMatchers("/**").hasAnyAuthority(GlobalConstants.AUTHORITY_ALL)
+                // 匹配监控权限actuator可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(GlobalConstants.AUTHORITY_ACTUATOR)
-                // 自定义FilterSecurityInterceptor
+                // 自定义动态全新拦截,支持原有表达式方式和自定义权限投票
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(
@@ -106,6 +106,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
                 .and()
                 .csrf().disable();
+
+        // 增加签名验证过滤器
+        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
     }
 
     static class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
