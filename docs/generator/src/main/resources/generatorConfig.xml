@@ -46,13 +46,13 @@
         </jdbcConnection>
         <!--MyBatis 生成器只需要生成 Model-->
         <javaModelGenerator targetPackage="com.github.lyd.entity"
-                            targetProject="docs/generator/src/main/java"/>
+                            targetProject="docs/generator/src/test/java"/>
 
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="docs/generator/src/main/resources"/>
+                         targetProject="docs/generator/src/test/resources"/>
 
         <javaClientGenerator targetPackage="com.github.lyd.mapper"
-                             targetProject="docs/generator/src/main/java"
+                             targetProject="docs/generator/src/test/java"
                              type="XMLMAPPER"/>
         <table tableName="%">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
