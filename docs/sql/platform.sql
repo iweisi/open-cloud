@@ -361,8 +361,8 @@ CREATE TABLE `system_user` (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES ('521677655146233856', 'admin', 'LiuYadu', null, '515608851@qq.com', '18518226890', 'platform', null, null, '2018-12-10 13:20:45', '1', null, '2018-12-10 13:20:45', '2018-12-10 13:20:45');
-
+INSERT INTO `system_user` VALUES ('521677655146233856', 'admin', 'L', null, '515608851@qq.com', '18518226890', 'platform', null, null, '2018-12-10 13:20:45', '1', null, '2018-12-10 13:20:45', '2018-12-10 13:20:45');
+iuYadu
 -- ----------------------------
 -- Table structure for system_user_role
 -- ----------------------------
