@@ -83,7 +83,7 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                 }
 
                 if(StringUtils.isBlank(desc)){
-                    desc = aClass.getName();
+                    desc = name;
                 }
                 path = prefix + path;
                 Map<String, Object> api = Maps.newHashMap();
