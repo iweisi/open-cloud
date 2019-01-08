@@ -200,7 +200,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return authorities
      */
     @Override
-    public String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds) {
+    public String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, String... resourceIds) {
         if (!AUTH_PREFIX_LIST.contains(authorityPrefix)) {
             throw new OpenMessageException(String.format("%s授权类型暂不支持!", authorityPrefix));
         }
@@ -210,7 +210,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         }
         List<SystemGrantAccess> access = Lists.newArrayList();
         List<String> authorities = Lists.newArrayList();
-        for (Long resource : resourceIds) {
+        for (String resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
             SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
             if (access != null) {

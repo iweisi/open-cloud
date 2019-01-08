@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface SystemApiRemoteService {
     /**
-     * 获取Api资源列表
+     * 获取接口分页列表
      *
      * @return
      */
@@ -22,7 +22,7 @@ public interface SystemApiRemoteService {
     );
 
     /**
-     * 获取菜单资源列表
+     * 获取接口列表
      *
      * @return
      */
@@ -32,7 +32,7 @@ public interface SystemApiRemoteService {
     );
 
     /**
-     * 获取Api资源
+     * 获取接口资源
      *
      * @param apiId apiId
      * @return
@@ -41,7 +41,7 @@ public interface SystemApiRemoteService {
     ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId);
 
     /**
-     * 添加Api资源
+     * 添加接口资源
      *
      * @param apiCode     Api编码
      * @param apiName     Api名称
@@ -66,7 +66,7 @@ public interface SystemApiRemoteService {
     );
 
     /**
-     * 编辑Api资源
+     * 编辑接口资源
      *
      * @param apiId     ApiID
      * @param apiCode   Api编码

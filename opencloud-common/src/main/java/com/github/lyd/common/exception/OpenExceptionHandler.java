@@ -103,10 +103,10 @@ public class OpenExceptionHandler {
             if ("Bad credentials".equals(ex.getMessage())) {
                 code = ResultEnum.BAD_CREDENTIALS;
             }
-            if("User is disabled".equals(ex.getMessage())){
+            if ("User is disabled".equals(ex.getMessage())) {
                 code = ResultEnum.ACCOUNT_DISABLED;
             }
-            if("User account is locked".equals(ex.getMessage())){
+            if ("User account is locked".equals(ex.getMessage())) {
                 code = ResultEnum.ACCOUNT_LOCKED;
             }
         } else if (ex instanceof InvalidScopeException) {
@@ -236,7 +236,7 @@ public class OpenExceptionHandler {
         } else {
             message = i18n(resultCode.getMessage());
         }
-        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, ex);
+        log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, (ex instanceof OpenException ? ex.getMessage() : ex));
         return ResultBody.failed(resultCode.getCode(), message).setPath(path);
     }
 

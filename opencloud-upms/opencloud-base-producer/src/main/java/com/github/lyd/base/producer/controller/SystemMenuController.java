@@ -23,11 +23,11 @@ public class SystemMenuController implements SystemMenuRemoteService {
     private SystemMenuService menuService;
 
     /**
-     * 菜单列表
+     * 菜单资源分页列表
      *
      * @return
      */
-    @ApiOperation(value = "菜单列表")
+    @ApiOperation(value = "菜单资源分页列表",notes = "菜单资源分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -44,12 +44,12 @@ public class SystemMenuController implements SystemMenuRemoteService {
     }
 
     /**
-     * 获取菜单资源列表
+     * 菜单资源列表
      *
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "菜单列表")
+    @ApiOperation(value = "菜单资源列表",notes = "菜单资源列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -65,7 +65,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuId 应用menuId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取菜单资源")
+    @ApiOperation(value = "获取菜单资源",notes = "获取菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
     })
@@ -90,7 +90,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuDesc 描述
      * @return
      */
-    @ApiOperation(value = "添加菜单资源")
+    @ApiOperation(value = "添加菜单资源",notes = "添加菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
             @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
@@ -147,7 +147,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuDesc 描述
      * @return
      */
-    @ApiOperation(value = "编辑菜单资源")
+    @ApiOperation(value = "编辑菜单资源",notes = "编辑菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "菜单ID", paramType = "form"),
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
@@ -193,12 +193,12 @@ public class SystemMenuController implements SystemMenuRemoteService {
     }
 
     /**
-     * 更新状态
+     * 更新菜单资源状态
      *
      * @param menuId 菜单ID
      * @return
      */
-    @ApiOperation(value = "更新状态")
+    @ApiOperation(value = "更新菜单资源状态",notes = "更新菜单资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
@@ -214,12 +214,12 @@ public class SystemMenuController implements SystemMenuRemoteService {
     }
 
     /**
-     * 移除菜单
+     * 移除菜单资源
      *
      * @param menuId 菜单ID
      * @return
      */
-    @ApiOperation(value = "移除菜单")
+    @ApiOperation(value = "移除菜单资源",notes = "移除菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })

@@ -33,7 +33,7 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
      *
      * @return
      */
-    @ApiOperation(value = "获取已授权访问列表")
+    @ApiOperation(value = "获取已授权访问列表",notes = "获取已授权访问列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),

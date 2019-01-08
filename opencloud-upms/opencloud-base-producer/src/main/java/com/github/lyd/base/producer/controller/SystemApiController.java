@@ -24,11 +24,11 @@ public class SystemApiController implements SystemApiRemoteService {
     private SystemApiService apiService;
 
     /**
-     * Api列表
+     * 获取接口分页列表
      *
      * @return
      */
-    @ApiOperation(value = "接口列表")
+    @ApiOperation(value = "获取接口分页列表",notes = "获取接口分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -47,12 +47,12 @@ public class SystemApiController implements SystemApiRemoteService {
 
 
     /**
-     * 获取Api资源列表
+     * 获取接口列表
      *
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "接口列表")
+    @ApiOperation(value = "获取接口列表",notes = "获取接口列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -63,12 +63,12 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 获取Api资源
+     * 获取接口资源
      *
      * @param apiId ApiId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取接口资源")
+    @ApiOperation(value = "获取接口资源",notes = "获取接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
@@ -91,7 +91,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiDesc   描述
      * @return
      */
-    @ApiOperation(value = "添加Api资源")
+    @ApiOperation(value = "添加接口资源",notes = "添加接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
@@ -140,7 +140,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiDesc   描述
      * @return
      */
-    @ApiOperation(value = "编辑Api资源")
+    @ApiOperation(value = "编辑接口资源",notes = "编辑接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "接口Id", paramType = "form"),
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
@@ -180,12 +180,12 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 更新状态
+     * 更新接口资源状态
      *
      * @param apiId 接口ID
      * @return
      */
-    @ApiOperation(value = "禁用接口资源")
+    @ApiOperation(value = "更新接口资源状态",notes = "更新接口资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
@@ -201,12 +201,12 @@ public class SystemApiController implements SystemApiRemoteService {
     }
 
     /**
-     * 移除接口
+     * 移除接口资源
      *
      * @param apiId ApiID
      * @return
      */
-    @ApiOperation(value = "移除接口")
+    @ApiOperation(value = "移除接口资源",notes = "移除接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })

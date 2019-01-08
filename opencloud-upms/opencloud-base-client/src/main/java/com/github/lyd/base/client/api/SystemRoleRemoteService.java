@@ -50,7 +50,7 @@ public interface SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "status",defaultValue = "1",required = false) Integer status
+            @RequestParam(value = "status", defaultValue = "1", required = false) Integer status
     );
 
     /**
@@ -69,7 +69,7 @@ public interface SystemRoleRemoteService {
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "status",defaultValue = "1", required = false) Integer status
+            @RequestParam(value = "status", defaultValue = "1", required = false) Integer status
     );
 
 
@@ -97,6 +97,42 @@ public interface SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId
     );
 
+    /**
+     * 菜单授权
+     *
+     * @param roleId  角色ID
+     * @param menuIds 菜单ID.多个以,隔开
+     * @return
+     */
+    @PostMapping("/role/grant/menu")
+    ResultBody<Boolean> roleGrantMenu(
+            @RequestParam(value = "roleId") Long roleId,
+            @RequestParam("menuIds") String menuIds
+    );
 
+    /**
+     * 操作授权
+     *
+     * @param roleId    角色ID
+     * @param actionIds 操作ID.多个以,隔开
+     * @return
+     */
+    @PostMapping("/role/grant/action")
+    ResultBody<Boolean> roleGrantAction(
+            @RequestParam(value = "roleId") Long roleId,
+            @RequestParam("actionIds") String actionIds
+    );
 
+    /**
+     * 接口授权
+     *
+     * @param roleId    角色ID
+     * @param apiIds 接口ID.多个以,隔开
+     * @return
+     */
+    @PostMapping("/role/grant/api")
+    ResultBody<Boolean> roleGrantApi(
+            @RequestParam(value = "roleId") Long roleId,
+            @RequestParam("apiIds") String apiIds
+    );
 }

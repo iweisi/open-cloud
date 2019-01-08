@@ -5,6 +5,9 @@ import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.producer.service.SystemAccountService;
 import com.github.lyd.common.model.ResultBody;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +27,15 @@ public class SystemAccountController implements SystemAccountRemoteService {
     private SystemAccountService systemAccountService;
 
     /**
-     * 登录
+     * 平台登录
      *
      * @param username 登录名
      * @return
      */
+    @ApiOperation(value = "平台登录",notes = "仅限系统内部调用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
+    })
     @GetMapping("/account/login")
     @Override
     public ResultBody<SystemAccountDto> login(@RequestParam(value = "username") String username) {

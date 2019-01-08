@@ -111,7 +111,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         app.setAppSecret(clientSecret);
         app.setCreateTime(new Date());
         app.setUpdateTime(app.getCreateTime());
-        if(app.getIsPersist()==null){
+        if (app.getIsPersist() == null) {
             app.setIsPersist(BaseConstants.DISABLED);
         }
         int result = systemAppMapper.insertSelective(app);
@@ -139,7 +139,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo == null) {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
         }
-        BeanUtils.copyProperties(app,appInfo);
+        BeanUtils.copyProperties(app, appInfo);
         appInfo.setUpdateTime(new Date());
         int result = systemAppMapper.updateByPrimaryKeySelective(appInfo);
         String clientInfoJson = JSONObject.toJSONString(appInfo);
@@ -191,7 +191,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
         }
-        if(appInfo.getIsPersist().equals(BaseConstants.ENABLED)){
+        if (appInfo.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
         int result = systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
@@ -207,14 +207,15 @@ public class SystemAppServiceImpl implements SystemAppService {
 
     /**
      * 授权功能
-     * @param appId 应用ID
+     *
+     * @param appId    应用ID
      * @param apiCodes api编码
      * @return authorities 授权后的权限标识
      */
     @Override
     public String grantAccess(String appId, String... apiCodes) {
-        List<Long> apiIds = systemApiService.findIdsByCodes(apiCodes);
-        return systemGrantAccessService.addGrantAccess(appId, BaseConstants.AUTHORITY_PREFIX_APP, BaseConstants.RESOURCE_TYPE_API, apiIds.toArray(new Long[apiIds.size()]));
+        List<String> apiIds = systemApiService.findIdsByCodes(apiCodes);
+        return systemGrantAccessService.addGrantAccess(appId, BaseConstants.AUTHORITY_PREFIX_APP, BaseConstants.RESOURCE_TYPE_API, apiIds.toArray(new String[apiIds.size()]));
     }
 
 }

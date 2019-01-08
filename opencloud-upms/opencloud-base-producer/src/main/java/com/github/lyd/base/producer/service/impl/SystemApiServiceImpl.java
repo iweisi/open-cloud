@@ -214,11 +214,11 @@ public class SystemApiServiceImpl implements SystemApiService {
      * @return
      */
     @Override
-    public List<Long> findIdsByCodes(String... codes) {
+    public List<String> findIdsByCodes(String... codes) {
         List codeList = Lists.newArrayList(codes);
-        List<Long> ids = Lists.newArrayList();
+        List<String> ids = Lists.newArrayList();
         if (codeList.contains("all")) {
-            ids.add(1L);
+            ids.add("1");
             return ids;
         }
         ExampleBuilder builder = new ExampleBuilder(SystemApi.class);
@@ -228,7 +228,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         List<SystemApi> list = systemApiMapper.selectByExample(example);
         if (list != null && !list.isEmpty()) {
             list.forEach(item -> {
-                ids.add(item.getApiId());
+                ids.add(String.valueOf(item.getApiId()));
             });
         }
         return ids;

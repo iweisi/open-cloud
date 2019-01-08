@@ -23,11 +23,11 @@ public class SystemActionController implements SystemActionRemoteService {
     private SystemActionService actionService;
 
     /**
-     * 操作列表
+     * 获取操作资源分页列表
      *
      * @return
      */
-    @ApiOperation(value = "操作列表")
+    @ApiOperation(value = "获取操作分页列表",notes = "获取操作分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -49,7 +49,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionId 操作Id
      * @return 应用信息
      */
-    @ApiOperation(value = "获取操作资源")
+    @ApiOperation(value = "获取操作资源",notes = "获取操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作Id", paramType = "path"),
     })
@@ -60,12 +60,12 @@ public class SystemActionController implements SystemActionRemoteService {
     }
 
     /**
-     * 获取操作资源
+     * 获取操作列表
      *
      * @param keyword keyword
      * @return
      */
-    @ApiOperation(value = "操作列表")
+    @ApiOperation(value = "获取操作列表",notes = "获取操作列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -87,7 +87,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @ApiOperation(value = "添加操作资源")
+    @ApiOperation(value = "添加操作资源",notes = "添加操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionCode", required = true, value = "操作编码", paramType = "form"),
             @ApiImplicitParam(name = "actionName", required = true, value = "操作名称", paramType = "form"),
@@ -133,7 +133,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @ApiOperation(value = "编辑操作资源")
+    @ApiOperation(value = "编辑操作资源",notes = "添加操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form"),
             @ApiImplicitParam(name = "actionCode", required = true, value = "操作编码", paramType = "form"),
@@ -170,12 +170,12 @@ public class SystemActionController implements SystemActionRemoteService {
     }
 
     /**
-     * 更新状态
+     * 更新操作资源状态
      *
      * @param actionId 操作ID
      * @return
      */
-    @ApiOperation(value = "更新状态")
+    @ApiOperation(value = "更新操作资源状态",notes = "更新操作资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
@@ -191,12 +191,12 @@ public class SystemActionController implements SystemActionRemoteService {
     }
 
     /**
-     * 移除操作
+     * 移除操作资源
      *
      * @param actionId 操作ID
      * @return
      */
-    @ApiOperation(value = "移除操作")
+    @ApiOperation(value = "移除操作资源",notes = "移除操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form")
     })

@@ -35,12 +35,13 @@ public class SystemUserController implements SystemUserRemoteService {
     private SystemUserService systemUserService;
     @Autowired
     private SystemGrantAccessService permissionService;
+
     /**
-     * 系统用户列表
+     * 系统用户分页列表
      *
      * @return
      */
-    @ApiOperation(value = "系统用户列表")
+    @ApiOperation(value = "系统用户分页列表", notes = "系统用户分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -64,7 +65,7 @@ public class SystemUserController implements SystemUserRemoteService {
      * @param status
      * @return
      */
-    @ApiOperation(value = "添加系统用户")
+    @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
     @PostMapping("/user/add")
     @Override
     public ResultBody<SystemUserDto> addUser(
@@ -83,7 +84,7 @@ public class SystemUserController implements SystemUserRemoteService {
      * @param status
      * @return
      */
-    @ApiOperation(value = "更新系统用户")
+    @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
     @PostMapping("/user/update")
     @Override
     public ResultBody<SystemUserDto> updateUser(
@@ -94,19 +95,34 @@ public class SystemUserController implements SystemUserRemoteService {
         return null;
     }
 
-    @ApiOperation(value = "当前用户可访问菜单资源")
+    /**
+     * 当前用户可访问菜单资源
+     *
+     * @return
+     */
+    @ApiOperation(value = "当前用户可访问菜单资源", notes = "当前用户可访问菜单资源")
     @GetMapping("/user/grant/menus")
     public ResultBody<List<SystemGrantAccess>> userGrantMenus() {
         return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
     }
 
-    @ApiOperation(value = "当前用户可访问操作资源")
+    /**
+     * 当前用户可访问操作资源
+     *
+     * @return
+     */
+    @ApiOperation(value = "当前用户可访问操作资源", notes = "当前用户可访问操作资源")
     @GetMapping("/user/grant/actions")
     public ResultBody<List<SystemGrantAccess>> userGrantActions() {
         return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
     }
 
-    @ApiOperation(value = "当前用户可访问API资源")
+    /**
+     * 当前用户可访问接口资源
+     *
+     * @return
+     */
+    @ApiOperation(value = "当前用户可访问接口资源", notes = "当前用户可访问接口资源")
     @GetMapping("/user/grant/apis")
     public ResultBody<List<SystemGrantAccess>> userGrantApis() {
         return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_API));

@@ -62,7 +62,7 @@ public interface SystemGrantAccessService {
      * @param resourceIds     资源ID
      * @return authorities 授权后的权限标识
      */
-    String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, Long... resourceIds);
+    String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, String... resourceIds);
 
     /**
      * 移除授权

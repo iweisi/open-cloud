@@ -28,11 +28,11 @@ public class SystemAppController implements SystemAppRemoteService {
 
 
     /**
-     * 获取应用列表
+     * 获取应用分页列表
      *
      * @return
      */
-    @ApiOperation(value = "应用列表")
+    @ApiOperation(value = "获取应用分页列表",notes = "获取应用分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -50,12 +50,12 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 获取应用基础信息
+     * 获取应用信息
      *
      * @param appId appId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取应用信息")
+    @ApiOperation(value = "获取应用信息",notes = "获取应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
     })
@@ -69,12 +69,12 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 获取应用开发信息
+     * 获取应用开发配置信息
      *
      * @param appId 应用Id
      * @return
      */
-    @ApiOperation(value = "获取应用开发信息")
+    @ApiOperation(value = "获取应用开发配置信息",notes = "获取应用开发配置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
     })
@@ -91,7 +91,7 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 添加应用
+     * 添加应用信息
      *
      * @param appName      应用名称
      * @param appNameEn    应用英文名称
@@ -109,7 +109,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
      */
-    @ApiOperation(value = "添加应用")
+    @ApiOperation(value = "添加应用信息",notes = "添加应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
@@ -164,7 +164,7 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 更新应用
+     * 编辑应用信息
      *
      * @param appId
      * @param appName      应用名称
@@ -184,7 +184,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @return
      * @
      */
-    @ApiOperation(value = "编辑应用")
+    @ApiOperation(value = "编辑应用信息",notes = "编辑应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
@@ -242,12 +242,12 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 重置秘钥
+     * 重置应用秘钥
      *
      * @param appId 应用Id
      * @return 应用信息
      */
-    @ApiOperation(value = "重置秘钥")
+    @ApiOperation(value = "重置应用秘钥",notes = "重置应用秘钥")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })
@@ -261,12 +261,12 @@ public class SystemAppController implements SystemAppRemoteService {
     }
 
     /**
-     * 删除应用
+     * 删除应用信息
      *
      * @param appId 应用Id
      * @return 应用信息
      */
-    @ApiOperation(value = "删除应用")
+    @ApiOperation(value = "删除应用信息",notes = "删除应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })

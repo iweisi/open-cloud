@@ -90,5 +90,5 @@ public interface SystemApiService {
      * @param codes
      * @return
      */
-     List<Long> findIdsByCodes(String...codes);
+     List<String> findIdsByCodes(String...codes);
 }
