@@ -9,6 +9,7 @@ import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
+import com.github.lyd.common.autoconfigure.GatewayProperties;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.gen.SnowflakeIdGenerator;
 import com.github.lyd.common.mapper.ExampleBuilder;
@@ -47,6 +48,8 @@ public class SystemAppServiceImpl implements SystemAppService {
     private SystemApiService systemApiService;
     @Autowired
     private SystemGrantAccessService systemGrantAccessService;
+    @Autowired
+    private GatewayProperties gatewayProperties;
 
     /**
      * 查询应用列表
@@ -162,6 +165,9 @@ public class SystemAppServiceImpl implements SystemAppService {
      */
     @Override
     public String restSecret(String appId) {
+        if (gatewayProperties.getClientId().equals(appId)) {
+            throw new OpenMessageException(String.format("保留数据,不允许修改"));
+        }
         SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
