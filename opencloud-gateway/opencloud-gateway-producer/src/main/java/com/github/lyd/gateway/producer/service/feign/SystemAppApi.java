@@ -1,6 +1,5 @@
 package com.github.lyd.gateway.producer.service.feign;
 
-import com.github.lyd.common.autoconfigure.FeignRequestInterceptor;
 import com.github.lyd.common.constants.ServicesConstants;
 import com.github.lyd.base.client.api.SystemAppRemoteService;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
-@FeignClient(value = ServicesConstants.BASE_SERVICE, configuration = FeignRequestInterceptor.class)
+@FeignClient(value = ServicesConstants.BASE_SERVICE)
 public interface SystemAppApi extends SystemAppRemoteService {
 
 
