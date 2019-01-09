@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.common.constants.AuthConstants;
+import com.github.lyd.common.constants.AuthorityConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenHelper;
@@ -47,7 +47,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 // 只有拥有actuator权限可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthConstants.AUTHORITY_ACTUATOR)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthorityConstants.AUTHORITY_ACTUATOR)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

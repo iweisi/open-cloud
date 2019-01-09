@@ -2,7 +2,7 @@ package com.github.lyd.gateway.producer.configuration;
 
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.common.autoconfigure.GatewayProperties;
-import com.github.lyd.common.constants.AuthConstants;
+import com.github.lyd.common.constants.AuthorityConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.model.ResultBody;
@@ -78,7 +78,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/**/oauth/token/**",
                         "/**/oauth/check_token/**").permitAll()
                 // 匹配监控权限actuator可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthConstants.AUTHORITY_ACTUATOR)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthorityConstants.AUTHORITY_ACTUATOR)
                 // 自定义动态全新拦截,支持原有表达式方式和自定义权限投票
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override

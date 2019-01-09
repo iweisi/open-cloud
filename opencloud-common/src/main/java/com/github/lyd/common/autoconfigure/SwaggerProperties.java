@@ -14,7 +14,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "opencloud.swagger2")
 public class SwaggerProperties {
     /**
-     * 是否启用swagger
+     * 是否启用swagger,生产环境建议关闭
      */
     private boolean enabled;
     /**

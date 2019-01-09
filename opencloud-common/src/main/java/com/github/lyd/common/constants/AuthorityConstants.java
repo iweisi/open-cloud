@@ -3,7 +3,7 @@ package com.github.lyd.common.constants;
 /**
  * @author liuyadu
  */
-public class AuthConstants {
+public class AuthorityConstants {
     /**
      * 超级角色
      */
