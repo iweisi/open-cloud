@@ -1,6 +1,6 @@
 package com.github.lyd.base.producer.configuration;
 
-import com.github.lyd.common.constants.GlobalConstants;
+import com.github.lyd.common.constants.AuthConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;
 import com.github.lyd.common.security.OpenHelper;
@@ -39,7 +39,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 //只有超级管理员角色可执行远程端点
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(GlobalConstants.AUTHORITY_ACTUATOR)
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthConstants.AUTHORITY_ACTUATOR)
                 // 内部调用直接放行
                 .antMatchers("/account/login", "/account/logs/add", "/grant/access/list","/app/{appId}").permitAll()
                 .anyRequest().authenticated()

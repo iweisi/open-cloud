@@ -2,14 +2,11 @@ package com.github.lyd.base.client.constants;
 
 /**
  * 通用权限常量
+ *
  * @author liuyadu
  */
 public class BaseConstants {
-    /**
-     * 超级权限
-     */
-    public final static String SUPER_ROLE = "superAdmin";
-    public final static String SUPER_ROLE_AUTHORITY = "ROLE_superAdmin";
+
     /**
      * 默认oauth2授权类型
      */
@@ -26,18 +23,19 @@ public class BaseConstants {
     public final static int DISABLED = 0;
 
     /**
-     * 系统用户类型:0-平台、1-服务提供商、2-自研开发者
-     */
-    public final static int USER_TYPE_PLATFORM = 0;
-    public final static int USER_TYPE_ISP = 1;
-    public final static int USER_TYPE_DEVELOPER = 2;
-    /**
      * 系统用户状态
      * 0:禁用、1:正常、2:锁定
      */
     public final static int USER_STATE_DISABLE = 0;
     public final static int USER_STATE_NORMAL = 1;
     public final static int USER_STATE_LOCKED = 2;
+
+    /**
+     * 系统用户类型:platform-平台、isp-服务提供商、dev-自研开发者
+     */
+    public final static String USER_TYPE_PLATFORM = "platform";
+    public final static String USER_TYPE_ISP = "isp";
+    public final static String USER_TYPE_DEVELOPER = "dev";
 
     /**
      * 系统用户账号类型:
@@ -68,13 +66,16 @@ public class BaseConstants {
     public final static String AUTHORITY_PREFIX_APP = "APP_";
 
     /**
-     * 应用服务
+     * 应用类型
      */
     public final static String APP_TYPE_SERVER = "server";
     public final static String APP_TYPE_APP = "app";
     public final static String APP_TYPE_PC = "pc";
     public final static String APP_TYPE_WAP = "wap";
 
+    /**
+     * 操作系统
+     */
     public final static String APP_IOS = "ios";
     public final static String APP_ANDROID = "android";
 }

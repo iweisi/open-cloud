@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.filter;
 
-import com.github.lyd.common.constants.GlobalConstants;
+import com.github.lyd.common.constants.AuthConstants;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.core.Authentication;
@@ -35,7 +35,7 @@ public class GrantAccessVoter extends RoleVoter {
                 while(var8.hasNext()) {
                     GrantedAuthority authority = (GrantedAuthority)var8.next();
                     // 全部权限放行
-                    if(GlobalConstants.AUTHORITY_ALL.contains(authority.getAuthority())){
+                    if(AuthConstants.AUTHORITY_ALL.contains(authority.getAuthority())){
                         return 1;
                     }
                     System.out.println();
