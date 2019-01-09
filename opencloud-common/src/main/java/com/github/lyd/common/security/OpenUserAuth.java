@@ -61,6 +61,15 @@ public class OpenUserAuth implements UserDetails {
      */
     private String authCenterId;
 
+    /**
+     * 只是客户端模式.不包含用户信息
+     *
+     * @return
+     */
+    public Boolean onlyClient() {
+        return authAppId != null && userId == null;
+    }
+
     public OpenUserAuth() {
     }
 
