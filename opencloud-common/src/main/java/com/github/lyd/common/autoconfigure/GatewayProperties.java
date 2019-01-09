@@ -28,11 +28,11 @@ public class GatewayProperties {
      */
     private String scope;
     /**
-     * 是否开启数字签名校验,只对网关服务有效,强烈建议开启
+     * 数字验签,仅网关服务有效,生产环境必须开启
      */
     private Boolean enabledValidateSign = true;
     /**
-     * 是否开启资源访问鉴权,只对网关服务有效,强烈建议开启
+     * 动态权限验证,仅网关服务有效,生产环境必须开启
      */
     private Boolean enabledValidateAccess = true;
     /**
