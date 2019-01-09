@@ -117,7 +117,7 @@ CREATE TABLE `system_api` (
 -- ----------------------------
 -- Records of system_api
 -- ----------------------------
-INSERT INTO `system_api` VALUES ('1', 'all', '全部', 'default', '', 'opencloud-base-producer', '/action/update', '0', '1', '2018-12-28 14:27:16', '2019-01-02 23:00:08', '1');
+INSERT INTO `system_api` VALUES ('1', 'all', '全部', 'default', '', 'opencloud-base-producer', '/**', '0', '1', '2018-12-28 14:27:16', '2019-01-02 23:00:08', '1');
 INSERT INTO `system_api` VALUES ('2', 'actuator', '监控端点', 'default', '监控端点', 'opencloud-base-producer', '/actuator/**', '0', '1', '2018-12-28 14:27:16', '2019-01-02 23:00:08', '1');
 INSERT INTO `system_api` VALUES ('530807941222105088', 'sign', '内部应用请求签名', 'default', '只适用于内部应用,外部不允许使用。返回clientId,nonce,timestamp,signType,sign', 'opencloud-gateway-producer', '/sign', '0', '1', '2019-01-04 18:01:15', '2019-01-08 17:00:07', '1');
 INSERT INTO `system_api` VALUES ('530807941326962688', 'login', '平台登录', 'default', '基于oauth2密码模式登录,无需签名,返回access_token。', 'opencloud-gateway-producer', '/login/token', '0', '1', '2019-01-04 18:01:15', '2019-01-08 17:00:07', '1');
