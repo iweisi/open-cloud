@@ -12,9 +12,9 @@
 # open-cloud
 ---
 
-<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">开放平台运维系统UI</a>
+<a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">开放平台运维系统UI</a>
 
-<a target="_blank" href="https://gitee.com/liuyadu/open-cloud-ui">在线访问</a>
+<a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">在线访问</a>
 
 #### 简介
 搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
