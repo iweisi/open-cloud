@@ -367,7 +367,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                     if ("all".equals(code)) {
                         authority = authorityPrefix + code;
                     } else {
-                        authority = authorityPrefix + resourceType + "_" + code;
+                        authority = authorityPrefix + resourceType + BaseConstants.AUTHORITY_SEPARATOR + code;
                     }
                 }
             }

@@ -52,12 +52,11 @@ public class BaseConstants {
 
     /**
      * 资源类型
-     * menu:菜单、action:操作、api:API
+     * MENU:菜单、ACTION:操作、API:接口
      */
-    public final static String RESOURCE_TYPE_MENU = "menu";
-    public final static String RESOURCE_TYPE_ACTION = "action";
-    public final static String RESOURCE_TYPE_API = "api";
-    public final static String RESOURCE_TYPE_APP = "app";
+    public final static String RESOURCE_TYPE_MENU = "MENU";
+    public final static String RESOURCE_TYPE_ACTION = "ACTION";
+    public final static String RESOURCE_TYPE_API = "API";
 
     /**
      * 权限所有者
