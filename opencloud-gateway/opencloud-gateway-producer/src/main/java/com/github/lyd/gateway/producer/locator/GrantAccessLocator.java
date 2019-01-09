@@ -1,8 +1,8 @@
 package com.github.lyd.gateway.producer.locator;
 
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
-import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.Route;
@@ -19,12 +19,10 @@ import java.util.List;
  */
 @Slf4j
 public class GrantAccessLocator {
-    private HashMap<String, Collection<ConfigAttribute>> map = Maps.newHashMap();
+    private HashMap<String, Collection<ConfigAttribute>> map;
     private SystemGrantAccessApi systemAccessApi;
     private ZuulRouteLocator zuulRoutesLocator;
-
     private List<SystemGrantAccess> accessList;
-
     public List<SystemGrantAccess> getAccessList() {
         return accessList;
     }
@@ -70,6 +68,7 @@ public class GrantAccessLocator {
      * 加载授权列表
      */
     public HashMap<String, Collection<ConfigAttribute>> loadResourceDefine() {
+        map = Maps.newHashMap();
         log.debug("=============加载动态权限==============");
         try {
             Collection<ConfigAttribute> array;

@@ -49,12 +49,12 @@ public class GrantAccessMetadataSource implements
         HashMap<String, Collection<ConfigAttribute>> map = accessLocator.getMap();
         //object 中包含系统用户请求的request 信息
         FilterInvocation fi = (FilterInvocation) object;
-        String requestUrl = fi.getRequestUrl();
+        String requestUri = fi.getRequest().getRequestURI();
         // 动态权限验证
         if (gatewayProperties.getEnabledValidateAccess()) {
             for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
                 String url = iter.next();
-                if (antPathMatcher.match(url, requestUrl)) {
+                if (antPathMatcher.match(url, requestUri)) {
                     // 返回匹配到权限
                     return map.get(url);
                 }
