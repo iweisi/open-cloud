@@ -68,8 +68,8 @@ public class GrantAccessLocator {
      * 加载授权列表
      */
     public HashMap<String, Collection<ConfigAttribute>> loadResourceDefine() {
-        map = Maps.newHashMap();
         log.debug("=============加载动态权限==============");
+        map = Maps.newHashMap();
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
