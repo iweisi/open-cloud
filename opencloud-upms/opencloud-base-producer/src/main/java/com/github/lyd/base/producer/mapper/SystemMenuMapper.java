@@ -1,13 +1,16 @@
 package com.github.lyd.base.producer.mapper;
 
+import com.github.lyd.base.client.dto.SystemMenuDto;
 import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.common.mapper.CrudMapper;
-import org.apache.ibatis.annotations.CacheNamespace;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author liuyadu
  */
 @Repository
 public interface SystemMenuMapper extends CrudMapper<SystemMenu> {
+    List<SystemMenuDto> selectWithActionList();
 }

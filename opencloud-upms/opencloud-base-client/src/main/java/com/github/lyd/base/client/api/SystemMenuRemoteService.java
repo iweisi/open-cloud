@@ -1,5 +1,6 @@
 package com.github.lyd.base.client.api;
 
+import com.github.lyd.base.client.dto.SystemMenuDto;
 import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
@@ -28,6 +29,16 @@ public interface SystemMenuRemoteService {
      */
     @PostMapping("/menu/list")
     ResultBody<PageList<SystemMenu>> menuList(
+            @RequestParam(name = "keyword", required = false) String keyword
+    );
+
+    /**
+     * 获取菜单和操作列表
+     * @param keyword
+     * @return
+     */
+    @PostMapping("/menu/action/list")
+    ResultBody<PageList<SystemMenuDto>> menuActionList(
             @RequestParam(name = "keyword", required = false) String keyword
     );
 

@@ -1,6 +1,7 @@
 package com.github.lyd.base.producer.service.impl;
 
 import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.base.client.dto.SystemMenuDto;
 import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.base.producer.mapper.SystemMenuMapper;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
@@ -58,6 +59,18 @@ public class SystemMenuServiceImpl implements SystemMenuService {
                 .orLike("menuName", keyword).end().build();
         example.orderBy("menuId").asc().orderBy("priority").asc();
         List<SystemMenu> list = systemMenuMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
+     * 获取菜单和操作列表
+     *
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemMenuDto> findWithActionList(String keyword) {
+        List<SystemMenuDto> list = systemMenuMapper.selectWithActionList();
         return new PageList(list);
     }
 

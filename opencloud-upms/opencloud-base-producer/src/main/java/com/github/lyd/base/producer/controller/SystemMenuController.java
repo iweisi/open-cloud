@@ -1,6 +1,7 @@
 package com.github.lyd.base.producer.controller;
 
 import com.github.lyd.base.client.api.SystemMenuRemoteService;
+import com.github.lyd.base.client.dto.SystemMenuDto;
 import com.github.lyd.base.client.entity.SystemMenu;
 import com.github.lyd.base.producer.service.SystemMenuService;
 import com.github.lyd.common.model.PageList;
@@ -57,6 +58,23 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @Override
     public ResultBody<PageList<SystemMenu>> menuList(String keyword) {
         return ResultBody.success(menuService.findList(keyword));
+    }
+
+    /**
+     * 获取菜单和操作列表
+     * @param keyword
+     * @return
+     */
+    @ApiOperation(value = "获取菜单和操作列表",notes = "获取菜单和操作列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/menu/action/list")
+    @Override
+    public ResultBody<PageList<SystemMenuDto>> menuActionList(
+            @RequestParam(name = "keyword", required = false) String keyword
+    ){
+        return ResultBody.success(menuService.findWithActionList(keyword));
     }
 
     /**

@@ -20,4 +20,12 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="is_persist" property="isPersist" jdbcType="INTEGER"/>
     </resultMap>
+
+    <resultMap id="SystemMenuDto" extends="BaseResultMap" type="com.github.lyd.base.client.dto.SystemMenuDto">
+        <collection property="actionList" column="menu_id"  select="com.github.lyd.base.producer.mapper.SystemActionMapper.selectByMenuId"/>
+    </resultMap>
+
+    <select id="selectWithActionList" resultMap="SystemMenuDto">
+        select * from system_menu
+    </select>
 </mapper>

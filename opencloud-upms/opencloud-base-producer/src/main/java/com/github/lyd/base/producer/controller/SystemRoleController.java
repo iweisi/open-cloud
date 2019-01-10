@@ -2,6 +2,7 @@ package com.github.lyd.base.producer.controller;
 
 import com.github.lyd.base.client.api.SystemRoleRemoteService;
 import com.github.lyd.base.client.constants.BaseConstants;
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
@@ -239,6 +240,40 @@ public class SystemRoleController implements SystemRoleRemoteService {
     ) {
         String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_API, apiIds.split(","));
         return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
+    }
+
+    /**
+     * 获取角色已授权菜单资源
+     *
+     * @param roleId 角色ID
+     * @return
+     */
+    @ApiOperation(value = "获取角色已授权菜单资源",notes = "获取角色已授权菜单资源")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
+    })
+    @PostMapping("/role/granted/menu")
+    @Override
+    public ResultBody<PageList<SystemGrantAccess>> roleGrantedMenu(Long roleId) {
+        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId),BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_MENU);
+        return ResultBody.success(result);
+    }
+
+    /**
+     * 获取角色已授权操作资源
+     *
+     * @param roleId 角色ID
+     * @return
+     */
+    @ApiOperation(value = "获取角色已授权操作资源",notes = "获取角色已授权操作资源")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
+    })
+    @PostMapping("/role/granted/action")
+    @Override
+    public ResultBody<PageList<SystemGrantAccess>> roleGrantedAction(Long roleId) {
+        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId),BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_ACTION);
+        return ResultBody.success(result);
     }
 
 

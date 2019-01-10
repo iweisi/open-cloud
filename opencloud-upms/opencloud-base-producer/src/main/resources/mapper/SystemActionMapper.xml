@@ -17,4 +17,9 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="is_persist" property="isPersist" jdbcType="INTEGER"/>
     </resultMap>
+
+    <select id="selectByMenuId" resultMap="BaseResultMap">
+        select  * from system_action
+        where menu_id = #{menuId}
+    </select>
 </mapper>

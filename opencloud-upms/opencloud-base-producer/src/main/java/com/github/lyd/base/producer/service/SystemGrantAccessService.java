@@ -13,13 +13,22 @@ import java.util.List;
  */
 public interface SystemGrantAccessService {
     /**
-     * 获取已授权访问列表
+     * 获取已授权列表
      *
      * @param pageParams
      * @param keyword
      * @return
      */
     PageList<SystemGrantAccess> findListPage(PageParams pageParams, String keyword);
+
+    /**
+     * 获取已授权列表
+     * @param authorityOwner
+     * @param authorityPrefix
+     * @param resourceType
+     * @return
+     */
+    PageList<SystemGrantAccess> findList(String authorityOwner, String authorityPrefix, String resourceType);
 
     /**
      * 获取系统用户已授权列表(包含个人特殊权限和所拥有角色的所以权限)
@@ -63,6 +72,7 @@ public interface SystemGrantAccessService {
      * @return authorities 授权后的权限标识
      */
     String addGrantAccess(String authorityOwner, String authorityPrefix, String resourceType, String... resourceIds);
+
 
     /**
      * 移除授权

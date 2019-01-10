@@ -1,5 +1,6 @@
 package com.github.lyd.base.client.api;
 
+import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.base.client.entity.SystemRole;
@@ -110,6 +111,7 @@ public interface SystemRoleRemoteService {
             @RequestParam("menuIds") String menuIds
     );
 
+
     /**
      * 操作授权
      *
@@ -134,5 +136,28 @@ public interface SystemRoleRemoteService {
     ResultBody<Boolean> roleGrantApi(
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("apiIds") String apiIds
+    );
+
+
+    /**
+     * 获取角色已授权菜单资源
+     *
+     * @param roleId  角色ID
+     * @return
+     */
+    @PostMapping("/role/granted/menu")
+    ResultBody<PageList<SystemGrantAccess>> roleGrantedMenu(
+            @RequestParam(value = "roleId") Long roleId
+    );
+
+    /**
+     * 获取角色已授权操作资源
+     *
+     * @param roleId  角色ID
+     * @return
+     */
+    @PostMapping("/role/granted/action")
+    ResultBody<PageList<SystemGrantAccess>> roleGrantedAction(
+            @RequestParam(value = "roleId") Long roleId
     );
 }

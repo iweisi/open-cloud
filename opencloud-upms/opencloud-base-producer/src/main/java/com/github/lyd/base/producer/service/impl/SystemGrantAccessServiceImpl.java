@@ -73,7 +73,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     }
 
     /**
-     * 获取已授权访问列表
+     * 获取已授权列表
      *
      * @param pageParams
      * @param keyword
@@ -85,6 +85,26 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.build();
         List<SystemGrantAccess> list = systemAccessMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
+     * 获取已授权列表
+     *
+     * @param authorityOwner
+     * @param authorityPrefix
+     * @param resourceType
+     * @return
+     */
+    @Override
+    public PageList<SystemGrantAccess> findList(String authorityOwner, String authorityPrefix, String resourceType) {
+        ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
+        Example example = builder.criteria()
+                .andEqualTo("authorityPrefix", authorityPrefix)
+                .andEqualTo("resourceType", resourceType)
+                .andEqualTo("authorityOwner", authorityOwner)
+                .end().build();
+        List<SystemGrantAccess> list  = systemAccessMapper.selectByExample(example);
         return new PageList(list);
     }
 

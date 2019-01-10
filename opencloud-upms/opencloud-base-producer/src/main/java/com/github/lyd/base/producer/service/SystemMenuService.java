@@ -1,5 +1,6 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.dto.SystemMenuDto;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.base.client.entity.SystemMenu;
@@ -24,6 +25,13 @@ public interface SystemMenuService {
      * @return
      */
     PageList<SystemMenu> findList(String keyword);
+
+    /**
+     * 获取菜单和操作列表
+     * @param keyword
+     * @return
+     */
+    PageList<SystemMenuDto> findWithActionList(String keyword);
 
     /**
      * 根据主键获取菜单
