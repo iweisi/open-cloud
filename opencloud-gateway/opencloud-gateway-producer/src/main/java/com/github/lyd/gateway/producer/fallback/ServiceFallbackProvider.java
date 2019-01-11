@@ -60,7 +60,7 @@ public class ServiceFallbackProvider implements FallbackProvider {
         return new ClientHttpResponse() {
             @Override
             public HttpStatus getStatusCode() throws IOException {
-                return HttpStatus.BAD_GATEWAY;
+                return HttpStatus.GATEWAY_TIMEOUT;
             }
 
             @Override
