@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
+ * 自定义动态权限元数据
+ *
  * @author liuyadu
  */
 public class GrantAccessMetadataSource implements
@@ -37,7 +39,7 @@ public class GrantAccessMetadataSource implements
     /**
      * 此方法是为了判定系统用户请求的url 是否在权限表中，如果在权限表中，
      * 返回null或empty,不进入decide验证,
-     * 网关接口访问安全性较高,如表达式方式没有直接放行,将返回默认自定义权限"ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS" 给decide 方法，强制投票验证访问权限。
+     * 网关接口访问安全性较高,如表达式方式未放行,将返回默认自定义权限"ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS" 给decide方法，强制投票验证访问权限。
      * ROLE_ANONYMOUS-角色匿名权限标识,USER_ANONYMOUS-用户匿名权限标识,APP_ANONYMOUS-应用匿名权限标识
      *
      * @param object
@@ -47,11 +49,12 @@ public class GrantAccessMetadataSource implements
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         HashMap<String, Collection<ConfigAttribute>> map = accessLocator.getMap();
-        //object 中包含系统用户请求的request 信息
         FilterInvocation fi = (FilterInvocation) object;
+        // 请求路径path
         String requestUri = fi.getRequest().getRequestURI();
-        // 动态权限验证
+        // 动态权限验证开启
         if (gatewayProperties.getEnabledValidateAccess()) {
+            // 匹配动态权限
             for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
                 String url = iter.next();
                 if (antPathMatcher.match(url, requestUri)) {
@@ -60,8 +63,9 @@ public class GrantAccessMetadataSource implements
                 }
             }
         }
+        // 默认返回表达式权限
         Collection<ConfigAttribute> attributes = expressionSecurityMetadataSource.getAttributes(object);
-        // 表达式匹配未直接放行,并且开启动态权限验证.则返回默认权限.
+        // 表达式匹配未放行.则返回默认权限.
         if (!attributes.toString().contains("permitAll")) {
             attributes = SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS");
         }

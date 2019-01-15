@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 
 /**
+ * 自定义邮件配置
+ *
  * @author liuyadu
  */
 @ConfigurationProperties(prefix = "opencloud.mail")

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 资源服务配置
+ * oauth2资源服务器配置
  *
  * @author: liuyadu
  * @date: 2018/10/23 10:31

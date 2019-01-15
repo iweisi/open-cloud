@@ -9,6 +9,9 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 
 /**
+ * 基础服务
+ * 提供系统用户、权限分配、资源、客户端管理
+ *
  * @author liuyadu
  */
 @EnableFeignClients

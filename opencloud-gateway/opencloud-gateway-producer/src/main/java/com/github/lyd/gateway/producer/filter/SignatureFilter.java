@@ -10,7 +10,7 @@ import com.github.lyd.common.security.OpenHelper;
 import com.github.lyd.common.security.OpenUserAuth;
 import com.github.lyd.common.utils.SignatureUtils;
 import com.github.lyd.common.utils.WebUtils;
-import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
+import com.github.lyd.gateway.producer.service.feign.SystemAppClient;
 import com.google.common.collect.Lists;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class SignatureFilter implements Filter {
     private SignatureDeniedHandler signatureDeniedHandler;
-    private SystemAppApi systemAppApi;
+    private SystemAppClient systemAppClient;
     private GatewayProperties gatewayProperties;
     /**
      * 忽略签名
@@ -45,8 +45,8 @@ public class SignatureFilter implements Filter {
             "/**/logout/**"
     );
 
-    public SignatureFilter(SystemAppApi systemAppApi, GatewayProperties gatewayProperties) {
-        this.systemAppApi = systemAppApi;
+    public SignatureFilter(SystemAppClient systemAppClient, GatewayProperties gatewayProperties) {
+        this.systemAppClient = systemAppClient;
         this.gatewayProperties = gatewayProperties;
         this.signatureDeniedHandler = new OpenSignatureDeniedHandler();
     }
@@ -84,12 +84,12 @@ public class SignatureFilter implements Filter {
             try {
                 //开始验证签名
                 String appId = auth.getAuthAppId();
-                if (systemAppApi != null && appId != null) {
+                if (systemAppClient != null && appId != null) {
                     Map params = WebUtils.getParameterMap(request);
                     // 验证请求参数
                     SignatureUtils.validateParams(params);
                     // 获取客户端信息
-                    ResultBody<SystemApp> result = systemAppApi.getApp(appId);
+                    ResultBody<SystemApp> result = systemAppClient.getApp(appId);
                     SystemApp app = result.getData();
                     if (app == null) {
                         throw new OpenSignatureException("clientId无效");

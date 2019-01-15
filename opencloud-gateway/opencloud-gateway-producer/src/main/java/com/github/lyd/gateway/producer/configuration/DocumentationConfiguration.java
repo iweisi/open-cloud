@@ -41,7 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * API聚合文档
+ * Swagger在线文档配置
+ * 聚合网关服务代理的所有微服务
  *
  * @author admin
  */
@@ -60,7 +61,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
     }
 
     @Autowired
-    public  DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRouteLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
+    public DocumentationConfiguration(SwaggerProperties swaggerProperties, ZuulRouteLocator zuulRoutesLocator, NacosDiscoveryProperties discoveryProperties) {
         this.swaggerProperties = swaggerProperties;
         this.zuulRoutesLocator = zuulRoutesLocator;
         this.namingService = discoveryProperties.namingServiceInstance();
@@ -72,9 +73,10 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
         resources.add(swaggerResource(swaggerProperties.getTitle(), "/v2/api-docs", "2.0"));
         List<Route> routes = zuulRoutesLocator.getRoutes();
         routes.forEach(route -> {
-            //授权不维护到swagger
+            // 只加载未被忽略的服务
             if (!swaggerProperties.getIgnores().contains(route.getId())) {
                 try {
+                    // 获取健康服务元数据中文名称 bootstrap.properties -> spring.cloud.nacos.discovery.metadata.name=网关服务
                     Instance instance = namingService.selectOneHealthyInstance(route.getId());
                     String name = instance.getMetadata().get("name");
                     if (name == null) {
@@ -82,7 +84,7 @@ public class DocumentationConfiguration implements SwaggerResourcesProvider {
                     }
                     resources.add(swaggerResource(name, route.getFullPath().replace("**", "v2/api-docs"), "2.0"));
                 } catch (Exception e) {
-                    log.error("加载文档出错:{}",e.getMessage());
+                    log.error("加载文档出错:{}", e.getMessage());
                 }
             }
         });

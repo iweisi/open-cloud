@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.service.impl;
 
-import com.github.lyd.auth.producer.service.feign.SystemAccountApi;
+import com.github.lyd.auth.producer.service.feign.SystemAccountClient;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.common.model.ResultBody;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
+ * Security用户信息获取实现类
+ *
  * @author liuyadu
  */
 @Slf4j
@@ -24,7 +26,7 @@ import java.util.Map;
 public class UserLoginServiceImpl implements UserDetailsService {
 
     @Autowired
-    private SystemAccountApi systemAccountApi;
+    private SystemAccountClient systemAccountClient;
     /**
      * 认证中心名称
      */
@@ -34,7 +36,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        ResultBody<SystemAccountDto> resp = systemAccountApi.login(username);
+        ResultBody<SystemAccountDto> resp = systemAccountClient.login(username);
         SystemAccountDto account = resp.getData();
         if (account == null) {
             throw new UsernameNotFoundException("系统用户 " + username + " 不存在!");
@@ -43,7 +45,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean enable = account.getUserProfile().getStatus().intValue() == BaseConstants.USER_STATE_NORMAL ? true : false;
         boolean accountNonExpired = true;
-        Map userProfile =  BeanConvertUtils.objectToMap(account.getUserProfile());
-        return new OpenUserAuth(AUTH_SERVICE_ID, account.getUserId(), account.getAccount(), account.getPassword(),account.getUserProfile().getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired,userProfile);
+        Map userProfile = BeanConvertUtils.objectToMap(account.getUserProfile());
+        return new OpenUserAuth(AUTH_SERVICE_ID, account.getUserId(), account.getAccount(), account.getPassword(), account.getUserProfile().getAuthorities(), accountNonLocked, accountNonExpired, enable, credentialsNonExpired, userProfile);
     }
 }

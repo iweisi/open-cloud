@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
+ * Web服务配置类
  * @author: liuyadu
  * @date: 2018/10/23 10:31
  * @description:

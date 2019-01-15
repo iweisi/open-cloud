@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @FeignClient(value = ServicesConstants.BASE_SERVICE)
-public interface SystemAppApi extends SystemAppRemoteService {
+public interface SystemAppClient extends SystemAppRemoteService {
 
 
 }

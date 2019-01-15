@@ -15,9 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
- * 资源服务配置
+ * oauth2资源服务器配置
  * 如过新建一个资源服务器，直接复制该类到项目中.
- *
  * @author: liuyadu
  * @date: 2018/10/23 10:31
  * @description:
@@ -30,6 +29,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // 构建远程获取token,这里是为了支持自定义用户信息转换器
         resources.tokenServices(OpenHelper.buildRemoteTokenServices(properties));
     }
 

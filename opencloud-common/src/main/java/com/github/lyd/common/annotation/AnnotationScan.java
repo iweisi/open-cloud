@@ -41,16 +41,15 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
     public void onApplicationEvent(ApplicationReadyEvent event) {
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
         Map<String, Object> resourceServer = applicationContext.getBeansWithAnnotation(EnableResourceServer.class);
-        if(resourceServer ==null || resourceServer.isEmpty()){
+        if (resourceServer == null || resourceServer.isEmpty()) {
             // 只扫描资源服务器
             return;
         }
         amqpTemplate = applicationContext.getBean(RabbitTemplate.class);
         Environment env = applicationContext.getEnvironment();
         String serviceId = env.getProperty("spring.application.name", "application");
-        List<Map<String, Object>> list = Lists.newArrayList();
-        List<Map<String, Object>> limitList = Lists.newArrayList();
         log.info("ApplicationReadyEvent:{}", serviceId);
+        List<Map<String, Object>> list = Lists.newArrayList();
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RestController.class);
         //遍历Bean
         Set<Map.Entry<String, Object>> entries = beans.entrySet();
@@ -82,7 +81,7 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                     name = code;
                 }
 
-                if(StringUtils.isBlank(desc)){
+                if (StringUtils.isBlank(desc)) {
                     desc = name;
                 }
                 path = prefix + path;
@@ -93,22 +92,11 @@ public class AnnotationScan implements ApplicationListener<ApplicationReadyEvent
                 api.put("path", path);
                 api.put("apiDesc", desc);
                 list.add(api);
-                Map<String, Object> limit = Maps.newHashMap();
-                // 限流
-                if (m.isAnnotationPresent(ApiRateLimit.class)) {
-                    ApiRateLimit rateLimit = m.getAnnotation(ApiRateLimit.class);
-                    limit.put("types",rateLimit.types());
-                    limit.put("serviceId", serviceId);
-                    limit.put("limit",rateLimit.limit());
-                    limit.put("interval",rateLimit.interval());
-                    limit.put("quota",rateLimit.quota());
-                    limitList.add(limit);
-                }
             }
         }
         if (amqpTemplate != null) {
+            // 发送mq扫描消息
             amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE, list);
-            amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE_LIMIT, limitList);
         }
     }
 

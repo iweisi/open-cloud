@@ -1,7 +1,7 @@
 package com.github.lyd.common.constants;
 
 /**
- * 返回码
+ * 自定义返回码
  *
  * @author admin
  */

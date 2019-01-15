@@ -41,6 +41,8 @@ import java.io.InputStream;
 
 
 /**
+ * zuul响应超时熔断处理器
+ *
  * @author: liuyadu
  * @date: 2018/10/23 10:31
  * @description:
@@ -80,7 +82,7 @@ public class ServiceFallbackProvider implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
-                log.error(s,throwable);
+                log.error(s, throwable);
                 //响应体
                 String content = JSONObject.toJSONString(ResultBody.failed(ResultEnum.SERVICE_NOT_FOUND.getCode(), "微服务不可用，请稍后再试"));
                 return new ByteArrayInputStream(content.getBytes());

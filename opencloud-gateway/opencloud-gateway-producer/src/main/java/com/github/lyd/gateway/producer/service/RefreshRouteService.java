@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
- * 动态路由刷新服务
+ * 自定义动态路由刷新服务
  * @author liuyadu
  */
 @Component

@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import javax.sql.DataSource;
 
 /**
- * 认证授权器配置
+ * 认证服务器配置
  *
  * @author liuyadu
  */
@@ -99,9 +99,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .accessTokenConverter(OpenHelper.buildAccessTokenConverter())
                 .authorizationCodeServices(authorizationCodeServices())
                 .tokenServices(defaultTokenServices());
-        // 自定义授权页面,映射
+        // 自定义确认授权页面
         endpoints.pathMapping("/oauth/confirm_access", "/confirm_access");
-        //定义异常转换类生效
+        // 自定义异常转换类
         endpoints.exceptionTranslator(new Oauth2WebResponseExceptionTranslator());
     }
 

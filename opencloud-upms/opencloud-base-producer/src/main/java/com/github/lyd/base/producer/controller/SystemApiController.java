@@ -3,7 +3,6 @@ package com.github.lyd.base.producer.controller;
 import com.github.lyd.base.client.api.SystemApiRemoteService;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.service.SystemApiService;
-import com.github.lyd.common.annotation.ApiRateLimit;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
@@ -35,7 +34,6 @@ public class SystemApiController implements SystemApiRemoteService {
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
     @PostMapping("/api")
-    @ApiRateLimit(limit = 10, interval = 1000)
     @Override
     public ResultBody<PageList<SystemApi>> api(
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
@@ -72,7 +70,6 @@ public class SystemApiController implements SystemApiRemoteService {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
-    @ApiRateLimit(limit = 20, interval = 1000)
     @GetMapping("/api/{apiId}")
     @Override
     public ResultBody<SystemApi> getApi(@PathVariable("apiId") Long apiId) {

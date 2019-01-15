@@ -24,7 +24,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
     /**
      * 微服务之间传递的唯一标识
      */
-    private static final String X_REQUEST_SID = "X-Request-serialId";
+    private static final String X_REQUEST_ID = "X-Request-Id";
 
     @Override
     public void apply(RequestTemplate template) {
@@ -34,9 +34,9 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             // 防止oauth2请求头丢失
             template.header(AUTHORIZATION_HEADER, headers.get(AUTHORIZATION_HEADER));
             // 微服务之间传递的唯一标识
-            if (!headers.containsKey(X_REQUEST_SID)) {
+            if (!headers.containsKey(X_REQUEST_ID)) {
                 String sid = String.valueOf(UUID.randomUUID());
-                template.header(X_REQUEST_SID, sid);
+                template.header(X_REQUEST_ID, sid);
             }
             log.debug("FeignRequestInterceptor:{}", template.toString());
         }

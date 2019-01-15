@@ -42,7 +42,9 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * 服务代理
+ * 网关服务
+ * 提供微服务统一外部调用入口、身份认证(@EnableResourceServer)、接口调用鉴权、接口限流、黑白名单
+ * 开发环境下提供在线调试文档.
  *
  * @author liuyadu
  */
@@ -58,16 +60,20 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
+    /**
+     * 项目启动完成加载类
+     */
     @Component
     @Order(value = 1)
     public class MyApplicationRunner implements ApplicationRunner {
         @Autowired
-       private ApplicationContext context;
+        private ApplicationContext context;
         @Autowired
         private BusProperties bus;
+
         @Override
-        public void run(ApplicationArguments var1) throws Exception{
-            context.publishEvent(new GatewayRefreshRemoteApplicationEvent(context,bus.getId(),null));
+        public void run(ApplicationArguments var1) throws Exception {
+            context.publishEvent(new GatewayRefreshRemoteApplicationEvent(context, bus.getId(), null));
         }
 
     }

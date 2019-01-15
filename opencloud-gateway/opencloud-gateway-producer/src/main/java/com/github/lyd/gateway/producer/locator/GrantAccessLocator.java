@@ -2,7 +2,7 @@ package com.github.lyd.gateway.producer.locator;
 
 import com.github.lyd.base.client.entity.SystemGrantAccess;
 import com.github.lyd.common.utils.StringUtils;
-import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessApi;
+import com.github.lyd.gateway.producer.service.feign.SystemGrantAccessClient;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.Route;
@@ -15,14 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 自定义动态权限加载器
+ *
  * @author liuyadu
  */
 @Slf4j
 public class GrantAccessLocator {
     private HashMap<String, Collection<ConfigAttribute>> map;
-    private SystemGrantAccessApi systemAccessApi;
+    private SystemGrantAccessClient systemGrantAccessClient;
     private ZuulRouteLocator zuulRoutesLocator;
     private List<SystemGrantAccess> accessList;
+
     public List<SystemGrantAccess> getAccessList() {
         return accessList;
     }
@@ -31,8 +34,8 @@ public class GrantAccessLocator {
         this.accessList = accessList;
     }
 
-    public GrantAccessLocator(SystemGrantAccessApi systemAccessApi, ZuulRouteLocator zuulRoutesLocator) {
-        this.systemAccessApi = systemAccessApi;
+    public GrantAccessLocator(SystemGrantAccessClient systemGrantAccessClient, ZuulRouteLocator zuulRoutesLocator) {
+        this.systemGrantAccessClient = systemGrantAccessClient;
         this.zuulRoutesLocator = zuulRoutesLocator;
     }
 
@@ -73,7 +76,7 @@ public class GrantAccessLocator {
         try {
             Collection<ConfigAttribute> array;
             ConfigAttribute cfg;
-            accessList = systemAccessApi.grantAccessList().getData();
+            accessList = systemGrantAccessClient.grantAccessList().getData();
             if (accessList != null) {
                 for (SystemGrantAccess assess : accessList) {
                     if (StringUtils.isBlank(assess.getPath())) {

@@ -12,7 +12,7 @@ import com.github.lyd.gateway.producer.filter.GrantAccessMetadataSource;
 import com.github.lyd.gateway.producer.filter.GrantAccessVoter;
 import com.github.lyd.gateway.producer.filter.SignatureFilter;
 import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
-import com.github.lyd.gateway.producer.service.feign.SystemAppApi;
+import com.github.lyd.gateway.producer.service.feign.SystemAppClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 资源服务配置
+ * oauth2资源服务器配置
  *
  * @author: liuyadu
  * @date: 2018/10/23 10:31
@@ -58,12 +58,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Autowired
     private GatewayProperties gatewayProperties;
     @Autowired
-    private SystemAppApi systemAppApi;
+    private SystemAppClient systemAppClient;
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // 构建远程获取token,这里是为了支持自定义用户信息转换器
         resources.tokenServices(OpenHelper.buildRemoteTokenServices(properties));
     }
 
@@ -79,14 +80,22 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/**/oauth/check_token/**").permitAll()
                 // 匹配监控权限actuator可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthorityConstants.AUTHORITY_ACTUATOR)
-                // 自定义动态全新拦截,支持原有表达式方式和自定义权限投票
+                // 自定义动态权限拦截,使用已经默认的FilterSecurityInterceptor对象,可以兼容默认表达式鉴权
+                // 增加自定义权限投票器
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(
                             O fsi) {
-                        //追加到默认投票器链,支持默认表达式方式
+                        /**
+                         * 投票器器链
+                         * 1.WebExpressionVoter 默认表达式方式
+                         * 2.GrantAccessVoter prefix =>ROLE_ 角色权限投票器
+                         * 3.GrantAccessVoter prefix =>USER_ 用户权限投票器
+                         * 4.GrantAccessVoter prefix =>APP_  应用权限投票器
+                         */
                         if (fsi.getAccessDecisionManager() instanceof AffirmativeBased) {
                             AffirmativeBased affirmativeBased = (AffirmativeBased) fsi.getAccessDecisionManager();
+                            // 追加自定义权限投票器
                             affirmativeBased.getDecisionVoters().addAll(decisionVoters());
                         }
                         // 设置权限配置并引用默认的权限配置
@@ -106,7 +115,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .csrf().disable();
 
         // 增加签名验证过滤器
-        http.addFilterAfter(new SignatureFilter(systemAppApi, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
+        http.addFilterAfter(new SignatureFilter(systemAppClient, gatewayProperties), AbstractPreAuthenticatedProcessingFilter.class);
     }
 
     static class SsoLogoutSuccessHandler implements LogoutSuccessHandler {

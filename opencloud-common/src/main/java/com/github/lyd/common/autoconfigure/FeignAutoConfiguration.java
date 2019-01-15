@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class FeignAutoConfiguration {
-    public static int connectTimeOutMillis = 12000;//超时时间
+    public static int connectTimeOutMillis = 12000;
     public static int readTimeOutMillis = 12000;
 
     @Bean

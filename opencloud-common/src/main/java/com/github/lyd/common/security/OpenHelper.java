@@ -15,9 +15,9 @@ import java.util.Map;
  * @author liuyadu
  */
 public class OpenHelper {
+
     /**
      * 获取登录用户认证信息
-     *
      * @return
      */
     public static OpenUserAuth getUserAuth() {
@@ -46,6 +46,11 @@ public class OpenHelper {
         return null;
     }
 
+    /**
+     * 是否拥有权限
+     * @param authority
+     * @return
+     */
     public static Boolean hasAuthority(String authority) {
         OpenUserAuth auth = getUserAuth();
         if (auth == null) {

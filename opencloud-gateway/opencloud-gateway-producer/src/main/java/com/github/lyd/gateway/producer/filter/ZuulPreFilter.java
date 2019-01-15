@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * zuul代理前置过滤器
  * @author liuyadu
  */
 @Slf4j

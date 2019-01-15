@@ -25,6 +25,8 @@ import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfi
 import java.util.*;
 
 /**
+ * Swagger文档生成配置
+ *
  * @author liuyadu
  */
 @Slf4j
@@ -38,11 +40,11 @@ public class SwaggerAutoConfiguration {
     private Locale locale = LocaleContextHolder.getLocale();
     private MessageSource messageSource;
 
-    public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties,MessageSource messageSource) {
+    public SwaggerAutoConfiguration(GatewayProperties gatewayProperties, SwaggerProperties swaggerProperties, MessageSource messageSource) {
         this.swaggerProperties = swaggerProperties;
         this.messageSource = messageSource;
-        log.debug("文档配置:{}", swaggerProperties);
-        log.debug("文档安全配置:{}", gatewayProperties);
+        log.debug("swaggerProperties:{}", swaggerProperties);
+        log.debug("gatewayProperties:{}", gatewayProperties);
     }
 
 
@@ -58,6 +60,14 @@ public class SwaggerAutoConfiguration {
                 .securitySchemes(Collections.singletonList(securityScheme()));
     }
 
+    /**
+     * 构建全局参数
+     * 这里主要针对网关服务外部访问数字验签所需参数
+     * 只在网关服务开启{opencloud.gateway.enabled-validate-sign=true}时生效.
+     * 未开启,可以不填写
+     *
+     * @return
+     */
     private List<Parameter> parameters() {
         ParameterBuilder builder = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * zuul错误响应过滤器
+ *
  * @author liuyadu
  */
 @Slf4j

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 动态限流加载器
+ * 自定义动态限流加载器
  *
  * @author: liuyadu
  * @date: 2018/10/23 10:31

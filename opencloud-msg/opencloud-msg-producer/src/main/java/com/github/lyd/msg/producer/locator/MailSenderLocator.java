@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
+ * 邮件发送者加载器
+ * 用于多个发送者随机切换.类似于路由加载器
+ *
  * @author: liuyadu
  * @date: 2018/11/27 14:19
  * @description:
