@@ -56,9 +56,6 @@
         <!-- 生产 -->
         <profile>
             <id>online</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
             <properties>
                 <profile.name>online</profile.name>
                 <!--配置中心地址-->
