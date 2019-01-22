@@ -7,10 +7,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 微服务之间feign调用请求头丢失的问题
@@ -20,7 +17,6 @@ import java.util.UUID;
  */
 @Slf4j
 public class FeignRequestInterceptor implements RequestInterceptor {
-    private static final String AUTHORIZATION_HEADER = "authorization";
     /**
      * 微服务之间传递的唯一标识
      */
@@ -31,8 +27,12 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         HttpServletRequest httpServletRequest =   getHttpServletRequest();
         if(httpServletRequest!=null){
             Map<String, String> headers = getHeaders(httpServletRequest);
-            // 防止oauth2请求头丢失
-            template.header(AUTHORIZATION_HEADER, headers.get(AUTHORIZATION_HEADER));
+            // 请求头丢失
+            Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                template.header(entry.getKey(), entry.getValue());
+            }
             // 微服务之间传递的唯一标识
             if (!headers.containsKey(X_REQUEST_ID)) {
                 String sid = String.valueOf(UUID.randomUUID());
