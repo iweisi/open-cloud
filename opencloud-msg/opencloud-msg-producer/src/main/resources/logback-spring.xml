@@ -2,24 +2,12 @@
 <configuration debug="false" scan="false">
     <springProperty scop="context" name="spring.application.name" source="spring.application.name" defaultValue="logs"/>
     <property name="log.path" value="logs/${spring.application.name}"/>
-    <!-- 彩色日志 -->
-    <!-- 彩色日志依赖的渲染类 -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wex"
-                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
-    <conversionRule conversionWord="wEx"
-                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-    <!-- 彩色日志格式 -->
-    <property name="CONSOLE_LOG_PATTERN"
-              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <!-- Console 输出设置 -->
+    <!-- Console log output -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
+            <pattern>%d{MM-dd HH:mm:ss.SSS} %-5level [%logger{50}] - %msg%n</pattern>
         </encoder>
     </appender>
-
 
     <!-- Log file debug output -->
     <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -53,10 +41,19 @@
     <!--开发环境:打印控制台-->
     <springProfile name="dev">
         <logger name="com.github.lyd" level="debug"/>
-        <logger name="org.springframework.security" level="debug"/>
         <logger name="java.sql.Connection" level="debug"/>
         <logger name="java.sql.Statement" level="debug"/>
         <logger name="java.sql.PreparedStatement" level="debug"/>
+        <logger name="org.springframework.security" level="debug"/>
+    </springProfile>
+
+    <!--测试环境:打印控制台-->
+    <springProfile name="test">
+        <logger name="com.github.lyd" level="debug"/>
+        <logger name="java.sql.Connection" level="debug"/>
+        <logger name="java.sql.Statement" level="debug"/>
+        <logger name="java.sql.PreparedStatement" level="debug"/>
+        <logger name="org.springframework.security" level="debug"/>
     </springProfile>
 
     <!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
