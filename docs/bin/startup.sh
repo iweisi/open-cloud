@@ -8,7 +8,7 @@ SERVICE=${INPUT##*/}
 echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
-JVM_OPTS="-server -Xms128m -Xmx128m -XX:PermSize=32M -XX:MaxNewSize=64m -XX:MaxPermSize=64m -Djava.awt.headless=true -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"
+JVM_OPTS="-server -Xms128m -Xmx128m"
 
 if [[ "$1" = "" ]];
 then
