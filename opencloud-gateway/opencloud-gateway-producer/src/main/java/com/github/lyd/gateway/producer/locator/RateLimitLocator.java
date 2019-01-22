@@ -79,7 +79,7 @@ public class RateLimitLocator {
      * @return
      */
     public Map<String, List<RateLimitProperties.Policy>> loadRateLimit() {
-        log.debug("=============加载动态限流==============");
+        log.info("=============加载动态限流==============");
         LinkedHashMap<String, List<RateLimitProperties.Policy>> policysMap = Maps.newLinkedHashMap();
         //从application.properties中加载限流信息
         policysMap.putAll(properties.getPolicyList());

@@ -50,7 +50,7 @@ public class ZuulRouteLocator extends SimpleRouteLocator {
      */
     @Override
     protected Map<String, ZuulProperties.ZuulRoute> locateRoutes() {
-        log.debug("=============加载动态路由==============");
+        log.info("=============加载动态路由==============");
         LinkedHashMap<String, ZuulProperties.ZuulRoute> routesMap = Maps.newLinkedHashMap();
         routesMap.putAll(super.locateRoutes());
         //从db中加载路由信息
