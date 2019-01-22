@@ -27,7 +27,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         HttpServletRequest httpServletRequest =   getHttpServletRequest();
         if(httpServletRequest!=null){
             Map<String, String> headers = getHeaders(httpServletRequest);
-            // 请求头丢失
+            // 传递所有请求头,防止部分丢失
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, String> entry = iterator.next();
