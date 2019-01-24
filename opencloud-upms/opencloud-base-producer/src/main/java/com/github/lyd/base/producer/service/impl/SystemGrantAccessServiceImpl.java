@@ -6,6 +6,7 @@ import com.github.lyd.base.producer.mapper.*;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.common.exception.OpenMessageException;
+import com.github.lyd.common.http.OpenRestTemplate;
 import com.github.lyd.common.mapper.CrudMapper;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
@@ -43,6 +44,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
     private SystemAppMapper systemAppMapper;
     @Autowired
     private SystemRoleService systemRoleService;
+    @Autowired
+    private OpenRestTemplate openRestTemplate;
     @Value("${spring.application.name}")
     private String DEFAULT_SERVICE_ID;
     private String DEFAULT_PREFIX = "/";
@@ -245,6 +248,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         removeGrantAccess(authorityOwner, authorityPrefix,resourceType);
         // 再重新批量授权
         systemAccessMapper.insertList(access);
+        // 刷新网关
+        openRestTemplate.refreshGateway();
         return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
     }
 
@@ -265,6 +270,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 .andEqualTo("resourceType",resourceType)
                 .end().build();
         int count = systemAccessMapper.deleteByExample(example);
+        // 刷新网关
+        openRestTemplate.refreshGateway();
         return count > 0;
     }
 
@@ -301,6 +308,8 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             }
 
         }
+        // 刷新网关
+        openRestTemplate.refreshGateway();
         return false;
     }
 
