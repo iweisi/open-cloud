@@ -272,8 +272,6 @@ CREATE TABLE `system_app` (
 -- Records of system_app
 -- ----------------------------
 INSERT INTO `system_app` VALUES ('gateway', '123456', '开放云平台', 'ApiGateway', '', 'server', '开放云平台', '', 'http://www.baidu.com', 'http://localhost:8888/login,http://localhost:8888/webjars/springfox-swagger-ui/o2c.html', '0', 'platform', '2018-11-12 17:48:45', '2019-01-10 22:22:46', '1', '1');
-INSERT INTO `system_app` VALUES ('532681992735555584', 'bb103a53a55f48468b5fee3bda4c1917', '测试', 'ce', 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar', 'server', '', '', 'http://www.baidu.com', 'http://www.baidu.com', '0', 'isp', '2019-01-09 22:08:03', '2019-01-10 21:49:08', '1', '0');
-INSERT INTO `system_app` VALUES ('533062925045202944', 'b7ace62e5fcc4c208c8a084e52563b86', '2', '2', 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar', 'server', '2', '', '2', '2', '0', 'platform', '2019-01-10 23:21:45', '2019-01-10 23:21:51', '1', '0');
 
 -- ----------------------------
 -- Table structure for system_gateway_rate_limit
