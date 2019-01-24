@@ -242,7 +242,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             return null;
         }
         //先清空拥有者的权限
-        removeGrantAccess(authorityOwner, authorityPrefix);
+        removeGrantAccess(authorityOwner, authorityPrefix,resourceType);
         // 再重新批量授权
         systemAccessMapper.insertList(access);
         return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
@@ -256,12 +256,13 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public Boolean removeGrantAccess(String authorityOwner, String authorityPrefix) {
+    public Boolean removeGrantAccess(String authorityOwner, String authorityPrefix,String resourceType) {
         //先清空拥有者的权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("authorityPrefix", authorityPrefix)
                 .andEqualTo("authorityOwner", authorityOwner)
+                .andEqualTo("resourceType",resourceType)
                 .end().build();
         int count = systemAccessMapper.deleteByExample(example);
         return count > 0;

@@ -160,4 +160,15 @@ public interface SystemRoleRemoteService {
     ResultBody<PageList<SystemGrantAccess>> roleGrantedAction(
             @RequestParam(value = "roleId") Long roleId
     );
+
+    /**
+     * 获取角色已授权接口资源
+     *
+     * @param roleId  角色ID
+     * @return
+     */
+    @PostMapping("/role/granted/api")
+    ResultBody<PageList<SystemGrantAccess>> roleGrantedApi(
+            @RequestParam(value = "roleId") Long roleId
+    );
 }

@@ -27,12 +27,13 @@ public class SystemRoleController implements SystemRoleRemoteService {
     private SystemRoleService systemRoleService;
     @Autowired
     private SystemGrantAccessService systemGrantAccessService;
+
     /**
      * 获取角色分页列表
      *
      * @return
      */
-    @ApiOperation(value = "获取角色分页列表",notes = "获取角色分页列表")
+    @ApiOperation(value = "获取角色分页列表", notes = "获取角色分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -54,7 +55,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleId
      * @return
      */
-    @ApiOperation(value = "获取角色信息",notes = "获取角色信息")
+    @ApiOperation(value = "获取角色信息", notes = "获取角色信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "path")
     })
@@ -74,7 +75,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param status   启用禁用
      * @return
      */
-    @ApiOperation(value = "添加角色",notes = "添加角色")
+    @ApiOperation(value = "添加角色", notes = "添加角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleName", value = "角色显示名称", defaultValue = "", required = true, paramType = "form"),
@@ -108,7 +109,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param status   启用禁用
      * @return
      */
-    @ApiOperation(value = "编辑角色",notes = "编辑角色")
+    @ApiOperation(value = "编辑角色", notes = "编辑角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "roleCode", value = "角色编码", defaultValue = "", required = true, paramType = "form"),
@@ -142,7 +143,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleId 菜单ID
      * @return
      */
-    @ApiOperation(value = "更新角色状态",notes = "更新角色状态")
+    @ApiOperation(value = "更新角色状态", notes = "更新角色状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", required = true, value = "roleId", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
@@ -163,7 +164,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleId 角色ID
      * @return
      */
-    @ApiOperation(value = "删除角色",notes = "删除角色")
+    @ApiOperation(value = "删除角色", notes = "删除角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
@@ -183,7 +184,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param menuIds 菜单ID.多个以,隔开
      * @return
      */
-    @ApiOperation(value = "菜单授权",notes = "菜单授权")
+    @ApiOperation(value = "菜单授权", notes = "菜单授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "menuIds", value = "菜单ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
@@ -194,8 +195,8 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("menuIds") String menuIds
     ) {
-       String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_MENU, menuIds.split(","));
-        return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
+        systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_MENU, StringUtils.isNotBlank(menuIds) ? menuIds.split(",") : new String[]{});
+        return ResultBody.success();
     }
 
     /**
@@ -205,7 +206,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param actionIds 操作ID.多个以,隔开
      * @return
      */
-    @ApiOperation(value = "操作授权",notes = "操作授权")
+    @ApiOperation(value = "操作授权", notes = "操作授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "actionIds", value = "操作ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
@@ -216,8 +217,8 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("actionIds") String actionIds
     ) {
-        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_ACTION, actionIds.split(","));
-        return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
+        systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_ACTION, StringUtils.isNotBlank(actionIds) ? actionIds.split(",") : new String[]{});
+        return ResultBody.success();
     }
 
     /**
@@ -227,7 +228,7 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param apiIds 接口ID.多个以,隔开
      * @return
      */
-    @ApiOperation(value = "接口授权",notes = "接口授权")
+    @ApiOperation(value = "接口授权", notes = "接口授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
             @ApiImplicitParam(name = "apiIds", value = "接口ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
@@ -238,8 +239,8 @@ public class SystemRoleController implements SystemRoleRemoteService {
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam("apiIds") String apiIds
     ) {
-        String result =  systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_API, apiIds.split(","));
-        return StringUtils.isNotBlank(result)?ResultBody.success().setData(true):ResultBody.failed().setData(false);
+        systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_API, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
+        return ResultBody.success();
     }
 
     /**
@@ -248,14 +249,14 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleId 角色ID
      * @return
      */
-    @ApiOperation(value = "获取角色已授权菜单资源",notes = "获取角色已授权菜单资源")
+    @ApiOperation(value = "获取角色已授权菜单资源", notes = "获取角色已授权菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
     @PostMapping("/role/granted/menu")
     @Override
     public ResultBody<PageList<SystemGrantAccess>> roleGrantedMenu(Long roleId) {
-        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId),BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_MENU);
+        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_MENU);
         return ResultBody.success(result);
     }
 
@@ -265,16 +266,32 @@ public class SystemRoleController implements SystemRoleRemoteService {
      * @param roleId 角色ID
      * @return
      */
-    @ApiOperation(value = "获取角色已授权操作资源",notes = "获取角色已授权操作资源")
+    @ApiOperation(value = "获取角色已授权操作资源", notes = "获取角色已授权操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
     })
     @PostMapping("/role/granted/action")
     @Override
     public ResultBody<PageList<SystemGrantAccess>> roleGrantedAction(Long roleId) {
-        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId),BaseConstants.AUTHORITY_PREFIX_ROLE,BaseConstants.RESOURCE_TYPE_ACTION);
+        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_ACTION);
         return ResultBody.success(result);
     }
 
+    /**
+     * 获取角色已授权接口资源
+     *
+     * @param roleId 角色ID
+     * @return
+     */
+    @ApiOperation(value = "获取角色已授权接口资源", notes = "获取角色已授权接口资源")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form")
+    })
+    @PostMapping("/role/granted/api")
+    @Override
+    public ResultBody<PageList<SystemGrantAccess>> roleGrantedApi(Long roleId) {
+        PageList<SystemGrantAccess> result = systemGrantAccessService.findList(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_API);
+        return ResultBody.success(result);
+    }
 
 }

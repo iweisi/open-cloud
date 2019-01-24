@@ -79,9 +79,10 @@ public interface SystemGrantAccessService {
      *
      * @param authorityOwner
      * @param authorityPrefix
+     * @param  resourceType
      * @return
      */
-    Boolean removeGrantAccess(String authorityOwner, String authorityPrefix);
+    Boolean removeGrantAccess(String authorityOwner, String authorityPrefix,String resourceType);
 
     /**
      * 更新授权信息
