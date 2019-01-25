@@ -8,7 +8,7 @@ SERVICE=${INPUT##*/}
 echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
-JVM_OPTS="-server -Xms128m -Xmx128m"
+JVM_OPTS="-server -Xms64m -Xmx128m -Xss512k"
 
 if [[ "$1" = "" ]];
 then
