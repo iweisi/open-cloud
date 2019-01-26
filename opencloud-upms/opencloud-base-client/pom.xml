@@ -26,8 +26,6 @@
         </dependency>
     </dependencies>
     <build>
-        <!-- 打包后文件的最终名字-->
-        <finalName>${artifactId}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
