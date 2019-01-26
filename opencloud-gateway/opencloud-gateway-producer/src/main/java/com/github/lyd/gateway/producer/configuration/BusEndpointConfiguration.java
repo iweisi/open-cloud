@@ -3,7 +3,7 @@ package com.github.lyd.gateway.producer.configuration;
 import com.github.lyd.gateway.producer.endpoint.GatewayRefreshBusEndpoint;
 import com.github.lyd.gateway.producer.event.GatewayRefreshRemoteListener;
 import com.github.lyd.gateway.producer.filter.ZuulErrorFilter;
-import com.github.lyd.gateway.producer.filter.ZuulPreFilter;
+import com.github.lyd.gateway.producer.filter.ZuulLogsFilter;
 import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import com.github.lyd.gateway.producer.locator.RateLimitLocator;
 import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
@@ -46,7 +46,7 @@ public class BusEndpointConfiguration {
 
     @Bean
     public ZuulFilter preRequestLogFilter() {
-        return new ZuulPreFilter();
+        return new ZuulLogsFilter();
     }
 
     /**

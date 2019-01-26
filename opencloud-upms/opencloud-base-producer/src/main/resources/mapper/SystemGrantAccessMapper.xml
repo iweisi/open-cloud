@@ -13,7 +13,7 @@
         <result column="resource_id" property="resourceId" jdbcType="BIGINT"/>
         <result column="resource_pid" property="resourcePid" jdbcType="BIGINT"/>
         <result column="resource_type" property="resourceType" jdbcType="VARCHAR"/>
-        <result column="resource_info" property="resourceInfo" jdbcType="VARCHAR"/>
+        <result column="resource_info" property="resourceInfo" jdbcType="LONGVARCHAR"/>
         <result column="service_id" property="serviceId" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
     </resultMap>

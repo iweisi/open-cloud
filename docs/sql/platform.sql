@@ -246,7 +246,7 @@ CREATE TABLE `system_grant_access` (
                                      `resource_id` bigint(20) NOT NULL COMMENT '资源ID',
                                      `resource_pid` bigint(20) DEFAULT NULL COMMENT '资源父节点',
                                      `resource_type` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '资源类型:api,menu,button',
-                                     `resource_info` varchar(4096) COLLATE utf8_bin DEFAULT NULL COMMENT '资源详细信息:必须为JSON字符串',
+                                     `resource_info`text COMMENT '资源详细信息:必须为JSON字符串',
                                      `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '状态:0-无效 1-有效',
                                      `service_id` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '所属服务',
                                      PRIMARY KEY (`id`)
@@ -373,4 +373,22 @@ CREATE TABLE `system_user_role` (
 -- Records of system_user_role
 -- ----------------------------
 INSERT INTO `system_user_role` VALUES ('521677655146233856', '1');
+SET FOREIGN_KEY_CHECKS=1;
+
+-- ----------------------------
+-- Table structure for system_access_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `system_access_logs`;
+CREATE TABLE `system_access_logs` (
+                                    `access_id` bigint(20) NOT NULL COMMENT '访问ID',
+                                    `path` varchar(255) DEFAULT NULL COMMENT '访问路径',
+                                    `method` varchar(50) DEFAULT NULL,
+                                    `data` text COMMENT '请求数据',
+                                    `headers` text COMMENT '请求头',
+                                    `ip` varchar(500) DEFAULT NULL COMMENT '请求IP',
+                                    `http_status` varchar(100) DEFAULT NULL COMMENT '响应状态',
+                                    `exception` text COMMENT '异常',
+                                    `access_time` datetime DEFAULT NULL COMMENT '访问时间',
+                                    PRIMARY KEY (`access_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='接口访问日志';
 SET FOREIGN_KEY_CHECKS=1;
