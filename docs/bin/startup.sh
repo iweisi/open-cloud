@@ -35,7 +35,7 @@ start()
 {
 	checkPid
 	if [[ ! -n "$pid" ]]; then
-    nohup java ${JVM_OPTS} -jar  ${FILE_PATH} >> ${LOG_PATH} 2>&1 &
+    BUILD_ID=dontKillMe  nohup java ${JVM_OPTS} -jar  ${FILE_PATH} >> ${LOG_PATH} 2>&1 &
     echo "$SERVICE_NAME is starting you can check the $LOG_PATH"
   else
       echo "$SERVICE_NAME is runing PID: $pid"
