@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
 INPUT=$2
-echo "输入的路径 $INPUT"
 FILE_PATH=`readlink -f ${INPUT}`
-echo "输入的服务路径 $FILE_PATH"
 SERVICE=${INPUT##*/}
-echo "输入的服务文件名 $SERVICE"
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
 JVM_OPTS="-server -Xms64m -Xmx128m -Xss512k"
