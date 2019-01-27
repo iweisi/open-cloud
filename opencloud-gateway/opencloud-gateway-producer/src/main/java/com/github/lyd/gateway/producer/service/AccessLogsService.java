@@ -8,6 +8,7 @@ import com.netflix.zuul.context.RequestContext;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +20,19 @@ public class AccessLogsService {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+
     public void  addLogs(RequestContext ctx){
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
+        String path = request.getRequestURI();
+        if(antPathMatcher.match("/**/oauth/check_token/**", path)){
+            return;
+        }
         String method = request.getMethod();
         Throwable throwable = ctx.getThrowable();
         Map headers = WebUtils.getHttpHeaders();
-        String path = request.getRequestURI();
         Map data = WebUtils.getParameterMap(request);
         String ip = WebUtils.getIpAddr(request);
         int httpStatus = response.getStatus();
