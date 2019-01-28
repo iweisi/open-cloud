@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author liuyadu
+ */
 @Component
 public class AccessLogsService {
     @Autowired
@@ -27,7 +30,7 @@ public class AccessLogsService {
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
         String path = request.getRequestURI();
-        if(antPathMatcher.match("/**/oauth/check_token/**", path)){
+        if(antPathMatcher.match("/**/oauth/check_token/**", path) || antPathMatcher.match("/base/access/logs/**",path)){
             return;
         }
         String method = request.getMethod();
