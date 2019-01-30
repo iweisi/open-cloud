@@ -20,7 +20,8 @@
 #### 问题反馈
 ![760809808](/docs/1548831206525.png)
 
-学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a> 
+学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>  
+ 
 邮箱：515608851@qq.com    
 
 #### 简介
