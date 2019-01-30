@@ -67,7 +67,7 @@ mvn clean install package -P dev
 ./startup.sh start open-gateway-producer.jar
 ```
 #### 问题反馈
-    学习交流群：760809808
+    学习交流群：<img src="/docs/1548831206525.png">760809808
     邮箱：515608851@qq.com    
 
 #### 项目进度
