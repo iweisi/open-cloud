@@ -73,7 +73,5 @@ mvn clean install package -P dev
 ./startup.sh start open-auth-producer.jar
 ./startup.sh start open-gateway-producer.jar
 ```
-
-
 #### 项目进度
     项目部分功能还在完善中，尚未正式发版。基础功能基本完善。
