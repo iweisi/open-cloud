@@ -15,7 +15,7 @@
 <a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">开放平台运营系统UI</a>
 
 <a target="_blank" href="http://39.106.187.125/admin">在线访问</a>
-默认登录账号:admin admin
+默认登录账号:admin 123456
 #### 简介
 搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
