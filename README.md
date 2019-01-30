@@ -11,6 +11,8 @@
 
 # open-cloud
 ---
+#### 简介
+深度整合SpringCloud+SpringSecurity+Oauth2,搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
 <a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">开放平台运营系统UI</a>
 
@@ -23,9 +25,6 @@
 学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>  
  
 邮箱：515608851@qq.com    
-
-#### 简介
-搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
 #### 功能
 ![Alt text](/docs/云服务开放平台.png)
