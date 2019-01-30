@@ -16,6 +16,13 @@
 
 <a target="_blank" href="http://39.106.187.125/admin">在线访问</a>
 默认登录账号:admin 123456
+
+#### 问题反馈
+![760809808](/docs/1548831206525.png)
+
+学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>
+邮箱：515608851@qq.com    
+
 #### 简介
 搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
@@ -66,11 +73,7 @@ mvn clean install package -P dev
 ./startup.sh start open-auth-producer.jar
 ./startup.sh start open-gateway-producer.jar
 ```
-#### 问题反馈
-![760809808](/docs/1548831206525.png)
 
-学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>
-邮箱：515608851@qq.com    
 
 #### 项目进度
     项目部分功能还在完善中，尚未正式发版。基础功能基本完善。
