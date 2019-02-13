@@ -58,9 +58,9 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @return
      */
     @Override
-    public Boolean register(SystemUserDto profileDto) {
+    public Long register(SystemUserDto profileDto) {
         if (profileDto == null) {
-            return false;
+            return null;
         }
         if (StringUtils.isBlank(profileDto.getUserName())) {
             throw new OpenMessageException("账号不能为空!");
@@ -73,31 +73,27 @@ public class SystemAccountServiceImpl implements SystemAccountService {
             // 已注册
             throw new OpenMessageException("登录名已经被注册!");
         }
-        //未注册
-        saved = new SystemUser();
-        BeanUtils.copyProperties(profileDto, saved);
         //加密
         String encodePassword = passwordEncoder.encode(profileDto.getPassword());
-        if (StringUtils.isBlank(saved.getNickName())) {
-            saved.setNickName(saved.getUserName());
+        if (StringUtils.isBlank(profileDto.getNickName())) {
+            profileDto.setNickName(profileDto.getUserName());
         }
-        saved.setStatus(BaseConstants.USER_STATE_DISABLE);
-        saved.setCreateTime(new Date());
-        saved.setUpdateTime(saved.getCreateTime());
-        saved.setRegisterTime(saved.getCreateTime());
+        profileDto.setCreateTime(new Date());
+        profileDto.setUpdateTime(profileDto.getCreateTime());
+        profileDto.setRegisterTime(profileDto.getCreateTime());
         //保存系统用户信息
-        systemUserService.addProfile(saved);
+        Long userId = systemUserService.addProfile(profileDto);
         //默认注册用户名账户
-        Boolean suceess = this.registerUsernameAccount(saved.getUserId(), saved.getUserName(), encodePassword);
-        if (suceess && StringUtils.isNotBlank(saved.getEmail())) {
+        Long accountId = this.registerUsernameAccount(userId, profileDto.getUserName(), encodePassword);
+        if (accountId != null && StringUtils.isNotBlank(profileDto.getEmail())) {
             //注册email账号登陆
-            this.registerMobileAccount(saved.getUserId(), saved.getEmail(), encodePassword);
+            this.registerMobileAccount(userId, profileDto.getEmail(), encodePassword);
         }
-        if (suceess && StringUtils.isNotBlank(saved.getMobile())) {
+        if (accountId != null && StringUtils.isNotBlank(profileDto.getMobile())) {
             //注册手机号账号登陆
-            this.registerMobileAccount(saved.getUserId(), saved.getMobile(), encodePassword);
+            this.registerMobileAccount(userId, profileDto.getMobile(), encodePassword);
         }
-        return suceess;
+        return  userId;
     }
 
     /**
@@ -146,6 +142,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (systemAccount != null) {
             List<String> authorities = Lists.newArrayList();
             List<Map> roles = Lists.newArrayList();
+            List<Long> roleIds = Lists.newArrayList();
             //查询角色权限
             List<SystemRole> rolesList = roleService.getUserRoles(systemAccount.getUserId());
             if (rolesList != null) {
@@ -155,6 +152,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                     map.put("code", role.getRoleCode());
                     map.put("name", role.getRoleName());
                     roles.add(map);
+                    roleIds.add(role.getRoleId());
                 }
             }
             //获取系统用户私有权限
@@ -202,14 +200,14 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @param password
      */
     @Override
-    public Boolean registerUsernameAccount(Long userId, String username, String password) {
+    public Long registerUsernameAccount(Long userId, String username, String password) {
         if (isExist(userId, username, BaseConstants.USER_ACCOUNT_TYPE_USERNAME)) {
             //已经注册
-            return false;
+            return null;
         }
         SystemAccount systemAccount = new SystemAccount(userId, username, password, BaseConstants.USER_ACCOUNT_TYPE_USERNAME);
-        int result = systemAccountMapper.insertSelective(systemAccount);
-        return result > 0;
+        systemAccountMapper.insertSelective(systemAccount);
+        return systemAccount.getAccountId();
     }
 
     /**
@@ -220,17 +218,16 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @param password
      */
     @Override
-    public Boolean registerEmailAccount(Long userId, String email, String password) {
+    public void registerEmailAccount(Long userId, String email, String password) {
         if (!StringUtils.matchEmail(email)) {
-            return false;
+            return;
         }
         if (isExist(userId, email, BaseConstants.USER_ACCOUNT_TYPE_EMAIL)) {
             //已经注册
-            return false;
+            return;
         }
         SystemAccount systemAccount = new SystemAccount(userId, email, password, BaseConstants.USER_ACCOUNT_TYPE_EMAIL);
-        int result = systemAccountMapper.insertSelective(systemAccount);
-        return result > 0;
+        systemAccountMapper.insertSelective(systemAccount);
     }
 
     /**
@@ -241,17 +238,16 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @param password
      */
     @Override
-    public Boolean registerMobileAccount(Long userId, String mobile, String password) {
+    public void registerMobileAccount(Long userId, String mobile, String password) {
         if (!StringUtils.matchMobile(mobile)) {
-            return false;
+            return;
         }
         if (isExist(userId, mobile, BaseConstants.USER_ACCOUNT_TYPE_MOBILE)) {
             //已经注册
-            return false;
+            return;
         }
         SystemAccount systemAccount = new SystemAccount(userId, mobile, password, BaseConstants.USER_ACCOUNT_TYPE_MOBILE);
-        int result = systemAccountMapper.insertSelective(systemAccount);
-        return result > 0;
+        systemAccountMapper.insertSelective(systemAccount);
     }
 
 
@@ -264,9 +260,9 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @return
      */
     @Override
-    public Boolean resetPassword(Long userId, String oldPassword, String newPassword) {
+    public void resetPassword(Long userId, String oldPassword, String newPassword) {
         if (userId == null || StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword)) {
-            return false;
+            return;
         }
         SystemUser userProfile = systemUserService.getProfile(userId);
         if (userProfile == null) {
@@ -280,15 +276,14 @@ public class SystemAccountServiceImpl implements SystemAccountService {
                 .end().build();
         SystemAccount systemAccount = systemAccountMapper.selectOneByExample(example);
         if (systemAccount == null) {
-            return false;
+            return;
         }
         String oldPasswordEncoder = passwordEncoder.encode(oldPassword);
         if (!passwordEncoder.matches(systemAccount.getPassword(), oldPasswordEncoder)) {
             throw new OpenMessageException("原密码不正确");
         }
         systemAccount.setPassword(passwordEncoder.encode(newPassword));
-        int count = systemAccountMapper.updateByPrimaryKey(systemAccount);
-        return count > 0;
+        systemAccountMapper.updateByPrimaryKey(systemAccount);
     }
 
     /**
@@ -334,15 +329,14 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @return
      */
     @Override
-    public Boolean removeEmailAccount(Long userId, String email) {
+    public void removeEmailAccount(Long userId, String email) {
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", email)
                 .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
                 .end().build();
-        int count = systemAccountMapper.deleteByExample(example);
-        return count > 0 ? true : false;
+        systemAccountMapper.deleteByExample(example);
     }
 
     /**
@@ -353,15 +347,14 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @return
      */
     @Override
-    public Boolean removeMobileAccount(Long userId, String mobile) {
+    public void removeMobileAccount(Long userId, String mobile) {
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("account", mobile)
                 .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
                 .end().build();
-        int count = systemAccountMapper.deleteByExample(example);
-        return count > 0 ? true : false;
+        systemAccountMapper.deleteByExample(example);
     }
 
 }

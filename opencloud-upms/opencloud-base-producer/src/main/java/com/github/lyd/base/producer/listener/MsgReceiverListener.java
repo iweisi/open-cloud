@@ -27,7 +27,7 @@ public class MsgReceiverListener {
     @Autowired
     private SystemApiService apiService;
     @Autowired
-    private OpenRestTemplate platformRestTemplate;
+    private OpenRestTemplate openRestTemplate;
     @Autowired
     private SystemAccessLogsMapper systemAccessLogsMapper;
 
@@ -58,7 +58,7 @@ public class MsgReceiverListener {
                 }
 
                 // 重新刷新网关
-                platformRestTemplate.refreshGateway();
+                openRestTemplate.refreshGateway();
             }
         }catch (Exception e){
             log.error("error:",e);

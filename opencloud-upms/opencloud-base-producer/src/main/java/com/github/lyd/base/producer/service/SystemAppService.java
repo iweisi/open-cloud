@@ -43,7 +43,7 @@ public interface SystemAppService {
      * @param app 应用
      * @return 应用信息
      */
-    Boolean addAppInfo(SystemAppDto app);
+    String addAppInfo(SystemAppDto app);
 
     /**
      * 修改应用
@@ -51,7 +51,7 @@ public interface SystemAppService {
      * @param app 应用
      * @return 应用信息
      */
-    Boolean updateInfo(SystemAppDto app);
+    void updateInfo(SystemAppDto app);
 
     /**
      * 重置秘钥
@@ -67,7 +67,7 @@ public interface SystemAppService {
      * @param appId
      * @return
      */
-    Boolean removeApp(String appId);
+    void removeApp(String appId);
 
     /**
      * APP授权功能

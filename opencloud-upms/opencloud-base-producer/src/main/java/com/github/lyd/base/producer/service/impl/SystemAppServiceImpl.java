@@ -107,7 +107,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return 应用信息
      */
     @Override
-    public Boolean addAppInfo(SystemAppDto app) {
+    public String addAppInfo(SystemAppDto app) {
         String clientId = String.valueOf(idGenerator.nextId());
         String clientSecret = RandomValueUtils.uuid();
         app.setAppId(clientId);
@@ -117,7 +117,7 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (app.getIsPersist() == null) {
             app.setIsPersist(BaseConstants.DISABLED);
         }
-        int result = systemAppMapper.insertSelective(app);
+        systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         // 功能授权
         app.setAuthorities(grantAccess(app.getAppId(), app.getAuthorities().split(",")));
@@ -127,7 +127,7 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk();
+        return app.getAppId();
     }
 
     /**
@@ -137,7 +137,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return 应用信息
      */
     @Override
-    public Boolean updateInfo(SystemAppDto app) {
+    public void updateInfo(SystemAppDto app) {
         SystemApp appInfo = getAppInfo(app.getAppId());
         if (appInfo == null) {
             throw new OpenMessageException(app.getAppId() + "应用不存在!");
@@ -154,7 +154,6 @@ public class SystemAppServiceImpl implements SystemAppService {
             // 手动事物回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk();
     }
 
     /**
@@ -192,7 +191,7 @@ public class SystemAppServiceImpl implements SystemAppService {
      * @return
      */
     @Override
-    public Boolean removeApp(String appId) {
+    public void removeApp(String appId) {
         SystemApp appInfo = getAppInfo(appId);
         if (appInfo == null) {
             throw new OpenMessageException(appId + "应用不存在!");
@@ -200,15 +199,14 @@ public class SystemAppServiceImpl implements SystemAppService {
         if (appInfo.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
-        int result = systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
+        systemAppMapper.deleteByPrimaryKey(appInfo.getAppId());
         // 移除授权
-        systemGrantAccessService.removeGrantAccess(appInfo.getAppId(), BaseConstants.AUTHORITY_PREFIX_APP,null);
+        systemGrantAccessService.removeGrantAccess(appInfo.getAppId(), BaseConstants.AUTHORITY_PREFIX_APP, null);
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.removeClinet(appInfo.getAppId());
         if (!resp.isOk()) {
             // 回滚事物
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return result > 0 && resp.isOk();
     }
 
     /**

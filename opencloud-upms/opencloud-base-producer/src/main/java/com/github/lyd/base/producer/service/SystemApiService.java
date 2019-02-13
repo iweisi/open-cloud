@@ -49,7 +49,7 @@ public interface SystemApiService {
      * @param api
      * @return
      */
-    Boolean addApi(SystemApi api);
+    Long addApi(SystemApi api);
 
     /**
      * 修改接口
@@ -57,7 +57,7 @@ public interface SystemApiService {
      * @param api
      * @return
      */
-    Boolean updateApi(SystemApi api);
+    void updateApi(SystemApi api);
 
     /**
      * 查询接口
@@ -75,7 +75,7 @@ public interface SystemApiService {
      * @param status
      * @return
      */
-    Boolean updateStatus(Long apiId, Integer status);
+    void updateStatus(Long apiId, Integer status);
 
     /**
      * 移除接口
@@ -83,7 +83,7 @@ public interface SystemApiService {
      * @param apiId
      * @return
      */
-    Boolean removeApi(Long apiId);
+    void removeApi(Long apiId);
 
     /**
      * 根据编码查询ID

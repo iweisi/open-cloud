@@ -48,6 +48,23 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     }
 
     /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemRole> findList(String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemRole.class);
+        Example example = builder.criteria()
+                .orLike("roleCode", keyword)
+                .orLike("roleName", keyword).end().build();
+        example.orderBy("roleId").asc();
+        List<SystemRole> list = systemRoleMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
      * 获取角色信息
      *
      * @param roleId
@@ -65,7 +82,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean addRole(SystemRole role) {
+    public Long addRole(SystemRole role) {
         if (isExist(role.getRoleCode())) {
             throw new OpenMessageException(String.format("%s角色编码已存在,不允许重复添加", role.getRoleCode()));
         }
@@ -77,8 +94,8 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         }
         role.setCreateTime(new Date());
         role.setUpdateTime(role.getCreateTime());
-        int result = systemRoleMapper.insertSelective(role);
-        return result > 0;
+        systemRoleMapper.insertSelective(role);
+        return role.getRoleId();
     }
 
     /**
@@ -88,7 +105,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean updateRole(SystemRole role) {
+    public void updateRole(SystemRole role) {
         if (role.getRoleId() == null) {
             throw new OpenMessageException("ID不能为空");
         }
@@ -103,8 +120,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             }
         }
         role.setUpdateTime(new Date());
-        int result = systemRoleMapper.updateByPrimaryKeySelective(role);
-        return result > 0;
+        systemRoleMapper.updateByPrimaryKeySelective(role);
     }
 
     /**
@@ -114,20 +130,19 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean removeRole(Long roleId) {
+    public void removeRole(Long roleId) {
+        if (roleId == null) {
+            return;
+        }
         SystemRole role = getRole(roleId);
         if (role != null && role.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
-        }
-        if (roleId == null) {
-            return false;
         }
         int count = getCountByRole(roleId);
         if (count > 0) {
             throw new OpenMessageException("该角色下存在授权组员,不允许删除!");
         }
-        int result = systemRoleMapper.deleteByPrimaryKey(roleId);
-        return result > 0;
+        systemRoleMapper.deleteByPrimaryKey(roleId);
     }
 
     /**
@@ -154,12 +169,12 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean saveMemberRoles(Long userId, Long... roles) {
+    public void saveMemberRoles(Long userId, Long... roles) {
         if (userId == null || roles == null) {
-            return false;
+            return;
         }
         if (roles.length == 0) {
-            return false;
+            return;
         }
         // 先清空,在添加
         removeMemberRoles(userId);
@@ -171,8 +186,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             list.add(roleUser);
         }
         // 批量保存
-        int result = systemUserRoleMapper.insertList(list);
-        return result > 0;
+        systemUserRoleMapper.insertList(list);
     }
 
     /**
@@ -210,11 +224,10 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean removeRoleMembers(Long roleId) {
+    public void removeRoleMembers(Long roleId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("roleId", roleId).end().build();
-        int result = systemUserRoleMapper.deleteByExample(example);
-        return result > 0;
+        systemUserRoleMapper.deleteByExample(example);
     }
 
     /**
@@ -224,11 +237,10 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean removeMemberRoles(Long userId) {
+    public void removeMemberRoles(Long userId) {
         ExampleBuilder builder = new ExampleBuilder(SystemUserRole.class);
         Example example = builder.criteria().andEqualTo("userId", userId).end().build();
-        int result = systemUserRoleMapper.deleteByExample(example);
-        return result > 0;
+        systemUserRoleMapper.deleteByExample(example);
     }
 
     /**
@@ -239,13 +251,12 @@ public class SystemRoleServiceImpl implements SystemRoleService {
      * @return
      */
     @Override
-    public Boolean updateStatus(Long roleId, Integer status) {
+    public void updateStatus(Long roleId, Integer status) {
         SystemRole role = new SystemRole();
         role.setRoleId(roleId);
         role.setStatus(status);
         role.setUpdateTime(new Date());
-        int count = systemRoleMapper.updateByPrimaryKeySelective(role);
-        return count > 0;
+        systemRoleMapper.updateByPrimaryKeySelective(role);
     }
 
     /**

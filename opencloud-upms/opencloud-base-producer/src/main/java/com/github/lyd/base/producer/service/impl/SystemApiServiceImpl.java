@@ -96,7 +96,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      * @return
      */
     @Override
-    public Boolean addApi(SystemApi api) {
+    public Long addApi(SystemApi api) {
         if (isExist(api.getApiCode())) {
             throw new OpenMessageException(String.format("%sApi编码已存在,不允许重复添加", api.getApiCode()));
         }
@@ -114,8 +114,8 @@ public class SystemApiServiceImpl implements SystemApiService {
         }
         api.setCreateTime(new Date());
         api.setUpdateTime(api.getCreateTime());
-        int count = systemApiMapper.insertSelective(api);
-        return count > 0;
+        systemApiMapper.insertSelective(api);
+        return api.getApiId();
     }
 
     /**
@@ -125,7 +125,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      * @return
      */
     @Override
-    public Boolean updateApi(SystemApi api) {
+    public void updateApi(SystemApi api) {
         if (api.getApiId() == null) {
             throw new OpenMessageException("ID不能为空");
         }
@@ -146,10 +146,9 @@ public class SystemApiServiceImpl implements SystemApiService {
             api.setApiCategory(BaseConstants.DEFAULT_API_CATEGORY);
         }
         api.setUpdateTime(new Date());
-        int count = systemApiMapper.updateByPrimaryKeySelective(api);
+        systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
-        return count > 0;
     }
 
     /**
@@ -177,15 +176,14 @@ public class SystemApiServiceImpl implements SystemApiService {
      * @return
      */
     @Override
-    public Boolean updateStatus(Long apiId, Integer status) {
+    public void updateStatus(Long apiId, Integer status) {
         SystemApi api = new SystemApi();
         api.setApiId(apiId);
         api.setStatus(status);
         api.setUpdateTime(new Date());
-        int count = systemApiMapper.updateByPrimaryKeySelective(api);
+        systemApiMapper.updateByPrimaryKeySelective(api);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_API, api.getApiId());
-        return count > 0;
     }
 
     /**
@@ -195,7 +193,7 @@ public class SystemApiServiceImpl implements SystemApiService {
      * @return
      */
     @Override
-    public Boolean removeApi(Long apiId) {
+    public void removeApi(Long apiId) {
         SystemApi api = getApi(apiId);
         if (api != null && api.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
@@ -203,8 +201,7 @@ public class SystemApiServiceImpl implements SystemApiService {
         if (systemAccessService.isExist(apiId, BaseConstants.RESOURCE_TYPE_API)) {
             throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!"));
         }
-        int count = systemApiMapper.deleteByPrimaryKey(apiId);
-        return count > 0;
+        systemApiMapper.deleteByPrimaryKey(apiId);
     }
 
     /**

@@ -58,7 +58,7 @@ public interface SystemActionRemoteService {
      * @return
      */
     @PostMapping("/action/add")
-    ResultBody<Boolean> addAction(
+    ResultBody<Long> addAction(
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
@@ -82,7 +82,7 @@ public interface SystemActionRemoteService {
      * @return
      */
     @PostMapping("/action/update")
-    ResultBody<Boolean> updateAction(
+    ResultBody updateAction(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
@@ -101,7 +101,7 @@ public interface SystemActionRemoteService {
      * @return
      */
     @PostMapping("/action/update/status")
-    ResultBody<Boolean> updateStatus(
+    ResultBody updateStatus(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     );
@@ -113,7 +113,7 @@ public interface SystemActionRemoteService {
      * @return
      */
     @PostMapping("/action/remove")
-    ResultBody<Boolean> removeAction(
+    ResultBody removeAction(
             @RequestParam("actionId") Long actionId
     );
 }

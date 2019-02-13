@@ -27,7 +27,7 @@ public class SystemApiController implements SystemApiRemoteService {
      *
      * @return
      */
-    @ApiOperation(value = "获取接口分页列表",notes = "获取接口分页列表")
+    @ApiOperation(value = "获取接口分页列表", notes = "获取接口分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -50,7 +50,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "获取接口列表",notes = "获取接口列表")
+    @ApiOperation(value = "获取接口列表", notes = "获取接口列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -66,7 +66,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiId ApiId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取接口资源",notes = "获取接口资源")
+    @ApiOperation(value = "获取接口资源", notes = "获取接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "path"),
     })
@@ -88,7 +88,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiDesc   描述
      * @return
      */
-    @ApiOperation(value = "添加接口资源",notes = "添加接口资源")
+    @ApiOperation(value = "添加接口资源", notes = "添加接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
             @ApiImplicitParam(name = "apiName", required = true, value = "接口名称", paramType = "form"),
@@ -101,7 +101,7 @@ public class SystemApiController implements SystemApiRemoteService {
     })
     @PostMapping("/api/add")
     @Override
-    public ResultBody<Boolean> addApi(
+    public ResultBody<Long> addApi(
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "apiCategory") String apiCategory,
@@ -120,8 +120,8 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
-        boolean result = apiService.addApi(api);
-        return result ? ResultBody.success() : ResultBody.failed();
+        Long result = apiService.addApi(api);
+        return ResultBody.success(result);
     }
 
     /**
@@ -137,7 +137,7 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiDesc   描述
      * @return
      */
-    @ApiOperation(value = "编辑接口资源",notes = "编辑接口资源")
+    @ApiOperation(value = "编辑接口资源", notes = "编辑接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "接口Id", paramType = "form"),
             @ApiImplicitParam(name = "apiCode", required = true, value = "接口编码", paramType = "form"),
@@ -151,7 +151,7 @@ public class SystemApiController implements SystemApiRemoteService {
     })
     @PostMapping("/api/update")
     @Override
-    public ResultBody<Boolean> updateApi(
+    public ResultBody updateApi(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
@@ -172,8 +172,8 @@ public class SystemApiController implements SystemApiRemoteService {
         api.setStatus(status);
         api.setPriority(priority);
         api.setApiDesc(apiDesc);
-        boolean result = apiService.updateApi(api);
-        return result ? ResultBody.success() : ResultBody.failed();
+        apiService.updateApi(api);
+        return ResultBody.success();
     }
 
     /**
@@ -182,19 +182,19 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiId 接口ID
      * @return
      */
-    @ApiOperation(value = "更新接口资源状态",notes = "更新接口资源状态")
+    @ApiOperation(value = "更新接口资源状态", notes = "更新接口资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/api/update/status")
     @Override
-    public ResultBody<Boolean> updateStatus(
+    public ResultBody updateStatus(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        boolean result = apiService.updateStatus(apiId, status);
-        return result ? ResultBody.success() : ResultBody.failed();
+        apiService.updateStatus(apiId, status);
+        return ResultBody.success();
     }
 
     /**
@@ -203,16 +203,16 @@ public class SystemApiController implements SystemApiRemoteService {
      * @param apiId ApiID
      * @return
      */
-    @ApiOperation(value = "移除接口资源",notes = "移除接口资源")
+    @ApiOperation(value = "移除接口资源", notes = "移除接口资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "apiId", required = true, value = "ApiId", paramType = "form"),
     })
     @PostMapping("/api/remove")
     @Override
-    public ResultBody<Boolean> removeApi(
+    public ResultBody removeApi(
             @RequestParam("apiId") Long apiId
     ) {
-        boolean result = apiService.removeApi(apiId);
-        return result ? ResultBody.success() : ResultBody.failed();
+        apiService.removeApi(apiId);
+        return ResultBody.success();
     }
 }

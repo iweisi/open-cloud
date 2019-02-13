@@ -7,6 +7,7 @@ import com.github.lyd.base.client.entity.SystemUser;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,10 @@ public class SystemUserDto extends SystemUser implements Serializable {
      * 用户角色
      */
     private Collection<Map> roles;
+    /**
+     * 用户角色ID
+     */
+    private List<Long> roleIds;
     /**
      * 用户权限
      */
@@ -55,5 +60,13 @@ public class SystemUserDto extends SystemUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Long> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 }

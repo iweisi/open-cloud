@@ -54,7 +54,7 @@ public interface SystemApiRemoteService {
      * @return
      */
     @PostMapping("/api/add")
-    ResultBody<Boolean> addApi(
+    ResultBody<Long> addApi(
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
             @RequestParam(value = "apiCategory") String apiCategory,
@@ -80,7 +80,7 @@ public interface SystemApiRemoteService {
      * @return
      */
     @PostMapping("/api/update")
-    ResultBody<Boolean> updateApi(
+    ResultBody updateApi(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "apiCode") String apiCode,
             @RequestParam(value = "apiName") String apiName,
@@ -100,7 +100,7 @@ public interface SystemApiRemoteService {
      * @return
      */
     @PostMapping("/api/update/status")
-    ResultBody<Boolean> updateStatus(
+    ResultBody updateStatus(
             @RequestParam("apiId") Long apiId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     );
@@ -112,7 +112,7 @@ public interface SystemApiRemoteService {
      * @return
      */
     @PostMapping("/api/remove")
-    ResultBody<Boolean> removeApi(
+    ResultBody removeApi(
             @RequestParam("apiId") Long apiId
     );
 }

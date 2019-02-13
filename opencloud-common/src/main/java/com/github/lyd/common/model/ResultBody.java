@@ -58,11 +58,6 @@ public class ResultBody<T extends Object> implements Serializable {
         return new ResultBody().setMessage("success");
     }
 
-
-    public static <T> ResultBody success(String msg) {
-        return new ResultBody().setMessage("success");
-    }
-
     public static <T> ResultBody success(T data) {
         return new ResultBody().setData(data).setMessage("success");
     }

@@ -1,8 +1,10 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.client.entity.SystemAction;
 import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.base.producer.mapper.SystemUserMapper;
+import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.mapper.ExampleBuilder;
 import com.github.lyd.common.model.PageList;
@@ -25,6 +27,8 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Autowired
     private SystemUserMapper systemUserMapper;
+    @Autowired
+    private SystemRoleService systemRoleService;
 
     /**
      * 更新系统用户
@@ -33,11 +37,12 @@ public class SystemUserServiceImpl implements SystemUserService {
      * @return
      */
     @Override
-    public Boolean addProfile(SystemUser userProfile) {
-        if (userProfile == null || userProfile.getUserId() == null) {
-            return false;
+    public Long addProfile(SystemUserDto userProfile) {
+        systemUserMapper.insertSelective(userProfile);
+        if(userProfile!=null && userProfile.getRoleIds().size()>0){
+            systemRoleService.saveMemberRoles(userProfile.getUserId(),userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
         }
-        return systemUserMapper.insertSelective(userProfile) > 0;
+        return userProfile.getUserId();
     }
 
     /**
@@ -47,12 +52,15 @@ public class SystemUserServiceImpl implements SystemUserService {
      * @return
      */
     @Override
-    public Boolean updateProfile(SystemUser userProfile) {
+    public Boolean updateProfile(SystemUserDto userProfile) {
         if (userProfile == null || userProfile.getUserId() == null) {
             return false;
         }
         if (userProfile.getUserId() == null) {
             return false;
+        }
+        if(userProfile!=null && userProfile.getRoleIds().size()>0){
+            systemRoleService.saveMemberRoles(userProfile.getUserId(),userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
         }
         return systemUserMapper.updateByPrimaryKeySelective(userProfile) > 0;
     }

@@ -82,7 +82,7 @@ public interface SystemGrantAccessService {
      * @param  resourceType
      * @return
      */
-    Boolean removeGrantAccess(String authorityOwner, String authorityPrefix,String resourceType);
+    void removeGrantAccess(String authorityOwner, String authorityPrefix,String resourceType);
 
     /**
      * 更新授权信息
@@ -93,7 +93,7 @@ public interface SystemGrantAccessService {
      * @param resourceId
      * @return
      */
-    Boolean updateGrantAccess(String resourceType, Long resourceId);
+    void updateGrantAccess(String resourceType, Long resourceId);
 
     /**
      * 检查资源是否已授权

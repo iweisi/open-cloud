@@ -27,7 +27,7 @@ public class SystemActionController implements SystemActionRemoteService {
      *
      * @return
      */
-    @ApiOperation(value = "获取操作分页列表",notes = "获取操作分页列表")
+    @ApiOperation(value = "获取操作分页列表", notes = "获取操作分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -49,7 +49,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionId 操作Id
      * @return 应用信息
      */
-    @ApiOperation(value = "获取操作资源",notes = "获取操作资源")
+    @ApiOperation(value = "获取操作资源", notes = "获取操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作Id", paramType = "path"),
     })
@@ -65,7 +65,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param keyword keyword
      * @return
      */
-    @ApiOperation(value = "获取操作列表",notes = "获取操作列表")
+    @ApiOperation(value = "获取操作列表", notes = "获取操作列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -87,7 +87,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @ApiOperation(value = "添加操作资源",notes = "添加操作资源")
+    @ApiOperation(value = "添加操作资源", notes = "添加操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionCode", required = true, value = "操作编码", paramType = "form"),
             @ApiImplicitParam(name = "actionName", required = true, value = "操作名称", paramType = "form"),
@@ -99,7 +99,7 @@ public class SystemActionController implements SystemActionRemoteService {
     })
     @PostMapping("/action/add")
     @Override
-    public ResultBody<Boolean> addAction(
+    public ResultBody<Long> addAction(
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
             @RequestParam(value = "menuId") Long menuId,
@@ -116,8 +116,8 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
-        boolean result = actionService.addAction(action);
-        return result ? ResultBody.success() : ResultBody.failed();
+        Long result = actionService.addAction(action);
+        return ResultBody.success(result);
     }
 
     /**
@@ -133,7 +133,7 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionDesc 描述
      * @return
      */
-    @ApiOperation(value = "编辑操作资源",notes = "添加操作资源")
+    @ApiOperation(value = "编辑操作资源", notes = "添加操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form"),
             @ApiImplicitParam(name = "actionCode", required = true, value = "操作编码", paramType = "form"),
@@ -146,7 +146,7 @@ public class SystemActionController implements SystemActionRemoteService {
     })
     @PostMapping("/action/update")
     @Override
-    public ResultBody<Boolean> updateAction(
+    public ResultBody updateAction(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "actionCode") String actionCode,
             @RequestParam(value = "actionName") String actionName,
@@ -165,8 +165,8 @@ public class SystemActionController implements SystemActionRemoteService {
         action.setStatus(status);
         action.setPriority(priority);
         action.setActionDesc(actionDesc);
-        boolean result = actionService.updateAction(action);
-        return result ? ResultBody.success() : ResultBody.failed();
+        actionService.updateAction(action);
+        return ResultBody.success();
     }
 
     /**
@@ -175,19 +175,19 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionId 操作ID
      * @return
      */
-    @ApiOperation(value = "更新操作资源状态",notes = "更新操作资源状态")
+    @ApiOperation(value = "更新操作资源状态", notes = "更新操作资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
     })
     @PostMapping("/action/update/status")
     @Override
-    public ResultBody<Boolean> updateStatus(
+    public ResultBody updateStatus(
             @RequestParam("actionId") Long actionId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        boolean result = actionService.updateStatus(actionId, status);
-        return result ? ResultBody.success() : ResultBody.failed();
+        actionService.updateStatus(actionId, status);
+        return ResultBody.success();
     }
 
     /**
@@ -196,16 +196,16 @@ public class SystemActionController implements SystemActionRemoteService {
      * @param actionId 操作ID
      * @return
      */
-    @ApiOperation(value = "移除操作资源",notes = "移除操作资源")
+    @ApiOperation(value = "移除操作资源", notes = "移除操作资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "actionId", required = true, value = "操作ID", paramType = "form")
     })
     @PostMapping("/action/remove")
     @Override
-    public ResultBody<Boolean> removeAction(
+    public ResultBody removeAction(
             @RequestParam("actionId") Long actionId
     ) {
-        boolean result = actionService.removeAction(actionId);
-        return result ? ResultBody.success() : ResultBody.failed();
+        actionService.removeAction(actionId);
+        return ResultBody.success();
     }
 }

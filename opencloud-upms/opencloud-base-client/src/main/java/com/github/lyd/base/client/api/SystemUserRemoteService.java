@@ -24,7 +24,7 @@
  */
 package com.github.lyd.base.client.api;
 
-import com.github.lyd.base.client.dto.SystemUserDto;
+import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
@@ -55,30 +55,67 @@ public interface SystemUserRemoteService {
     /**
      * 添加系统用户
      *
-     * @param username
+     * @param userName
      * @param password
+     * @param nickName
      * @param status
+     * @param userType
+     * @param email
+     * @param mobile
+     * @param userDesc
+     * @param avatar
      * @return
      */
     @PostMapping("/user/add")
-    ResultBody<SystemUserDto> addUser(
-            @RequestParam(value = "username") String username,
+    ResultBody<Long> addUser(
+            @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "status") Integer status
+            @RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "status") Integer status,
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "mobile") String mobile,
+            @RequestParam(value = "userDesc") String userDesc,
+            @RequestParam(value = "avatar") String avatar,
+            @RequestParam(value = "roleIds") String roleIds
     );
 
     /**
      * 更新系统用户
      *
-     * @param username
-     * @param password
+     * @param userId
+     * @param userName
+     * @param nickName
      * @param status
+     * @param userType
+     * @param email
+     * @param mobile
+     * @param userDesc
+     * @param avatar
      * @return
      */
     @PostMapping("/user/update")
-    ResultBody<SystemUserDto> updateUser(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "status") Integer status
+    ResultBody updateUser(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "status") Integer status,
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "mobile", required = false) String mobile,
+            @RequestParam(value = "userDesc", required = false) String userDesc,
+            @RequestParam(value = "avatar", required = false) String avatar,
+            @RequestParam(value = "roleIds") String roleIds
+    );
+
+    /**
+     * 获取用户角色
+     *
+     * @param userId
+     * @return
+     */
+    @PostMapping("/user/roles")
+    ResultBody<PageList<SystemRole>> getUserRoles(
+            @RequestParam(value = "userId") Long userId
     );
 }

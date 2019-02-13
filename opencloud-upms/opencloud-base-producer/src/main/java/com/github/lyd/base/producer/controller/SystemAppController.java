@@ -32,7 +32,7 @@ public class SystemAppController implements SystemAppRemoteService {
      *
      * @return
      */
-    @ApiOperation(value = "获取应用分页列表",notes = "获取应用分页列表")
+    @ApiOperation(value = "获取应用分页列表", notes = "获取应用分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -55,7 +55,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param appId appId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取应用信息",notes = "获取应用信息")
+    @ApiOperation(value = "获取应用信息", notes = "获取应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
     })
@@ -74,7 +74,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param appId 应用Id
      * @return
      */
-    @ApiOperation(value = "获取应用开发配置信息",notes = "获取应用开发配置信息")
+    @ApiOperation(value = "获取应用开发配置信息", notes = "获取应用开发配置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用ID", defaultValue = "1", required = true, paramType = "path"),
     })
@@ -84,7 +84,7 @@ public class SystemAppController implements SystemAppRemoteService {
             @PathVariable("appId") String appId
     ) {
         SystemAppDto appInfo = appInfoService.getAppWithClientInfo(appId);
-        if(appInfo==null){
+        if (appInfo == null) {
             return ResultBody.success(null);
         }
         return ResultBody.success(appInfo.getClientInfo());
@@ -109,7 +109,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param grantTypes   授权类型(多个使用,号隔开)
      * @return
      */
-    @ApiOperation(value = "添加应用信息",notes = "添加应用信息")
+    @ApiOperation(value = "添加应用信息", notes = "添加应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appNameEn", value = "应用英文名称", required = true, paramType = "form"),
@@ -128,7 +128,7 @@ public class SystemAppController implements SystemAppRemoteService {
     })
     @PostMapping("/app/add")
     @Override
-    public ResultBody<Boolean> addApp(
+    public ResultBody<String> addApp(
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
@@ -159,8 +159,8 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setScopes(scopes);
         app.setAuthorities(authorities);
         app.setGrantTypes(grantTypes);
-        Boolean result = appInfoService.addAppInfo(app);
-        return result? ResultBody.success():ResultBody.failed();
+        String result = appInfoService.addAppInfo(app);
+        return ResultBody.success(result);
     }
 
     /**
@@ -184,7 +184,7 @@ public class SystemAppController implements SystemAppRemoteService {
      * @return
      * @
      */
-    @ApiOperation(value = "编辑应用信息",notes = "编辑应用信息")
+    @ApiOperation(value = "编辑应用信息", notes = "编辑应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
             @ApiImplicitParam(name = "appName", value = "应用名称", required = true, paramType = "form"),
@@ -204,7 +204,7 @@ public class SystemAppController implements SystemAppRemoteService {
     })
     @PostMapping("/app/update")
     @Override
-    public ResultBody<Boolean> updateApp(
+    public ResultBody updateApp(
             @RequestParam("appId") String appId,
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
@@ -237,8 +237,8 @@ public class SystemAppController implements SystemAppRemoteService {
         app.setScopes(scopes);
         app.setAuthorities(authorities);
         app.setGrantTypes(grantTypes);
-        Boolean result = appInfoService.updateInfo(app);
-        return result? ResultBody.success():ResultBody.failed();
+        appInfoService.updateInfo(app);
+        return ResultBody.success();
     }
 
     /**
@@ -247,17 +247,17 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param appId 应用Id
      * @return 应用信息
      */
-    @ApiOperation(value = "重置应用秘钥",notes = "重置应用秘钥")
+    @ApiOperation(value = "重置应用秘钥", notes = "重置应用秘钥")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })
     @PostMapping("/app/reset")
     @Override
-    public ResultBody<Boolean> resetSecret(
+    public ResultBody<String> resetSecret(
             @RequestParam("appId") String appId
     ) {
         String result = appInfoService.restSecret(appId);
-        return result!=null? ResultBody.success().setData(result):ResultBody.failed();
+        return ResultBody.success(result);
     }
 
     /**
@@ -266,16 +266,16 @@ public class SystemAppController implements SystemAppRemoteService {
      * @param appId 应用Id
      * @return 应用信息
      */
-    @ApiOperation(value = "删除应用信息",notes = "删除应用信息")
+    @ApiOperation(value = "删除应用信息", notes = "删除应用信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "应用Id", required = true, paramType = "form"),
     })
     @PostMapping("/app/remove")
     @Override
-    public ResultBody<Boolean> removeApp(
+    public ResultBody removeApp(
             @RequestParam("appId") String appId
     ) {
-        Boolean result = appInfoService.removeApp(appId);
-        return result? ResultBody.success():ResultBody.failed();
+        appInfoService.removeApp(appId);
+        return ResultBody.success();
     }
 }

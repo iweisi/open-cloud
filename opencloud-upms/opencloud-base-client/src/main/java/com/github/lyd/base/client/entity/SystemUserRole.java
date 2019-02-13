@@ -1,8 +1,5 @@
 package com.github.lyd.base.client.entity;
 
-import com.github.lyd.common.gen.SnowflakeId;
-import tk.mybatis.mapper.annotation.KeySql;
-
 import javax.persistence.Column;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -21,7 +18,6 @@ public class SystemUserRole implements Serializable {
      * 系统用户ID
      */
     @Column(name = "user_id")
-    @KeySql(genId = SnowflakeId.class)
     private Long userId;
 
     /**

@@ -107,7 +107,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 .andEqualTo("resourceType", resourceType)
                 .andEqualTo("authorityOwner", authorityOwner)
                 .end().build();
-        List<SystemGrantAccess> list  = systemAccessMapper.selectByExample(example);
+        List<SystemGrantAccess> list = systemAccessMapper.selectByExample(example);
         return new PageList(list);
     }
 
@@ -231,26 +231,26 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         if (crudMapper == null) {
             throw new OpenMessageException(String.format("%s资源类型暂不支持!", resourceType));
         }
-        List<SystemGrantAccess> access = Lists.newArrayList();
+        List<SystemGrantAccess> accessList = Lists.newArrayList();
         List<String> authorities = Lists.newArrayList();
         for (String resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
             SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
-            if (access != null) {
-                access.add(grantAccess);
+            if (grantAccess!=null) {
+                accessList.add(grantAccess);
                 authorities.add(grantAccess.getAuthority());
             }
         }
-        if (access.isEmpty()) {
+        if (accessList.isEmpty()) {
             return null;
         }
         //先清空拥有者的权限
-        removeGrantAccess(authorityOwner, authorityPrefix,resourceType);
+        removeGrantAccess(authorityOwner, authorityPrefix, resourceType);
         // 再重新批量授权
-        systemAccessMapper.insertList(access);
+        systemAccessMapper.insertList(accessList);
         // 刷新网关
         openRestTemplate.refreshGateway();
-        return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[access.size()]), ",");
+        return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[accessList.size()]), ",");
     }
 
     /**
@@ -261,18 +261,17 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public Boolean removeGrantAccess(String authorityOwner, String authorityPrefix,String resourceType) {
+    public void removeGrantAccess(String authorityOwner, String authorityPrefix, String resourceType) {
         //先清空拥有者的权限
         ExampleBuilder builder = new ExampleBuilder(SystemGrantAccess.class);
         Example example = builder.criteria()
                 .andEqualTo("authorityPrefix", authorityPrefix)
                 .andEqualTo("authorityOwner", authorityOwner)
-                .andEqualTo("resourceType",resourceType)
+                .andEqualTo("resourceType", resourceType)
                 .end().build();
-        int count = systemAccessMapper.deleteByExample(example);
+        systemAccessMapper.deleteByExample(example);
         // 刷新网关
         openRestTemplate.refreshGateway();
-        return count > 0;
     }
 
 
@@ -284,11 +283,11 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
      * @return
      */
     @Override
-    public Boolean updateGrantAccess(String resourceType, Long resourceId) {
+    public void updateGrantAccess(String resourceType, Long resourceId) {
         // 判断资源类型
         CrudMapper crudMapper = getMapper(resourceType);
         if (crudMapper == null) {
-            return false;
+            return;
         }
         Object object = crudMapper.selectByPrimaryKey(resourceId);
         if (object != null) {
@@ -304,13 +303,13 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 updateObj.setPath(grantAccess.getPath());
                 updateObj.setResourceInfo(grantAccess.getResourceInfo());
                 int count = systemAccessMapper.updateByExampleSelective(updateObj, example);
-                return count > 0;
+                return;
             }
 
         }
         // 刷新网关
         openRestTemplate.refreshGateway();
-        return false;
+        return;
     }
 
     /**

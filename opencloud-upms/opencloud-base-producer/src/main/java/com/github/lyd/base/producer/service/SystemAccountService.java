@@ -18,7 +18,7 @@ public interface SystemAccountService {
      * @param profileDto
      * @return
      */
-    Boolean register(SystemUserDto profileDto);
+    Long register(SystemUserDto profileDto);
 
 
     /**
@@ -29,7 +29,7 @@ public interface SystemAccountService {
      * @param password
      * @return
      */
-    Boolean registerUsernameAccount(Long userId, String username, String password);
+    Long registerUsernameAccount(Long userId, String username, String password);
 
     /**
      * 绑定email账号
@@ -39,7 +39,7 @@ public interface SystemAccountService {
      * @param password
      * @return
      */
-    Boolean registerEmailAccount(Long userId, String email, String password);
+    void registerEmailAccount(Long userId, String email, String password);
 
     /**
      * 绑定手机账号
@@ -49,7 +49,7 @@ public interface SystemAccountService {
      * @param mobile
      * @return
      */
-    Boolean registerMobileAccount(Long userId, String mobile, String password);
+    void registerMobileAccount(Long userId, String mobile, String password);
 
     /**
      * 支持密码、手机号、email登陆
@@ -68,7 +68,7 @@ public interface SystemAccountService {
      * @param newPassword
      * @return
      */
-    Boolean resetPassword(Long userId, String oldPassword, String newPassword);
+    void resetPassword(Long userId, String oldPassword, String newPassword);
 
     /**
      * 添加登录日志
@@ -95,7 +95,7 @@ public interface SystemAccountService {
      * @param userId
      * @return
      */
-    Boolean removeEmailAccount(Long userId, String email);
+    void removeEmailAccount(Long userId, String email);
 
     /**
      * 解绑手机账号
@@ -104,5 +104,5 @@ public interface SystemAccountService {
      * @param mobile
      * @return
      */
-    Boolean removeMobileAccount(Long userId, String mobile);
+    void removeMobileAccount(Long userId, String mobile);
 }

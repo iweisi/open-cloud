@@ -105,7 +105,7 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public Boolean addAction(SystemAction action) {
+    public Long addAction(SystemAction action) {
         if (isExist(action.getActionCode())) {
             throw new OpenMessageException(String.format("%sAction编码已存在,不允许重复添加", action.getActionCode()));
         }
@@ -118,13 +118,13 @@ public class SystemActionServiceImpl implements SystemActionService {
         if (action.getStatus() == null) {
             action.setStatus(BaseConstants.ENABLED);
         }
-        if(action.getIsPersist()==null){
+        if (action.getIsPersist() == null) {
             action.setIsPersist(BaseConstants.DISABLED);
         }
         action.setCreateTime(new Date());
         action.setUpdateTime(action.getCreateTime());
-        int count = systemActionMapper.insertSelective(action);
-        return count > 0;
+        systemActionMapper.insertSelective(action);
+        return action.getActionId();
     }
 
     /**
@@ -134,7 +134,7 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public Boolean updateAction(SystemAction action) {
+    public void updateAction(SystemAction action) {
         SystemAction savedAction = getAction(action.getActionId());
         if (savedAction == null) {
             throw new OpenMessageException(String.format("%sAction不存在", action.getActionId()));
@@ -152,10 +152,9 @@ public class SystemActionServiceImpl implements SystemActionService {
             action.setPriority(0);
         }
         action.setUpdateTime(new Date());
-        int count = systemActionMapper.updateByPrimaryKeySelective(action);
+        systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION, action.getActionId());
-        return count > 0;
     }
 
     /**
@@ -166,15 +165,14 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public Boolean updateStatus(Long actionId, Integer status) {
+    public void updateStatus(Long actionId, Integer status) {
         SystemAction action = new SystemAction();
         action.setActionId(actionId);
         action.setStatus(status);
         action.setUpdateTime(new Date());
-        int count = systemActionMapper.updateByPrimaryKeySelective(action);
+        systemActionMapper.updateByPrimaryKeySelective(action);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION, action.getActionId());
-        return count > 0;
     }
 
     /**
@@ -184,16 +182,15 @@ public class SystemActionServiceImpl implements SystemActionService {
      * @return
      */
     @Override
-    public Boolean removeAction(Long actionId) {
+    public void removeAction(Long actionId) {
         SystemAction action = getAction(actionId);
-        if(action!=null && action.getIsPersist().equals(BaseConstants.ENABLED)){
+        if (action != null && action.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
         if (systemAccessService.isExist(actionId, BaseConstants.RESOURCE_TYPE_ACTION)) {
             throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!"));
         }
-        int count = systemActionMapper.deleteByPrimaryKey(actionId);
-        return count > 0;
+        systemActionMapper.deleteByPrimaryKey(actionId);
     }
 
 

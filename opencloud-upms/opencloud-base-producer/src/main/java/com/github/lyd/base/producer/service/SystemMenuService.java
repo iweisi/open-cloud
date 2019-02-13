@@ -56,7 +56,7 @@ public interface SystemMenuService {
      * @param menu
      * @return
      */
-    Boolean addMenu(SystemMenu menu);
+    Long addMenu(SystemMenu menu);
 
     /**
      * 修改菜单资源
@@ -64,7 +64,7 @@ public interface SystemMenuService {
      * @param menu
      * @return
      */
-    Boolean updateMenu(SystemMenu menu);
+    void updateMenu(SystemMenu menu);
 
     /**
      * 更新启用禁用
@@ -73,7 +73,7 @@ public interface SystemMenuService {
      * @param status
      * @return
      */
-    Boolean updateStatus(Long menuId, Integer status);
+    void updateStatus(Long menuId, Integer status);
 
     /**
      * 移除菜单
@@ -81,5 +81,5 @@ public interface SystemMenuService {
      * @param menuId
      * @return
      */
-    Boolean removeMenu(Long menuId);
+    void removeMenu(Long menuId);
 }

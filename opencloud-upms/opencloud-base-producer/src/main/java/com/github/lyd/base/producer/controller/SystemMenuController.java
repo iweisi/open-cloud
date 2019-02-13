@@ -28,7 +28,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      *
      * @return
      */
-    @ApiOperation(value = "菜单资源分页列表",notes = "菜单资源分页列表")
+    @ApiOperation(value = "菜单资源分页列表", notes = "菜单资源分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页码", paramType = "form"),
             @ApiImplicitParam(name = "limit", value = "显示条数:最大999", paramType = "form"),
@@ -50,7 +50,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "菜单资源列表",notes = "菜单资源列表")
+    @ApiOperation(value = "菜单资源列表", notes = "菜单资源列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -62,10 +62,11 @@ public class SystemMenuController implements SystemMenuRemoteService {
 
     /**
      * 获取菜单和操作列表
+     *
      * @param keyword
      * @return
      */
-    @ApiOperation(value = "获取菜单和操作列表",notes = "获取菜单和操作列表")
+    @ApiOperation(value = "获取菜单和操作列表", notes = "获取菜单和操作列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
     })
@@ -73,7 +74,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     @Override
     public ResultBody<PageList<SystemMenuDto>> menuActionList(
             @RequestParam(name = "keyword", required = false) String keyword
-    ){
+    ) {
         return ResultBody.success(menuService.findWithActionList(keyword));
     }
 
@@ -83,7 +84,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuId 应用menuId
      * @return 应用信息
      */
-    @ApiOperation(value = "获取菜单资源",notes = "获取菜单资源")
+    @ApiOperation(value = "获取菜单资源", notes = "获取菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId"),
     })
@@ -108,7 +109,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuDesc 描述
      * @return
      */
-    @ApiOperation(value = "添加菜单资源",notes = "添加菜单资源")
+    @ApiOperation(value = "添加菜单资源", notes = "添加菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
             @ApiImplicitParam(name = "menuName", required = true, value = "菜单名称", paramType = "form"),
@@ -123,7 +124,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     })
     @PostMapping("/menu/add")
     @Override
-    public ResultBody<Boolean> addMenu(
+    public ResultBody<Long> addMenu(
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon", required = false) String icon,
@@ -146,8 +147,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setParentId(parentId);
         menu.setPriority(priority);
         menu.setMenuDesc(menuDesc);
-        Boolean result = menuService.addMenu(menu);
-        return result? ResultBody.success():ResultBody.failed();
+        Long result = menuService.addMenu(menu);
+        return ResultBody.success(result);
     }
 
     /**
@@ -165,7 +166,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuDesc 描述
      * @return
      */
-    @ApiOperation(value = "编辑菜单资源",notes = "编辑菜单资源")
+    @ApiOperation(value = "编辑菜单资源", notes = "编辑菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "菜单ID", paramType = "form"),
             @ApiImplicitParam(name = "menuCode", required = true, value = "菜单编码", paramType = "form"),
@@ -181,7 +182,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     })
     @PostMapping("/menu/update")
     @Override
-    public ResultBody<Boolean> updateMenu(
+    public ResultBody updateMenu(
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
@@ -206,8 +207,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
         menu.setParentId(parentId);
         menu.setPriority(priority);
         menu.setMenuDesc(menuDesc);
-        Boolean result = menuService.updateMenu(menu);
-        return result? ResultBody.success():ResultBody.failed();
+        menuService.updateMenu(menu);
+        return ResultBody.success();
     }
 
     /**
@@ -216,7 +217,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuId 菜单ID
      * @return
      */
-    @ApiOperation(value = "更新菜单资源状态",notes = "更新菜单资源状态")
+    @ApiOperation(value = "更新菜单资源状态", notes = "更新菜单资源状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, defaultValue = "1", allowableValues = "0,1", value = "是否启用", paramType = "form")
@@ -227,8 +228,8 @@ public class SystemMenuController implements SystemMenuRemoteService {
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     ) {
-        Boolean result = menuService.updateStatus(menuId,status);
-        return result? ResultBody.success():ResultBody.failed();
+        menuService.updateStatus(menuId, status);
+        return ResultBody.success();
     }
 
     /**
@@ -237,7 +238,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
      * @param menuId 菜单ID
      * @return
      */
-    @ApiOperation(value = "移除菜单资源",notes = "移除菜单资源")
+    @ApiOperation(value = "移除菜单资源", notes = "移除菜单资源")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "form"),
     })
@@ -246,7 +247,7 @@ public class SystemMenuController implements SystemMenuRemoteService {
     public ResultBody<Boolean> removeMenu(
             @RequestParam("menuId") Long menuId
     ) {
-        Boolean result = menuService.removeMenu(menuId);
-        return result? ResultBody.success():ResultBody.failed();
+        menuService.removeMenu(menuId);
+        return ResultBody.success();
     }
 }

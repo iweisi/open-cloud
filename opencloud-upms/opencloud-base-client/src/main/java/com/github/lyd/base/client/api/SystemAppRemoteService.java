@@ -64,7 +64,7 @@ public interface SystemAppRemoteService {
      * @return
      */
     @PostMapping("/app/add")
-    ResultBody<Boolean> addApp(
+    ResultBody<String> addApp(
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
             @RequestParam(value = "appType") String appType,
@@ -104,7 +104,7 @@ public interface SystemAppRemoteService {
      * @
      */
     @PostMapping("/app/update")
-    ResultBody<Boolean> updateApp(
+    ResultBody updateApp(
             @RequestParam("appId") String appId,
             @RequestParam(value = "appName") String appName,
             @RequestParam(value = "appNameEn") String appNameEn,
@@ -129,7 +129,7 @@ public interface SystemAppRemoteService {
      * @return
      */
     @PostMapping("/app/reset")
-    ResultBody<Boolean> resetSecret(
+    ResultBody<String> resetSecret(
             @RequestParam("appId") String appId
     );
 
@@ -141,7 +141,7 @@ public interface SystemAppRemoteService {
      * @return
      */
     @PostMapping("/app/remove")
-    ResultBody<Boolean> removeApp(
+    ResultBody removeApp(
             @RequestParam("appId") String appId
     );
 }

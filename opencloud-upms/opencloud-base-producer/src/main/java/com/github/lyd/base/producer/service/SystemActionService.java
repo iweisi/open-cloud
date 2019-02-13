@@ -43,7 +43,7 @@ public interface SystemActionService {
      * @param action
      * @return
      */
-    Boolean addAction(SystemAction action);
+    Long addAction(SystemAction action);
 
     /**
      * 修改操作资源
@@ -51,7 +51,7 @@ public interface SystemActionService {
      * @param action
      * @return
      */
-    Boolean updateAction(SystemAction action);
+    void updateAction(SystemAction action);
 
     /**
      * 更新启用禁用
@@ -60,7 +60,7 @@ public interface SystemActionService {
      * @param status
      * @return
      */
-    Boolean updateStatus(Long actionId, Integer status);
+    void updateStatus(Long actionId, Integer status);
 
     /**
      * 移除操作
@@ -68,5 +68,5 @@ public interface SystemActionService {
      * @param actionId
      * @return
      */
-    Boolean removeAction(Long actionId);
+    void removeAction(Long actionId);
 }

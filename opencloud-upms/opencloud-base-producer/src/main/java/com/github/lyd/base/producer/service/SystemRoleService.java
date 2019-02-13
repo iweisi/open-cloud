@@ -1,8 +1,8 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
-import com.github.lyd.base.client.entity.SystemRole;
 
 import java.util.List;
 
@@ -23,6 +23,14 @@ public interface SystemRoleService {
     PageList<SystemRole> findListPage(PageParams pageParams, String keyword);
 
     /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    PageList<SystemRole> findList(String keyword);
+
+    /**
      * 获取角色信息
      *
      * @param roleId
@@ -33,18 +41,18 @@ public interface SystemRoleService {
     /**
      * 添加角色
      *
-     * @param role      角色
+     * @param role 角色
      * @return
      */
-    Boolean addRole(SystemRole role);
+    Long addRole(SystemRole role);
 
     /**
      * 更新角色
      *
-     * @param role      角色
+     * @param role 角色
      * @return
      */
-    Boolean updateRole(SystemRole role);
+    void updateRole(SystemRole role);
 
     /**
      * 删除角色
@@ -52,7 +60,7 @@ public interface SystemRoleService {
      * @param roleId 角色ID
      * @return
      */
-    Boolean removeRole(Long roleId);
+    void removeRole(Long roleId);
 
     /**
      * 检测角色编码是否存在
@@ -69,7 +77,7 @@ public interface SystemRoleService {
      * @param roles
      * @return
      */
-    Boolean saveMemberRoles(Long userId, Long... roles);
+    void saveMemberRoles(Long userId, Long... roles);
 
     /**
      * 获取角色所有授权组员数量
@@ -93,7 +101,7 @@ public interface SystemRoleService {
      * @param roleId
      * @return
      */
-    Boolean removeRoleMembers(Long roleId);
+    void removeRoleMembers(Long roleId);
 
     /**
      * 移除组员的所有角色
@@ -101,7 +109,8 @@ public interface SystemRoleService {
      * @param userId
      * @return
      */
-    Boolean removeMemberRoles(Long userId);
+    void removeMemberRoles(Long userId);
+
     /**
      * 更新启用禁用
      *
@@ -109,7 +118,8 @@ public interface SystemRoleService {
      * @param status
      * @return
      */
-    Boolean updateStatus(Long roleId, Integer status);
+    void updateStatus(Long roleId, Integer status);
+
     /**
      * 检测是否存在
      *

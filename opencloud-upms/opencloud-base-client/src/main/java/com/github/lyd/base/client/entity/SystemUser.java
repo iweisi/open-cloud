@@ -66,7 +66,7 @@ public class SystemUser implements Serializable {
     /**
      * 描述
      */
-    @Column(name = "user_name")
+    @Column(name = "user_desc")
     private String userDesc;
 
     /**

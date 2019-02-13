@@ -34,6 +34,7 @@ public interface SystemMenuRemoteService {
 
     /**
      * 获取菜单和操作列表
+     *
      * @param keyword
      * @return
      */
@@ -54,20 +55,20 @@ public interface SystemMenuRemoteService {
     /**
      * 添加菜单资源
      *
-     * @param menuCode    菜单编码
-     * @param menuName    菜单名称
-     * @param icon        图标
-     * @param prefix      请求前缀
-     * @param path        请求路径
-     * @param target      打开方式
-     * @param status      是否启用
-     * @param parentId    父节点ID
-     * @param priority    优先级越小越靠前
+     * @param menuCode 菜单编码
+     * @param menuName 菜单名称
+     * @param icon     图标
+     * @param prefix   请求前缀
+     * @param path     请求路径
+     * @param target   打开方式
+     * @param status   是否启用
+     * @param parentId 父节点ID
+     * @param priority 优先级越小越靠前
      * @param menuDesc 描述
      * @return
      */
     @PostMapping("/menu/add")
-    ResultBody<Boolean> addMenu(
+    ResultBody<Long> addMenu(
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
             @RequestParam(value = "icon", required = false) String icon,
@@ -83,20 +84,20 @@ public interface SystemMenuRemoteService {
     /**
      * 编辑菜单资源
      *
-     * @param menuCode    菜单编码
-     * @param menuName    菜单名称
-     * @param icon        图标
-     * @param prefix      请求前缀
-     * @param path        请求路径
-     * @param target      打开方式
-     * @param status      是否启用
-     * @param parentId    父节点ID
-     * @param priority    优先级越小越靠前
+     * @param menuCode 菜单编码
+     * @param menuName 菜单名称
+     * @param icon     图标
+     * @param prefix   请求前缀
+     * @param path     请求路径
+     * @param target   打开方式
+     * @param status   是否启用
+     * @param parentId 父节点ID
+     * @param priority 优先级越小越靠前
      * @param menuDesc 描述
      * @return
      */
     @PostMapping("/menu/update")
-    ResultBody<Boolean> updateMenu(
+    ResultBody updateMenu(
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "menuCode") String menuCode,
             @RequestParam(value = "menuName") String menuName,
@@ -118,7 +119,7 @@ public interface SystemMenuRemoteService {
      * @return
      */
     @PostMapping("/menu/update/status")
-    ResultBody<Boolean> updateStatus(
+    ResultBody updateStatus(
             @RequestParam("menuId") Long menuId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     );
@@ -131,7 +132,7 @@ public interface SystemMenuRemoteService {
      * @return
      */
     @PostMapping("/menu/remove")
-    ResultBody<Boolean> removeMenu(
+    ResultBody removeMenu(
             @RequestParam("menuId") Long menuId
     );
 }

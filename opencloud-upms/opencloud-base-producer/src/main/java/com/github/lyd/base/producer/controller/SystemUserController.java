@@ -1,27 +1,28 @@
 package com.github.lyd.base.producer.controller;
 
 import com.github.lyd.base.client.api.SystemUserRemoteService;
-import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemUserDto;
-import com.github.lyd.base.client.entity.SystemGrantAccess;
+import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.base.client.entity.SystemUser;
-import com.github.lyd.base.producer.service.SystemGrantAccessService;
+import com.github.lyd.base.producer.service.SystemAccountService;
+import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.common.security.OpenHelper;
+import com.github.lyd.common.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户信息
@@ -34,7 +35,9 @@ public class SystemUserController implements SystemUserRemoteService {
     @Autowired
     private SystemUserService systemUserService;
     @Autowired
-    private SystemGrantAccessService permissionService;
+    private SystemAccountService systemAccountService;
+    @Autowired
+    private SystemRoleService systemRoleService;
 
     /**
      * 系统用户分页列表
@@ -60,71 +63,110 @@ public class SystemUserController implements SystemUserRemoteService {
     /**
      * 添加系统用户
      *
-     * @param username
+     * @param userName
      * @param password
+     * @param nickName
      * @param status
+     * @param userType
+     * @param email
+     * @param mobile
+     * @param userDesc
+     * @param avatar
      * @return
      */
     @ApiOperation(value = "添加系统用户", notes = "添加系统用户")
-    @PostMapping("/user/add")
     @Override
-    public ResultBody<SystemUserDto> addUser(
-            @RequestParam(value = "username") String username,
+    @PostMapping("/user/add")
+    public ResultBody<Long> addUser(
+            @RequestParam(value = "userName") String userName,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "status") Integer status
+            @RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "status") Integer status,
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "mobile") String mobile,
+            @RequestParam(value = "userDesc") String userDesc,
+            @RequestParam(value = "avatar") String avatar,
+            @RequestParam(value = "roleIds") String roleIds
     ) {
-        return null;
+        SystemUserDto user = new SystemUserDto();
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setNickName(nickName);
+        user.setStatus(status);
+        user.setUserType(userType);
+        user.setEmail(email);
+        user.setMobile(mobile);
+        user.setUserDesc(userDesc);
+        user.setAvatar(avatar);
+        if(StringUtils.isNotBlank(roleIds)){
+            List<Long> ids = Arrays.asList(roleIds.split(",")).stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+            user.setRoleIds(ids);
+        }
+        Long userId = systemAccountService.register(user);
+        return ResultBody.success(userId);
     }
 
     /**
      * 更新系统用户
      *
-     * @param username
-     * @param password
+     * @param userId
+     * @param userName
+     * @param nickName
      * @param status
+     * @param userType
+     * @param email
+     * @param mobile
+     * @param userDesc
+     * @param avatar
      * @return
      */
     @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
     @PostMapping("/user/update")
     @Override
-    public ResultBody<SystemUserDto> updateUser(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "status") Integer status
+    public ResultBody updateUser(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "nickName") String nickName,
+            @RequestParam(value = "status") Integer status,
+            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "mobile", required = false) String mobile,
+            @RequestParam(value = "userDesc", required = false) String userDesc,
+            @RequestParam(value = "avatar", required = false) String avatar,
+            @RequestParam(value = "roleIds") String roleIds
     ) {
-        return null;
+        SystemUserDto user = new SystemUserDto();
+        user.setUserId(userId);
+        user.setUserName(userName);
+        user.setNickName(nickName);
+        user.setStatus(status);
+        user.setUserType(userType);
+        user.setEmail(email);
+        user.setMobile(mobile);
+        user.setUserDesc(userDesc);
+        user.setAvatar(avatar);
+        if(StringUtils.isNotBlank(roleIds)){
+            List<Long> ids = Arrays.asList(roleIds.split(",")).stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+            user.setRoleIds(ids);
+        }
+        systemUserService.updateProfile(user);
+        return ResultBody.success();
     }
 
-    /**
-     * 当前用户可访问菜单资源
-     *
-     * @return
-     */
-    @ApiOperation(value = "当前用户可访问菜单资源", notes = "当前用户可访问菜单资源")
-    @GetMapping("/user/grant/menus")
-    public ResultBody<List<SystemGrantAccess>> userGrantMenus() {
-        return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_MENU));
-    }
 
     /**
-     * 当前用户可访问操作资源
+     * 获取用户角色
      *
+     * @param userId
      * @return
      */
-    @ApiOperation(value = "当前用户可访问操作资源", notes = "当前用户可访问操作资源")
-    @GetMapping("/user/grant/actions")
-    public ResultBody<List<SystemGrantAccess>> userGrantActions() {
-        return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_ACTION));
-    }
-
-    /**
-     * 当前用户可访问接口资源
-     *
-     * @return
-     */
-    @ApiOperation(value = "当前用户可访问接口资源", notes = "当前用户可访问接口资源")
-    @GetMapping("/user/grant/apis")
-    public ResultBody<List<SystemGrantAccess>> userGrantApis() {
-        return ResultBody.success(permissionService.getUserGrantAccessList(OpenHelper.getUserAuth().getUserId(), BaseConstants.RESOURCE_TYPE_API));
+    @ApiOperation(value = "获取用户角色", notes = "获取用户角色")
+    @PostMapping("/user/roles")
+    @Override
+    public ResultBody<PageList<SystemRole>> getUserRoles(
+            @RequestParam(value = "userId") Long userId
+    ) {
+        return ResultBody.success(new PageList<>(systemRoleService.getUserRoles(userId)));
     }
 }

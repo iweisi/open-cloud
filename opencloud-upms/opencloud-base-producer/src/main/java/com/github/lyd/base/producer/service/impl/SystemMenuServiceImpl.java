@@ -108,7 +108,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      * @return
      */
     @Override
-    public Boolean addMenu(SystemMenu menu) {
+    public Long addMenu(SystemMenu menu) {
         if (isExist(menu.getMenuCode())) {
             throw new OpenMessageException(String.format("%s菜单编码已存在,不允许重复添加", menu.getMenuCode()));
         }
@@ -121,13 +121,13 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         if (menu.getStatus() == null) {
             menu.setStatus(BaseConstants.ENABLED);
         }
-        if(menu.getIsPersist()==null){
+        if (menu.getIsPersist() == null) {
             menu.setIsPersist(BaseConstants.DISABLED);
         }
         menu.setCreateTime(new Date());
         menu.setUpdateTime(menu.getCreateTime());
-        int count = systemMenuMapper.insertSelective(menu);
-        return count > 0;
+        systemMenuMapper.insertSelective(menu);
+        return menu.getMenuId();
     }
 
     /**
@@ -137,7 +137,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      * @return
      */
     @Override
-    public Boolean updateMenu(SystemMenu menu) {
+    public void updateMenu(SystemMenu menu) {
         if (menu.getMenuId() == null) {
             throw new OpenMessageException("ID不能为空");
         }
@@ -158,10 +158,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
             menu.setPriority(0);
         }
         menu.setUpdateTime(new Date());
-        int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
+        systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_MENU, menu.getMenuId());
-        return count > 0;
     }
 
     /**
@@ -172,15 +171,14 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      * @return
      */
     @Override
-    public Boolean updateStatus(Long menuId, Integer status) {
+    public void updateStatus(Long menuId, Integer status) {
         SystemMenu menu = new SystemMenu();
         menu.setMenuId(menuId);
         menu.setStatus(status);
         menu.setUpdateTime(new Date());
-        int count = systemMenuMapper.updateByPrimaryKeySelective(menu);
+        systemMenuMapper.updateByPrimaryKeySelective(menu);
         // 同步授权表里的信息
         systemAccessService.updateGrantAccess(BaseConstants.RESOURCE_TYPE_ACTION, menu.getMenuId());
-        return count > 0;
     }
 
     /**
@@ -190,16 +188,15 @@ public class SystemMenuServiceImpl implements SystemMenuService {
      * @return
      */
     @Override
-    public Boolean removeMenu(Long menuId) {
+    public void removeMenu(Long menuId) {
         SystemMenu menu = getMenu(menuId);
-        if(menu!=null && menu.getIsPersist().equals(BaseConstants.ENABLED)){
+        if (menu != null && menu.getIsPersist().equals(BaseConstants.ENABLED)) {
             throw new OpenMessageException(String.format("保留数据,不允许删除"));
         }
         if (systemAccessService.isExist(menuId, BaseConstants.RESOURCE_TYPE_MENU)) {
             throw new OpenMessageException(String.format("资源已被授权,不允许删除,请取消授权后,再次尝试!", menuId));
         }
-        int count = systemMenuMapper.deleteByPrimaryKey(menuId);
-        return count > 0;
+        systemMenuMapper.deleteByPrimaryKey(menuId);
     }
 
 

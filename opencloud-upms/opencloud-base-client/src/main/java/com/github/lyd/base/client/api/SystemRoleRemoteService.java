@@ -1,9 +1,11 @@
 package com.github.lyd.base.client.api;
 
-import com.github.lyd.base.client.entity.SystemGrantAccess;
+import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
-import com.github.lyd.base.client.entity.SystemRole;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,19 @@ public interface SystemRoleRemoteService {
     );
 
     /**
+     * 获取角色列表
+     *
+     * @param keyword
+     * @return
+     */
+    @ApiOperation(value = "获取角色列表", notes = "获取角色列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/role/list")
+    ResultBody<PageList<SystemRole>> roleList(String keyword);
+
+    /**
      * 获取角色信息
      *
      * @param roleId
@@ -47,7 +62,7 @@ public interface SystemRoleRemoteService {
      * @return
      */
     @PostMapping("/role/add")
-    ResultBody<Boolean> addRole(
+    ResultBody<Long> addRole(
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
             @RequestParam(value = "description", required = false) String description,
@@ -65,7 +80,7 @@ public interface SystemRoleRemoteService {
      * @return
      */
     @PostMapping("/role/update")
-    ResultBody<Boolean> updateRole(
+    ResultBody updateRole(
             @RequestParam(value = "roleId") Long roleId,
             @RequestParam(value = "roleCode") String roleCode,
             @RequestParam(value = "roleName") String roleName,
@@ -82,7 +97,7 @@ public interface SystemRoleRemoteService {
      * @return
      */
     @PostMapping("/role/update/status")
-    ResultBody<Boolean> updateStatus(
+    ResultBody updateStatus(
             @RequestParam("roleId") Long roleId,
             @RequestParam(value = "status", defaultValue = "1") Integer status
     );
@@ -94,81 +109,8 @@ public interface SystemRoleRemoteService {
      * @return
      */
     @PostMapping("/role/remove")
-    ResultBody<Boolean> removeRole(
+    ResultBody removeRole(
             @RequestParam(value = "roleId") Long roleId
     );
 
-    /**
-     * 菜单授权
-     *
-     * @param roleId  角色ID
-     * @param menuIds 菜单ID.多个以,隔开
-     * @return
-     */
-    @PostMapping("/role/grant/menu")
-    ResultBody<Boolean> roleGrantMenu(
-            @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("menuIds") String menuIds
-    );
-
-
-    /**
-     * 操作授权
-     *
-     * @param roleId    角色ID
-     * @param actionIds 操作ID.多个以,隔开
-     * @return
-     */
-    @PostMapping("/role/grant/action")
-    ResultBody<Boolean> roleGrantAction(
-            @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("actionIds") String actionIds
-    );
-
-    /**
-     * 接口授权
-     *
-     * @param roleId    角色ID
-     * @param apiIds 接口ID.多个以,隔开
-     * @return
-     */
-    @PostMapping("/role/grant/api")
-    ResultBody<Boolean> roleGrantApi(
-            @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("apiIds") String apiIds
-    );
-
-
-    /**
-     * 获取角色已授权菜单资源
-     *
-     * @param roleId  角色ID
-     * @return
-     */
-    @PostMapping("/role/granted/menu")
-    ResultBody<PageList<SystemGrantAccess>> roleGrantedMenu(
-            @RequestParam(value = "roleId") Long roleId
-    );
-
-    /**
-     * 获取角色已授权操作资源
-     *
-     * @param roleId  角色ID
-     * @return
-     */
-    @PostMapping("/role/granted/action")
-    ResultBody<PageList<SystemGrantAccess>> roleGrantedAction(
-            @RequestParam(value = "roleId") Long roleId
-    );
-
-    /**
-     * 获取角色已授权接口资源
-     *
-     * @param roleId  角色ID
-     * @return
-     */
-    @PostMapping("/role/granted/api")
-    ResultBody<PageList<SystemGrantAccess>> roleGrantedApi(
-            @RequestParam(value = "roleId") Long roleId
-    );
 }

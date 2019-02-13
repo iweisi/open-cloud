@@ -1,5 +1,6 @@
 package com.github.lyd.base.producer.service;
 
+import com.github.lyd.base.client.dto.SystemUserDto;
 import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
@@ -19,7 +20,7 @@ public interface SystemUserService {
      * @param profileDto
      * @return
      */
-    Boolean addProfile(SystemUser profileDto);
+    Long addProfile(SystemUserDto profileDto);
 
     /**
      * 更新系统用户
@@ -27,7 +28,7 @@ public interface SystemUserService {
      * @param profileDto
      * @return
      */
-    Boolean updateProfile(SystemUser profileDto);
+    Boolean updateProfile(SystemUserDto profileDto);
 
     /**
      * 分页查询
