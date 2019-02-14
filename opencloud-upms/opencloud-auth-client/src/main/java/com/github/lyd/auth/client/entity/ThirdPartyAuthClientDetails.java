@@ -39,6 +39,11 @@ public class ThirdPartyAuthClientDetails implements Serializable {
      */
     private String userInfoUri;
 
+    /**
+     * 登录成功地址
+     */
+    private String loginSuccessUri;
+
     public String getClientId() {
         return clientId;
     }
@@ -93,5 +98,13 @@ public class ThirdPartyAuthClientDetails implements Serializable {
 
     public void setRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
+    }
+
+    public String getLoginSuccessUri() {
+        return loginSuccessUri;
+    }
+
+    public void setLoginSuccessUri(String loginSuccessUri) {
+        this.loginSuccessUri = loginSuccessUri;
     }
 }

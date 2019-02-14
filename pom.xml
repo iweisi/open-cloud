@@ -36,6 +36,8 @@
                 <auth.server-addr>http://localhost:8211</auth.server-addr>
                 <!--网关服务地址-->
                 <gateway.server-addr>http://localhost:8888</gateway.server-addr>
+                <!-- 站点地址 -->
+                <site.server-addr>http://localhost:8080</site.server-addr>
             </properties>
         </profile>
         <!-- 测试 -->
@@ -51,6 +53,8 @@
                 <auth.server-addr>http://39.106.187.125:8211</auth.server-addr>
                 <!--网关服务地址-->
                 <gateway.server-addr>http://39.106.187.125:8888</gateway.server-addr>
+                <!-- 站点地址 -->
+                <site.server-addr>http://39.106.187.125/admin</site.server-addr>
             </properties>
         </profile>
         <!-- 生产 -->
@@ -66,6 +70,8 @@
                 <auth.server-addr>http://localhost:8211</auth.server-addr>
                 <!--网关服务地址-->
                 <gateway.server-addr>http://localhost:8888</gateway.server-addr>
+                <!-- 站点地址 -->
+                <site.server-addr>http://39.106.187.125/admin</site.server-addr>
             </properties>
         </profile>
     </profiles>

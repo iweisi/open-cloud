@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class SystemAccountController implements SystemAccountRemoteService {
      * @param username 登录名
      * @return
      */
-    @ApiOperation(value = "获取账号登录信息",notes = "获取账号登录信息,仅限系统内部调用")
+    @ApiOperation(value = "获取账号登录信息", notes = "获取账号登录信息,仅限系统内部调用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", required = true, value = "登录名", paramType = "path"),
     })
@@ -42,5 +43,26 @@ public class SystemAccountController implements SystemAccountRemoteService {
         SystemAccountDto account = systemAccountService.login(username);
         return ResultBody.success(account);
     }
+
+    /**
+     * 注册账号
+     *
+     * @param account
+     * @param password
+     * @param accountType
+     * @return
+     */
+    @ApiOperation(value = "注册账号", notes = "注册账号")
+    @PostMapping("/account/register")
+    @Override
+    public ResultBody accountRegister(
+            @RequestParam(value = "account") String account,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "accountType") String accountType
+    ) {
+        Long userId = systemAccountService.register(account, password, accountType);
+        return ResultBody.success(userId);
+    }
+
 
 }

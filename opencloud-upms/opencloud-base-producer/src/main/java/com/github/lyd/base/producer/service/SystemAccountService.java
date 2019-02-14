@@ -20,6 +20,13 @@ public interface SystemAccountService {
      */
     Long register(SystemUserDto profileDto);
 
+    /**
+     * 绑定账号
+     * @param account
+     * @param password
+     * @return
+     */
+    Long register(String account, String password,String accountType);
 
     /**
      * 绑定系统用户名账户
@@ -39,7 +46,8 @@ public interface SystemAccountService {
      * @param password
      * @return
      */
-    void registerEmailAccount(Long userId, String email, String password);
+    Long registerEmailAccount(Long userId, String email, String password);
+
 
     /**
      * 绑定手机账号
@@ -49,7 +57,7 @@ public interface SystemAccountService {
      * @param mobile
      * @return
      */
-    void registerMobileAccount(Long userId, String mobile, String password);
+    Long registerMobileAccount(Long userId, String mobile, String password);
 
     /**
      * 支持密码、手机号、email登陆
@@ -87,6 +95,13 @@ public interface SystemAccountService {
      */
     Boolean isExist(Long userId, String account, String accountType);
 
+    /**
+     * 检查账号是否存在
+     * @param account
+     * @param accountType
+     * @return
+     */
+    Boolean isExist(String account, String accountType);
 
     /**
      * 解绑email账号
@@ -105,4 +120,6 @@ public interface SystemAccountService {
      * @return
      */
     void removeMobileAccount(Long userId, String mobile);
+
+
 }

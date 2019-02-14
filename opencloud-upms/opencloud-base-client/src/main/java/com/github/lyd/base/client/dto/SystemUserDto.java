@@ -31,6 +31,10 @@ public class SystemUserDto extends SystemUser implements Serializable {
     private Collection<String> authorities;
 
     /**
+     * 第三方账号
+     */
+    private String thirdParty;
+    /**
      * 密码凭证
      */
     @Transient
@@ -68,5 +72,13 @@ public class SystemUserDto extends SystemUser implements Serializable {
 
     public void setRoleIds(List<Long> roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public String getThirdParty() {
+        return thirdParty;
+    }
+
+    public void setThirdParty(String thirdParty) {
+        this.thirdParty = thirdParty;
     }
 }

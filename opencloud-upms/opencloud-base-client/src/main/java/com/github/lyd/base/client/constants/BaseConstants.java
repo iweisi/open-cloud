@@ -45,8 +45,8 @@ public class BaseConstants {
     public final static String USER_ACCOUNT_TYPE_EMAIL = "email";
     public final static String USER_ACCOUNT_TYPE_MOBILE = "mobile";
     public final static String USER_ACCOUNT_TYPE_QQ = "qq";
-    public final static String USER_ACCOUNT_TYPE_WEIXIN = "weixin";
-    public final static String USER_ACCOUNT_TYPE_WEIBO = "weibo";
+    public final static String USER_ACCOUNT_TYPE_WEIXIN = "wechat";
+    public final static String USER_ACCOUNT_TYPE_GITEE = "gitee";
 
     /**
      * 资源类型

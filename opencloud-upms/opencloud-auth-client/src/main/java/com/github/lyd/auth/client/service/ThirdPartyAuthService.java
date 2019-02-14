@@ -1,8 +1,7 @@
 package com.github.lyd.auth.client.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.lyd.auth.client.entity.ThirdPartyAuthClientDetails;
-
-import java.util.Map;
 
 /**
  * 第三方登录接口
@@ -40,7 +39,7 @@ public interface ThirdPartyAuthService {
      * @param openId      openId
      * @return 第三方应用给的用户信息
      */
-    Map getUserInfo(String accessToken, String openId);
+    JSONObject getUserInfo(String accessToken, String openId);
 
     /**
      * 刷新Token
@@ -49,6 +48,12 @@ public interface ThirdPartyAuthService {
      * @return 新的token
      */
     String refreshToken(String code);
+
+    /**
+     * 获取登录成功地址
+     * @return
+     */
+    String getLoginSuccessUrl();
 
     /**
      * 获取客户端配置信息

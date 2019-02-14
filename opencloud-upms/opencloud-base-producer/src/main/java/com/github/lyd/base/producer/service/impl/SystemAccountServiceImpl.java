@@ -1,5 +1,6 @@
 package com.github.lyd.base.producer.service.impl;
 
+import com.github.lyd.auth.client.constants.AuthConstants;
 import com.github.lyd.base.client.constants.BaseConstants;
 import com.github.lyd.base.client.dto.SystemAccountDto;
 import com.github.lyd.base.client.dto.SystemUserDto;
@@ -12,6 +13,7 @@ import com.github.lyd.base.producer.service.SystemRoleService;
 import com.github.lyd.base.producer.service.SystemUserService;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.mapper.ExampleBuilder;
+import com.github.lyd.common.utils.RandomValueUtils;
 import com.github.lyd.common.utils.StringUtils;
 import com.github.lyd.common.utils.WebUtils;
 import com.google.common.collect.Lists;
@@ -87,15 +89,44 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         Long accountId = this.registerUsernameAccount(userId, profileDto.getUserName(), encodePassword);
         if (accountId != null && StringUtils.isNotBlank(profileDto.getEmail())) {
             //注册email账号登陆
-            this.registerMobileAccount(userId, profileDto.getEmail(), encodePassword);
+            this.registerEmailAccount(userId, profileDto.getEmail(), encodePassword);
         }
         if (accountId != null && StringUtils.isNotBlank(profileDto.getMobile())) {
             //注册手机号账号登陆
             this.registerMobileAccount(userId, profileDto.getMobile(), encodePassword);
         }
-        return  userId;
+        return userId;
     }
-
+    /**
+     * 绑定其他账号
+     *
+     * @param account
+     * @param password
+     * @param accountType
+     * @return
+     */
+    @Override
+    public Long register(String account, String password, String accountType) {
+        if (isExist(account, accountType)) {
+            return null;
+        }
+        SystemUserDto user = new SystemUserDto();
+        String name = accountType + "_" + RandomValueUtils.randomAlphanumeric(16);
+        user.setPassword(password);
+        user.setNickName(name);
+        user.setUserName(name);
+        user.setUserType(BaseConstants.USER_TYPE_PLATFORM);
+        user.setCreateTime(new Date());
+        user.setUpdateTime(user.getCreateTime());
+        user.setRegisterTime(user.getCreateTime());
+        user.setStatus(BaseConstants.USER_STATE_NORMAL);
+        Long userId = systemUserService.addProfile(user);
+        //加密
+        String encodePassword = passwordEncoder.encode(user.getPassword());
+        SystemAccount systemAccount = new SystemAccount(userId, account, encodePassword,accountType);
+        systemAccountMapper.insertSelective(systemAccount);
+        return userId;
+    }
     /**
      * 支持系统用户名、手机号、email登陆
      *
@@ -107,36 +138,47 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         if (StringUtils.isBlank(account)) {
             return null;
         }
+        Map<String, String> headers = WebUtils.getHttpHeaders();
+        String thirdParty = headers.get(AuthConstants.HEADER_X_THIRDPARTY_LOGIN);
         SystemAccount systemAccount = null;
         SystemAccountDto systemAccountDto = null;
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
-        Example example = builder.criteria()
-                .andEqualTo("account", account)
-                .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
-                .end().build();
-        //默认用户名登录
-        systemAccount = systemAccountMapper.selectOneByExample(example);
-
-        if (systemAccount == null && StringUtils.matchMobile(account)) {
-            //强制清空
-            example.clear();
-            //  尝试手机号登录
-            example = builder.criteria()
+        if (StringUtils.isNotBlank(thirdParty)) {
+            // 第三方登录
+            Example example = builder.criteria()
                     .andEqualTo("account", account)
-                    .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
+                    .andEqualTo("accountType", thirdParty)
                     .end().build();
             systemAccount = systemAccountMapper.selectOneByExample(example);
-        }
-
-        if (systemAccount == null && StringUtils.matchEmail(account)) {
-            //强制清空
-            example.clear();
-            //  尝试邮箱登录
-            example = builder.criteria()
+        } else {
+            // 非第三方登录
+            Example example = builder.criteria()
                     .andEqualTo("account", account)
-                    .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
+                    .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_USERNAME)
                     .end().build();
+            //默认用户名登录
             systemAccount = systemAccountMapper.selectOneByExample(example);
+            if (systemAccount == null && StringUtils.matchMobile(account)) {
+                //强制清空
+                example.clear();
+                //  尝试手机号登录
+                example = builder.criteria()
+                        .andEqualTo("account", account)
+                        .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_MOBILE)
+                        .end().build();
+                systemAccount = systemAccountMapper.selectOneByExample(example);
+            }
+
+            if (systemAccount == null && StringUtils.matchEmail(account)) {
+                //强制清空
+                example.clear();
+                //  尝试邮箱登录
+                example = builder.criteria()
+                        .andEqualTo("account", account)
+                        .andEqualTo("accountType", BaseConstants.USER_ACCOUNT_TYPE_EMAIL)
+                        .end().build();
+                systemAccount = systemAccountMapper.selectOneByExample(example);
+            }
         }
 
         if (systemAccount != null) {
@@ -191,7 +233,6 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         return systemAccountDto;
     }
 
-
     /**
      * 注册系统用户名账户
      *
@@ -218,17 +259,20 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @param password
      */
     @Override
-    public void registerEmailAccount(Long userId, String email, String password) {
+    public Long registerEmailAccount(Long userId, String email, String password) {
         if (!StringUtils.matchEmail(email)) {
-            return;
+            return null;
         }
         if (isExist(userId, email, BaseConstants.USER_ACCOUNT_TYPE_EMAIL)) {
             //已经注册
-            return;
+            return null;
         }
         SystemAccount systemAccount = new SystemAccount(userId, email, password, BaseConstants.USER_ACCOUNT_TYPE_EMAIL);
         systemAccountMapper.insertSelective(systemAccount);
+        return systemAccount.getAccountId();
     }
+
+
 
     /**
      * 注册手机账号
@@ -238,16 +282,17 @@ public class SystemAccountServiceImpl implements SystemAccountService {
      * @param password
      */
     @Override
-    public void registerMobileAccount(Long userId, String mobile, String password) {
+    public Long registerMobileAccount(Long userId, String mobile, String password) {
         if (!StringUtils.matchMobile(mobile)) {
-            return;
+            return null;
         }
         if (isExist(userId, mobile, BaseConstants.USER_ACCOUNT_TYPE_MOBILE)) {
             //已经注册
-            return;
+            return null;
         }
         SystemAccount systemAccount = new SystemAccount(userId, mobile, password, BaseConstants.USER_ACCOUNT_TYPE_MOBILE);
         systemAccountMapper.insertSelective(systemAccount);
+        return systemAccount.getAccountId();
     }
 
 
@@ -314,6 +359,17 @@ public class SystemAccountServiceImpl implements SystemAccountService {
         ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
         Example example = builder.criteria()
                 .andEqualTo("userId", userId)
+                .andEqualTo("account", account)
+                .andEqualTo("accountType", accountType)
+                .end().build();
+        int count = systemAccountMapper.selectCountByExample(example);
+        return count > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean isExist(String account, String accountType) {
+        ExampleBuilder builder = new ExampleBuilder(SystemAccount.class);
+        Example example = builder.criteria()
                 .andEqualTo("account", account)
                 .andEqualTo("accountType", accountType)
                 .end().build();

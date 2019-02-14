@@ -39,7 +39,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Override
     public Long addProfile(SystemUserDto userProfile) {
         systemUserMapper.insertSelective(userProfile);
-        if(userProfile!=null && userProfile.getRoleIds().size()>0){
+        if(userProfile!=null && userProfile.getRoleIds()!=null && userProfile.getRoleIds().size()>0){
             systemRoleService.saveMemberRoles(userProfile.getUserId(),userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
         }
         return userProfile.getUserId();

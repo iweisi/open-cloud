@@ -1,11 +1,11 @@
 package com.github.lyd.auth.producer.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.lyd.auth.client.constants.AuthConstants;
 import com.github.lyd.auth.client.entity.ThirdPartyAuthClientDetails;
 import com.github.lyd.auth.client.entity.ThirdPartyAuthProperties;
 import com.github.lyd.auth.client.service.ThirdPartyAuthService;
 import com.github.lyd.common.http.OpenRestTemplate;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,6 @@ import java.util.Map;
 @Service("qqAuthService")
 @Slf4j
 public class QQAuthServiceImpl implements ThirdPartyAuthService {
-    private static  final String TYPE = "qq";
     @Autowired
     private OpenRestTemplate restTemplate;
     @Autowired
@@ -112,17 +111,11 @@ public class QQAuthServiceImpl implements ThirdPartyAuthService {
     }
 
     @Override
-    public Map getUserInfo(String accessToken, String openId) {
+    public JSONObject getUserInfo(String accessToken, String openId) {
         String url = String.format(USER_INFO_URL, getClientDetails().getUserInfoUri(), accessToken, getClientDetails().getClientId(), openId);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
-        URI uri = builder.build().encode().toUri();
-        String resp = restTemplate.getForObject(uri, String.class);
+        String resp = restTemplate.getForObject(url, String.class);
         JSONObject data = JSONObject.parseObject(resp);
-        Map result = Maps.newHashMap();
-        result.put("openId", openId);
-        result.put("avatar", data.getString("figureurl_qq_2"));
-        result.put("nickName", data.getString("nickname"));
-        return result;
+        return data;
     }
 
     /**
@@ -132,11 +125,21 @@ public class QQAuthServiceImpl implements ThirdPartyAuthService {
      */
     @Override
     public ThirdPartyAuthClientDetails getClientDetails() {
-        return socialAuthProperties.getOauth2().get(TYPE);
+        return socialAuthProperties.getOauth2().get(AuthConstants.LOGIN_QQ);
     }
 
     @Override
     public String refreshToken(String code) {
         return null;
+    }
+
+    /**
+     * 获取登录成功地址
+     *
+     * @return
+     */
+    @Override
+    public String getLoginSuccessUrl() {
+        return getClientDetails().getLoginSuccessUri();
     }
 }
