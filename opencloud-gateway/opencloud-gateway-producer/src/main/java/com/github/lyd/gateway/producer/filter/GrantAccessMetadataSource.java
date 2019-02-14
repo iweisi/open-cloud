@@ -8,6 +8,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,6 +49,7 @@ public class GrantAccessMetadataSource implements
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        Collection<ConfigAttribute> attributes = new ArrayList<>();
         HashMap<String, Collection<ConfigAttribute>> map = accessLocator.getMap();
         FilterInvocation fi = (FilterInvocation) object;
         // 请求路径path
@@ -58,16 +60,23 @@ public class GrantAccessMetadataSource implements
             for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
                 String url = iter.next();
                 if (antPathMatcher.match(url, requestUri)) {
-                    // 返回匹配到权限
-                    return map.get(url);
+                    Collection<ConfigAttribute> attrs = map.get(url);
+                    if (attrs != null && attrs.size() > 0) {
+                        // 动态权限匹配结果
+                        attributes.addAll(attrs);
+                    }
+                    break;
                 }
             }
         }
-        // 默认返回表达式权限
-        Collection<ConfigAttribute> attributes = expressionSecurityMetadataSource.getAttributes(object);
+        // 表达式匹配结果
+        Collection<ConfigAttribute> expressionAttributes = expressionSecurityMetadataSource.getAttributes(object);
+        if (expressionAttributes != null && expressionAttributes.size() > 0) {
+            attributes.addAll(expressionAttributes);
+        }
         // 表达式匹配未放行.则返回默认权限.
-        if (!attributes.toString().contains("permitAll")) {
-            attributes = SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS");
+        if (!attributes.toString().contains("permitAll") && !attributes.toString().contains("anonymous")) {
+            attributes.addAll(SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS"));
         }
         return attributes;
     }
