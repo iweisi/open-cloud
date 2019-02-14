@@ -78,12 +78,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/**/logout/**",
                         "/**/oauth/token/**",
                         "/**/oauth/check_token/**").permitAll()
-                // 认证通过后直接放行,无需鉴权的请求
-                .antMatchers(
-                        "/auth/user",
-                        "/base/grant/login/menus",
-                        "base/grant/login/actions"
-                ).authenticated()
                 // 匹配监控权限actuator可执行远程端点
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyAuthority(AuthorityConstants.AUTHORITY_ACTUATOR)
                 // 自定义动态权限拦截,使用已经默认的FilterSecurityInterceptor对象,可以兼容默认表达式鉴权

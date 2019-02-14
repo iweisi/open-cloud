@@ -7,11 +7,9 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * 自定义动态权限元数据
@@ -22,6 +20,16 @@ public class GrantAccessMetadataSource implements
         FilterInvocationSecurityMetadataSource {
 
     private GrantAccessLocator accessLocator;
+
+    private PathMatcher pathMatcher = new AntPathMatcher();
+    /**
+     * 忽略鉴权
+     */
+    private List<String> ignores = new ArrayList<>(Arrays.asList(new String[]{
+            "/auth/user",
+            "/base/grant/login/menus",
+            "base/grant/login/actions"
+    }));
 
     /**
      * 默认的FilterInvocationSecurityMetadataSource
@@ -49,34 +57,30 @@ public class GrantAccessMetadataSource implements
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        Collection<ConfigAttribute> attributes = new ArrayList<>();
         HashMap<String, Collection<ConfigAttribute>> map = accessLocator.getMap();
         FilterInvocation fi = (FilterInvocation) object;
         // 请求路径path
         String requestUri = fi.getRequest().getRequestURI();
+        if (isIgnore(requestUri)) {
+            // 返回null，表示不需要鉴权
+            return null;
+        }
         // 动态权限验证开启
         if (gatewayProperties.getEnabledValidateAccess()) {
             // 匹配动态权限
             for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
                 String url = iter.next();
                 if (antPathMatcher.match(url, requestUri)) {
-                    Collection<ConfigAttribute> attrs = map.get(url);
-                    if (attrs != null && attrs.size() > 0) {
-                        // 动态权限匹配结果
-                        attributes.addAll(attrs);
-                    }
-                    break;
+                    // 返回匹配到权限
+                    return map.get(url);
                 }
             }
         }
-        // 表达式匹配结果
-        Collection<ConfigAttribute> expressionAttributes = expressionSecurityMetadataSource.getAttributes(object);
-        if (expressionAttributes != null && expressionAttributes.size() > 0) {
-            attributes.addAll(expressionAttributes);
-        }
+        // 默认返回表达式权限
+        Collection<ConfigAttribute> attributes = expressionSecurityMetadataSource.getAttributes(object);
         // 表达式匹配未放行.则返回默认权限.
-        if (!attributes.toString().contains("permitAll") && !attributes.toString().contains("anonymous")) {
-            attributes.addAll(SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS"));
+        if (!attributes.toString().contains("permitAll")) {
+            attributes = SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS");
         }
         return attributes;
     }
@@ -89,5 +93,14 @@ public class GrantAccessMetadataSource implements
     @Override
     public boolean supports(Class<?> clazz) {
         return FilterInvocation.class.isAssignableFrom(clazz);
+    }
+
+    protected boolean isIgnore(String requestPath) {
+        for (String path : ignores) {
+            if (pathMatcher.match(requestPath, path)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
