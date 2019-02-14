@@ -1,6 +1,6 @@
 package com.github.lyd.auth.producer.configuration;
 
-import com.github.lyd.auth.producer.service.impl.UserLoginServiceImpl;
+import com.github.lyd.auth.producer.service.impl.UserAuthServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserLoginServiceImpl userDetailsService;
+    private UserAuthServiceImpl userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

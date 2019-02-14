@@ -1,9 +1,11 @@
 package com.github.lyd.auth.producer.configuration;
 
 import com.github.lyd.auth.client.constants.AuthConstants;
+import com.github.lyd.auth.client.entity.ThirdPartyAuthProperties;
 import com.github.lyd.auth.producer.exception.Oauth2WebResponseExceptionTranslator;
 import com.github.lyd.common.security.OpenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -32,6 +34,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableAuthorizationServer
+@EnableConfigurationProperties(ThirdPartyAuthProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;

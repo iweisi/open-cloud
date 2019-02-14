@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service("userDetailService")
-public class UserLoginServiceImpl implements UserDetailsService {
+public class UserAuthServiceImpl implements UserDetailsService {
 
     @Autowired
     private SystemAccountClient systemAccountClient;

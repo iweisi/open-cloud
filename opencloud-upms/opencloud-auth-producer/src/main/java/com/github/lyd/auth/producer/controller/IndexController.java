@@ -1,5 +1,6 @@
 package com.github.lyd.auth.producer.controller;
 
+import com.github.lyd.auth.producer.service.impl.QQAuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,9 @@ import java.util.Map;
 public class IndexController {
     @Autowired
     private JdbcClientDetailsService clientDetailsService;
+
+    @Autowired
+    private QQAuthServiceImpl qqAuthService;
 
     /**
      * 欢迎页
@@ -44,9 +49,50 @@ public class IndexController {
         return "login";
     }
 
+    /**
+     * 第三方授权后会回调此方法，并将code传过来
+     *
+     * @param code code
+     * @return
+     */
+    @GetMapping("/oauth/qq/callback")
+    public String oauthByQQ(@RequestParam(value = "code") String code, HttpServletRequest request) {
+        String token = qqAuthService.getAccessToken(code);
+        if (token!=null) {
+             String openid = qqAuthService.getOpenId(token);
+            if (openid!=null) {
+
+            }
+        }
+        return "redirect:http://www.baidu.com";
+    }
+
+    @GetMapping("/oauth/wechat/callback")
+    public String oauthByWechat(@RequestParam(value = "code") String code, HttpServletRequest request) {
+        String token = qqAuthService.getAccessToken(code);
+        if (token!=null) {
+            String openid = qqAuthService.getOpenId(token);
+            if (openid!=null) {
+
+            }
+        }
+        return "redirect:http://www.baidu.com";
+    }
+
+    @GetMapping("/oauth/gitee/callback")
+    public String oauthByGitee(@RequestParam(value = "code") String code, HttpServletRequest request) {
+        String token = qqAuthService.getAccessToken(code);
+        if (token!=null) {
+            String openid = qqAuthService.getOpenId(token);
+            if (openid!=null) {
+
+            }
+        }
+        return "redirect:http://www.baidu.com";
+    }
 
     @RequestMapping("/confirm_access")
-    public String confirm_access(HttpServletRequest request,HttpSession session, Map model) {
+    public String confirm_access(HttpServletRequest request, HttpSession session, Map model) {
         Map<String, String> scopes = (Map<String, String>) (model.containsKey("scopes") ? model.get("scopes") : request.getAttribute("scopes"));
         List<String> scopeList = new ArrayList<String>();
         for (String scope : scopes.keySet()) {
@@ -55,13 +101,13 @@ public class IndexController {
         model.put("scopeList", scopeList);
         Object auth = session.getAttribute("authorizationRequest");
         if (auth != null) {
-           try{
-               AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-               ClientDetails clientDetails = clientDetailsService.loadClientByClientId(authorizationRequest.getClientId());
-               model.put("app", clientDetails.getAdditionalInformation());
-           }catch (Exception e){
+            try {
+                AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
+                ClientDetails clientDetails = clientDetailsService.loadClientByClientId(authorizationRequest.getClientId());
+                model.put("app", clientDetails.getAdditionalInformation());
+            } catch (Exception e) {
 
-           }
+            }
         }
         return "confirm_access";
     }
