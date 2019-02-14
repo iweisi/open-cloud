@@ -235,9 +235,6 @@ public class OpenExceptionHandler {
             message = i18n(ex.getMessage());
         } else {
             message = i18n(resultCode.getMessage());
-            if (resultCode.getCode() == ResultEnum.ACCESS_DENIED.getCode()) {
-                message = path + "," + message;
-            }
         }
         log.error("错误解析:method={},path={},code={},message={},exception={}", method, path, resultCode.getCode(), message, (ex instanceof OpenException ? ex.getMessage() : ex));
         return ResultBody.failed(resultCode.getCode(), message).setPath(path);
