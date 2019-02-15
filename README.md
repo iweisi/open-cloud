@@ -77,18 +77,18 @@ mvn clean install package -P dev
     项目部分功能还在完善中，尚未正式发版。基础功能基本完善。
     
 #### 功能截图
-![image.gif](/screenshot/login.gif)  
+![image.gif](/docs/screenshot/login.gif)  
 
-![image.gif](/screenshot/app.gif)  
+![image.gif](/docs/screenshot/app.gif)  
 
-![image.gif](/screenshot/user.gif)  
+![image.gif](/docs/screenshot/user.gif)  
 
-![image.gif](/screenshot/role.gif)  
+![image.gif](/docs/screenshot/role.gif)  
 
-![image.gif](/screenshot/menu.gif)  
+![image.gif](/docs/screenshot/menu.gif)  
 
-![image.gif](/screenshot/api.gif)
+![image.gif](/docs/screenshot/api.gif)
 
-![image.gif](/screenshot/access.gif) 
+![image.gif](/docs/screenshot/access.gif) 
 
-![image.gif](/screenshot/docs.gif)
+![image.gif](/docs/screenshot/docs.gif)
