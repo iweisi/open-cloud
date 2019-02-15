@@ -78,10 +78,17 @@ mvn clean install package -P dev
     
 #### 功能截图
 ![image.gif](/screenshot/login.gif)  
+
 ![image.gif](/screenshot/app.gif)  
+
 ![image.gif](/screenshot/user.gif)  
+
 ![image.gif](/screenshot/role.gif)  
+
 ![image.gif](/screenshot/menu.gif)  
+
 ![image.gif](/screenshot/api.gif)
-![image.gif](/screenshot/access.gif)    
+
+![image.gif](/screenshot/access.gif) 
+
 ![image.gif](/screenshot/docs.gif)
