@@ -3,7 +3,6 @@ package com.github.lyd.msg.producer.locator;
 import com.github.lyd.msg.producer.configuration.MailChannelsProperties;
 import com.google.common.collect.Maps;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Iterator;
@@ -25,10 +24,10 @@ public class MailSenderLocator {
         this.mailProperties = mailProperties;
     }
 
-    private Map<String, JavaMailSender> mailSenders = Maps.newLinkedHashMap();
+    private Map<String, JavaMailSenderImpl> mailSenders = Maps.newLinkedHashMap();
 
-    public Map<String, JavaMailSender> locateSenders() {
-        Map<String, JavaMailSender> senders = Maps.newLinkedHashMap();
+    public Map<String, JavaMailSenderImpl> locateSenders() {
+        Map<String, JavaMailSenderImpl> senders = Maps.newLinkedHashMap();
         if (this.mailProperties != null && this.mailProperties.getChannels() != null) {
             Iterator<Map.Entry<String, MailProperties>> entries = mailProperties.getChannels().entrySet().iterator();
             while (entries.hasNext()) {
@@ -56,11 +55,11 @@ public class MailSenderLocator {
         return senders;
     }
 
-    public Map<String, JavaMailSender> getMailSenders() {
+    public Map<String, JavaMailSenderImpl> getMailSenders() {
         return mailSenders;
     }
 
-    public void setMailSenders(Map<String, JavaMailSender> mailSenders) {
+    public void setMailSenders(Map<String, JavaMailSenderImpl> mailSenders) {
         this.mailSenders = mailSenders;
     }
 }
