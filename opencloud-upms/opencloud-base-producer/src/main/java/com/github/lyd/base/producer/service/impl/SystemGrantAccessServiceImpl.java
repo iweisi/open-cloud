@@ -160,7 +160,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
             }
         }
         // 去重
-        permissions.stream()
+        permissions = permissions.stream()
                 .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(f -> f.getResourceId() + f.getResourceType()))), ArrayList::new));
         return permissions;
     }
