@@ -80,7 +80,7 @@ public class GrantAccessMetadataSource implements
         Collection<ConfigAttribute> attributes = expressionSecurityMetadataSource.getAttributes(object);
         // 表达式匹配未放行.则返回默认权限.
         if (!attributes.toString().contains("permitAll")) {
-            attributes = SecurityConfig.createList("ROLE_ANONYMOUS", "USER_ANONYMOUS", "APP_ANONYMOUS");
+            attributes = SecurityConfig.createList("ROLE_REQUIRED", "USER_REQUIRED", "APP_REQUIRED");
         }
         return attributes;
     }
