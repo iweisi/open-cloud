@@ -73,7 +73,7 @@ CREATE TABLE `oauth_client_details` (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('gateway', '$2a$10$jIgCsWeTRrWXw7Cf6p26Yu5lP9WLnXbwTEPAmy4vPMuByx3tJGjsK', null, 'userProfile', 'refresh_token,authorization_code,password,client_credentials', 'http://localhost:8888/webjars/springfox-swagger-ui/o2c.html', 'APP_all', '43200', '604800', '{\"appDesc\":\"开放云平台\",\"appIcon\":\"\",\"appId\":\"gateway\",\"appName\":\"开放云平台\",\"appNameEn\":\"ApiGateway\",\"appOs\":\"\",\"appSecret\":\"123456\",\"appType\":\"server\",\"createTime\":1542016125000,\"redirectUrls\":\"http://localhost:8888/login,http://localhost:8888/webjars/springfox-swagger-ui/o2c.html\",\"status\":1,\"updateTime\":1545927416000,\"userId\":0,\"userType\":\"platform\",\"website\":\"http://www.baidu.com\"}', '');
+INSERT INTO `oauth_client_details` VALUES ('gateway', '$2a$10$jIgCsWeTRrWXw7Cf6p26Yu5lP9WLnXbwTEPAmy4vPMuByx3tJGjsK', null, 'userProfile', 'refresh_token,authorization_code,password,client_credentials', 'http://localhost:8888/webjars/springfox-swagger-ui/o2c.html', 'APP_all', '43200', '604800', '{\"appDesc\":\"微服务开放平台\",\"appIcon\":\"\",\"appId\":\"gateway\",\"appName\":\"微服务开放平台\",\"appNameEn\":\"ApiGateway\",\"appOs\":\"\",\"appSecret\":\"123456\",\"appType\":\"server\",\"createTime\":1542016125000,\"redirectUrls\":\"http://localhost:8888/login,http://localhost:8888/webjars/springfox-swagger-ui/o2c.html\",\"status\":1,\"updateTime\":1545927416000,\"userId\":0,\"userType\":\"platform\",\"website\":\"http://www.baidu.com\"}', '');
 
 -- ----------------------------
 -- Table structure for oauth_client_token

@@ -7,7 +7,7 @@
     <artifactId>open-cloud</artifactId>
     <packaging>pom</packaging>
     <version>0.2.0</version>
-    <description>开放云平台</description>
+    <description>微服务开放平台</description>
     <modules>
         <module>docs/generator</module>
         <module>opencloud-common</module>

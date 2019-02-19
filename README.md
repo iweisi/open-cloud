@@ -12,9 +12,9 @@
 # open-cloud
 ---
 #### 简介
-深度整合SpringCloud+SpringSecurity+Oauth2,搭建基于OAuth2的开放云平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
+深度整合SpringCloud+SpringSecurity+Oauth2,搭建基于OAuth2的微服务开放平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
-<a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">开放平台运营系统UI</a>
+<a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">微服务开放平台admin-ui</a>
 
 <a target="_blank" href="http://39.106.187.125/admin">在线访问</a>
 默认登录账号:admin 123456
@@ -27,7 +27,7 @@
 邮箱：515608851@qq.com    
 
 #### 功能
-![Alt text](/docs/云服务开放平台.png)
+![Alt text](/docs/platform.png)
 
 #### 模块
 ``` lua
