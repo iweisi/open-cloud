@@ -5,13 +5,11 @@ import com.github.lyd.msg.client.dto.HttpNotification;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author woodev
  */
-@RequestMapping("/notification")
 public interface NotificationRemoteService {
     /**
      * 短信通知
@@ -23,7 +21,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("短信通知")
-    @PostMapping("/send/sms")
+    @PostMapping("/notify/send/sms")
     ResultBody<String> sendSms(
             @RequestParam(value = "phoneNumber", required = true) String phoneNumber,
             @RequestParam(value = "templateCode", required = true) String templateCode,
@@ -40,7 +38,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("邮件通知")
-    @PostMapping("/send/email")
+    @PostMapping("/notify/send/email")
     ResultBody<String> sendEmail(
             @RequestParam(value = "to", required = true) String to,
             @RequestParam(value = "title", required = true) String title,
@@ -55,7 +53,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("HTTP异步通知")
-    @PostMapping("/send/http")
+    @PostMapping("/notify/send/http")
     ResultBody<String> sendHttp(
             @RequestBody HttpNotification notification
     );

@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author woodev
  */
 @RestController
-@RequestMapping("/notification")
-@Api(value = "notification", tags = "通知管理")
+@Api(value = "通知管理", tags = "通知管理")
 public class NotificationController implements NotificationRemoteService {
 
     @Autowired
@@ -26,7 +25,7 @@ public class NotificationController implements NotificationRemoteService {
     private MessageSender messageSender;
 
     @ApiOperation("短信通知")
-    @PostMapping("/send/sms")
+    @PostMapping("/notify/send/sms")
     @Override
     public ResultBody<String> sendSms(
             @RequestParam(value = "phoneNumber", required = true) String phoneNumber,
@@ -44,7 +43,7 @@ public class NotificationController implements NotificationRemoteService {
     }
 
     @ApiOperation("邮件通知")
-    @PostMapping("/send/email")
+    @PostMapping("/notify/send/email")
     @Override
     public ResultBody<String> sendEmail(
             @RequestParam(value = "to", required = true) String to,
@@ -61,7 +60,7 @@ public class NotificationController implements NotificationRemoteService {
 
 
     @ApiOperation("HTTP异步通知")
-    @PostMapping("/send/http")
+    @PostMapping("/notify/send/http")
     @Override
     public ResultBody<String> sendHttp(
             @RequestBody HttpNotification notification
