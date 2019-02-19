@@ -20,7 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 
 /**
@@ -155,6 +159,9 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
                 }
             }
         }
+        // 去重
+        permissions.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(f -> f.getResourceId() + f.getResourceType()))), ArrayList::new));
         return permissions;
     }
 
@@ -236,7 +243,7 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         for (String resource : resourceIds) {
             Object object = crudMapper.selectByPrimaryKey(resource);
             SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
-            if (grantAccess!=null) {
+            if (grantAccess != null) {
                 accessList.add(grantAccess);
                 authorities.add(grantAccess.getAuthority());
             }
