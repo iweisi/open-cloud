@@ -25,7 +25,7 @@ public class NotificationController implements NotificationRemoteService {
     private MessageSender messageSender;
 
     @ApiOperation("短信通知")
-    @PostMapping("/notify/send/sms")
+    @PostMapping("/notification/send/sms")
     @Override
     public ResultBody<String> sendSms(
             @RequestParam(value = "phoneNumber", required = true) String phoneNumber,
@@ -43,7 +43,7 @@ public class NotificationController implements NotificationRemoteService {
     }
 
     @ApiOperation("邮件通知")
-    @PostMapping("/notify/send/email")
+    @PostMapping("/notification/send/email")
     @Override
     public ResultBody<String> sendEmail(
             @RequestParam(value = "to", required = true) String to,
@@ -60,7 +60,7 @@ public class NotificationController implements NotificationRemoteService {
 
 
     @ApiOperation("HTTP异步通知")
-    @PostMapping("/notify/send/http")
+    @PostMapping("/notification/send/http")
     @Override
     public ResultBody<String> sendHttp(
             @RequestBody HttpNotification notification

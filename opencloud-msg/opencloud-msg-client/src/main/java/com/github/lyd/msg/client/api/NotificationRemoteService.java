@@ -21,7 +21,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("短信通知")
-    @PostMapping("/notify/send/sms")
+    @PostMapping("/notification/send/sms")
     ResultBody<String> sendSms(
             @RequestParam(value = "phoneNumber", required = true) String phoneNumber,
             @RequestParam(value = "templateCode", required = true) String templateCode,
@@ -38,7 +38,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("邮件通知")
-    @PostMapping("/notify/send/email")
+    @PostMapping("/notification/send/email")
     ResultBody<String> sendEmail(
             @RequestParam(value = "to", required = true) String to,
             @RequestParam(value = "title", required = true) String title,
@@ -53,7 +53,7 @@ public interface NotificationRemoteService {
      * @return
      */
     @ApiOperation("HTTP异步通知")
-    @PostMapping("/notify/send/http")
+    @PostMapping("/notification/send/http")
     ResultBody<String> sendHttp(
             @RequestBody HttpNotification notification
     );
