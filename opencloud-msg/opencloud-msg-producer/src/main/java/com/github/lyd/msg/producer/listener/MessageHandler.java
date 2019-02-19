@@ -42,13 +42,16 @@ public class MessageHandler {
      * 首次是即时推送，重试通知时间间隔为 5s、10s、2min、5min、10min、30min、1h、2h、6h、15h，直到你正确回复状态 200 并且返回 success 或者超过最大重发次数 或者超过最大重发次数
      */
     public final static List<Integer> DELAY_TIMES = Arrays.asList(new Integer[]{
-            1* 1000,
-            3* 1000,
-            5* 1000,
-            6* 1000,
-            7* 1000,
-            10* 1000,
-            12* 1000
+            5 * 1000,
+            10 * 1000,
+            2 * 60 * 1000,
+            5 * 60 * 1000,
+            10 * 60 * 1000,
+            30 * 60 * 1000,
+            60 * 60 * 1000,
+            2 * 60 * 60 * 1000,
+            6 * 60 * 60 * 1000,
+            15 * 60 * 60 * 1000
     });
 
     @RabbitListener(queues = MessageConstants.QUEUE_MSG)
