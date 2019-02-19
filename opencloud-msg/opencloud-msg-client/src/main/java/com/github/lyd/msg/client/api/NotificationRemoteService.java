@@ -5,11 +5,13 @@ import com.github.lyd.msg.client.dto.HttpNotification;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author woodev
  */
+@RequestMapping("/notification")
 public interface NotificationRemoteService {
     /**
      * 短信通知
