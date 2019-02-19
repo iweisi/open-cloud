@@ -1,6 +1,6 @@
-package com.github.lyd.msg.producer.service;
+package com.github.lyd.msg.producer.service.impl;
 
-import com.github.lyd.msg.client.model.mail.MailSenderParams;
+import com.github.lyd.msg.client.dto.mail.MailSenderParams;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
@@ -19,14 +19,14 @@ import java.util.List;
  * @author woodev
  */
 @Slf4j
-public class MailSender {
+public class MailSenderImpl {
 
 	private JavaMailSenderImpl javaMailSender;
 
 	private FreeMarkerConfigurer freeMarkerConfigurer;
 
 
-    public MailSender(){
+    public MailSenderImpl(){
         log.info("初始化邮件组件");
     }
 

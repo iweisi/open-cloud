@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.handler.annotation.Payload;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @Configuration
 @Slf4j
-public class MsgReceiverListener {
+public class MessageHandler {
     @Autowired
     private SystemApiService apiService;
     @Autowired
@@ -37,7 +38,7 @@ public class MsgReceiverListener {
      * @param list
      */
     @RabbitListener(queues = MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE)
-    public void ScanApiResourceQueue(List<Map> list) {
+    public void ScanApiResourceQueue(@Payload List<Map> list) {
         try {
             if (list != null && list.size() > 0) {
                 log.info("【apiResourceQueue监听到消息】" + list.toString());
@@ -71,7 +72,7 @@ public class MsgReceiverListener {
      * @param access
      */
     @RabbitListener(queues = MqAutoConfiguration.QUEUE_ACCESS_LOGS)
-    public void accessLogsQueue(Map access) {
+    public void accessLogsQueue(@Payload Map access) {
         try {
             if (access != null) {
                 SystemAccessLogs accessLogs = BeanConvertUtils.mapToObject(access, SystemAccessLogs.class);

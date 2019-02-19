@@ -1,11 +1,11 @@
 package com.github.lyd.msg.producer.exchanger;
 
 
-import com.github.lyd.msg.client.model.EmailNotification;
-import com.github.lyd.msg.client.model.Notification;
-import com.github.lyd.msg.client.model.mail.MailSenderParams;
+import com.github.lyd.msg.client.dto.EmailNotification;
+import com.github.lyd.msg.client.dto.Notification;
+import com.github.lyd.msg.client.dto.mail.MailSenderParams;
 import com.github.lyd.msg.producer.locator.MailSenderLocator;
-import com.github.lyd.msg.producer.service.MailSender;
+import com.github.lyd.msg.producer.service.impl.MailSenderImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.util.Assert;
@@ -18,9 +18,9 @@ import java.util.Random;
 @Slf4j
 public class EmailNoficationExchanger implements NotificationExchanger{
 
-    private MailSender mailSender;
+    private MailSenderImpl mailSender;
     private MailSenderLocator mailSenderLocator;
-    public EmailNoficationExchanger(MailSender mailSender,MailSenderLocator mailSenderLocator) {
+    public EmailNoficationExchanger(MailSenderImpl mailSender, MailSenderLocator mailSenderLocator) {
         this.mailSender = mailSender;
         this.mailSenderLocator = mailSenderLocator;
     }

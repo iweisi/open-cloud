@@ -1,7 +1,7 @@
 package com.github.lyd.msg.producer.configuration;
 
 import com.github.lyd.msg.producer.locator.MailSenderLocator;
-import com.github.lyd.msg.producer.service.MailSender;
+import com.github.lyd.msg.producer.service.impl.MailSenderImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
  */
 @Configuration
 @EnableConfigurationProperties({MailChannelsProperties.class})
-public class MailAutoConfiguration {
+public class MailConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MailSenderLocator.class)
@@ -25,8 +25,8 @@ public class MailAutoConfiguration {
 
 
     @Bean
-    public MailSender mailSender(FreeMarkerConfigurer freeMarkerConfigurer) {
-        MailSender mailSender = new MailSender();
+    public MailSenderImpl mailSender(FreeMarkerConfigurer freeMarkerConfigurer) {
+        MailSenderImpl mailSender = new MailSenderImpl();
         mailSender.setFreeMarkerConfigurer(freeMarkerConfigurer);
         return mailSender;
     }

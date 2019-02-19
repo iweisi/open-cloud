@@ -1,4 +1,4 @@
-package com.github.lyd.msg.client.model.sms;
+package com.github.lyd.msg.client.dto.sms;
 
 /**
  * @author woodev

@@ -1,4 +1,4 @@
-package com.github.lyd.msg.producer.service;
+package com.github.lyd.msg.producer.service.impl;
 
 
 import com.aliyuncs.CommonRequest;
@@ -9,9 +9,9 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
-import com.github.lyd.msg.client.model.sms.SmsParameter;
-import com.github.lyd.msg.client.model.sms.SmsSendResult;
-import com.github.lyd.msg.client.model.sms.SmsSender;
+import com.github.lyd.msg.client.dto.sms.SmsParameter;
+import com.github.lyd.msg.client.dto.sms.SmsSendResult;
+import com.github.lyd.msg.client.dto.sms.SmsSender;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author woodev
  */
 @Slf4j
-public class AliyunSmsSender implements SmsSender {
+public class AliyunSmsSenderImpl implements SmsSender {
 
     private String accessKeyId;
 
@@ -28,7 +28,7 @@ public class AliyunSmsSender implements SmsSender {
 
     private String STATUS_OK = "OK";
 
-    public AliyunSmsSender(){
+    public AliyunSmsSenderImpl(){
         log.info("初始化阿里云接口:" + this);
     }
 

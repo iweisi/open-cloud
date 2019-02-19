@@ -1,4 +1,4 @@
-package com.github.lyd.msg.client.model.mail;
+package com.github.lyd.msg.client.dto.mail;
 
 import java.io.File;
 import java.util.ArrayList;

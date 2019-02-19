@@ -1,7 +1,7 @@
 package com.github.lyd.msg.producer.exchanger;
 
 
-import com.github.lyd.msg.client.model.Notification;
+import com.github.lyd.msg.client.dto.Notification;
 
 /**
  * @author woodev

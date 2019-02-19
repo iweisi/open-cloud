@@ -1,7 +1,7 @@
 package com.github.lyd.msg.producer.configuration;
 
 import com.github.lyd.common.test.BaseTest;
-import com.github.lyd.msg.client.model.EmailNotification;
+import com.github.lyd.msg.client.dto.EmailNotification;
 import com.github.lyd.msg.producer.dispatcher.NotificationDispatcher;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

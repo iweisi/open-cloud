@@ -1,6 +1,6 @@
 package com.github.lyd.msg.producer.task;
 
-import com.github.lyd.msg.client.model.Notification;
+import com.github.lyd.msg.client.dto.Notification;
 import com.github.lyd.msg.producer.exchanger.NotificationExchanger;
 
 import java.util.concurrent.Callable;

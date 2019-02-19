@@ -1,10 +1,10 @@
 package com.github.lyd.msg.producer.exchanger;
 
-import com.github.lyd.msg.client.model.Notification;
-import com.github.lyd.msg.client.model.SmsNotification;
-import com.github.lyd.msg.client.model.sms.SmsParameter;
-import com.github.lyd.msg.client.model.sms.SmsSendResult;
-import com.github.lyd.msg.client.model.sms.SmsSender;
+import com.github.lyd.msg.client.dto.Notification;
+import com.github.lyd.msg.client.dto.SmsNotification;
+import com.github.lyd.msg.client.dto.sms.SmsParameter;
+import com.github.lyd.msg.client.dto.sms.SmsSendResult;
+import com.github.lyd.msg.client.dto.sms.SmsSender;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
