@@ -9,22 +9,26 @@
   <a><img src="https://img.shields.io/npm/l/express.svg" alt="License"></a>
 </p>  
 
-# open-cloud
+# 微服务开放平台
 ---
 #### 简介
 深度整合SpringCloud+SpringSecurity+Oauth2,搭建基于OAuth2的微服务开放平台、为APP端提供统一接口管控平台、为第三方合作伙伴的业务对接提供授信可控的技术对接平台
 
+<a target="_blank" href="http://39.106.187.125/admin">在线访问</a>  
+
+默认登录账号:admin 123456
+
+#### 代码仓库
 <a target="_blank" href="https://gitee.com/liuyadu/open-admin-ui">微服务开放平台admin-ui</a>
 
-<a target="_blank" href="http://39.106.187.125/admin">在线访问</a>
-默认登录账号:admin 123456
+<a target="_blank" href="https://gitee.com/liuyadu">码云</a> <a target="_blank" href="https://github.com/liuyadu/">Github</a>  
 
 #### 问题反馈
 ![760809808](/docs/1548831206525.png)
 
-学习交流群：760809808 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>  
- 
-邮箱：515608851@qq.com    
+交流群：760809808   
+
+<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b45f53bc72df5935af588df50a0f651285020356d1daa05f90ee3fb95a0607c9"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="open-cloud学习交流群" title="open-cloud学习交流群"></a>  
 
 #### 功能
 ![Alt text](/docs/platform.png)
@@ -75,20 +79,3 @@ mvn clean install package -P dev
 ```
 #### 项目进度
     项目部分功能还在完善中，尚未正式发版。基础功能基本完善。
-    
-#### 功能截图
-![image.gif](/docs/screenshot/login.gif)  
-
-![image.gif](/docs/screenshot/app.gif)  
-
-![image.gif](/docs/screenshot/user.gif)  
-
-![image.gif](/docs/screenshot/role.gif)  
-
-![image.gif](/docs/screenshot/menu.gif)  
-
-![image.gif](/docs/screenshot/api.gif)
-
-![image.gif](/docs/screenshot/access.gif) 
-
-![image.gif](/docs/screenshot/docs.gif)
