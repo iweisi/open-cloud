@@ -5,7 +5,7 @@ FILE_PATH=`readlink -f ${INPUT}`
 SERVICE=${INPUT##*/}
 SERVICE_NAME=${SERVICE%.*}
 DEPLOY_DIR=`pwd`
-JVM_OPTS="-server -Xms64m -Xmx256m"
+JVM_OPTS="-server -Xms64m -Xmx128m"
 
 if [[ "$1" = "" ]];
 then
