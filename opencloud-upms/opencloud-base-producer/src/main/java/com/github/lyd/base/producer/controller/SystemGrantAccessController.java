@@ -78,13 +78,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "角色菜单授权", notes = "角色菜单授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "menuIds", value = "菜单ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "menuIds", value = "菜单ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/role/menu")
     @Override
     public ResultBody grantRoleMenu(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("menuIds") String menuIds
+            @RequestParam(value = "menuIds", required = false) String menuIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_MENU, StringUtils.isNotBlank(menuIds) ? menuIds.split(",") : new String[]{});
         return ResultBody.success();
@@ -100,13 +100,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "角色操作授权", notes = "角色操作授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "actionIds", value = "操作ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "actionIds", value = "操作ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/role/action")
     @Override
     public ResultBody grantRoleAction(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("actionIds") String actionIds
+            @RequestParam(value = "actionIds", required = false) String actionIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_ACTION, StringUtils.isNotBlank(actionIds) ? actionIds.split(",") : new String[]{});
         return ResultBody.success();
@@ -122,13 +122,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "角色接口授权", notes = "角色接口授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "apiIds", value = "接口ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "apiIds", value = "接口ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/role/api")
     @Override
     public ResultBody grantRoleApi(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("apiIds") String apiIds
+            @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(roleId), BaseConstants.AUTHORITY_PREFIX_ROLE, BaseConstants.RESOURCE_TYPE_API, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
         return ResultBody.success();
@@ -195,13 +195,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "用户菜单授权", notes = "用户菜单授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "用户ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "menuIds", value = "菜单ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "menuIds", value = "菜单ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/user/menu")
     @Override
     public ResultBody grantUserMenu(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("menuIds") String menuIds
+            @RequestParam(value = "menuIds", required = false) String menuIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(userId), BaseConstants.AUTHORITY_PREFIX_USER, BaseConstants.RESOURCE_TYPE_MENU, StringUtils.isNotBlank(menuIds) ? menuIds.split(",") : new String[]{});
         return ResultBody.success();
@@ -217,13 +217,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "用户操作授权", notes = "用户操作授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "用户ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "actionIds", value = "操作ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "actionIds", value = "操作ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/user/action")
     @Override
     public ResultBody grantUserAction(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("actionIds") String actionIds
+            @RequestParam(value = "actionIds", required = false) String actionIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(userId), BaseConstants.AUTHORITY_PREFIX_USER, BaseConstants.RESOURCE_TYPE_ACTION, StringUtils.isNotBlank(actionIds) ? actionIds.split(",") : new String[]{});
         return ResultBody.success();
@@ -239,13 +239,13 @@ public class SystemGrantAccessController implements SystemGrantAccessRemoteServi
     @ApiOperation(value = "用户接口授权", notes = "用户接口授权")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "用户ID", defaultValue = "", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "apiIds", value = "操作ID.多个以,隔开", defaultValue = "", required = true, paramType = "form")
+            @ApiImplicitParam(name = "apiIds", value = "操作ID.多个以,隔开", defaultValue = "", required = false, paramType = "form")
     })
     @PostMapping("/grant/user/api")
     @Override
     public ResultBody grantUserApi(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("apiIds") String apiIds
+            @RequestParam(value = "apiIds", required = false) String apiIds
     ) {
         systemGrantAccessService.addGrantAccess(String.valueOf(userId), BaseConstants.AUTHORITY_PREFIX_USER, BaseConstants.RESOURCE_TYPE_API, StringUtils.isNotBlank(apiIds) ? apiIds.split(",") : new String[]{});
         return ResultBody.success();

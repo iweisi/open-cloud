@@ -77,7 +77,7 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "userType") String userType,
             @RequestParam(value = "scopes") String scopes,
-            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "authorities",required = false) String authorities,
             @RequestParam(value = "grantTypes") String grantTypes
 
     );
@@ -118,7 +118,7 @@ public interface SystemAppRemoteService {
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "userType") String userType,
             @RequestParam(value = "scopes") String scopes,
-            @RequestParam(value = "authorities") String authorities,
+            @RequestParam(value = "authorities",required = false) String authorities,
             @RequestParam(value = "grantTypes") String grantTypes
     );
 

@@ -46,7 +46,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/role/menu")
     ResultBody grantRoleMenu(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("menuIds") String menuIds
+            @RequestParam(value = "menuIds",required = false) String menuIds
     );
 
 
@@ -60,7 +60,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/role/action")
     ResultBody grantRoleAction(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("actionIds") String actionIds
+            @RequestParam(value = "actionIds",required = false) String actionIds
     );
 
     /**
@@ -73,7 +73,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/role/api")
     ResultBody grantRoleApi(
             @RequestParam(value = "roleId") Long roleId,
-            @RequestParam("apiIds") String apiIds
+            @RequestParam(value = "apiIds",required = false) String apiIds
     );
 
 
@@ -120,7 +120,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/user/menu")
     ResultBody grantUserMenu(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("menuIds") String menuIds
+            @RequestParam(value = "menuIds",required = false) String menuIds
     );
 
 
@@ -134,7 +134,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/user/action")
     ResultBody grantUserAction(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("actionIds") String actionIds
+            @RequestParam(value = "actionIds",required = false) String actionIds
     );
 
     /**
@@ -147,7 +147,7 @@ public interface SystemGrantAccessRemoteService {
     @PostMapping("/grant/user/api")
     ResultBody grantUserApi(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam("apiIds") String apiIds
+            @RequestParam(value = "apiIds",required = false) String apiIds
     );
 
 

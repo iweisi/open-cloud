@@ -242,21 +242,22 @@ public class SystemGrantAccessServiceImpl implements SystemGrantAccessService {
         }
         List<SystemGrantAccess> accessList = Lists.newArrayList();
         List<String> authorities = Lists.newArrayList();
-        for (String resource : resourceIds) {
-            Object object = crudMapper.selectByPrimaryKey(resource);
-            SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
-            if (grantAccess != null) {
-                accessList.add(grantAccess);
-                authorities.add(grantAccess.getAuthority());
+        if (resourceIds != null) {
+            for (String resource : resourceIds) {
+                Object object = crudMapper.selectByPrimaryKey(resource);
+                SystemGrantAccess grantAccess = buildGrantAccess(resourceType, authorityPrefix, authorityOwner, object);
+                if (grantAccess != null) {
+                    accessList.add(grantAccess);
+                    authorities.add(grantAccess.getAuthority());
+                }
             }
-        }
-        if (accessList.isEmpty()) {
-            return null;
         }
         //先清空拥有者的权限
         removeGrantAccess(authorityOwner, authorityPrefix, resourceType);
-        // 再重新批量授权
-        systemAccessMapper.insertList(accessList);
+        if (accessList.size() > 0) {
+            // 再重新批量授权
+            systemAccessMapper.insertList(accessList);
+        }
         // 刷新网关
         openRestTemplate.refreshGateway();
         return org.springframework.util.StringUtils.arrayToDelimitedString(authorities.toArray(new String[accessList.size()]), ",");

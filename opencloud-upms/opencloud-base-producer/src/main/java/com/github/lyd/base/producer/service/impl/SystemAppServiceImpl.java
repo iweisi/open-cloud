@@ -17,6 +17,7 @@ import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.PageParams;
 import com.github.lyd.common.model.ResultBody;
 import com.github.lyd.common.utils.RandomValueUtils;
+import com.github.lyd.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +121,9 @@ public class SystemAppServiceImpl implements SystemAppService {
         systemAppMapper.insertSelective(app);
         String clientInfoJson = JSONObject.toJSONString(app);
         // 功能授权
-        app.setAuthorities(grantAccess(app.getAppId(), app.getAuthorities().split(",")));
+        if(StringUtils.isNotBlank(app.getAuthorities())){
+            app.setAuthorities(grantAccess(app.getAppId(), app.getAuthorities().split(",")));
+        }
         // 保持客户端信息
         ResultBody<Boolean> resp = clientDetailsRemoteServiceClient.addClient(clientId, clientSecret, BaseConstants.DEFAULT_OAUTH2_GRANT_TYPES, "", app.getRedirectUrls(), app.getScopes(), app.getResourceIds(), app.getAuthorities(), clientInfoJson);
         if (!resp.isOk()) {

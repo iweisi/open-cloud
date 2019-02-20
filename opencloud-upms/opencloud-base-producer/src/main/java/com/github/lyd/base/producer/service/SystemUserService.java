@@ -40,6 +40,14 @@ public interface SystemUserService {
     PageList<SystemUser> findListPage(PageParams pageParams, String keyword);
 
     /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    PageList<SystemUser> findList(String keyword);
+
+    /**
      * 依据登录名查询系统用户信息
      *
      * @param username

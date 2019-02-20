@@ -3,6 +3,7 @@ package com.github.lyd.base.client.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.lyd.base.client.entity.SystemUser;
+import com.google.common.collect.Lists;
 
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -20,15 +21,15 @@ public class SystemUserDto extends SystemUser implements Serializable {
     /**
      * 用户角色
      */
-    private Collection<Map> roles;
+    private Collection<Map> roles = Lists.newArrayList();
     /**
      * 用户角色ID
      */
-    private List<Long> roleIds;
+    private List<Long> roleIds = Lists.newArrayList();
     /**
      * 用户权限
      */
-    private Collection<String> authorities;
+    private Collection<String> authorities = Lists.newArrayList();
 
     /**
      * 第三方账号

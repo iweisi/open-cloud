@@ -28,6 +28,9 @@ import com.github.lyd.base.client.entity.SystemRole;
 import com.github.lyd.base.client.entity.SystemUser;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,6 +55,21 @@ public interface SystemUserRemoteService {
             @RequestParam(name = "keyword", required = false) String keyword
     );
 
+
+    /**
+     * 获取用户列表
+     *
+     * @param keyword
+     * @return
+     */
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/user/list")
+    ResultBody<PageList<SystemRole>> userList(String keyword);
+
+
     /**
      * 添加系统用户
      *
@@ -73,11 +91,11 @@ public interface SystemUserRemoteService {
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "mobile") String mobile,
-            @RequestParam(value = "userDesc") String userDesc,
-            @RequestParam(value = "avatar") String avatar,
-            @RequestParam(value = "roleIds") String roleIds
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "mobile", required = false) String mobile,
+            @RequestParam(value = "userDesc", required = false) String userDesc,
+            @RequestParam(value = "avatar", required = false) String avatar,
+            @RequestParam(value = "roleIds", required = false) String roleIds
     );
 
     /**
@@ -101,11 +119,11 @@ public interface SystemUserRemoteService {
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email") String email,
+            @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "mobile", required = false) String mobile,
             @RequestParam(value = "userDesc", required = false) String userDesc,
             @RequestParam(value = "avatar", required = false) String avatar,
-            @RequestParam(value = "roleIds") String roleIds
+            @RequestParam(value = "roleIds", required = false) String roleIds
     );
 
 

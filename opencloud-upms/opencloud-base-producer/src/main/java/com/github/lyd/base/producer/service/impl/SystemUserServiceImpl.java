@@ -39,8 +39,8 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Override
     public Long addProfile(SystemUserDto userProfile) {
         systemUserMapper.insertSelective(userProfile);
-        if(userProfile!=null && userProfile.getRoleIds()!=null && userProfile.getRoleIds().size()>0){
-            systemRoleService.saveMemberRoles(userProfile.getUserId(),userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
+        if (userProfile != null && userProfile.getRoleIds() != null && userProfile.getRoleIds().size() > 0) {
+            systemRoleService.saveMemberRoles(userProfile.getUserId(), userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
         }
         return userProfile.getUserId();
     }
@@ -59,9 +59,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (userProfile.getUserId() == null) {
             return false;
         }
-        if(userProfile!=null && userProfile.getRoleIds().size()>0){
-            systemRoleService.saveMemberRoles(userProfile.getUserId(),userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
-        }
+        systemRoleService.saveMemberRoles(userProfile.getUserId(), userProfile.getRoleIds().toArray(new Long[userProfile.getRoleIds().size()]));
         return systemUserMapper.updateByPrimaryKeySelective(userProfile) > 0;
     }
 
@@ -76,6 +74,22 @@ public class SystemUserServiceImpl implements SystemUserService {
     public PageList<SystemUser> findListPage(PageParams pageParams, String keyword) {
         ExampleBuilder builder = new ExampleBuilder(SystemAction.class);
         Example example = builder.build();
+        List<SystemUser> list = systemUserMapper.selectByExample(example);
+        return new PageList(list);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @param keyword
+     * @return
+     */
+    @Override
+    public PageList<SystemUser> findList(String keyword) {
+        ExampleBuilder builder = new ExampleBuilder(SystemUser.class);
+        Example example = builder.criteria()
+                .orLike("userName", keyword).end().build();
+        example.orderBy("userId").asc();
         List<SystemUser> list = systemUserMapper.selectByExample(example);
         return new PageList(list);
     }

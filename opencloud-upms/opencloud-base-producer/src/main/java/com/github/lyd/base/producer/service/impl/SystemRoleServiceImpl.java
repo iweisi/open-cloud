@@ -173,20 +173,19 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (userId == null || roles == null) {
             return;
         }
-        if (roles.length == 0) {
-            return;
-        }
         // 先清空,在添加
         removeMemberRoles(userId);
-        List<SystemUserRole> list = Lists.newArrayList();
-        for (Long roleId : roles) {
-            SystemUserRole roleUser = new SystemUserRole();
-            roleUser.setUserId(userId);
-            roleUser.setRoleId(roleId);
-            list.add(roleUser);
+        if (roles.length > 0) {
+            List<SystemUserRole> list = Lists.newArrayList();
+            for (Long roleId : roles) {
+                SystemUserRole roleUser = new SystemUserRole();
+                roleUser.setUserId(userId);
+                roleUser.setRoleId(roleId);
+                list.add(roleUser);
+            }
+            // 批量保存
+            systemUserRoleMapper.insertList(list);
         }
-        // 批量保存
-        systemUserRoleMapper.insertList(list);
     }
 
     /**

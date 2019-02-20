@@ -84,7 +84,6 @@ public class ClientDetailsController implements ClientDetailsRemoteService {
      *
      * @param clientId     客户端ID
      * @param grantTypes   授权类型
-     * @param autoApprove  自动授权
      * @param redirectUrls 授权重定向地址
      * @param scopes       授权范围
      * @param resourceIds  资源服务ID

@@ -61,6 +61,22 @@ public class SystemUserController implements SystemUserRemoteService {
     }
 
     /**
+     * 获取用户列表
+     *
+     * @param keyword
+     * @return
+     */
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "查询字段", paramType = "form"),
+    })
+    @PostMapping("/user/list")
+    @Override
+    public ResultBody<PageList<SystemRole>> userList(String keyword) {
+        return ResultBody.success(systemUserService.findList(keyword));
+    }
+
+    /**
      * 添加系统用户
      *
      * @param userName
@@ -83,11 +99,11 @@ public class SystemUserController implements SystemUserRemoteService {
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "mobile") String mobile,
-            @RequestParam(value = "userDesc") String userDesc,
-            @RequestParam(value = "avatar") String avatar,
-            @RequestParam(value = "roleIds") String roleIds
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "mobile", required = false) String mobile,
+            @RequestParam(value = "userDesc", required = false) String userDesc,
+            @RequestParam(value = "avatar", required = false) String avatar,
+            @RequestParam(value = "roleIds", required = false) String roleIds
     ) {
         SystemUserDto user = new SystemUserDto();
         user.setUserName(userName);
@@ -130,11 +146,11 @@ public class SystemUserController implements SystemUserRemoteService {
             @RequestParam(value = "nickName") String nickName,
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "email") String email,
+            @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "mobile", required = false) String mobile,
             @RequestParam(value = "userDesc", required = false) String userDesc,
             @RequestParam(value = "avatar", required = false) String avatar,
-            @RequestParam(value = "roleIds") String roleIds
+            @RequestParam(value = "roleIds", required = false) String roleIds
     ) {
         SystemUserDto user = new SystemUserDto();
         user.setUserId(userId);
