@@ -15,6 +15,11 @@
     </parent>
     <dependencies>
         <dependency>
+            <artifactId>opencloud-common-starter</artifactId>
+            <groupId>com.github.lyd</groupId>
+            <version>${opencloud.common.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.lyd</groupId>
             <artifactId>opencloud-gateway-client</artifactId>
             <version>${opencloud.gateway-client.version}</version>

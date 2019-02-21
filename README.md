@@ -38,7 +38,10 @@ open-cloud
     ├── bin           -- 执行脚本  
     ├── generator     -- 代码生成器  
     ├── sql           -- sql文件  
-├── opencloud-common  -- 公共模块(提供微服务相关依赖包、springCloud必要配置类、工具类、统一全局异常解析)
+├── opencloud-common  -- 公共模块
+     ├── opencloud-common-core    -- 提供微服务相关依赖包、工具类、统一全局异常解析
+     ├── opencloud-common-autoconfigure -- SpringBoot自动配置类
+     ├── opencloud-common-starter       -- SpringBoot自动扫描启动配置
 ├── opencloud-gateway 
      ├── opencloud-gateway-client    -- 开放API网关(对外接口)
      ├── opencloud-gateway-producer  -- 开放API网关(资源服务器)(port = 8888)  

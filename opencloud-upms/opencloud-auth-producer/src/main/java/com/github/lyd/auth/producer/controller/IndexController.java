@@ -6,7 +6,7 @@ import com.github.lyd.auth.producer.service.feign.SystemAccountClient;
 import com.github.lyd.auth.producer.service.impl.GiteeAuthServiceImpl;
 import com.github.lyd.auth.producer.service.impl.QQAuthServiceImpl;
 import com.github.lyd.auth.producer.service.impl.WechatAuthServiceImpl;
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.common.http.OpenRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

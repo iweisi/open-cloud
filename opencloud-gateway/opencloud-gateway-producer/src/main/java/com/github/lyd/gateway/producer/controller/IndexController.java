@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.controller;
 
-import com.github.lyd.common.autoconfigure.SwaggerProperties;
+import com.github.lyd.common.configuration.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

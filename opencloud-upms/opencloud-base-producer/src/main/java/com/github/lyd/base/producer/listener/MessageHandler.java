@@ -5,7 +5,7 @@ import com.github.lyd.base.client.entity.SystemAccessLogs;
 import com.github.lyd.base.client.entity.SystemApi;
 import com.github.lyd.base.producer.mapper.SystemAccessLogsMapper;
 import com.github.lyd.base.producer.service.SystemApiService;
-import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
+import com.github.lyd.common.constants.MqConstants;
 import com.github.lyd.common.http.OpenRestTemplate;
 import com.github.lyd.common.utils.BeanConvertUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class MessageHandler {
      *
      * @param list
      */
-    @RabbitListener(queues = MqAutoConfiguration.QUEUE_SCAN_API_RESOURCE)
+    @RabbitListener(queues = MqConstants.QUEUE_SCAN_API_RESOURCE)
     public void ScanApiResourceQueue(@Payload List<Map> list) {
         try {
             if (list != null && list.size() > 0) {
@@ -71,7 +71,7 @@ public class MessageHandler {
      *
      * @param access
      */
-    @RabbitListener(queues = MqAutoConfiguration.QUEUE_ACCESS_LOGS)
+    @RabbitListener(queues = MqConstants.QUEUE_ACCESS_LOGS)
     public void accessLogsQueue(@Payload Map access) {
         try {
             if (access != null) {

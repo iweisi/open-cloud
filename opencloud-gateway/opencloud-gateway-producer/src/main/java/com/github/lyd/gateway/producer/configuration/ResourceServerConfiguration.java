@@ -1,7 +1,7 @@
 package com.github.lyd.gateway.producer.configuration;
 
 import com.github.lyd.base.client.constants.BaseConstants;
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.common.constants.AuthorityConstants;
 import com.github.lyd.common.exception.OpenAccessDeniedHandler;
 import com.github.lyd.common.exception.OpenAuthenticationEntryPoint;

@@ -1,7 +1,7 @@
 package com.github.lyd.gateway.producer.filter;
 
 import com.github.lyd.base.client.entity.SystemApp;
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.common.exception.OpenSignatureDeniedHandler;
 import com.github.lyd.common.exception.OpenSignatureException;
 import com.github.lyd.common.exception.SignatureDeniedHandler;

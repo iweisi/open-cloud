@@ -26,7 +26,7 @@ package com.github.lyd.gateway.producer.configuration;
 
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
-import com.github.lyd.common.autoconfigure.SwaggerProperties;
+import com.github.lyd.common.configuration.SwaggerProperties;
 import com.github.lyd.gateway.producer.locator.ZuulRouteLocator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

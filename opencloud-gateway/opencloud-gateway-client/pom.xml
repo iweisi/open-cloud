@@ -15,7 +15,7 @@
     </parent>
     <dependencies>
         <dependency>
-            <artifactId>opencloud-common</artifactId>
+            <artifactId>opencloud-common-core</artifactId>
             <groupId>com.github.lyd</groupId>
             <version>${opencloud.common.version}</version>
         </dependency>

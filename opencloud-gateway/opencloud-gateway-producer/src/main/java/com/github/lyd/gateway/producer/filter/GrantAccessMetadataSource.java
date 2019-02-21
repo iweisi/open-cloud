@@ -1,6 +1,6 @@
 package com.github.lyd.gateway.producer.filter;
 
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.gateway.producer.locator.GrantAccessLocator;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

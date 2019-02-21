@@ -9,7 +9,7 @@ import com.github.lyd.base.producer.service.SystemApiService;
 import com.github.lyd.base.producer.service.SystemAppService;
 import com.github.lyd.base.producer.service.SystemGrantAccessService;
 import com.github.lyd.base.producer.service.feign.ClientDetailsRemoteServiceClient;
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.common.exception.OpenMessageException;
 import com.github.lyd.common.gen.SnowflakeIdGenerator;
 import com.github.lyd.common.mapper.ExampleBuilder;

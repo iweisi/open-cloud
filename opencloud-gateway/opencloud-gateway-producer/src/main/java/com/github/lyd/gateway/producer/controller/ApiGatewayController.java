@@ -3,7 +3,7 @@ package com.github.lyd.gateway.producer.controller;
 import com.github.lyd.base.client.entity.SystemGatewayRateLimit;
 import com.github.lyd.base.client.entity.SystemGatewayRoute;
 import com.github.lyd.base.client.entity.SystemGrantAccess;
-import com.github.lyd.common.autoconfigure.GatewayProperties;
+import com.github.lyd.common.configuration.GatewayProperties;
 import com.github.lyd.common.http.OpenRestTemplate;
 import com.github.lyd.common.model.PageList;
 import com.github.lyd.common.model.ResultBody;

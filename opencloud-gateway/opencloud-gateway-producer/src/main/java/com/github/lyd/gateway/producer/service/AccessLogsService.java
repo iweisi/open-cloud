@@ -1,7 +1,7 @@
 package com.github.lyd.gateway.producer.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.lyd.common.autoconfigure.MqAutoConfiguration;
+import com.github.lyd.common.constants.MqConstants;
 import com.github.lyd.common.utils.WebUtils;
 import com.google.common.collect.Maps;
 import com.netflix.zuul.context.RequestContext;
@@ -48,7 +48,7 @@ public class AccessLogsService {
         msg.put("httpStatus", httpStatus);
         msg.put("accessTime", accessTime);
         msg.put("method", method);
-        amqpTemplate.convertAndSend(MqAutoConfiguration.QUEUE_ACCESS_LOGS, msg);
+        amqpTemplate.convertAndSend(MqConstants.QUEUE_ACCESS_LOGS, msg);
         if(throwable!=null){
             msg.put("exception", throwable.getMessage());
         }

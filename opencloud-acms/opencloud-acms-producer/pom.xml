@@ -15,9 +15,9 @@
     </parent>
     <dependencies>
         <dependency>
-            <artifactId>opencloud-acms-client</artifactId>
+            <artifactId>opencloud-common-starter</artifactId>
             <groupId>com.github.lyd</groupId>
-            <version>${opencloud.acms-client.version}</version>
+            <version>${opencloud.common.version}</version>
         </dependency>
     </dependencies>
 
