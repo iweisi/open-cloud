@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.lyd</groupId>
     <artifactId>opencloud-common</artifactId>
-    <version>${opencloud.common.version}</version>
+    <version>0.2.0</version>
     <packaging>pom</packaging>
     <description>通用核心组件</description>
     <modules>
