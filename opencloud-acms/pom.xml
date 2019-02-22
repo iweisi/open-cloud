@@ -8,13 +8,12 @@
         <version>0.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.lyd</groupId>
     <artifactId>opencloud-acms</artifactId>
     <version>0.2.0</version>
     <packaging>pom</packaging>
     <description>APP应用管理</description>
     <modules>
         <module>opencloud-acms-client</module>
-        <module>opencloud-acms-producer</module>
+        <module>opencloud-acms-provider</module>
     </modules>
 </project>

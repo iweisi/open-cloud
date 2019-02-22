@@ -1,7 +1,7 @@
 <p align="center">
   <a target="_blank" href="https://nacos.io/en-us/"><img src="https://img.shields.io/badge/Nacos-0.2.1-blue.svg" alt="Nacos"></a>
   <a><img src="https://img.shields.io/badge/Spring%20Cloud-%20Finchley.SR2-brightgreen.svg" alt="SpringCloud"></a>
-  <a><img src="https://img.shields.io/badge/Spring%20Boot-2.0.6-brightgreen.svg" alt="SpringBoot"></a>
+  <a><img src="https://img.shields.io/badge/Spring%20Boot-2.0.8-brightgreen.svg" alt="SpringBoot"></a>
   <a><img src="https://img.shields.io/badge/Redis-orange.svg"></a>
   <a><img src="https://img.shields.io/badge/RabbitMq-orange.svg"></a>
   <a target="_blank" href="https://www.iviewui.com/docs/guide/install"><img src="https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square" alt="iview"></a>
@@ -46,19 +46,19 @@ open-cloud
      ├── opencloud-common-starter       -- SpringBoot自动扫描启动配置
 ├── opencloud-gateway 
      ├── opencloud-gateway-client    -- 开放API网关(对外接口)
-     ├── opencloud-gateway-producer  -- 开放API网关(资源服务器)(port = 8888)  
+     ├── opencloud-gateway-provider  -- 开放API网关(资源服务器)(port = 8888)  
 ├── opencloud-upms
      ├── opencloud-base-client    -- 基础服务(对外接口)
-     ├── opencloud-base-producer  -- 基础服务(资源服务器)(port = 8233)  
+     ├── opencloud-base-provider  -- 基础服务(资源服务器)(port = 8233)  
      ├── opencloud-auth-client    -- 认证服务(对外接口)
-     ├── opencloud-auth-producer  -- 认证服务(认证授权器)(资源服务器)(port = 8211)  
+     ├── opencloud-auth-provider  -- 认证服务(认证授权器)(资源服务器)(port = 8211)  
 ├── opencloud-zipkin  -- 链路追踪 
 ├── opencloud-msg     -- 待开发...  
       ├── opencloud-msg-client    -- 消息服务(对外接口)
-      ├── opencloud-msg-producer  -- 消息服务(资源服务器)(port = 8266)  
+      ├── opencloud-msg-provider  -- 消息服务(资源服务器)(port = 8266)  
 ├── opencloud-acms    -- 待开发...  
       ├── opencloud-acms-client   -- APP内容管理(对外接口)
-      ├── opencloud-acms-producer -- APP内容管理(资源服务器) (port = 8255)
+      ├── opencloud-acms-provider -- APP内容管理(资源服务器) (port = 8255)
 ```
 
 #### 部署
@@ -76,9 +76,9 @@ open-cloud
 mvn clean install package -P dev
 
 -- 项目启动 (start|stop|restart|status)
-./startup.sh start open-base-producer.jar
-./startup.sh start open-auth-producer.jar
-./startup.sh start open-gateway-producer.jar
+./startup.sh start open-base-provider.jar
+./startup.sh start open-auth-provider.jar
+./startup.sh start open-gateway-provider.jar
 ```
 #### 项目进度
     项目部分功能还在完善中，尚未正式发版。基础功能基本完善。

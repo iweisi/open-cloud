@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>opencloud-zipkin</artifactId>
-    <groupId>com.github.lyd</groupId>
     <version>0.2.0</version>
     <packaging>jar</packaging>
     <description>zipkin追踪服务</description>

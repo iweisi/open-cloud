@@ -15,6 +15,6 @@
     <description>消息服务</description>
     <modules>
         <module>opencloud-msg-client</module>
-        <module>opencloud-msg-producer</module>
+        <module>opencloud-msg-provider</module>
     </modules>
 </project>

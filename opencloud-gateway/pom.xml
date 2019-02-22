@@ -8,13 +8,12 @@
         <version>0.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.lyd</groupId>
     <artifactId>opencloud-gateway</artifactId>
     <packaging>pom</packaging>
     <version>0.2.0</version>
     <description>API网关</description>
     <modules>
         <module>opencloud-gateway-client</module>
-        <module>opencloud-gateway-producer</module>
+        <module>opencloud-gateway-provider</module>
     </modules>
 </project>

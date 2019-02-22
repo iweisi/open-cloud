@@ -16,6 +16,7 @@
         <module>opencloud-acms</module>
         <module>opencloud-msg</module>
         <module>opencloud-zipkin</module>
+        <module>opencloud-bpm</module>
     </modules>
     <!-- 环境 -->
     <profiles>
@@ -85,7 +86,7 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
-        <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
         <spring-cloud.version>Finchley.SR2</spring-cloud.version>
 
         <alibaba.cloud.version>0.2.1.RELEASE</alibaba.cloud.version>
@@ -111,6 +112,7 @@
         <opencloud.gateway-client.version>0.2.0-SNAPSHOT</opencloud.gateway-client.version>
         <opencloud.acms-client.version>0.2.0-SNAPSHOT</opencloud.acms-client.version>
         <opencloud.msg-client.version>0.2.0-SNAPSHOT</opencloud.msg-client.version>
+        <opencloud.bpm-client.version>0.2.0-SNAPSHOT</opencloud.bpm-client.version>
     </properties>
     <!--公共依赖-->
     <dependencies>

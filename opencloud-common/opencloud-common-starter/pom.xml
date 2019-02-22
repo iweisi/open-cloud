@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>opencloud-common-starter</artifactId>
-    <groupId>com.github.lyd</groupId>
     <version>${opencloud.common.version}</version>
     <packaging>jar</packaging>
     <dependencies>

@@ -2,17 +2,16 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>opencloud-base-client</artifactId>
-    <groupId>com.github.lyd</groupId>
-    <version>${opencloud.base-client.version}</version>
-    <packaging>jar</packaging>
-    <description>基础服务-接口</description>
     <parent>
         <artifactId>opencloud-upms</artifactId>
         <groupId>com.github.lyd</groupId>
         <version>0.2.0</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>opencloud-base-client</artifactId>
+    <version>${opencloud.base-client.version}</version>
+    <packaging>jar</packaging>
+    <description>基础服务-接口</description>
     <dependencies>
         <dependency>
             <artifactId>opencloud-common-core</artifactId>

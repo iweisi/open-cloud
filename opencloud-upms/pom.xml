@@ -9,14 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>opencloud-upms</artifactId>
-    <groupId>com.github.lyd</groupId>
     <version>0.2.0</version>
     <packaging>pom</packaging>
     <description>统一身份权限认证</description>
     <modules>
         <module>opencloud-auth-client</module>
-        <module>opencloud-auth-producer</module>
+        <module>opencloud-auth-provider</module>
         <module>opencloud-base-client</module>
-        <module>opencloud-base-producer</module>
+        <module>opencloud-base-provider</module>
     </modules>
 </project>

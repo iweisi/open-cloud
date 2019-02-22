@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>opencloud-common-core</artifactId>
-    <groupId>com.github.lyd</groupId>
     <version>${opencloud.common.version}</version>
     <packaging>jar</packaging>
     <dependencies>
@@ -60,13 +59,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
             <exclusions>
+                <!--旧版本 redis操作有问题-->
                 <exclusion>
                     <groupId>org.springframework.security.oauth</groupId>
                     <artifactId>spring-security-oauth2</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--spring-security-oauth2 不要升级2.3.5 redis连接报错-->
+        <!--spring-security-oauth2-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
@@ -130,11 +130,6 @@
             <version>${mybatis.version}</version>
         </dependency>
         <!-- Druid Pool -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${alibaba.druid.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
