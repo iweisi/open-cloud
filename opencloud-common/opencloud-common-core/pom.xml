@@ -66,10 +66,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--spring-security-oauth2 不要升级2.3.5 redis连接报错-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-            <version>2.3.3.RELEASE</version>
+            <version>2.3.4.RELEASE</version>
         </dependency>
         <!--Redis-->
         <dependency>
