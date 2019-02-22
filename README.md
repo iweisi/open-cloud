@@ -16,6 +16,8 @@
 
 <a target="_blank" href="http://39.106.187.125/admin">在线访问</a>  
 
+<a target="_blank" href="https://gitee.com/liuyadu/open-cloud/wikis/pages">使用手册</a>  
+
 默认登录账号:admin 123456
 
 #### 代码仓库
